@@ -9,6 +9,7 @@
 #import "jobDetailVC.h"
 #import "MLMapView.h"
 
+
 @interface jobDetailVC ()
 
 @end
@@ -24,6 +25,8 @@
     
     MLMapView *mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 200)];
     [self.view addSubview:mapView];
+    
+    
 }
 
 - (void)shareJob{

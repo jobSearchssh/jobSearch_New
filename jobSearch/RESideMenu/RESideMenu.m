@@ -40,7 +40,6 @@ const int INTERSTITIAL_STEPS = 99;
 @property (strong, readonly, nonatomic) UIImageView *screenshotView;
 @property (strong, readonly, nonatomic) UITableView *tableView;
 
-// Array containing menu (which are array of items)
 @property (strong, readwrite, nonatomic) NSMutableArray *menuStack;
 @property (strong, readwrite, nonatomic) RESideMenuItem *backMenu;
 

@@ -12,6 +12,8 @@
 #import "MLMapView.h"
 #import "MLFilterVC.h"
 #import "jobDetailVC.h"
+#import "MLMessageVC.h"
+#import "MLLoginVC.h"
 
 @interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate>
 {
@@ -69,6 +71,15 @@ static  MLFirstVC *thisVC=nil;
         mapDisplaying=NO;
     }
 }
+- (IBAction)showMessage:(id)sender {
+//    MLMessageVC *messageVC=[[MLMessageVC alloc]init];
+//    messageVC.title=@"消息";
+//    [self.navigationController pushViewController:messageVC animated:YES];
+    
+    MLLoginVC *vc=[[MLLoginVC alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (IBAction)filter:(id)sender {
     MLFilterVC *filterVC=[[MLFilterVC alloc]init];
     [self.navigationController pushViewController:filterVC animated:YES];
@@ -192,9 +203,11 @@ static  MLFirstVC *thisVC=nil;
     MLCell1 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
     [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
     cell.delegate = self;
-
-    return cell;
     
+    [cell.portraitView.layer setCornerRadius:CGRectGetHeight(cell.portraitView.bounds)/2];
+    [cell.portraitView.layer setMasksToBounds:YES];
+    
+    return cell;
 }
 
 - (NSArray *)rightButtons

@@ -37,6 +37,9 @@
             MLFirstVC *viewController = [MLFirstVC sharedInstance];
             viewController.title = item.title;
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+            navigationController.navigationBar.translucent = NO;
+            navigationController.tabBarController.tabBar.translucent = NO;
+            navigationController.toolbar.translucent = NO;
             [menu setRootViewController:navigationController];
             [menu hide];
         }];
@@ -45,6 +48,9 @@
             MLSecondVC *secondViewController = [MLSecondVC sharedInstance];
             secondViewController.title = item.title;
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:secondViewController];
+            navigationController.navigationBar.translucent = NO;
+            navigationController.tabBarController.tabBar.translucent = NO;
+            navigationController.toolbar.translucent = NO;
             [menu setRootViewController:navigationController];
         }];
         
@@ -53,6 +59,9 @@
             MLProfileVC *_profilehVC=[[MLProfileVC alloc] init];
             _profilehVC.title = item.title;
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:_profilehVC];
+            navigationController.navigationBar.translucent = NO;
+            navigationController.tabBarController.tabBar.translucent = NO;
+            navigationController.toolbar.translucent = NO;
             [menu setRootViewController:navigationController];
             
         }];
@@ -62,6 +71,9 @@
             DailyMatchVC *_dailyMatchVC=[DailyMatchVC sharedInstance];
             _dailyMatchVC.title = item.title;
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:_dailyMatchVC];
+            navigationController.navigationBar.translucent = NO;
+            navigationController.tabBarController.tabBar.translucent = NO;
+            navigationController.toolbar.translucent = NO;
             [menu setRootViewController:navigationController];
         }];
         RESideMenuItem *feedbackItem = [[RESideMenuItem alloc] initWithTitle:@"发送反馈" action:^(RESideMenu *menu, RESideMenuItem *item) {

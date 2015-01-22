@@ -26,7 +26,6 @@
                         <constraint firstAttribute="height" constant="44" id="cOr-gw-1Vd"/>
                     </constraints>
                     <items>
-                        <barButtonItem width="24" style="plain" systemItem="fixedSpace" id="hvQ-yr-IAt"/>
                         <barButtonItem image="shaixuan.png" id="PUx-7Z-eLN">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -41,6 +40,13 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="rU8-om-pnc"/>
+                        <barButtonItem image="shaixuan.png" id="PAW-vY-11a">
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <connections>
+                                <action selector="showMessage:" destination="-1" id="QU8-S0-tFE"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="oON-Pa-QGY"/>
                         <barButtonItem image="shaixuan.png" id="Lz8-2z-xrm">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -51,7 +57,6 @@
                         <barButtonItem image="shaixuan.png" id="vg1-Zy-ri5">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
-                        <barButtonItem width="24" style="plain" systemItem="fixedSpace" id="GV2-Ae-FdC"/>
                     </items>
                     <variation key="default">
                         <mask key="constraints">
@@ -105,7 +110,7 @@
                     <include reference="uBE-ZF-nmb"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-142" y="354"/>
+            <point key="canvasLocation" x="-271" y="324"/>
         </view>
     </objects>
     <resources>
