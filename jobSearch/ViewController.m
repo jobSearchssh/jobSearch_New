@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MLNavigation.h"
 #import "ViewController.h"
 #import "MLFirstVC.h"
 #import "MLSecondVC.h"
@@ -21,8 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStyleBordered target:self action:@selector(showMenu)];
-    
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"mainItem"] style:UIBarButtonItemStyleBordered target:self action:@selector(showMenu)];
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 #pragma mark -
@@ -33,32 +34,39 @@
     _sideMenu=[RESideMenu sharedInstance];
     
     if (!_sideMenu) {
-        RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"搜索职位" action:^(RESideMenu *menu, RESideMenuItem *item) {
-            MLFirstVC *viewController = [MLFirstVC sharedInstance];
-            viewController.title = item.title;
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-            navigationController.navigationBar.translucent = NO;
-            navigationController.tabBarController.tabBar.translucent = NO;
-            navigationController.toolbar.translucent = NO;
-            [menu setRootViewController:navigationController];
+        
+        RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:@"未登录" setFlag:USRCELL setSubtitle:@"游客"  image:[UIImage imageNamed:@"tourists"] highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
+            
+            NSLog(@"Item %@", item);
             [menu hide];
         }];
         
-        RESideMenuItem *savedItem = [[RESideMenuItem alloc] initWithTitle:@"我的收藏" action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"搜索" setFlag:NORMALCELL image:[UIImage imageNamed:@"search"] highlightedImage:[UIImage imageNamed:@"search"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+            MLFirstVC *viewController = [MLFirstVC sharedInstance];
+            viewController.title = item.title;
+            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
+            navigationController.navigationBar.translucent = NO;
+            navigationController.tabBarController.tabBar.translucent = NO;
+            navigationController.toolbar.translucent = NO;
+            [menu setRootViewController:navigationController];
+
+        }];
+        
+        RESideMenuItem *savedItem = [[RESideMenuItem alloc] initWithTitle:@"收藏的工作" setFlag:NORMALCELL image:[UIImage imageNamed:@"collection"] highlightedImage:[UIImage imageNamed:@"collection"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             MLSecondVC *secondViewController = [MLSecondVC sharedInstance];
             secondViewController.title = item.title;
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:secondViewController];
+            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:secondViewController];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
             [menu setRootViewController:navigationController];
         }];
         
-        RESideMenuItem *applicationItem = [[RESideMenuItem alloc] initWithTitle:@"我的申请" image:[UIImage imageNamed:@"find"] highlightedImage:[UIImage imageNamed:@"find1"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *applicationItem = [[RESideMenuItem alloc] initWithTitle:@"我的申请" setFlag:NORMALCELL image:[UIImage imageNamed:@"apply"] highlightedImage:[UIImage imageNamed:@"apply"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             
             MLProfileVC *_profilehVC=[[MLProfileVC alloc] init];
             _profilehVC.title = item.title;
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:_profilehVC];
+            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:_profilehVC];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
@@ -66,32 +74,44 @@
             
         }];
         
-        RESideMenuItem *dailymatchItem = [[RESideMenuItem alloc] initWithTitle:@"每日推荐" action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *dailymatchItem = [[RESideMenuItem alloc] initWithTitle:@"精灵匹配" setFlag:NORMALCELL image:[UIImage imageNamed:@"calendar"] highlightedImage:[UIImage imageNamed:@"calendar"] action:^(RESideMenu *menu, RESideMenuItem *item)  {
             [menu hide];
             DailyMatchVC *_dailyMatchVC=[DailyMatchVC sharedInstance];
             _dailyMatchVC.title = item.title;
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:_dailyMatchVC];
+            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:_dailyMatchVC];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
             [menu setRootViewController:navigationController];
         }];
-        RESideMenuItem *feedbackItem = [[RESideMenuItem alloc] initWithTitle:@"发送反馈" action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *feedbackItem = [[RESideMenuItem alloc] initWithTitle:@"发送反馈" setFlag:NORMALCELL image:[UIImage imageNamed:@"send"] highlightedImage:[UIImage imageNamed:@"send"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             [menu hide];
             NSLog(@"Item %@", item);
         }];
         
-        RESideMenuItem *aboutusItem = [[RESideMenuItem alloc] initWithTitle:@"关于我们" action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *aboutusItem = [[RESideMenuItem alloc] initWithTitle:@"声明" setFlag:NORMALCELL image:[UIImage imageNamed:@"notice"] highlightedImage:[UIImage imageNamed:@"notice"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             NSLog(@"Item %@", item);
             [menu hide];
         }];
         
-        RESideMenuItem *loginItem = [[RESideMenuItem alloc] initWithTitle:@"登录" action:^(RESideMenu *menu, RESideMenuItem *item) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Confirmation" message:@"Are you sure you want to log out?" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Log Out", nil];
-            [alertView show];
+        RESideMenuItem *logoutsItem = [[RESideMenuItem alloc] initWithTitle:@"退出" setFlag:NORMALCELL image:[UIImage imageNamed:@"logout"] highlightedImage:[UIImage imageNamed:@"logout"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+            NSLog(@"Item %@", item);
+            [menu hide];
         }];
         
-        _sideMenu=[RESideMenu initInstanceWithItems:@[searchItem, savedItem, applicationItem, dailymatchItem,feedbackItem, aboutusItem,loginItem]];
+        RESideMenuItem *loginItem = [[RESideMenuItem alloc] initWithTitle:Nil setFlag:LOGINCELL action:^(RESideMenu *menu, RESideMenuItem *item) {
+            if ([item getTapFlag] == ACTION_LOGINFLAG) {
+                NSLog(@"点击登陆");
+            }
+            if ([item getTapFlag] == ACTION_REGISTERFLAG) {
+                NSLog(@"点击注册");
+            }
+            [item setTapFlag:ACTION_NONFLAG];
+            [menu hide];
+        }];
+
+        
+        _sideMenu=[RESideMenu initInstanceWithItems:@[usrItem,searchItem, savedItem, applicationItem, dailymatchItem,feedbackItem, aboutusItem,logoutsItem,loginItem]];
         _sideMenu.verticalOffset = IS_WIDESCREEN ? 110 : 76;
         _sideMenu.hideStatusBarArea = [AppDelegate OSVersion] < 7;
     }

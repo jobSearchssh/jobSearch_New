@@ -29,6 +29,9 @@
 #import "REBackgroundView.h"
 #import "RESideMenuCell.h"
 #import "RESideMenuItem.h"
+#import "loginTableViewCell.h"
+#import "usrTableViewCell.h"
+#import "sideNormalTableViewCell.h"
 
 @interface RESideMenu : NSObject <UITableViewDataSource, UITableViewDelegate>
 

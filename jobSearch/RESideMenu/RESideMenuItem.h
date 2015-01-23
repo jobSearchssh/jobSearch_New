@@ -26,11 +26,32 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+static int USRCELL = 1;
+static int NORMALCELL = 2;
+static int LOGINCELL = 3;
+static int DEFAULTCELL = 4;
+
+static int ACTION_NONFLAG = 0;
+static int ACTION_REGISTERFLAG = 1;
+static int ACTION_LOGINFLAG = 2;
+
 @class RESideMenu;
 
-@interface RESideMenuItem : NSObject
+@interface RESideMenuItem : NSObject{
+    int cellflag;
+    int tapFlag;
+    BOOL isClick;
+}
+
+-(void)setTapFlag:(int)getFlag;
+-(int)getTapFlag;
+-(void)setCellFlag:(int)getFlag;
+-(int)getCellFlag;
+-(void)setIsClick:(BOOL)click;
+-(BOOL)getIsClick;
 
 @property (copy,nonatomic) NSString *title;
+@property (strong,nonatomic) NSString *subtitle;
 @property (strong,nonatomic) UIImage *image;
 @property (strong,nonatomic) UIImage *highlightedImage;
 @property (assign,nonatomic) NSInteger tag;
@@ -38,7 +59,8 @@
 
 @property (strong, readwrite, nonatomic) NSArray *subItems;
 
-- (id)initWithTitle:(NSString *)title action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
-- (id)initWithTitle:(NSString *)title image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
-
+- (id)initWithTitle:(NSString *)title setFlag:(int)getFlag action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
+- (id)initWithTitle:(NSString *)title setFlag:(int)getFlag setSubtitle:(NSString *)subtitle action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
+- (id)initWithTitle:(NSString *)title setFlag:(int)getFlag image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
+- (id)initWithTitle:(NSString *)title setFlag:(int)getFlag setSubtitle:(NSString *)subtitle image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action;
 @end

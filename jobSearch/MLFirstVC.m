@@ -14,8 +14,9 @@
 #import "jobDetailVC.h"
 #import "MLMessageVC.h"
 #import "MLLoginVC.h"
+#import "MLMatchVC.h"
 
-@interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate>
+@interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate>
 {
     NSInteger cellNum;
     NiftySearchView *searchView;
@@ -23,6 +24,9 @@
     
     BOOL mapDisplaying;
 }
+
+@property (weak, nonatomic) IBOutlet UITabBar *tabbar;
+
 @end
 
 @implementation MLFirstVC
@@ -47,16 +51,82 @@ static  MLFirstVC *thisVC=nil;
     searchView.alpha=0.0f;
     self.navigationController.navigationBar.translucent=NO;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"] style:UIBarButtonItemStylePlain target:self action:@selector(search)];
+    self.navigationItem.rightBarButtonItem.tintColor=[UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem.tintColor=[UIColor whiteColor];
+    
+    self.title=@"附近的工作";
+    //设置导航栏标题颜色及返回按钮颜色
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
+    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
     
     [self tableViewInit];
     
     mapDisplaying=NO;
+    
+    [self initTabbar];
 }
 
-- (IBAction)showMap:(id)sender {
+- (void)viewWillLayoutSubviews{
+    
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:54.0/255.0 green:59.0/255.0 blue:81.0/255.0 alpha:1.0]];
+    [self.tabbar setSelectedImageTintColor: [UIColor whiteColor]];
+    
+}
+
+- (void)initTabbar{
+    [[self.tabbar.items objectAtIndex:0] setFinishedSelectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [[self.tabbar.items objectAtIndex:0] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                        [UIColor whiteColor], UITextAttributeTextColor,
+                                        nil] forState:UIControlStateNormal];
+    
+    
+    [[self.tabbar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"catagory"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"catagory"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [[self.tabbar.items objectAtIndex:1] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                 [UIColor whiteColor], UITextAttributeTextColor,
+                                                                 nil] forState:UIControlStateNormal];
+    [[self.tabbar.items objectAtIndex:2] setFinishedSelectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [[self.tabbar.items objectAtIndex:2] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                 [UIColor whiteColor], UITextAttributeTextColor,
+                                                                 nil] forState:UIControlStateNormal];
+    [[self.tabbar.items objectAtIndex:3] setFinishedSelectedImage:[[UIImage imageNamed:@"target"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"target"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [[self.tabbar.items objectAtIndex:3] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                 [UIColor whiteColor], UITextAttributeTextColor,
+                                                                 nil] forState:UIControlStateNormal];
+    [[self.tabbar.items objectAtIndex:4] setFinishedSelectedImage:[[UIImage imageNamed:@"calendar"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"calendar"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [[self.tabbar.items objectAtIndex:4] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                 [UIColor whiteColor], UITextAttributeTextColor,
+                                                                 nil] forState:UIControlStateNormal];
+    self.tabbar.delegate=self;
+}
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
+    if (item.tag==0) {
+        [self showMap];
+    }else if (item.tag==1){
+        [self sort];
+    }else if (item.tag==2){
+        [self showMessage];
+    }else if (item.tag==3){
+        [self filter];
+    }else if (item.tag==4){
+        [self showMatchInfo];
+    }
+}
+
+- (void)showMatchInfo{
+    MLMatchVC *matchVC=[[MLMatchVC alloc]init];
+    matchVC.title=@"精灵匹配";
+    [self.navigationController pushViewController:matchVC animated:YES];
+}
+
+- (void)showMap{
     if (!mapDisplaying) {
         if (!mapView) {
-            mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-108)];
+            mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-113)];
             mapView.alpha=0.0f;
             [self.view addSubview:mapView];
         }
@@ -71,29 +141,29 @@ static  MLFirstVC *thisVC=nil;
         mapDisplaying=NO;
     }
 }
-- (IBAction)showMessage:(id)sender {
-//    MLMessageVC *messageVC=[[MLMessageVC alloc]init];
-//    messageVC.title=@"消息";
-//    [self.navigationController pushViewController:messageVC animated:YES];
+- (void)showMessage{
+    MLMessageVC *messageVC=[[MLMessageVC alloc]init];
+    messageVC.title=@"消息";
+    [self.navigationController pushViewController:messageVC animated:YES];
     
-    MLLoginVC *vc=[[MLLoginVC alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
+    //MLLoginVC *vc=[[MLLoginVC alloc]init];
+    //[self.navigationController pushViewController:vc animated:YES];
 }
 
-- (IBAction)filter:(id)sender {
+- (void)filter{
     MLFilterVC *filterVC=[[MLFilterVC alloc]init];
     [self.navigationController pushViewController:filterVC animated:YES];
 }
 
 //*********************ActionSheet********************//
-- (IBAction)sort:(id)sender {
+- (void)sort{
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:@"请选择排序类型"
                                   delegate:self
                                   cancelButtonTitle:@"取消"
                                   destructiveButtonTitle:nil
                                   otherButtonTitles:@"智能排序", @"距离最近", @"最新发布",nil];
-    //actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+
     [actionSheet showInView:self.view];
 }
 

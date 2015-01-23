@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MLFirstVC">
             <connections>
+                <outlet property="tabbar" destination="hq5-HG-YjK" id="5Tz-gx-d5c"/>
                 <outlet property="tableView" destination="4Zw-aG-ERW" id="0Bl-e8-1Jh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -16,104 +17,85 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4Zw-aG-ERW">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </tableView>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z2q-Dx-m4B">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <tabBar contentMode="scaleToFill" backgroundImage="tabbarBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="hq5-HG-YjK">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="cOr-gw-1Vd"/>
+                        <constraint firstAttribute="height" constant="49" id="5Ef-EI-lDa"/>
                     </constraints>
                     <items>
-                        <barButtonItem image="shaixuan.png" id="PUx-7Z-eLN">
-                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="showMap:" destination="-1" id="gDf-1o-cKc"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="dNA-bk-uM5"/>
-                        <barButtonItem image="shaixuan.png" id="t4c-Ez-gk2">
-                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="sort:" destination="-1" id="MJk-9t-dfv"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="rU8-om-pnc"/>
-                        <barButtonItem image="shaixuan.png" id="PAW-vY-11a">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <connections>
-                                <action selector="showMessage:" destination="-1" id="QU8-S0-tFE"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="oON-Pa-QGY"/>
-                        <barButtonItem image="shaixuan.png" id="Lz8-2z-xrm">
-                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="filter:" destination="-1" id="Htp-fA-G3a"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="T6A-zz-Rhu"/>
-                        <barButtonItem image="shaixuan.png" id="vg1-Zy-ri5">
-                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        </barButtonItem>
+                        <tabBarItem title="地图" image="location.png" selectedImage="location.png" id="i4c-Uu-9PM"/>
+                        <tabBarItem tag="1" title="分类" image="catagory.png" selectedImage="catagory.png" id="qDR-4l-c4X"/>
+                        <tabBarItem tag="2" title="消息" image="letter.png" selectedImage="letter.png" id="IDM-zW-qqE"/>
+                        <tabBarItem tag="3" title="筛选" image="target.png" selectedImage="target.png" id="yGw-lO-0HX"/>
+                        <tabBarItem tag="4" title="精灵匹配" image="calendar.png" selectedImage="calendar.png" id="750-FT-GBd"/>
                     </items>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <variation key="default">
                         <mask key="constraints">
-                            <exclude reference="cOr-gw-1Vd"/>
+                            <exclude reference="5Ef-EI-lDa"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
                         <mask key="constraints">
-                            <include reference="cOr-gw-1Vd"/>
+                            <include reference="5Ef-EI-lDa"/>
                         </mask>
                     </variation>
-                </toolbar>
+                </tabBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4Zw-aG-ERW">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="Z2q-Dx-m4B" secondAttribute="bottom" id="00j-Sy-A1N"/>
-                <constraint firstAttribute="trailing" secondItem="4Zw-aG-ERW" secondAttribute="trailing" id="LNQ-Wh-pjq"/>
-                <constraint firstItem="Z2q-Dx-m4B" firstAttribute="top" secondItem="4Zw-aG-ERW" secondAttribute="bottom" id="TfJ-eX-6zk"/>
-                <constraint firstAttribute="trailing" secondItem="Z2q-Dx-m4B" secondAttribute="trailing" id="dBU-MO-yOM"/>
-                <constraint firstItem="4Zw-aG-ERW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dSr-eW-7tM"/>
-                <constraint firstItem="4Zw-aG-ERW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="uBE-ZF-nmb"/>
-                <constraint firstItem="Z2q-Dx-m4B" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vci-V0-PjR"/>
+                <constraint firstAttribute="trailing" secondItem="hq5-HG-YjK" secondAttribute="trailing" id="0zu-XN-f1d"/>
+                <constraint firstAttribute="trailing" secondItem="4Zw-aG-ERW" secondAttribute="trailing" id="1tN-nS-kJq"/>
+                <constraint firstItem="hq5-HG-YjK" firstAttribute="top" secondItem="4Zw-aG-ERW" secondAttribute="bottom" id="7iA-v5-HAr"/>
+                <constraint firstItem="4Zw-aG-ERW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="CAZ-p0-XRm"/>
+                <constraint firstAttribute="bottom" secondItem="hq5-HG-YjK" secondAttribute="bottom" id="TAO-ty-ky8"/>
+                <constraint firstItem="hq5-HG-YjK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YjO-MK-dxs"/>
+                <constraint firstItem="4Zw-aG-ERW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="i5a-ju-B0P"/>
             </constraints>
             <variation key="default">
                 <mask key="subviews">
+                    <exclude reference="hq5-HG-YjK"/>
                     <exclude reference="4Zw-aG-ERW"/>
-                    <exclude reference="Z2q-Dx-m4B"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="00j-Sy-A1N"/>
-                    <exclude reference="TfJ-eX-6zk"/>
-                    <exclude reference="dBU-MO-yOM"/>
-                    <exclude reference="vci-V0-PjR"/>
-                    <exclude reference="LNQ-Wh-pjq"/>
-                    <exclude reference="dSr-eW-7tM"/>
-                    <exclude reference="uBE-ZF-nmb"/>
+                    <exclude reference="1tN-nS-kJq"/>
+                    <exclude reference="CAZ-p0-XRm"/>
+                    <exclude reference="i5a-ju-B0P"/>
+                    <exclude reference="0zu-XN-f1d"/>
+                    <exclude reference="7iA-v5-HAr"/>
+                    <exclude reference="TAO-ty-ky8"/>
+                    <exclude reference="YjO-MK-dxs"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
+                    <include reference="hq5-HG-YjK"/>
                     <include reference="4Zw-aG-ERW"/>
-                    <include reference="Z2q-Dx-m4B"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="00j-Sy-A1N"/>
-                    <include reference="TfJ-eX-6zk"/>
-                    <include reference="dBU-MO-yOM"/>
-                    <include reference="vci-V0-PjR"/>
-                    <include reference="LNQ-Wh-pjq"/>
-                    <include reference="dSr-eW-7tM"/>
-                    <include reference="uBE-ZF-nmb"/>
+                    <include reference="1tN-nS-kJq"/>
+                    <include reference="CAZ-p0-XRm"/>
+                    <include reference="i5a-ju-B0P"/>
+                    <include reference="0zu-XN-f1d"/>
+                    <include reference="7iA-v5-HAr"/>
+                    <include reference="TAO-ty-ky8"/>
+                    <include reference="YjO-MK-dxs"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="-271" y="324"/>
         </view>
     </objects>
     <resources>
-        <image name="shaixuan.png" width="30" height="30"/>
+        <image name="calendar.png" width="30" height="30"/>
+        <image name="catagory.png" width="30" height="30"/>
+        <image name="letter.png" width="30" height="30"/>
+        <image name="location.png" width="30" height="30"/>
+        <image name="tabbarBackground.png" width="720" height="106"/>
+        <image name="target.png" width="30" height="30"/>
     </resources>
 </document>

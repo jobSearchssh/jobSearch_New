@@ -8,7 +8,7 @@
 
 #import "MLMessageVC.h"
 #import "MLCell2.h"
-#import "jobDetailVC.h"
+#import "jobRecmendVC.h"
 
 
 @interface MLMessageVC ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate>
@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self tableViewInit];
 }
 
 //*********************tableView********************//
@@ -39,9 +39,9 @@
     
     BOOL nibsRegistered = NO;
     
-    static NSString *Cellidentifier=@"MLCell1";
+    static NSString *Cellidentifier=@"MLCell2";
     if (!nibsRegistered) {
-        UINib *nib = [UINib nibWithNibName:@"MLCell1" bundle:nil];
+        UINib *nib = [UINib nibWithNibName:@"MLCell2" bundle:nil];
         [tableView registerNib:nib forCellReuseIdentifier:Cellidentifier];
         nibsRegistered = YES;
     }
@@ -88,7 +88,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    jobDetailVC *detailVC=[[jobDetailVC alloc]init];
+    jobRecmendVC *detailVC=[[jobRecmendVC alloc]init];
     detailVC.hidesBottomBarWhenPushed=YES;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"";

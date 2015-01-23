@@ -27,17 +27,46 @@
 
 @implementation RESideMenuItem
 
-- (id)initWithTitle:(NSString *)title action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action
-{
-    return [self initWithTitle:title image:nil highlightedImage:nil action:action];
+
+-(void)setTapFlag:(int)getFlag{
+    tapFlag = getFlag;
+}
+-(int)getTapFlag{
+    return tapFlag;
+}
+-(void)setCellFlag:(int)getFlag{
+    cellflag = getFlag;
+}
+-(int)getCellFlag{
+    return cellflag;
+}
+-(void)setIsClick:(BOOL)click{
+    isClick = click;
+}
+-(BOOL)getIsClick{
+    return isClick;
 }
 
-- (id)initWithTitle:(NSString *)title image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action
+- (id)initWithTitle:(NSString *)title setFlag:(int)getFlag action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action
 {
+    return [self initWithTitle:title setFlag:getFlag setSubtitle:nil image:nil highlightedImage:nil action:action];
+}
+
+- (id)initWithTitle:(NSString *)title setFlag:(int)getFlag setSubtitle:(NSString *)subtitle action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action{
+    return [self initWithTitle:title setFlag:getFlag setSubtitle:subtitle image:nil highlightedImage:nil action:action];
+}
+
+- (id)initWithTitle:(NSString *)title setFlag:(int)getFlag image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action{
+    return [self initWithTitle:title setFlag:getFlag setSubtitle:nil image:image highlightedImage:highlightedImage action:action];
+}
+
+- (id)initWithTitle:(NSString *)title setFlag:(int)getFlag setSubtitle:(NSString *)subtitle image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage action:(void(^)(RESideMenu *menu, RESideMenuItem *item))action{
     self = [super init];
     if (!self)
         return nil;
-    
+    cellflag = getFlag;
+    isClick = false;
+    self.subtitle = subtitle;
     self.title = title;
     self.action = action;
     self.image = image;

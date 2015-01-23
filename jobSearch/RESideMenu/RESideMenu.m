@@ -40,6 +40,7 @@ const int INTERSTITIAL_STEPS = 99;
 @property (strong, readonly, nonatomic) UIImageView *screenshotView;
 @property (strong, readonly, nonatomic) UITableView *tableView;
 
+// Array containing menu (which are array of items)
 @property (strong, readwrite, nonatomic) NSMutableArray *menuStack;
 @property (strong, readwrite, nonatomic) RESideMenuItem *backMenu;
 
@@ -57,7 +58,7 @@ static  RESideMenu *thisMenu=nil;
     self.verticalOffset = 100;
     self.horizontalOffset = 50;
     self.itemHeight = 50;
-    self.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:21];
+    self.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
     self.textColor = [UIColor whiteColor];
     self.highlightedTextColor = [UIColor lightGrayColor];
     self.hideStatusBarArea = YES;
@@ -75,7 +76,7 @@ static  RESideMenu *thisMenu=nil;
     
     _items = items;
     [_menuStack addObject:items];
-    _backMenu = [[RESideMenuItem alloc] initWithTitle:@"<" action:nil];
+    _backMenu = [[RESideMenuItem alloc] initWithTitle:@"<" setFlag:DEFAULTCELL action:nil];
     
     return self;
 }
@@ -192,7 +193,7 @@ static  RESideMenu *thisMenu=nil;
     _tableView.backgroundView = nil;
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, window.frame.size.width, self.verticalOffset)];
+    _tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, window.frame.size.width, self.verticalOffset/2)];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.alpha = 0;
     [window addSubview:_tableView];
@@ -336,34 +337,86 @@ static  RESideMenu *thisMenu=nil;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == 0) {
+        return 100;
+    }
+    
     return self.itemHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellIdentifier = @"RESideMenuCell";
     
-    RESideMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil) {
-        cell = [[RESideMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        cell.backgroundColor = [UIColor clearColor];
-        cell.selectedBackgroundView = [[UIView alloc] init];
-        cell.textLabel.font = self.font;
-        cell.textLabel.textColor = self.textColor;
-        cell.textLabel.highlightedTextColor = self.highlightedTextColor;
-        [cell initBadge];
+    BOOL nibsRegistered = NO;
+    
+    NSString *normalcellIdentifier = @"sideNormalCell";
+    NSString *loginCellIdentifier = @"loginCell";
+    NSString *usrCellIdentifier = @"usrCell";
+    
+    if (!nibsRegistered) {
+        UINib *niblogin = [UINib nibWithNibName:@"loginTableViewCell" bundle:nil];
+        [tableView registerNib:niblogin forCellReuseIdentifier:loginCellIdentifier];
+        UINib *nibusr = [UINib nibWithNibName:@"usrTableViewCell" bundle:nil];
+        [tableView registerNib:nibusr forCellReuseIdentifier:usrCellIdentifier];
+        UINib *nibnormal = [UINib nibWithNibName:@"sideNormalTableViewCell" bundle:nil];
+        [tableView registerNib:nibnormal forCellReuseIdentifier:normalcellIdentifier];
+        nibsRegistered = YES;
     }
     
+
     
     RESideMenuItem *item = [_items objectAtIndex:indexPath.row];
-    cell.textLabel.text = item.title;
-    cell.imageView.image = item.image;
-    cell.imageView.highlightedImage = item.highlightedImage;
-    cell.horizontalOffset = self.horizontalOffset;
+    usrTableViewCell *usrcell = nil;
+    sideNormalTableViewCell *normalcell = nil;
+    loginTableViewCell *logincell = nil;
     
-    cell.badge.image=[UIImage imageNamed:@"find1"];
-
-    return cell;
+    
+    if ([item getCellFlag] == USRCELL) {
+        
+        usrcell = [tableView dequeueReusableCellWithIdentifier:usrCellIdentifier];
+        if (usrcell == nil) {
+            usrcell = [[usrTableViewCell alloc]init];
+            usrcell.backgroundColor = [UIColor clearColor];
+            usrcell.selectedBackgroundView = [[UIView alloc] init];
+            usrcell.usrActionOutlet.font = self.font;
+            usrcell.usrActionOutlet.textColor = self.textColor;
+            usrcell.usrNameOutlet.font = self.font;
+            usrcell.usrNameOutlet.textColor = self.textColor;
+        }
+        [usrcell setUsrAvatar:item.image];
+        [usrcell setusrName:item.title];
+        [usrcell setusrAction:item.subtitle];
+        usrcell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return usrcell;
+    }
+    
+    if ([item getCellFlag] == NORMALCELL || [item getCellFlag] == DEFAULTCELL) {
+        
+        normalcell = [tableView dequeueReusableCellWithIdentifier:normalcellIdentifier];
+        if (normalcell == nil) {
+            normalcell = [[sideNormalTableViewCell alloc]init];
+        }
+        
+        [normalcell setImage:item.image];
+        [normalcell setAction:item.title];
+        normalcell.item = item;
+        [normalcell notifyDatasetChange];
+        normalcell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return normalcell;
+    }
+    
+    if ([item getCellFlag] == LOGINCELL) {
+        
+        logincell = [tableView dequeueReusableCellWithIdentifier:loginCellIdentifier];
+        if (logincell == nil) {
+            logincell = [[loginTableViewCell alloc] init];
+        }
+        logincell.item = item;
+        logincell.menu = self;
+        logincell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return logincell;
+    }
+    return nil;
 }
 
 #pragma mark - Table view delegate
@@ -372,6 +425,14 @@ static  RESideMenu *thisMenu=nil;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     RESideMenuItem *item = [_items objectAtIndex:indexPath.row];
+    
+    if (indexPath.row >0 && indexPath.row <8) {
+        for (RESideMenuItem *getiItema in _items) {
+            [getiItema setIsClick:false];
+        }
+        [item setIsClick:true];
+        [tableView reloadData];
+    }
     
     // Case back on subMenu
     if(_isInSubMenu &&
