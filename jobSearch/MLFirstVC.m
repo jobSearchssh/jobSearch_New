@@ -316,7 +316,7 @@ static  MLFirstVC *thisVC=nil;
     detailVC.hidesBottomBarWhenPushed=YES;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"";
-    backItem.tintColor=[UIColor whiteColor];
+    backItem.tintColor=[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:50.0/255.0 alpha:1.0];
     self.navigationItem.backBarButtonItem = backItem;
     
     [self.navigationController pushViewController:detailVC animated:YES];

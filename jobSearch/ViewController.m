@@ -13,6 +13,8 @@
 #import "MLSecondVC.h"
 #import "DailyMatchVC.h"
 #import "MLProfileVC.h"
+#import "MLLoginVC.h"
+
 @interface ViewController ()
 
 @end
@@ -37,8 +39,13 @@
         
         RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:@"未登录" setFlag:USRCELL setSubtitle:@"游客"  image:[UIImage imageNamed:@"tourists"] highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
             
-            NSLog(@"Item %@", item);
-            [menu hide];
+            MLLoginVC *viewController = [MLLoginVC sharedInstance];
+            viewController.title = item.title;
+            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
+            navigationController.navigationBar.translucent = NO;
+            navigationController.tabBarController.tabBar.translucent = NO;
+            navigationController.toolbar.translucent = NO;
+            [menu setRootViewController:navigationController];
         }];
         
         RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"搜索" setFlag:NORMALCELL image:[UIImage imageNamed:@"search"] highlightedImage:[UIImage imageNamed:@"search"] action:^(RESideMenu *menu, RESideMenuItem *item) {
@@ -84,6 +91,7 @@
             navigationController.toolbar.translucent = NO;
             [menu setRootViewController:navigationController];
         }];
+        
         RESideMenuItem *feedbackItem = [[RESideMenuItem alloc] initWithTitle:@"发送反馈" setFlag:NORMALCELL image:[UIImage imageNamed:@"send"] highlightedImage:[UIImage imageNamed:@"send"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             [menu hide];
             NSLog(@"Item %@", item);
@@ -94,24 +102,24 @@
             [menu hide];
         }];
         
-        RESideMenuItem *logoutsItem = [[RESideMenuItem alloc] initWithTitle:@"退出" setFlag:NORMALCELL image:[UIImage imageNamed:@"logout"] highlightedImage:[UIImage imageNamed:@"logout"] action:^(RESideMenu *menu, RESideMenuItem *item) {
-            NSLog(@"Item %@", item);
-            [menu hide];
-        }];
+//        RESideMenuItem *logoutsItem = [[RESideMenuItem alloc] initWithTitle:@"退出" setFlag:NORMALCELL image:[UIImage imageNamed:@"logout"] highlightedImage:[UIImage imageNamed:@"logout"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+//            NSLog(@"Item %@", item);
+//            [menu hide];
+//        }];
         
-        RESideMenuItem *loginItem = [[RESideMenuItem alloc] initWithTitle:Nil setFlag:LOGINCELL action:^(RESideMenu *menu, RESideMenuItem *item) {
-            if ([item getTapFlag] == ACTION_LOGINFLAG) {
-                NSLog(@"点击登陆");
-            }
-            if ([item getTapFlag] == ACTION_REGISTERFLAG) {
-                NSLog(@"点击注册");
-            }
-            [item setTapFlag:ACTION_NONFLAG];
-            [menu hide];
-        }];
+//        RESideMenuItem *loginItem = [[RESideMenuItem alloc] initWithTitle:Nil setFlag:LOGINCELL action:^(RESideMenu *menu, RESideMenuItem *item) {
+//            if ([item getTapFlag] == ACTION_LOGINFLAG) {
+//                NSLog(@"点击登陆");
+//            }
+//            if ([item getTapFlag] == ACTION_REGISTERFLAG) {
+//                NSLog(@"点击注册");
+//            }
+//            [item setTapFlag:ACTION_NONFLAG];
+//            [menu hide];
+//        }];
 
         
-        _sideMenu=[RESideMenu initInstanceWithItems:@[usrItem,searchItem, savedItem, applicationItem, dailymatchItem,feedbackItem, aboutusItem,logoutsItem,loginItem]];
+        _sideMenu=[RESideMenu initInstanceWithItems:@[usrItem,searchItem, savedItem, applicationItem, dailymatchItem,feedbackItem, aboutusItem]];
         _sideMenu.verticalOffset = IS_WIDESCREEN ? 110 : 76;
         _sideMenu.hideStatusBarArea = [AppDelegate OSVersion] < 7;
     }

@@ -18,4 +18,5 @@
 
 
 + (MLFirstVC*)sharedInstance;
+
 @end

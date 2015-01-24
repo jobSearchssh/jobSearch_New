@@ -23,6 +23,11 @@
 - (void)done{
     [self popoverPresentationController];
 }
+- (IBAction)setApplicationDirection:(id)sender {
+    
+}
+- (IBAction)setApplicationType:(id)sender {
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -7,8 +7,9 @@
 //
 
 #import "MLLoginVC.h"
+#import "QCheckBox.h"
 
-@interface MLLoginVC (){
+@interface MLLoginVC ()<QCheckBoxDelegate>{
     UIButton *chooseLoginBtn;
     UIButton *chooseRegisterBtn;
 }
@@ -19,6 +20,15 @@
 @end
 
 @implementation MLLoginVC
+
+static  MLLoginVC *thisVC=nil;
+
++ (MLLoginVC*)sharedInstance{
+    if (thisVC==nil) {
+        thisVC=[[MLLoginVC alloc]init];
+    }
+    return thisVC;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,9 +50,42 @@
     
     self.loginView.frame=CGRectMake(0, 44, [[UIScreen mainScreen] bounds].size.width, 220);
     self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 44, [[UIScreen mainScreen] bounds].size.width, 330);
+    
+    //for check box
+    QCheckBox *_check1 = [[QCheckBox alloc] initWithDelegate:self];
+    _check1.tag=1;
+    _check1.frame = CGRectMake(25, 120, 25, 25);
+    [_check1 setTitle:nil forState:UIControlStateNormal];
+    [_check1 setTitleColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [_check1.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
+    [self.loginView addSubview:_check1];
+    [_check1 setChecked:YES];
+    
+    QCheckBox *_check2 = [[QCheckBox alloc] initWithDelegate:self];
+    _check2.tag=2;
+    _check2.frame = CGRectMake(25, 221, 25, 25);
+    [_check2 setTitle:nil forState:UIControlStateNormal];
+    [_check2 setTitleColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [_check2.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
+    [self.registerView addSubview:_check2];
+    [_check2 setChecked:YES];
+    
     [self.scrollView addSubview:self.loginView];
     [self.scrollView addSubview:self.registerView];
+    
+    
 }
+
+- (void)didSelectedCheckBox:(QCheckBox *)checkbox checked:(BOOL)checked {
+    
+    if (checkbox.tag==1) {
+        
+    }
+    else if (checkbox.tag==2) {
+        
+    }
+}
+
 
 - (void)chooseLogin{
     chooseLoginBtn.backgroundColor=[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];

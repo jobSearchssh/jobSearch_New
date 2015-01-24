@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ViewController.h"
 
-@interface MLLoginVC : UIViewController
+@interface MLLoginVC : ViewController
+
++ (MLLoginVC*)sharedInstance;
 
 @end

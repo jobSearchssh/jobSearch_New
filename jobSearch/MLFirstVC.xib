@@ -63,13 +63,13 @@
                     <exclude reference="4Zw-aG-ERW"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="1tN-nS-kJq"/>
-                    <exclude reference="CAZ-p0-XRm"/>
-                    <exclude reference="i5a-ju-B0P"/>
                     <exclude reference="0zu-XN-f1d"/>
                     <exclude reference="7iA-v5-HAr"/>
                     <exclude reference="TAO-ty-ky8"/>
                     <exclude reference="YjO-MK-dxs"/>
+                    <exclude reference="1tN-nS-kJq"/>
+                    <exclude reference="CAZ-p0-XRm"/>
+                    <exclude reference="i5a-ju-B0P"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -78,16 +78,16 @@
                     <include reference="4Zw-aG-ERW"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="1tN-nS-kJq"/>
-                    <include reference="CAZ-p0-XRm"/>
-                    <include reference="i5a-ju-B0P"/>
                     <include reference="0zu-XN-f1d"/>
                     <include reference="7iA-v5-HAr"/>
                     <include reference="TAO-ty-ky8"/>
                     <include reference="YjO-MK-dxs"/>
+                    <include reference="1tN-nS-kJq"/>
+                    <include reference="CAZ-p0-XRm"/>
+                    <include reference="i5a-ju-B0P"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-271" y="324"/>
+            <point key="canvasLocation" x="-351" y="280"/>
         </view>
     </objects>
     <resources>

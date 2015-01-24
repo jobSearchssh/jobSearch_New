@@ -15,8 +15,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cellBackground1.png" translatesAutoresizingMaskIntoConstraints="NO" id="F54-8s-OF2">
+                        <rect key="frame" x="220" y="1" width="100" height="100"/>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="餐厅服务员" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MgL-ti-zjk">
-                        <rect key="frame" x="93" y="9" width="171" height="21"/>
+                        <rect key="frame" x="93" y="10" width="171" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="171" id="0vY-Fw-FCa"/>
                             <constraint firstAttribute="height" constant="21" id="kuj-UA-yBR"/>
@@ -26,7 +29,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="辽宁省大连市高新园区万达广场B座1202" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hrs-Ic-SXT">
-                        <rect key="frame" x="93" y="30" width="211" height="36"/>
+                        <rect key="frame" x="93" y="31" width="211" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="Dj3-BH-ESG"/>
                         </constraints>
@@ -34,29 +37,29 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="test1.png" translatesAutoresizingMaskIntoConstraints="NO" id="630-VL-6Cw">
-                        <rect key="frame" x="8" y="13" width="69" height="69"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pepsi.png" translatesAutoresizingMaskIntoConstraints="NO" id="630-VL-6Cw">
+                        <rect key="frame" x="8" y="14" width="69" height="69"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="69" id="Ctg-8U-FAW"/>
                             <constraint firstAttribute="height" constant="69" id="Rds-f6-X5F"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_location.png" translatesAutoresizingMaskIntoConstraints="NO" id="96J-Pf-3qK">
-                        <rect key="frame" x="93" y="70" width="15" height="15"/>
+                        <rect key="frame" x="93" y="71" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="15" id="GAM-2a-uPh"/>
                             <constraint firstAttribute="height" constant="15" id="mnv-Yq-hHV"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_location.png" translatesAutoresizingMaskIntoConstraints="NO" id="vty-EU-R5W">
-                        <rect key="frame" x="234" y="70" width="15" height="15"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="just.png" translatesAutoresizingMaskIntoConstraints="NO" id="vty-EU-R5W">
+                        <rect key="frame" x="234" y="71" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="15" id="ALf-bF-ra9"/>
                             <constraint firstAttribute="height" constant="15" id="Ye9-hM-S4r"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2小时前" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9az-Fb-uXu">
-                        <rect key="frame" x="251" y="65" width="53" height="26"/>
+                        <rect key="frame" x="251" y="66" width="53" height="26"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="26" id="9iy-vx-J4f"/>
                             <constraint firstAttribute="width" constant="53" id="lJP-iI-a4X"/>
@@ -66,7 +69,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.5千米" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cme-ci-vsM">
-                        <rect key="frame" x="110" y="65" width="58" height="26"/>
+                        <rect key="frame" x="110" y="66" width="58" height="26"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="26" id="G2O-VA-IY2"/>
                             <constraint firstAttribute="width" constant="58" id="Yrg-4l-Dej"/>
@@ -76,7 +79,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工作待遇：80元/天" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mXa-5g-tAo">
-                        <rect key="frame" x="14" y="99" width="111" height="26"/>
+                        <rect key="frame" x="14" y="100" width="111" height="26"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="26" id="9D7-SG-1tb"/>
                             <constraint firstAttribute="width" constant="111" id="B7k-oz-Mxt"/>
@@ -91,7 +94,7 @@
                             <constraint firstAttribute="height" constant="40" id="Qnk-ae-aen"/>
                             <constraint firstAttribute="width" constant="40" id="XRc-c2-4kP"/>
                         </constraints>
-                        <state key="normal" image="accept.png">
+                        <state key="normal" image="agreeInvite.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
@@ -101,7 +104,7 @@
                             <constraint firstAttribute="height" constant="40" id="Ehp-PD-7BU"/>
                             <constraint firstAttribute="width" constant="40" id="mOl-vD-msY"/>
                         </constraints>
-                        <state key="normal" image="refuse.png">
+                        <state key="normal" image="ignoreInvite.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
@@ -126,7 +129,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工作时间：下午" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Dy-qS-gMm">
-                        <rect key="frame" x="195" y="99" width="111" height="26"/>
+                        <rect key="frame" x="195" y="100" width="111" height="26"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="111" id="2fb-0i-kbt"/>
                             <constraint firstAttribute="height" constant="26" id="kHd-JD-e3Z"/>
@@ -146,6 +149,13 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="percent.png" translatesAutoresizingMaskIntoConstraints="NO" id="rSQ-57-wAm">
+                        <rect key="frame" x="285" y="1" width="35" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="Lfh-vV-NyQ"/>
+                            <constraint firstAttribute="width" constant="35" id="tpX-dI-vIH"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
@@ -163,28 +173,33 @@
                     <constraint firstAttribute="bottomMargin" secondItem="iMw-pg-gA3" secondAttribute="bottom" constant="-7" id="FKO-a7-IW7"/>
                     <constraint firstItem="MgL-ti-zjk" firstAttribute="leading" secondItem="630-VL-6Cw" secondAttribute="trailing" constant="16" id="Fur-Tw-ZWl"/>
                     <constraint firstItem="vty-EU-R5W" firstAttribute="top" secondItem="hrs-Ic-SXT" secondAttribute="bottom" constant="4" id="KjO-lf-S9t"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="rSQ-57-wAm" secondAttribute="trailing" constant="-8" id="UPW-Wa-R2P"/>
                     <constraint firstItem="2Dy-qS-gMm" firstAttribute="top" secondItem="9az-Fb-uXu" secondAttribute="bottom" constant="8" id="VxK-bJ-v13"/>
                     <constraint firstItem="iMw-pg-gA3" firstAttribute="top" secondItem="hlV-iQ-Z59" secondAttribute="bottom" constant="2" id="Yah-aT-ddR"/>
-                    <constraint firstItem="MgL-ti-zjk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="bFp-8Y-Dlo"/>
+                    <constraint firstItem="MgL-ti-zjk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="bFp-8Y-Dlo"/>
                     <constraint firstItem="96J-Pf-3qK" firstAttribute="leading" secondItem="630-VL-6Cw" secondAttribute="trailing" constant="16" id="c1k-WH-nk5"/>
                     <constraint firstItem="c0D-zx-1OP" firstAttribute="top" secondItem="Y1e-AP-9V8" secondAttribute="bottom" constant="2" id="i91-bG-CH4"/>
                     <constraint firstAttribute="bottomMargin" secondItem="c0D-zx-1OP" secondAttribute="bottom" constant="-7" id="iyn-B5-ogj"/>
                     <constraint firstItem="mXa-5g-tAo" firstAttribute="top" secondItem="Cme-ci-vsM" secondAttribute="bottom" constant="8" id="j5m-Fw-719"/>
-                    <constraint firstItem="630-VL-6Cw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="lK9-kF-dx6"/>
+                    <constraint firstItem="630-VL-6Cw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="lK9-kF-dx6"/>
                     <constraint firstItem="96J-Pf-3qK" firstAttribute="top" secondItem="hrs-Ic-SXT" secondAttribute="bottom" constant="4" id="ok3-ey-18S"/>
+                    <constraint firstItem="rSQ-57-wAm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-7" id="p83-7a-l9C"/>
                     <constraint firstItem="c0D-zx-1OP" firstAttribute="leading" secondItem="iMw-pg-gA3" secondAttribute="trailing" constant="37" id="saA-uF-vhA"/>
                     <constraint firstItem="Cme-ci-vsM" firstAttribute="top" secondItem="MgL-ti-zjk" secondAttribute="bottom" constant="35" id="urz-qm-o5T"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Y1e-AP-9V8" secondAttribute="trailing" constant="8" id="wIs-QN-tdQ"/>
                     <constraint firstItem="hrs-Ic-SXT" firstAttribute="leading" secondItem="630-VL-6Cw" secondAttribute="trailing" constant="16" id="zyq-Cf-1UQ"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="270" y="283"/>
+            <point key="canvasLocation" x="270" y="281"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="accept.png" width="40" height="40"/>
+        <image name="Pepsi.png" width="140" height="140"/>
+        <image name="agreeInvite.png" width="40" height="40"/>
+        <image name="cellBackground1.png" width="100" height="100"/>
         <image name="icon_location.png" width="15" height="15"/>
-        <image name="refuse.png" width="40" height="40"/>
-        <image name="test1.png" width="90" height="90"/>
+        <image name="ignoreInvite.png" width="40" height="40"/>
+        <image name="just.png" width="30" height="30"/>
+        <image name="percent.png" width="40" height="40"/>
     </resources>
 </document>

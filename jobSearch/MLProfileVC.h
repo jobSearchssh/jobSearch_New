@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "KVNMaskedPageControl.h"
+#import "ViewController.h"
 
-@interface MLProfileVC : UIViewController<KVNMaskedPageControlDataSource,UIScrollViewDelegate>
+@interface MLProfileVC : ViewController<KVNMaskedPageControlDataSource,UIScrollViewDelegate>
 
 @property (weak, nonatomic) KVNMaskedPageControl *pageControl;
 @property (nonatomic)NSInteger pages;
