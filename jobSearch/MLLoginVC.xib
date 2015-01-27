@@ -7,9 +7,19 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MLLoginVC">
             <connections>
+                <outlet property="errorAlertLabel" destination="JpK-Ay-gbz" id="jnb-zE-GNq"/>
+                <outlet property="loginButton" destination="aqj-dV-utd" id="1kt-ZZ-UO9"/>
                 <outlet property="loginView" destination="qvT-2l-fLE" id="4Xp-lD-90b"/>
+                <outlet property="phoneNumber" destination="mgy-eh-N2T" id="Yku-g5-ubz"/>
+                <outlet property="registerButton" destination="MGm-TW-sBP" id="2xH-B1-P08"/>
                 <outlet property="registerView" destination="AlJ-Tf-CRZ" id="Swc-Ig-vgC"/>
                 <outlet property="scrollView" destination="hKW-7x-SZ6" id="vCS-f0-T0t"/>
+                <outlet property="securityCode" destination="ElG-1c-kj9" id="q4r-RM-2og"/>
+                <outlet property="sendMsgButton" destination="qP9-pL-jh0" id="uEx-yN-WfZ"/>
+                <outlet property="userAccount" destination="j3Q-Eg-DV3" id="Xpc-vW-R9T"/>
+                <outlet property="userPassword" destination="QpQ-Fy-yaW" id="D7v-9J-MI9"/>
+                <outlet property="userPassword1" destination="Ow7-xk-oaD" id="tjl-OQ-xP7"/>
+                <outlet property="userPassword2" destination="OUY-V3-7FO" id="nee-2T-YwI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -147,6 +157,9 @@
                             <include reference="Cry-gl-SgF"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="passwordEditingChanged:" destination="-1" eventType="editingChanged" id="dDv-22-27A"/>
+                    </connections>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名/手机号" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="j3Q-Eg-DV3" userLabel="账号文本框">
                     <rect key="frame" x="123" y="125" width="150" height="29"/>
@@ -165,6 +178,9 @@
                             <include reference="B4a-ob-NQB"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="accountEditingChanged:" destination="-1" eventType="editingChanged" id="dgV-tD-Mm5"/>
+                    </connections>
                 </textField>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userPassword.png" translatesAutoresizingMaskIntoConstraints="NO" id="Zxe-bk-sM2">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -206,6 +222,9 @@
                             <include reference="ZAA-NS-tJm"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="touchLoginBtn:" destination="-1" eventType="touchUpInside" id="F5q-kf-kQZ"/>
+                    </connections>
                 </button>
             </subviews>
             <constraints>
@@ -391,6 +410,9 @@
                             <include reference="Rn0-kV-aHT"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="phoneEditingChanged:" destination="-1" eventType="editingChanged" id="tk7-MP-oqX"/>
+                    </connections>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ElG-1c-kj9" userLabel="账号文本框">
                     <rect key="frame" x="123" y="125" width="150" height="29"/>
@@ -409,6 +431,9 @@
                             <include reference="eab-Vc-tZq"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="securitycodeEditingChanged:" destination="-1" eventType="editingChanged" id="GKG-xd-7Zo"/>
+                    </connections>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGm-TW-sBP">
                     <rect key="frame" x="35" y="278" width="250" height="40"/>
@@ -431,6 +456,9 @@
                             <include reference="4d4-4l-fNY"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="touchRegister:" destination="-1" eventType="touchUpInside" id="OEj-Ow-GWF"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qP9-pL-jh0">
                     <rect key="frame" x="35" y="278" width="250" height="40"/>
@@ -456,6 +484,9 @@
                             <include reference="yAM-kU-T1B"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="sendMassage:" destination="-1" eventType="touchUpInside" id="1Zw-5C-NXk"/>
+                    </connections>
                 </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ow7-xk-oaD">
                     <rect key="frame" x="123" y="160" width="150" height="30"/>
@@ -474,6 +505,9 @@
                             <include reference="DXr-JA-Iqg"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="password1EditingChanged:" destination="-1" eventType="editingChanged" id="YtH-Of-1sD"/>
+                    </connections>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请再次输入密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="OUY-V3-7FO">
                     <rect key="frame" x="123" y="160" width="150" height="30"/>
@@ -492,6 +526,10 @@
                             <include reference="eeJ-dJ-PDc"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="password2EditingChanged:" destination="-1" eventType="editingChanged" id="Igh-6N-gP6"/>
+                        <action selector="password2EditingEnd:" destination="-1" eventType="editingDidEnd" id="3EG-Xp-Fb4"/>
+                    </connections>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我已阅读并同意" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="06v-w6-hB2">
                     <rect key="frame" x="44" y="164" width="36" height="21"/>
@@ -538,45 +576,79 @@
                         </mask>
                     </variation>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="两次输入密码不一致" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JpK-Ay-gbz">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="14" id="Hpf-fg-x1P"/>
+                        <constraint firstAttribute="width" constant="280" id="Oe7-Hn-pmI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Hpf-fg-x1P"/>
+                            <exclude reference="Oe7-Hn-pmI"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="Hpf-fg-x1P"/>
+                            <include reference="Oe7-Hn-pmI"/>
+                        </mask>
+                    </variation>
+                </label>
             </subviews>
             <constraints>
                 <constraint firstItem="ElG-1c-kj9" firstAttribute="top" secondItem="rTr-2M-HNr" secondAttribute="bottom" constant="13" id="0sT-kr-jUy"/>
                 <constraint firstItem="06v-w6-hB2" firstAttribute="leading" secondItem="AlJ-Tf-CRZ" secondAttribute="leading" constant="68" id="2l0-BA-5TA">
                     <variation key="heightClass=regular-widthClass=compact" constant="45"/>
                 </constraint>
+                <constraint firstAttribute="centerX" secondItem="JpK-Ay-gbz" secondAttribute="centerX" id="3Bq-8O-fuS"/>
                 <constraint firstItem="641-gr-ieO" firstAttribute="top" secondItem="rTr-2M-HNr" secondAttribute="bottom" constant="8" id="3sL-5y-bbr"/>
                 <constraint firstAttribute="trailing" secondItem="mgy-eh-N2T" secondAttribute="trailing" constant="28" id="4Qz-92-mhL"/>
                 <constraint firstItem="fqG-2p-EbW" firstAttribute="leading" secondItem="AlJ-Tf-CRZ" secondAttribute="leading" constant="155" id="5Mk-dS-lYp">
-                    <variation key="heightClass=regular-widthClass=compact" constant="132"/>
+                    <variation key="heightClass=regular-widthClass=compact" constant="131"/>
                 </constraint>
                 <constraint firstAttribute="trailing" secondItem="qP9-pL-jh0" secondAttribute="trailing" constant="20" id="767-Cs-xcu"/>
                 <constraint firstAttribute="trailing" secondItem="Ow7-xk-oaD" secondAttribute="trailing" constant="28" id="8cS-WG-7gx"/>
                 <constraint firstItem="641-gr-ieO" firstAttribute="leading" secondItem="AlJ-Tf-CRZ" secondAttribute="leading" constant="20" id="AJz-OD-fxw"/>
                 <constraint firstAttribute="trailing" secondItem="EXA-XP-wOx" secondAttribute="trailing" constant="20" id="C7Q-Qs-hs4"/>
-                <constraint firstItem="mgy-eh-N2T" firstAttribute="top" secondItem="AlJ-Tf-CRZ" secondAttribute="top" constant="37" id="FYv-CT-uFD"/>
+                <constraint firstItem="mgy-eh-N2T" firstAttribute="top" secondItem="AlJ-Tf-CRZ" secondAttribute="top" constant="37" id="FYv-CT-uFD">
+                    <variation key="heightClass=regular-widthClass=compact" constant="13"/>
+                </constraint>
                 <constraint firstItem="qP9-pL-jh0" firstAttribute="top" secondItem="rTr-2M-HNr" secondAttribute="bottom" constant="8" id="Lh8-7w-E8l"/>
                 <constraint firstAttribute="trailing" secondItem="m42-Ah-Cti" secondAttribute="trailing" constant="20" id="MuH-OG-ciw"/>
                 <constraint firstItem="mgy-eh-N2T" firstAttribute="leading" secondItem="AlJ-Tf-CRZ" secondAttribute="leading" constant="30" id="OFW-Cn-jh9"/>
-                <constraint firstItem="06v-w6-hB2" firstAttribute="top" secondItem="EXA-XP-wOx" secondAttribute="bottom" constant="8" id="Qqa-tZ-mmu"/>
+                <constraint firstItem="06v-w6-hB2" firstAttribute="top" secondItem="EXA-XP-wOx" secondAttribute="bottom" constant="8" id="Qqa-tZ-mmu">
+                    <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                </constraint>
                 <constraint firstItem="EXA-XP-wOx" firstAttribute="leading" secondItem="AlJ-Tf-CRZ" secondAttribute="leading" constant="20" id="R2z-r5-pbR"/>
                 <constraint firstItem="rTr-2M-HNr" firstAttribute="leading" secondItem="AlJ-Tf-CRZ" secondAttribute="leading" constant="20" id="SX8-cV-dMl"/>
                 <constraint firstItem="Ow7-xk-oaD" firstAttribute="top" secondItem="qP9-pL-jh0" secondAttribute="bottom" constant="13" id="TCa-il-hGw"/>
                 <constraint firstItem="m42-Ah-Cti" firstAttribute="leading" secondItem="AlJ-Tf-CRZ" secondAttribute="leading" constant="20" id="WF6-rf-noR"/>
                 <constraint firstItem="qP9-pL-jh0" firstAttribute="leading" secondItem="641-gr-ieO" secondAttribute="trailing" constant="8" id="WzT-a3-Xfo"/>
                 <constraint firstItem="OUY-V3-7FO" firstAttribute="leading" secondItem="AlJ-Tf-CRZ" secondAttribute="leading" constant="30" id="XQx-FR-CDh"/>
-                <constraint firstItem="fqG-2p-EbW" firstAttribute="top" secondItem="EXA-XP-wOx" secondAttribute="bottom" constant="4" id="ZCS-fV-7kv"/>
+                <constraint firstItem="fqG-2p-EbW" firstAttribute="top" secondItem="EXA-XP-wOx" secondAttribute="bottom" constant="4" id="ZCS-fV-7kv">
+                    <variation key="heightClass=regular-widthClass=compact" constant="26"/>
+                </constraint>
                 <constraint firstItem="ElG-1c-kj9" firstAttribute="leading" secondItem="AlJ-Tf-CRZ" secondAttribute="leading" constant="30" id="ZVt-as-s8M"/>
                 <constraint firstItem="OUY-V3-7FO" firstAttribute="top" secondItem="m42-Ah-Cti" secondAttribute="bottom" constant="13" id="aFN-Bq-3Tj"/>
                 <constraint firstAttribute="trailing" secondItem="OUY-V3-7FO" secondAttribute="trailing" constant="28" id="c3c-ne-n96"/>
+                <constraint firstItem="JpK-Ay-gbz" firstAttribute="top" secondItem="EXA-XP-wOx" secondAttribute="bottom" constant="3" id="cpW-vf-YPV"/>
                 <constraint firstItem="EXA-XP-wOx" firstAttribute="top" secondItem="m42-Ah-Cti" secondAttribute="bottom" constant="8" id="iKn-AR-9nO"/>
                 <constraint firstAttribute="trailing" secondItem="rTr-2M-HNr" secondAttribute="trailing" constant="20" id="kU2-x2-2XV"/>
                 <constraint firstItem="qP9-pL-jh0" firstAttribute="leading" secondItem="ElG-1c-kj9" secondAttribute="trailing" constant="14" id="kuU-hk-c35"/>
                 <constraint firstItem="m42-Ah-Cti" firstAttribute="top" secondItem="qP9-pL-jh0" secondAttribute="bottom" constant="8" id="l7f-ix-EnG"/>
                 <constraint firstAttribute="trailing" secondItem="MGm-TW-sBP" secondAttribute="trailing" constant="20" id="nic-zr-gMq"/>
-                <constraint firstItem="MGm-TW-sBP" firstAttribute="top" secondItem="fqG-2p-EbW" secondAttribute="bottom" constant="20" id="vmC-A7-d4Y"/>
+                <constraint firstItem="MGm-TW-sBP" firstAttribute="top" secondItem="fqG-2p-EbW" secondAttribute="bottom" constant="20" id="vmC-A7-d4Y">
+                    <variation key="heightClass=regular-widthClass=compact" constant="-2"/>
+                </constraint>
                 <constraint firstItem="MGm-TW-sBP" firstAttribute="leading" secondItem="AlJ-Tf-CRZ" secondAttribute="leading" constant="20" id="wZX-zZ-55g"/>
                 <constraint firstItem="Ow7-xk-oaD" firstAttribute="leading" secondItem="AlJ-Tf-CRZ" secondAttribute="leading" constant="30" id="ywm-HO-XCS"/>
-                <constraint firstItem="rTr-2M-HNr" firstAttribute="top" secondItem="AlJ-Tf-CRZ" secondAttribute="top" constant="32" id="zq0-3g-rVS"/>
+                <constraint firstItem="rTr-2M-HNr" firstAttribute="top" secondItem="AlJ-Tf-CRZ" secondAttribute="top" constant="32" id="zq0-3g-rVS">
+                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                </constraint>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
@@ -593,39 +665,42 @@
                     <exclude reference="OUY-V3-7FO"/>
                     <exclude reference="06v-w6-hB2"/>
                     <exclude reference="fqG-2p-EbW"/>
+                    <exclude reference="JpK-Ay-gbz"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="2l0-BA-5TA"/>
-                    <exclude reference="Qqa-tZ-mmu"/>
-                    <exclude reference="0sT-kr-jUy"/>
-                    <exclude reference="ZVt-as-s8M"/>
+                    <exclude reference="SX8-cV-dMl"/>
+                    <exclude reference="kU2-x2-2XV"/>
+                    <exclude reference="zq0-3g-rVS"/>
                     <exclude reference="4Qz-92-mhL"/>
                     <exclude reference="FYv-CT-uFD"/>
                     <exclude reference="OFW-Cn-jh9"/>
                     <exclude reference="3sL-5y-bbr"/>
                     <exclude reference="AJz-OD-fxw"/>
-                    <exclude reference="C7Q-Qs-hs4"/>
-                    <exclude reference="R2z-r5-pbR"/>
-                    <exclude reference="iKn-AR-9nO"/>
+                    <exclude reference="0sT-kr-jUy"/>
+                    <exclude reference="ZVt-as-s8M"/>
                     <exclude reference="MuH-OG-ciw"/>
                     <exclude reference="WF6-rf-noR"/>
                     <exclude reference="l7f-ix-EnG"/>
-                    <exclude reference="SX8-cV-dMl"/>
-                    <exclude reference="kU2-x2-2XV"/>
-                    <exclude reference="zq0-3g-rVS"/>
-                    <exclude reference="XQx-FR-CDh"/>
-                    <exclude reference="aFN-Bq-3Tj"/>
-                    <exclude reference="c3c-ne-n96"/>
                     <exclude reference="8cS-WG-7gx"/>
                     <exclude reference="TCa-il-hGw"/>
                     <exclude reference="ywm-HO-XCS"/>
-                    <exclude reference="nic-zr-gMq"/>
-                    <exclude reference="vmC-A7-d4Y"/>
-                    <exclude reference="wZX-zZ-55g"/>
+                    <exclude reference="C7Q-Qs-hs4"/>
+                    <exclude reference="R2z-r5-pbR"/>
+                    <exclude reference="iKn-AR-9nO"/>
+                    <exclude reference="XQx-FR-CDh"/>
+                    <exclude reference="aFN-Bq-3Tj"/>
+                    <exclude reference="c3c-ne-n96"/>
                     <exclude reference="767-Cs-xcu"/>
                     <exclude reference="Lh8-7w-E8l"/>
                     <exclude reference="WzT-a3-Xfo"/>
                     <exclude reference="kuU-hk-c35"/>
+                    <exclude reference="3Bq-8O-fuS"/>
+                    <exclude reference="cpW-vf-YPV"/>
+                    <exclude reference="2l0-BA-5TA"/>
+                    <exclude reference="Qqa-tZ-mmu"/>
+                    <exclude reference="nic-zr-gMq"/>
+                    <exclude reference="vmC-A7-d4Y"/>
+                    <exclude reference="wZX-zZ-55g"/>
                     <exclude reference="5Mk-dS-lYp"/>
                     <exclude reference="ZCS-fV-7kv"/>
                 </mask>
@@ -644,39 +719,42 @@
                     <include reference="OUY-V3-7FO"/>
                     <include reference="06v-w6-hB2"/>
                     <include reference="fqG-2p-EbW"/>
+                    <include reference="JpK-Ay-gbz"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="2l0-BA-5TA"/>
-                    <include reference="Qqa-tZ-mmu"/>
-                    <include reference="0sT-kr-jUy"/>
-                    <include reference="ZVt-as-s8M"/>
+                    <include reference="SX8-cV-dMl"/>
+                    <include reference="kU2-x2-2XV"/>
+                    <include reference="zq0-3g-rVS"/>
                     <include reference="4Qz-92-mhL"/>
                     <include reference="FYv-CT-uFD"/>
                     <include reference="OFW-Cn-jh9"/>
                     <include reference="3sL-5y-bbr"/>
                     <include reference="AJz-OD-fxw"/>
-                    <include reference="C7Q-Qs-hs4"/>
-                    <include reference="R2z-r5-pbR"/>
-                    <include reference="iKn-AR-9nO"/>
+                    <include reference="0sT-kr-jUy"/>
+                    <include reference="ZVt-as-s8M"/>
                     <include reference="MuH-OG-ciw"/>
                     <include reference="WF6-rf-noR"/>
                     <include reference="l7f-ix-EnG"/>
-                    <include reference="SX8-cV-dMl"/>
-                    <include reference="kU2-x2-2XV"/>
-                    <include reference="zq0-3g-rVS"/>
-                    <include reference="XQx-FR-CDh"/>
-                    <include reference="aFN-Bq-3Tj"/>
-                    <include reference="c3c-ne-n96"/>
                     <include reference="8cS-WG-7gx"/>
                     <include reference="TCa-il-hGw"/>
                     <include reference="ywm-HO-XCS"/>
-                    <include reference="nic-zr-gMq"/>
-                    <include reference="vmC-A7-d4Y"/>
-                    <include reference="wZX-zZ-55g"/>
+                    <include reference="C7Q-Qs-hs4"/>
+                    <include reference="R2z-r5-pbR"/>
+                    <include reference="iKn-AR-9nO"/>
+                    <include reference="XQx-FR-CDh"/>
+                    <include reference="aFN-Bq-3Tj"/>
+                    <include reference="c3c-ne-n96"/>
                     <include reference="767-Cs-xcu"/>
                     <include reference="Lh8-7w-E8l"/>
                     <include reference="WzT-a3-Xfo"/>
                     <include reference="kuU-hk-c35"/>
+                    <include reference="3Bq-8O-fuS"/>
+                    <include reference="cpW-vf-YPV"/>
+                    <include reference="2l0-BA-5TA"/>
+                    <include reference="Qqa-tZ-mmu"/>
+                    <include reference="nic-zr-gMq"/>
+                    <include reference="vmC-A7-d4Y"/>
+                    <include reference="wZX-zZ-55g"/>
                     <include reference="5Mk-dS-lYp"/>
                     <include reference="ZCS-fV-7kv"/>
                 </mask>

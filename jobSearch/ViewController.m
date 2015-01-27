@@ -46,11 +46,11 @@
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
             [menu setRootViewController:navigationController];
+            
         }];
         
         RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"搜索" setFlag:NORMALCELL image:[UIImage imageNamed:@"search"] highlightedImage:[UIImage imageNamed:@"search"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             MLFirstVC *viewController = [MLFirstVC sharedInstance];
-            viewController.title = item.title;
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;

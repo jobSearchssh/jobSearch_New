@@ -13,8 +13,8 @@
 #import "MLFilterVC.h"
 #import "jobDetailVC.h"
 #import "MLMessageVC.h"
-#import "MLLoginVC.h"
 #import "MLMatchVC.h"
+#import "MLLoginBusiness.h"
 
 @interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate>
 {
@@ -68,6 +68,9 @@ static  MLFirstVC *thisVC=nil;
     mapDisplaying=NO;
     
     [self initTabbar];
+    
+    MLLoginBusiness *log=[[MLLoginBusiness alloc]init];
+
 }
 
 - (void)viewWillLayoutSubviews{
@@ -146,8 +149,6 @@ static  MLFirstVC *thisVC=nil;
     messageVC.title=@"消息";
     [self.navigationController pushViewController:messageVC animated:YES];
     
-    //MLLoginVC *vc=[[MLLoginVC alloc]init];
-    //[self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)filter{
@@ -274,8 +275,8 @@ static  MLFirstVC *thisVC=nil;
     [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
     cell.delegate = self;
     
-    [cell.portraitView.layer setCornerRadius:CGRectGetHeight(cell.portraitView.bounds)/2];
-    [cell.portraitView.layer setMasksToBounds:YES];
+//    [cell.portraitView.layer setCornerRadius:CGRectGetHeight(cell.portraitView.bounds)/2];
+//    [cell.portraitView.layer setMasksToBounds:YES];
     
     return cell;
 }

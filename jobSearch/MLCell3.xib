@@ -15,8 +15,12 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="cellBackground1.png" translatesAutoresizingMaskIntoConstraints="NO" id="F54-8s-OF2">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cellBackground1.png" translatesAutoresizingMaskIntoConstraints="NO" id="F54-8s-OF2">
                         <rect key="frame" x="220" y="1" width="100" height="100"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="100" id="P5D-WB-Mbz"/>
+                            <constraint firstAttribute="width" constant="100" id="r5h-jr-vf1"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="餐厅服务员" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MgL-ti-zjk">
                         <rect key="frame" x="93" y="10" width="171" height="21"/>
@@ -159,6 +163,7 @@
                 </subviews>
                 <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
+                    <constraint firstItem="F54-8s-OF2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-7" id="0bt-x1-Jmk"/>
                     <constraint firstItem="9az-Fb-uXu" firstAttribute="top" secondItem="MgL-ti-zjk" secondAttribute="bottom" constant="35" id="12w-hd-YNL"/>
                     <constraint firstAttribute="trailingMargin" secondItem="9az-Fb-uXu" secondAttribute="trailing" constant="8" id="2Jj-u6-WGq"/>
                     <constraint firstItem="hrs-Ic-SXT" firstAttribute="top" secondItem="MgL-ti-zjk" secondAttribute="bottom" id="2Z3-AP-gab"/>
@@ -174,6 +179,7 @@
                     <constraint firstItem="MgL-ti-zjk" firstAttribute="leading" secondItem="630-VL-6Cw" secondAttribute="trailing" constant="16" id="Fur-Tw-ZWl"/>
                     <constraint firstItem="vty-EU-R5W" firstAttribute="top" secondItem="hrs-Ic-SXT" secondAttribute="bottom" constant="4" id="KjO-lf-S9t"/>
                     <constraint firstAttribute="trailingMargin" secondItem="rSQ-57-wAm" secondAttribute="trailing" constant="-8" id="UPW-Wa-R2P"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="F54-8s-OF2" secondAttribute="trailing" constant="-8" id="VRe-9r-GW1"/>
                     <constraint firstItem="2Dy-qS-gMm" firstAttribute="top" secondItem="9az-Fb-uXu" secondAttribute="bottom" constant="8" id="VxK-bJ-v13"/>
                     <constraint firstItem="iMw-pg-gA3" firstAttribute="top" secondItem="hlV-iQ-Z59" secondAttribute="bottom" constant="2" id="Yah-aT-ddR"/>
                     <constraint firstItem="MgL-ti-zjk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="bFp-8Y-Dlo"/>
@@ -190,7 +196,7 @@
                     <constraint firstItem="hrs-Ic-SXT" firstAttribute="leading" secondItem="630-VL-6Cw" secondAttribute="trailing" constant="16" id="zyq-Cf-1UQ"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="270" y="281"/>
+            <point key="canvasLocation" x="261" y="379"/>
         </tableViewCell>
     </objects>
     <resources>

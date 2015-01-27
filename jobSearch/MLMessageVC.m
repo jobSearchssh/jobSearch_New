@@ -50,8 +50,8 @@
     [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
     cell.delegate = self;
     
-    [cell.portraitView.layer setCornerRadius:CGRectGetHeight(cell.portraitView.bounds)/2];
-    [cell.portraitView.layer setMasksToBounds:YES];
+//    [cell.portraitView.layer setCornerRadius:CGRectGetHeight(cell.portraitView.bounds)/2];
+//    [cell.portraitView.layer setMasksToBounds:YES];
     
     return cell;
 }

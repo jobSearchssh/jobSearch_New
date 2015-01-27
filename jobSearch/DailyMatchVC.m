@@ -66,7 +66,7 @@ static  DailyMatchVC *thisVC=nil;
     self.swipeableView.dataSource = self;
     
     likeImgView=[[UIImageView alloc]initWithFrame:CGRectMake(self.swipeableView.frame.size.width/2-25,self.swipeableView.frame.size.height/2-25, 50, 50)];
-    likeImgView.image=[UIImage imageNamed:@"like"];
+    likeImgView.image=[UIImage imageNamed:@"accept"];
     likeImgView.alpha=0.0f;
     [self.swipeableView addSubview:likeImgView];
 }
@@ -88,10 +88,10 @@ static  DailyMatchVC *thisVC=nil;
     //正在滑动
     else if (status==1){
         if (transition.x>0) {
-            likeImgView.image=[UIImage imageNamed:@"like"];
+            likeImgView.image=[UIImage imageNamed:@"accept"];
             likeImgView.alpha=((float)transition.x/100);
         }else if (transition.x<0){
-            likeImgView.image=[UIImage imageNamed:@"dontlike"];
+            likeImgView.image=[UIImage imageNamed:@"refuse"];
             likeImgView.alpha=-((float)transition.x/100);
         }
         

@@ -152,8 +152,7 @@
                         </mask>
                     </variation>
                     <connections>
-                        <action selector="refuse:" destination="-1" eventType="touchUpInside" id="bS3-Vq-r9X"/>
-                        <action selector="refuser:" destination="-1" eventType="touchUpInside" id="ATk-wk-LUG"/>
+                        <action selector="refuse:" destination="-1" eventType="touchUpInside" id="62o-Qs-t7Q"/>
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="接受" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9T-lF-3hN">

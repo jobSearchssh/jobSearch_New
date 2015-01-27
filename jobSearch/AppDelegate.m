@@ -9,8 +9,16 @@
 #import "AppDelegate.h"
 #import "MLFirstVC.h"
 #import "MobClick.h"
+#import "Reachability.h"
+#import <BmobSDK/Bmob.h>
+#import "MLLoginBusiness.h"
+#import "SMS_SDK/SMS_SDK.h"
 
 @interface AppDelegate ()
+
+@property (strong, nonatomic) Reachability *internetReachability;
+@property (nonatomic) BOOL isReachable;
+@property (nonatomic) BOOL beenReachable;
 
 @end
 
@@ -26,7 +34,6 @@
     return _deviceSystemMajorVersion;
 }
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -38,11 +45,52 @@
     [MobClick startWithAppkey:@"54c10ddbfd98c5b7c2000836" reportPolicy:BATCH  channelId:nil];
     [MobClick checkUpdate:@"兼职精灵有新版本啦" cancelButtonTitle:@"无情的忽略" otherButtonTitles:@"欣然前往下载"];
 
+    //Bmob后台服务
+    [Bmob registerWithAppKey:@"feda8b57c5da4a0364a3406906f77e2d"];
     
+    //短信验证模块
+    [SMS_SDK registerApp:@"57cd980818a9" withSecret:@"3bf26f5a30d5c3317f17887c4ee4986d"];
+
     
+    //网络连接监测
+    self.isReachable=YES;
+    self.beenReachable=YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    self.internetReachability = [Reachability reachabilityWithHostName:@"www.bmob.cn"] ;
+    //开始监听，会启动一个run loop
+    [self.internetReachability startNotifier];
     
     
     return YES;
+}
+
+#pragma mark - 网络通信检查
+-(void)reachabilityChanged:(NSNotification *)note
+{
+    Reachability *curReach = [note object];
+    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
+    
+    //对连接改变做出响应处理动作
+    NetworkStatus status = [curReach currentReachabilityStatus];
+    //如果没有连接到网络就弹出提醒实况
+    
+    if(status == NotReachable)
+    {
+        if (self.isReachable) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接异常" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+            self.isReachable = NO;
+        }
+        return;
+    }
+    if (status==ReachableViaWiFi||status==ReachableViaWWAN) {
+        
+        if (!self.isReachable) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接信息" message:@"网络连接恢复" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+            self.isReachable = YES;
+        }
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -10,7 +10,27 @@
 #import "ViewController.h"
 
 @interface MLLoginVC : ViewController
-
+{
+    NSString *inputUserAccount;
+    NSString *inputUserPassword;
+    NSString *inputUserPhoneNumber;
+    NSString *inputSecurityCode;
+    NSString *inputUserPassword1;
+    NSString *inputUserPassword2;
+}
 + (MLLoginVC*)sharedInstance;
 
+@property (weak, nonatomic) IBOutlet UITextField *userAccount;
+@property (weak, nonatomic) IBOutlet UITextField *userPassword;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+
+@property (weak, nonatomic) IBOutlet UITextField *phoneNumber;
+
+@property (weak, nonatomic) IBOutlet UITextField *securityCode;
+
+@property (weak, nonatomic) IBOutlet UITextField *userPassword1;
+@property (weak, nonatomic) IBOutlet UITextField *userPassword2;
+
+@property (weak, nonatomic) IBOutlet UIButton *registerButton;
+@property (weak, nonatomic) IBOutlet UIButton *sendMsgButton;
 @end
