@@ -277,7 +277,6 @@ static  MLLoginVC *thisVC=nil;
 //触发事件
 -(void)handleMaxShowTimer:(NSTimer *)theTimer
 {
-    NSLog(@"%d",seconds);
     seconds--;
     
     [self performSelectorOnMainThread:@selector(showTimer) withObject:nil waitUntilDone:YES];
@@ -316,7 +315,7 @@ static  MLLoginVC *thisVC=nil;
     if ([inputUserPhoneNumber length]==11&&[inputSecurityCode length]>0&&[inputUserPassword1 isEqualToString:inputUserPassword2]&&agree) {
         [self startRegisting];
     }else{
-        NSString*alertString;
+        NSString*alertString=[[NSString alloc]init];
         
         if (inputUserPhoneNumber.length!=11) {
             [alertString stringByAppendingString:@"手机号码不正确\n"];

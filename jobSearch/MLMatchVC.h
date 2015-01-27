@@ -10,4 +10,7 @@
 
 @interface MLMatchVC : UIViewController
 
++ (MLMatchVC*)sharedInstance;
+
+
 @end

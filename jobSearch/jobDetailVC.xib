@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="jobDetailVC">
             <connections>
+                <outlet property="applyButton" destination="TEN-OG-YLW" id="7jA-bJ-1ws"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -107,7 +108,7 @@
                 </textView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEN-OG-YLW">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                    <color key="backgroundColor" red="0.090196078430000007" green="0.3411764706" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.68235294117647061" green="0.77254901960784317" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="2I5-HA-AaH"/>
                     </constraints>

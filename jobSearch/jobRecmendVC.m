@@ -22,13 +22,6 @@
 
 }
 
-- (IBAction)accept:(id)sender {
-    
-}
-
-- (IBAction)refuse:(id)sender {
-    
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

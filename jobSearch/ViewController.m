@@ -10,10 +10,14 @@
 #import "MLNavigation.h"
 #import "ViewController.h"
 #import "MLFirstVC.h"
-#import "MLSecondVC.h"
+#import "MLMyCollection.h"
+#import "MLMyApplication.h"
 #import "DailyMatchVC.h"
 #import "MLProfileVC.h"
 #import "MLLoginVC.h"
+#import "MLMatchVC.h"
+#import "MLResumePreviewVC.h"
+
 
 @interface ViewController ()
 
@@ -40,7 +44,6 @@
         RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:@"未登录" setFlag:USRCELL setSubtitle:@"游客"  image:[UIImage imageNamed:@"tourists"] highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
             
             MLLoginVC *viewController = [MLLoginVC sharedInstance];
-            viewController.title = item.title;
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
@@ -49,19 +52,17 @@
             
         }];
         
-        RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"搜索" setFlag:NORMALCELL image:[UIImage imageNamed:@"search"] highlightedImage:[UIImage imageNamed:@"search"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"搜索职位" setFlag:NORMALCELL image:[UIImage imageNamed:@"search"] highlightedImage:[UIImage imageNamed:@"search"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             MLFirstVC *viewController = [MLFirstVC sharedInstance];
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
             [menu setRootViewController:navigationController];
-
         }];
         
-        RESideMenuItem *savedItem = [[RESideMenuItem alloc] initWithTitle:@"收藏的工作" setFlag:NORMALCELL image:[UIImage imageNamed:@"collection"] highlightedImage:[UIImage imageNamed:@"collection"] action:^(RESideMenu *menu, RESideMenuItem *item) {
-            MLSecondVC *secondViewController = [MLSecondVC sharedInstance];
-            secondViewController.title = item.title;
+        RESideMenuItem *savedItem = [[RESideMenuItem alloc] initWithTitle:@"我的收藏" setFlag:NORMALCELL image:[UIImage imageNamed:@"collection"] highlightedImage:[UIImage imageNamed:@"collection"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+            MLMyCollection *secondViewController = [MLMyCollection sharedInstance];
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:secondViewController];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
@@ -71,8 +72,7 @@
         
         RESideMenuItem *applicationItem = [[RESideMenuItem alloc] initWithTitle:@"我的申请" setFlag:NORMALCELL image:[UIImage imageNamed:@"apply"] highlightedImage:[UIImage imageNamed:@"apply"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             
-            MLProfileVC *_profilehVC=[[MLProfileVC alloc] init];
-            _profilehVC.title = item.title;
+            MLMyApplication *_profilehVC=[[MLMyApplication alloc] init];
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:_profilehVC];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
@@ -81,10 +81,10 @@
             
         }];
         
-        RESideMenuItem *dailymatchItem = [[RESideMenuItem alloc] initWithTitle:@"精灵匹配" setFlag:NORMALCELL image:[UIImage imageNamed:@"calendar"] highlightedImage:[UIImage imageNamed:@"calendar"] action:^(RESideMenu *menu, RESideMenuItem *item)  {
+        RESideMenuItem *dailymatchItem = [[RESideMenuItem alloc] initWithTitle:@"我的简历" setFlag:NORMALCELL image:[UIImage imageNamed:@"calendar"] highlightedImage:[UIImage imageNamed:@"calendar"] action:^(RESideMenu *menu, RESideMenuItem *item)  {
             [menu hide];
-            DailyMatchVC *_dailyMatchVC=[DailyMatchVC sharedInstance];
-            _dailyMatchVC.title = item.title;
+            MLResumePreviewVC *_dailyMatchVC=[[MLResumePreviewVC alloc] init];
+
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:_dailyMatchVC];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
@@ -119,7 +119,7 @@
 //        }];
 
         
-        _sideMenu=[RESideMenu initInstanceWithItems:@[usrItem,searchItem, savedItem, applicationItem, dailymatchItem,feedbackItem, aboutusItem]];
+        _sideMenu=[RESideMenu initInstanceWithItems:@[usrItem,searchItem, savedItem, applicationItem,dailymatchItem,feedbackItem, aboutusItem]];
         _sideMenu.verticalOffset = IS_WIDESCREEN ? 110 : 76;
         _sideMenu.hideStatusBarArea = [AppDelegate OSVersion] < 7;
     }

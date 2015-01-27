@@ -247,16 +247,16 @@
                         <exclude reference="49O-6p-4hp"/>
                         <exclude reference="BEh-PF-Xb5"/>
                         <exclude reference="UzY-IE-Jpi"/>
-                        <exclude reference="BVO-i0-JQP"/>
-                        <exclude reference="GzB-EL-BHh"/>
-                        <exclude reference="hlA-cT-kat"/>
-                        <exclude reference="wcC-Hp-Q0k"/>
-                        <exclude reference="H6S-DC-76d"/>
-                        <exclude reference="uHz-2A-P5L"/>
-                        <exclude reference="fUU-aw-WsH"/>
                         <exclude reference="GbH-in-D6B"/>
                         <exclude reference="JpR-qV-acL"/>
                         <exclude reference="aVw-LX-qR0"/>
+                        <exclude reference="hlA-cT-kat"/>
+                        <exclude reference="wcC-Hp-Q0k"/>
+                        <exclude reference="BVO-i0-JQP"/>
+                        <exclude reference="GzB-EL-BHh"/>
+                        <exclude reference="H6S-DC-76d"/>
+                        <exclude reference="uHz-2A-P5L"/>
+                        <exclude reference="fUU-aw-WsH"/>
                         <exclude reference="22S-7j-XF2"/>
                         <exclude reference="Rph-ou-NHb"/>
                         <exclude reference="iHA-Sd-S7a"/>
@@ -284,16 +284,16 @@
                         <include reference="49O-6p-4hp"/>
                         <include reference="BEh-PF-Xb5"/>
                         <include reference="UzY-IE-Jpi"/>
-                        <include reference="BVO-i0-JQP"/>
-                        <include reference="GzB-EL-BHh"/>
-                        <include reference="hlA-cT-kat"/>
-                        <include reference="wcC-Hp-Q0k"/>
-                        <include reference="H6S-DC-76d"/>
-                        <include reference="uHz-2A-P5L"/>
-                        <include reference="fUU-aw-WsH"/>
                         <include reference="GbH-in-D6B"/>
                         <include reference="JpR-qV-acL"/>
                         <include reference="aVw-LX-qR0"/>
+                        <include reference="hlA-cT-kat"/>
+                        <include reference="wcC-Hp-Q0k"/>
+                        <include reference="BVO-i0-JQP"/>
+                        <include reference="GzB-EL-BHh"/>
+                        <include reference="H6S-DC-76d"/>
+                        <include reference="uHz-2A-P5L"/>
+                        <include reference="fUU-aw-WsH"/>
                         <include reference="22S-7j-XF2"/>
                         <include reference="Rph-ou-NHb"/>
                         <include reference="iHA-Sd-S7a"/>
@@ -307,7 +307,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Pepsi.png" width="140" height="140"/>
+        <image name="Pepsi.png" width="220" height="220"/>
         <image name="cellBackground1.png" width="100" height="100"/>
         <image name="icon_location.png" width="15" height="15"/>
         <image name="just.png" width="30" height="30"/>

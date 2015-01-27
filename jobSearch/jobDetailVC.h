@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface jobDetailVC : UIViewController
+@property (strong, nonatomic) NSString *buttonTitle;
+@property (weak, nonatomic) IBOutlet UIButton *applyButton;
 
 @end

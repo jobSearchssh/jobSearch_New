@@ -31,7 +31,7 @@
                                 <segment title="10"/>
                                 <segment title="20"/>
                             </segments>
-                            <color key="tintColor" red="0.090196078430000007" green="0.3411764706" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.68235294120000001" green="0.7725490196" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="czL-1j-zzj"/>
@@ -46,7 +46,7 @@
                             </variation>
                         </segmentedControl>
                     </subviews>
-                    <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="IBq-Bl-uvU" secondAttribute="centerX" id="PQF-du-NpY"/>
                         <constraint firstItem="IBq-Bl-uvU" firstAttribute="top" secondItem="Z9C-xp-G6S" secondAttribute="top" constant="8" id="Zhv-wP-P1b"/>
@@ -127,7 +127,6 @@
                                 <constraint firstAttribute="width" constant="119" id="xpp-Px-Q7i"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -169,7 +168,7 @@
                                 <constraint firstAttribute="width" constant="39" id="zHC-s6-CeN"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.55294117649999996" green="0.55294117649999996" blue="0.55294117649999996" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -194,7 +193,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="2cR-Ro-FCa" secondAttribute="trailing" id="5xh-hc-4aa"/>
                         <constraint firstAttribute="height" constant="44" id="9g3-jd-Dfs"/>
@@ -217,13 +216,13 @@
                         </mask>
                         <mask key="constraints">
                             <exclude reference="9g3-jd-Dfs"/>
+                            <exclude reference="TkW-hd-h1O"/>
+                            <exclude reference="YaJ-0c-NYM"/>
+                            <exclude reference="yW5-Jf-ipl"/>
                             <exclude reference="5xh-hc-4aa"/>
                             <exclude reference="WhK-Hz-FXi"/>
                             <exclude reference="fnK-08-T3E"/>
                             <exclude reference="rqi-NM-Esq"/>
-                            <exclude reference="TkW-hd-h1O"/>
-                            <exclude reference="YaJ-0c-NYM"/>
-                            <exclude reference="yW5-Jf-ipl"/>
                             <exclude reference="WRi-VV-T7v"/>
                             <exclude reference="cmm-yc-EDy"/>
                             <exclude reference="gYa-xm-2Xc"/>
@@ -238,13 +237,13 @@
                         </mask>
                         <mask key="constraints">
                             <include reference="9g3-jd-Dfs"/>
+                            <include reference="TkW-hd-h1O"/>
+                            <include reference="YaJ-0c-NYM"/>
+                            <include reference="yW5-Jf-ipl"/>
                             <include reference="5xh-hc-4aa"/>
                             <include reference="WhK-Hz-FXi"/>
                             <include reference="fnK-08-T3E"/>
                             <include reference="rqi-NM-Esq"/>
-                            <include reference="TkW-hd-h1O"/>
-                            <include reference="YaJ-0c-NYM"/>
-                            <include reference="yW5-Jf-ipl"/>
                             <include reference="WRi-VV-T7v"/>
                             <include reference="cmm-yc-EDy"/>
                             <include reference="gYa-xm-2Xc"/>
@@ -261,7 +260,6 @@
                                 <constraint firstAttribute="height" constant="21" id="zfn-pg-oFw"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -303,7 +301,7 @@
                                 <constraint firstAttribute="width" constant="39" id="zFf-FH-LYZ"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.55294117649999996" green="0.55294117649999996" blue="0.55294117649999996" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -328,7 +326,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="R7Y-mV-K9q" firstAttribute="top" secondItem="I6f-RG-bho" secondAttribute="top" id="00L-Iz-mol"/>
                         <constraint firstAttribute="trailing" secondItem="R7Y-mV-K9q" secondAttribute="trailing" id="A8I-uU-GKu"/>
@@ -351,13 +349,13 @@
                         </mask>
                         <mask key="constraints">
                             <exclude reference="TyE-lE-Qql"/>
+                            <exclude reference="TTe-Go-9ju"/>
+                            <exclude reference="pfA-xL-tfM"/>
+                            <exclude reference="QHP-Pf-ZpN"/>
                             <exclude reference="00L-Iz-mol"/>
                             <exclude reference="A8I-uU-GKu"/>
                             <exclude reference="EjY-Io-gLu"/>
                             <exclude reference="NES-dC-uAz"/>
-                            <exclude reference="TTe-Go-9ju"/>
-                            <exclude reference="pfA-xL-tfM"/>
-                            <exclude reference="QHP-Pf-ZpN"/>
                             <exclude reference="KDp-Xr-OAn"/>
                             <exclude reference="RUW-Dt-4th"/>
                             <exclude reference="dz4-nT-mnd"/>
@@ -372,13 +370,13 @@
                         </mask>
                         <mask key="constraints">
                             <include reference="TyE-lE-Qql"/>
+                            <include reference="TTe-Go-9ju"/>
+                            <include reference="pfA-xL-tfM"/>
+                            <include reference="QHP-Pf-ZpN"/>
                             <include reference="00L-Iz-mol"/>
                             <include reference="A8I-uU-GKu"/>
                             <include reference="EjY-Io-gLu"/>
                             <include reference="NES-dC-uAz"/>
-                            <include reference="TTe-Go-9ju"/>
-                            <include reference="pfA-xL-tfM"/>
-                            <include reference="QHP-Pf-ZpN"/>
                             <include reference="KDp-Xr-OAn"/>
                             <include reference="RUW-Dt-4th"/>
                             <include reference="dz4-nT-mnd"/>
@@ -414,7 +412,6 @@
                                 <constraint firstAttribute="height" constant="21" id="ikh-fB-nf4"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -430,7 +427,7 @@
                             </variation>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="tuh-wK-nUo" firstAttribute="top" secondItem="tR6-lS-S2E" secondAttribute="top" constant="6" id="629-hl-1sV"/>
                         <constraint firstItem="0uS-aP-irW" firstAttribute="top" secondItem="tR6-lS-S2E" secondAttribute="top" constant="11" id="XPp-6n-C1t"/>
@@ -466,7 +463,7 @@
                     </variation>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="Co8-nu-RZ0" firstAttribute="top" secondItem="Z9C-xp-G6S" secondAttribute="bottom" constant="49" id="1Sr-Hj-gip"/>
                 <constraint firstAttribute="trailing" secondItem="Co8-nu-RZ0" secondAttribute="trailing" id="Aef-UO-FXM"/>

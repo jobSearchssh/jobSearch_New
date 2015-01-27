@@ -20,6 +20,27 @@
 
 @implementation MLMatchVC
 
+static  MLMatchVC *thisVC=nil;
+
++ (MLMatchVC*)sharedInstance{
+    if (thisVC==nil) {
+        thisVC=[[MLMatchVC alloc]init];
+    }
+    return thisVC;
+}
+
+- (void)viewWillLayoutSubviews{
+    self.title=@"精灵匹配";
+    //设置导航栏标题颜色及返回按钮颜色
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
+    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

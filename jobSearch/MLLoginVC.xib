@@ -61,7 +61,7 @@
                     <include reference="eWl-66-0Lu"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="265" y="425"/>
+            <point key="canvasLocation" x="257" y="589"/>
         </view>
         <view contentMode="scaleToFill" id="qvT-2l-fLE">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -203,7 +203,7 @@
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aqj-dV-utd">
                     <rect key="frame" x="35" y="278" width="250" height="40"/>
-                    <color key="backgroundColor" red="0.090196078430000007" green="0.3411764706" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.68235294120000001" green="0.7725490196" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="ZAA-NS-tJm"/>
                     </constraints>
@@ -437,7 +437,7 @@
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGm-TW-sBP">
                     <rect key="frame" x="35" y="278" width="250" height="40"/>
-                    <color key="backgroundColor" red="0.090196078430000007" green="0.3411764706" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.68235294120000001" green="0.7725490196" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="4d4-4l-fNY"/>
                     </constraints>
@@ -462,7 +462,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qP9-pL-jh0">
                     <rect key="frame" x="35" y="278" width="250" height="40"/>
-                    <color key="backgroundColor" red="0.090196078430000007" green="0.3411764706" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.68235294120000001" green="0.7725490196" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="hqU-CH-1Sq"/>
                         <constraint firstAttribute="width" constant="107" id="yAM-kU-T1B"/>

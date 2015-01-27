@@ -14,7 +14,6 @@
 #import "jobDetailVC.h"
 #import "MLMessageVC.h"
 #import "MLMatchVC.h"
-#import "MLLoginBusiness.h"
 
 @interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate>
 {
@@ -55,21 +54,13 @@ static  MLFirstVC *thisVC=nil;
     self.navigationItem.leftBarButtonItem.tintColor=[UIColor whiteColor];
     
     self.title=@"附近的工作";
-    //设置导航栏标题颜色及返回按钮颜色
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
-    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
     
-    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
     
     [self tableViewInit];
     
     mapDisplaying=NO;
     
     [self initTabbar];
-    
-    MLLoginBusiness *log=[[MLLoginBusiness alloc]init];
 
 }
 
@@ -78,6 +69,13 @@ static  MLFirstVC *thisVC=nil;
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:54.0/255.0 green:59.0/255.0 blue:81.0/255.0 alpha:1.0]];
     [self.tabbar setSelectedImageTintColor: [UIColor whiteColor]];
     
+    //设置导航栏标题颜色及返回按钮颜色
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
+    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
 }
 
 - (void)initTabbar{
@@ -121,7 +119,7 @@ static  MLFirstVC *thisVC=nil;
 }
 
 - (void)showMatchInfo{
-    MLMatchVC *matchVC=[[MLMatchVC alloc]init];
+    MLMatchVC *matchVC=[MLMatchVC sharedInstance];
     matchVC.title=@"精灵匹配";
     [self.navigationController pushViewController:matchVC animated:YES];
 }
@@ -314,6 +312,7 @@ static  MLFirstVC *thisVC=nil;
 {
     
     jobDetailVC *detailVC=[[jobDetailVC alloc]init];
+    detailVC.buttonTitle=@"一键申请";
     detailVC.hidesBottomBarWhenPushed=YES;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"";
