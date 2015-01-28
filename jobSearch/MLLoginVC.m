@@ -10,6 +10,8 @@
 #import "QCheckBox.h"
 #import "MLLoginBusiness.h"
 #import "SMS_SDK/SMS_SDK.h"
+static NSString *usrAccountText = @"usrAccountText";
+static NSString *usrPhoneText = @"usrPhoneText";
 
 @interface MLLoginVC ()<QCheckBoxDelegate,loginResult,registerResult,UIGestureRecognizerDelegate>{
     
@@ -104,6 +106,64 @@ static  MLLoginVC *thisVC=nil;
     self.sendMsgButton.enabled=NO;
     
     [self.sendMsgButton setBackgroundColor:[UIColor lightGrayColor]];
+    
+    //增加上移效果
+    [self.userPassword addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    [self.securityCode addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    [self.userPassword1 addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    [self.userPassword2 addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    [self.userAccount addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    [self.phoneNumber addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    
+    //增加代理
+    self.userAccount.delegate = self;
+    self.userPassword.delegate = self;
+    self.phoneNumber.delegate = self;
+    self.securityCode.delegate = self;
+    self.userPassword1.delegate = self;
+    self.userPassword2.delegate = self;
+}
+
+//textfield上移
+//响应回车
+- (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
+    [theTextField resignFirstResponder];
+    [self scollToBase];
+    return YES;
+}
+
+-(void)scollToBase{
+    int page;
+    if ([self.scrollView contentOffset].x >0) {
+        page = 1;
+    }else{
+        page = 0;
+    }
+    CGPoint offset = CGPointMake(page*[UIScreen mainScreen].bounds.size.width,0);
+    [self.scrollView setContentOffset:offset animated:YES];
+}
+
+//编辑上移
+-(void)textFieldOutletWork:(UITextField *)sender{
+    int page;
+    if ([self.scrollView contentOffset].x >0) {
+        page = 1;
+    }else{
+        page = 0;
+    }
+    CGPoint offset;
+    switch (page) {
+        case 0:
+            offset = CGPointMake(0,sender.frame.origin.y-self.userAccount.frame.origin.y);
+            break;
+        case 1:
+            offset = CGPointMake([UIScreen mainScreen].bounds.size.width,sender.frame.origin.y-self.phoneNumber.frame.origin.y);
+            break;
+        default:
+            offset = CGPointMake(0,0);
+            break;
+    }
+    [self.scrollView setContentOffset:offset animated:YES];
 }
 
 - (void)didSelectedCheckBox:(QCheckBox *)checkbox checked:(BOOL)checked {
@@ -135,13 +195,13 @@ static  MLLoginVC *thisVC=nil;
 }
 
 - (void)tapRegisnFirstRespond{
-    
     [_userAccount resignFirstResponder];
     [_userPassword resignFirstResponder];
     [_userPassword1 resignFirstResponder];
     [_userPassword2 resignFirstResponder];
     [_phoneNumber resignFirstResponder];
     [_securityCode resignFirstResponder];
+    [self scollToBase];
 }
 
 
@@ -161,12 +221,37 @@ static  MLLoginVC *thisVC=nil;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入登陆密码" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
     }else{
-        
-        if (!loginer) {
-            loginer=[[MLLoginBusiness alloc]init];
-            loginer.loginResultDelegate=self;
-            [loginer loginInBackground:inputUserAccount Password:inputUserPassword];
+        @try {
+            [self.view makeToastActivity];
         }
+        @catch (NSException *exception) {
+            
+        }
+        [netAPI usrLogin:inputUserAccount usrPassword:inputUserPassword withBlock:^(URLReturnModel *returnModel) {
+            if ([self.view isToastActivityShow]) {
+                @try {
+                    [self.view hideToastActivity];
+                }
+                @catch (NSException *exception) {
+                }
+            }
+            
+            UIAlertView *alterTittle = nil ;
+            
+            if (returnModel.getFlag) {
+                NSString *receiveStr = [[NSString alloc]initWithData:[returnModel getData] encoding:NSUTF8StringEncoding];
+                alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:receiveStr delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            }else{
+                alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:[[returnModel getError] localizedDescription] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            }
+            
+            [alterTittle show];
+        }];
+//        if (!loginer) {
+//            loginer=[[MLLoginBusiness alloc]init];
+//            loginer.loginResultDelegate=self;
+//            [loginer loginInBackground:inputUserAccount Password:inputUserPassword];
+//        }
     }
 }
 

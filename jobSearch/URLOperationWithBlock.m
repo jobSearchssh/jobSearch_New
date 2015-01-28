@@ -41,9 +41,8 @@ static NSString *baseURL = @"http://182.92.177.56:3000/";
             [request setHTTPBody:postInfo];
         }
         
-        
         NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            NSLog(@"ccc");
+
             BOOL flag = TRUE;
             if (!error) {
                 flag = TRUE;

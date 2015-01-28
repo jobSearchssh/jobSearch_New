@@ -107,19 +107,19 @@
 //            [menu hide];
 //        }];
         
-//        RESideMenuItem *loginItem = [[RESideMenuItem alloc] initWithTitle:Nil setFlag:LOGINCELL action:^(RESideMenu *menu, RESideMenuItem *item) {
-//            if ([item getTapFlag] == ACTION_LOGINFLAG) {
-//                NSLog(@"点击登陆");
-//            }
-//            if ([item getTapFlag] == ACTION_REGISTERFLAG) {
-//                NSLog(@"点击注册");
-//            }
-//            [item setTapFlag:ACTION_NONFLAG];
-//            [menu hide];
-//        }];
+        RESideMenuItem *loginItem = [[RESideMenuItem alloc] initWithTitle:Nil setFlag:LOGINCELL action:^(RESideMenu *menu, RESideMenuItem *item) {
+            if ([item getTapFlag] == ACTION_LOGINFLAG) {
+                NSLog(@"点击登陆");
+            }
+            if ([item getTapFlag] == ACTION_REGISTERFLAG) {
+                NSLog(@"点击注册");
+            }
+            [item setTapFlag:ACTION_NONFLAG];
+            [menu hide];
+        }];
 
         
-        _sideMenu=[RESideMenu initInstanceWithItems:@[usrItem,searchItem, savedItem, applicationItem,dailymatchItem,feedbackItem, aboutusItem]];
+        _sideMenu=[RESideMenu initInstanceWithItems:@[usrItem,searchItem, savedItem, applicationItem,dailymatchItem,feedbackItem, aboutusItem,loginItem]];
         _sideMenu.verticalOffset = IS_WIDESCREEN ? 110 : 76;
         _sideMenu.hideStatusBarArea = [AppDelegate OSVersion] < 7;
     }

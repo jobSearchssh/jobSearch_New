@@ -57,7 +57,14 @@ static  RESideMenu *thisMenu=nil;
     
     self.verticalOffset = 100;
     self.horizontalOffset = 50;
-    self.itemHeight = 50;
+    CGFloat scrennHeight = [UIScreen mainScreen].bounds.size.height;
+    if(scrennHeight < 481){
+        self.itemHeight = 40;
+    }else{
+        self.itemHeight = 50;
+    }
+    
+    
     self.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:18];
     self.textColor = [UIColor whiteColor];
     self.highlightedTextColor = [UIColor lightGrayColor];
@@ -337,10 +344,13 @@ static  RESideMenu *thisMenu=nil;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
+    RESideMenuItem *item = [_items objectAtIndex:indexPath.row];
+    if ([item getCellFlag] == USRCELL) {
         return 100;
     }
-    
+    if ([item getCellFlag] == LOGINCELL) {
+        return 65;
+    }
     return self.itemHeight;
 }
 
@@ -431,8 +441,12 @@ static  RESideMenu *thisMenu=nil;
             [getiItema setIsClick:false];
         }
         [item setIsClick:true];
-        [tableView reloadData];
+    }else{
+        for (RESideMenuItem *getiItema in _items) {
+            [getiItema setIsClick:false];
+        }
     }
+    [tableView reloadData];
     
     // Case back on subMenu
     if(_isInSubMenu &&

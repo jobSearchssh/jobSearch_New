@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "ViewController.h"
+#import "netAPI.h"
+#import "UIView+toastView.h"
 
-@interface MLLoginVC : ViewController
+@interface MLLoginVC : ViewController<UITextFieldDelegate>
 {
     NSString *inputUserAccount;
     NSString *inputUserPassword;
