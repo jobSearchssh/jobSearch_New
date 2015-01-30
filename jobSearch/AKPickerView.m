@@ -194,15 +194,19 @@
 
 - (void)scrollToItem:(NSUInteger)item animated:(BOOL)animated
 {
+    NSUInteger getItem = item;
+    if (item>3) {
+        getItem = 3;
+    }
 	switch (self.pickerViewStyle) {
 		case AKPickerViewStyleFlat: {
-			[self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:item inSection:0]
+			[self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:getItem inSection:0]
 										atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
 												animated:animated];
 			break;
 		}
 		case AKPickerViewStyle3D: {
-			[self.collectionView setContentOffset:CGPointMake([self offsetForItem:item], self.collectionView.contentOffset.y)
+			[self.collectionView setContentOffset:CGPointMake([self offsetForItem:getItem], self.collectionView.contentOffset.y)
 										 animated:animated];
 			break;
 		}
