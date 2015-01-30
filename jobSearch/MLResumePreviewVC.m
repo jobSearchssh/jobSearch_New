@@ -25,6 +25,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (strong, nonatomic) IBOutlet UIView *usrinfo1Outlet;
 //第三项
 @property (strong, nonatomic) IBOutlet UIView *usrinfo2Outlet;
+@property (weak, nonatomic) IBOutlet UILabel *usrNameOutlet;
+@property (weak, nonatomic) IBOutlet UIImageView *sexOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *ageOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *locationOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *intentionOutlet;
+
 //第四项
 @property (strong, nonatomic) IBOutlet UIView *collectionViewOutlet;
 @property (weak, nonatomic) IBOutlet UICollectionView *selectfreeCollectionOutlet;
@@ -63,11 +69,48 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.mainScrollviewOutlet addSubview:self.coverflowOutlet];
     
     //第二项
-    [self.usrinfo1Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,110)];
-    [self.mainScrollviewOutlet addSubview:self.usrinfo1Outlet];
+//    [self.usrinfo1Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,110)];
+//    [self.mainScrollviewOutlet addSubview:self.usrinfo1Outlet];
     //第三项
-    [self.usrinfo2Outlet setFrame:CGRectMake(0,self.usrinfo1Outlet.frame.origin.y+self.usrinfo1Outlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,180)];
+    //用户名字
+    NSString *usrname = @"小欣";
+    [self.usrNameOutlet setNumberOfLines:0];
+    [self.usrNameOutlet setLineBreakMode:NSLineBreakByWordWrapping];
+    CGSize usrnameSize = [usrname sizeWithFont:[self.usrNameOutlet font] constrainedToSize:CGSizeMake(0,0) lineBreakMode:NSLineBreakByWordWrapping];
+
+    [self.usrNameOutlet setFrame:CGRectMake(self.usrNameOutlet.frame.origin.x,
+                                            self.usrNameOutlet.frame.origin.y,
+                                            usrnameSize.width,
+                                            usrnameSize.height)];
+    [self.usrNameOutlet setText:usrname];
+
+    [self.sexOutlet setFrame:CGRectMake(
+                                        300,
+                                        self.sexOutlet.frame.origin.y,
+                                        self.sexOutlet.frame.size.width,
+                                        self.sexOutlet.frame.size.height)];
+
+    NSString *usrLoaction = @"大连高新区万达广场";
+    [self.locationOutlet setNumberOfLines:0];
+    [self.locationOutlet setLineBreakMode:NSLineBreakByWordWrapping];
+    CGSize locationOutletlabelsize = [usrLoaction sizeWithFont:[self.locationOutlet font] constrainedToSize:CGSizeMake(self.locationOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    [self.locationOutlet setFrame:CGRectMake(self.locationOutlet.frame.origin.x,
+                                                   self.locationOutlet.frame.origin.y, locationOutletlabelsize.width, locationOutletlabelsize.height)];
+    [self.locationOutlet setText:usrLoaction];
+    
+    NSString *usrintention = @"咨询经理、设计师、客服、文员、其他、临时工";
+    [self.intentionOutlet setNumberOfLines:0];
+    [self.intentionOutlet setLineBreakMode:NSLineBreakByWordWrapping];
+    CGSize intentionOutletlabelsize = [usrLoaction sizeWithFont:[self.intentionOutlet font] constrainedToSize:CGSizeMake(self.intentionOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    [self.intentionOutlet setFrame:CGRectMake(self.intentionOutlet.frame.origin.x,
+                                              self.intentionOutlet.frame.origin.y,
+                                              intentionOutletlabelsize.width,
+                                              intentionOutletlabelsize.height)];
+    [self.intentionOutlet setText:usrintention];
+    
+    [self.usrinfo2Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.origin.y+self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,self.intentionOutlet.frame.origin.y+self.intentionOutlet.frame.size.height+20)];
     [self.mainScrollviewOutlet addSubview:self.usrinfo2Outlet];
+    
     //第四项
     selectfreetimepicArray = [[NSMutableArray alloc]init];
     selectfreetimetitleArray = [[NSMutableArray alloc]init];
@@ -94,8 +137,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     self.selectfreeCollectionOutlet.dataSource = self;
     UINib *niblogin = [UINib nibWithNibName:selectFreecellIdentifier bundle:nil];
     [self.selectfreeCollectionOutlet registerNib:niblogin forCellWithReuseIdentifier:selectFreecellIdentifier];
-    [self.collectionViewOutlet setFrame:CGRectMake(0,self.usrinfo2Outlet.frame.origin.y+self.usrinfo2Outlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,60+freecellwidth*4)];
+    [self.collectionViewOutlet setFrame:CGRectMake(0,self.usrinfo2Outlet.frame.origin.y+self.usrinfo2Outlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,60+freecellwidth*4+50)];
     [self.mainScrollviewOutlet addSubview:self.collectionViewOutlet];
+    
     //第五项
     NSString *testworkexperience = @"IBM\n售后服务-客服\n2013年至今(2年1月)";
     NSString  *testworkexperienceFormat = [testworkexperience stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
@@ -106,7 +150,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                                    self.workexperienceOutlet.frame.origin.y, testworkexperiencelabelsize.width, testworkexperiencelabelsize.height)];
     [self.workexperienceOutlet setText:testworkexperienceFormat];
     
-    [self.usrinfo3Outet setFrame:CGRectMake(0,self.collectionViewOutlet.frame.origin.y+self.collectionViewOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,200)];
+    [self.usrinfo3Outet setFrame:CGRectMake(0,
+                                            self.collectionViewOutlet.frame.origin.y+self.collectionViewOutlet.frame.size.height,
+                                            [UIScreen mainScreen].bounds.size.width,
+                                            self.workexperienceOutlet.frame.origin.y+self.workexperienceOutlet.frame.size.height+25)];
     [self.mainScrollviewOutlet addSubview:self.usrinfo3Outet];
     
     

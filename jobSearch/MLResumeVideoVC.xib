@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MLResumeVideoVC">
             <connections>
+                <outlet property="changeOutlet" destination="xpq-79-qvU" id="hbP-md-HzZ"/>
+                <outlet property="paiOutlet" destination="yKK-a0-bHb" id="byi-2V-68H"/>
+                <outlet property="videoPreViewOutlet" destination="wsh-FZ-IUe" id="rj1-qN-O8A"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -13,7 +17,54 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wsh-FZ-IUe">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <subviews>
+                        <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xpq-79-qvU">
+                            <rect key="frame" x="20" y="20" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="7eQ-wl-Zok"/>
+                                <constraint firstAttribute="width" constant="50" id="RuW-94-Jbw"/>
+                            </constraints>
+                            <state key="normal" image="resume_change.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="changeAction:" destination="-1" eventType="touchUpInside" id="mOb-O8-sDP"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yKK-a0-bHb">
+                            <rect key="frame" x="265" y="460" width="70" height="70"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="70" id="u0J-yo-eBb"/>
+                                <constraint firstAttribute="width" constant="70" id="z4w-hP-385"/>
+                            </constraints>
+                            <state key="normal" image="resume_pai.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="yKK-a0-bHb" secondAttribute="bottom" constant="70" id="C2x-m1-dw8"/>
+                        <constraint firstAttribute="centerX" secondItem="yKK-a0-bHb" secondAttribute="centerX" id="CX2-4L-TlN"/>
+                        <constraint firstItem="xpq-79-qvU" firstAttribute="leading" secondItem="wsh-FZ-IUe" secondAttribute="leading" constant="20" id="SlW-9R-Vqj"/>
+                        <constraint firstItem="xpq-79-qvU" firstAttribute="top" secondItem="wsh-FZ-IUe" secondAttribute="top" constant="20" id="YMy-FX-O0H"/>
+                    </constraints>
+                </view>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="wsh-FZ-IUe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="O1F-h7-YMy"/>
+                <constraint firstItem="wsh-FZ-IUe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Uoi-ct-Hea"/>
+                <constraint firstAttribute="bottom" secondItem="wsh-FZ-IUe" secondAttribute="bottom" id="coh-NY-ExE"/>
+                <constraint firstAttribute="trailing" secondItem="wsh-FZ-IUe" secondAttribute="trailing" id="th4-y5-AGK"/>
+            </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="resume_change.png" width="70" height="70"/>
+        <image name="resume_pai.png" width="200" height="200"/>
+    </resources>
 </document>

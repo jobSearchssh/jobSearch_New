@@ -31,4 +31,7 @@ typedef void (^returnBlock)(URLReturnModel *returnModel);
 //用户登录
 +(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(returnBlock)block;
 
+//用户注册
++(void)usrRegister:(NSString *)name usrPassword:(NSString *)password usrEmail:(NSString *)email usrPhone:(NSString *)phone usrType:(int)type withBlock:(returnBlock)block;
+
 @end

@@ -43,12 +43,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (strong, nonatomic) IBOutlet UIView *view5outlet;
 
 
+
 //page1
 @property (weak, nonatomic) IBOutlet UILabel *sexlabeloutlet;
 @property (weak, nonatomic) IBOutlet UITextField *nameoutlet;
 @property (weak, nonatomic) IBOutlet UITextField *heightOutlet;
 @property (weak, nonatomic) IBOutlet UITextField *iphoneOutlet;
-
+@property (weak, nonatomic) IBOutlet UIButton *birthdayOutlet;
+- (IBAction)birthdayAction:(UIButton *)sender;
 
 //page2
 @property (weak, nonatomic) IBOutlet UITextField *schoolOutlet;
@@ -56,6 +58,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 //page3
 @property (weak, nonatomic) IBOutlet UIScrollView *picscrollview;
+- (IBAction)callVideoAction:(UIButton *)sender;
 
 //page4
 @property (weak, nonatomic) IBOutlet UICollectionView *selectfreetimeOutlet;
@@ -65,6 +68,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 //page5
 @property (weak, nonatomic) IBOutlet UITextField *introductionmeOutlet;
 @property (weak, nonatomic) IBOutlet UITextField *workexperienceOutlet;
+@property (weak, nonatomic) IBOutlet UITextField *schollNewOutlet;
 
 
 @end
@@ -95,26 +99,25 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     self.pickerView.pickerViewStyle = AKPickerViewStyleFlat;
     
     self.titles = @[[self compressImage:[UIImage imageNamed:@"resume_icon1"] size:80],
-                    [self compressImage:[UIImage imageNamed:@"resume_icon2"] size:80],
-                    [self compressImage:[UIImage imageNamed:@"resume_icon3"] size:80],
                     [self compressImage:[UIImage imageNamed:@"resume_icon4"] size:80],
+                    [self compressImage:[UIImage imageNamed:@"resume_icon3"] size:80],
                     [self compressImage:[UIImage imageNamed:@"resume_icon5"] size:80]
                     ];
     
     [self.pickerView reloadData];
     //indicator
-    self.pageIndicator = [[MCPagerView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 - 50, self.pageIndicator.frame.origin.y,100, self.indicatorcontainview.frame.size.height-5)];
+    self.pageIndicator = [[MCPagerView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 - 44, self.pageIndicator.frame.origin.y,100, self.indicatorcontainview.frame.size.height-5)];
     [self.pageIndicator setImage:[self compressImage:[UIImage imageNamed:@"mark1"] size:14]
        highlightedImage:[self compressImage:[UIImage imageNamed:@"mark2"] size:14]
                  forKey:@"a"];
-    [self.pageIndicator setPattern:@"aaaaa"];
+    [self.pageIndicator setPattern:@"aaaa"];
     
     self.pageIndicator.delegate = self;
     [self.indicatorcontainview addSubview:self.pageIndicator];
     
     //下部分
     self.scrollviewOutlet.delegate=self;
-    self.pages = 5;
+    self.pages = 4;
     
     [self createPages:self.pages];
     
@@ -156,6 +159,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     lineviewheight.backgroundColor = [UIColor grayColor];
     [self.view1outlet addSubview:lineviewheight];
     
+    UIView *lineviewbirthday= [[UIView alloc] initWithFrame:CGRectMake(self.birthdayOutlet.frame.origin.x, self.birthdayOutlet.frame.origin.y+self.birthdayOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 125, 1)];
+    lineviewbirthday.alpha = 0.5;
+    lineviewbirthday.backgroundColor = [UIColor grayColor];
+    [self.view1outlet addSubview:lineviewbirthday];
+    
     self.nameoutlet.delegate = self;
     self.iphoneOutlet.delegate = self;
     self.heightOutlet.delegate = self;
@@ -165,6 +173,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.iphoneOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     //text上移
     [self.heightOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    self.birthdayOutlet.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
 
     //page2
     UIView *lineviewschool= [[UIView alloc] initWithFrame:CGRectMake(self.schoolOutlet.frame.origin.x, self.schoolOutlet.frame.origin.y+self.schoolOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 60, 1)];
@@ -215,22 +224,36 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     UINib *niblogin = [UINib nibWithNibName:selectFreecellIdentifier bundle:nil];
     [self.selectfreeCollectionOutlet registerNib:niblogin forCellWithReuseIdentifier:selectFreecellIdentifier];
     [self.intentionOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    self.intentionOutlet.delegate = self;
+    UIView *lineviewIntention= [[UIView alloc] initWithFrame:CGRectMake(self.intentionOutlet.frame.origin.x, self.intentionOutlet.frame.origin.y+self.intentionOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
+    lineviewIntention.alpha = 0.5;
+    lineviewIntention.backgroundColor = [UIColor grayColor];
+    [self.view4outlet addSubview:lineviewIntention];
     
     
     //page5
-    UIView *lineviewwork= [[UIView alloc] initWithFrame:CGRectMake(self.workexperienceOutlet.frame.origin.x, self.workexperienceOutlet.frame.origin.y+self.workexperienceOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 110, 1)];
+    UIView *lineviewwork= [[UIView alloc] initWithFrame:CGRectMake(self.workexperienceOutlet.frame.origin.x, self.workexperienceOutlet.frame.origin.y+self.workexperienceOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
     lineviewwork.alpha = 0.5;
     lineviewwork.backgroundColor = [UIColor grayColor];
     [self.view5outlet addSubview:lineviewwork];
     
-    UIView *lineviewintroduction= [[UIView alloc] initWithFrame:CGRectMake(self.introductionmeOutlet.frame.origin.x, self.introductionmeOutlet.frame.origin.y+self.introductionmeOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 110, 1)];
+    UIView *lineviewintroduction= [[UIView alloc] initWithFrame:CGRectMake(self.introductionmeOutlet.frame.origin.x, self.introductionmeOutlet.frame.origin.y+self.introductionmeOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
     lineviewintroduction.alpha = 0.5;
     lineviewintroduction.backgroundColor = [UIColor grayColor];
     [self.view5outlet addSubview:lineviewintroduction];
+    
+    UIView *lineviewschoolnew= [[UIView alloc] initWithFrame:CGRectMake(self.schollNewOutlet.frame.origin.x, self.schollNewOutlet.frame.origin.y+self.schollNewOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
+    lineviewschoolnew.alpha = 0.5;
+    lineviewschoolnew.backgroundColor = [UIColor grayColor];
+    [self.view5outlet addSubview:lineviewschoolnew];
+    
     self.introductionmeOutlet.delegate = self;
     self.workexperienceOutlet.delegate = self;
+    self.schollNewOutlet.delegate = self;
+    
     [self.introductionmeOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     [self.workexperienceOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    [self.schollNewOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     
     //整体 增加点击事件
     UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapRegisnFirstRespond:)];
@@ -246,8 +269,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 //编辑上移
 -(void)textFieldOutletWork:(UITextField *)sender{
-    CGFloat yDiff = sender.frame.origin.y-sender.frame.size.height-20;
-    if (yDiff<20) {
+    CGFloat yDiff = sender.frame.origin.y-sender.frame.size.height-10;
+    if (yDiff<10) {
         return;
     }
     CGPoint offset = CGPointMake([self.pickerView selectedItem]*[UIScreen mainScreen].bounds.size.width,yDiff);
@@ -361,18 +384,18 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     [self.view1outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 0, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     
-    [self.view2outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 1, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    [self.view4outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 1, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     
     [self.view3outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 2, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     
-    [self.view4outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 3, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    [self.view5outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 3, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     
-    [self.view5outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 4, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+//    [self.view5outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 4, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     
     [self.scrollviewOutlet addSubview:self.view1outlet];
-    [self.scrollviewOutlet addSubview:self.view2outlet];
-    [self.scrollviewOutlet addSubview:self.view3outlet];
+//    [self.scrollviewOutlet addSubview:self.view2outlet];
     [self.scrollviewOutlet addSubview:self.view4outlet];
+    [self.scrollviewOutlet addSubview:self.view3outlet];
     [self.scrollviewOutlet addSubview:self.view5outlet];
     
     CGFloat scrennHeight = [UIScreen mainScreen].bounds.size.height;
@@ -411,28 +434,20 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 
-//page1
-#pragma mark - QRadioButtonDelegate
-
-- (void)didSelectedRadioButton:(QRadioButton *)radio groupId:(NSString *)groupId {
-    NSLog(@"did selected radio:%@ groupId:%@", radio.titleLabel.text, groupId);
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 - (IBAction)continueAction:(UIBarButtonItem *)sender {
     NSInteger currentpage = [self.pickerView selectedItem];
     if (currentpage == self.pages-1) {
@@ -444,6 +459,19 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     self.pageIndicator.page = nextpage;
     [self.pickerView selectItem:nextpage animated:YES];
 }
+
+
+//page1
+#pragma mark - QRadioButtonDelegate
+
+- (void)didSelectedRadioButton:(QRadioButton *)radio groupId:(NSString *)groupId {
+    NSLog(@"did selected radio:%@ groupId:%@", radio.titleLabel.text, groupId);
+}
+
+- (IBAction)birthdayAction:(UIButton *)sender {
+    
+}
+
 //page3
 - (IBAction)addPicAction:(UIButton *)sender {
     
@@ -502,6 +530,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     CGSize contentSize=CGSizeMake(width, PIC_HEIGHT+INSETS*2);
     [self.picscrollview setContentSize:contentSize];
     [self.picscrollview setContentOffset:CGPointMake(width<self.picscrollview.frame.size.width?0:width-self.picscrollview.frame.size.width, 0) animated:YES];
+}
+- (IBAction)callVideoAction:(UIButton *)sender {
+    MLResumeVideoVC *vc = [[MLResumeVideoVC alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 //page4
@@ -573,6 +605,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     return cell;
 };
+
+
 
 
 @end

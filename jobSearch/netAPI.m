@@ -17,6 +17,12 @@
     [self testAPIPostTestWithBlock:block getFunction:@"user" postInfo:data];
 }
 
++(void)usrRegister:(NSString *)name usrPassword:(NSString *)password usrEmail:(NSString *)email usrPhone:(NSString *)phone usrType:(int)type withBlock:(returnBlock)block{
+    NSString *str = [[NSString alloc]initWithFormat:@"userName=%@&userPassword=%@&userPhone=%@&userEmail=%@&userType=%d",name,password,phone,email,type];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:block getFunction:@"user/register" postInfo:data];
+}
+
 
 
 

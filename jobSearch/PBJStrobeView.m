@@ -49,12 +49,9 @@
     self = [super initWithFrame:frame];
     if (self) {
 
-        CGFloat padding = 4.0f;
+        CGFloat padding = 0.0f;
     
-        self.backgroundColor = [UIColor blackColor];
-        CGRect viewFrame = CGRectZero;
-        viewFrame.size = CGSizeMake(100.0f, 30.0f);
-        self.frame = viewFrame;
+        self.backgroundColor = [UIColor clearColor];
                 
         _strobeView = [self _strobeView];
         CGRect strobeFrame = _strobeView.frame;

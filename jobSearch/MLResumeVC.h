@@ -10,6 +10,7 @@
 #import "QRadioButton.h"
 #import "MCPagerView.h"
 #import "freeselectViewCell.h"
+#import "MLResumeVideoVC.h"
 
 @interface MLResumeVC : UIViewController<UIScrollViewDelegate,QRadioButtonDelegate,MCPagerViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate>
 

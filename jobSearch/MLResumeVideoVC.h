@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PBJVision.h"
+#import "PBJStrobeView.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
-@interface MLResumeVideoVC : UIViewController
+@interface MLResumeVideoVC : UIViewController<UIGestureRecognizerDelegate,PBJVisionDelegate,UIAlertViewDelegate>
 
 @end
