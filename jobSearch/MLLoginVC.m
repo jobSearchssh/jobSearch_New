@@ -282,7 +282,7 @@ static  MLLoginVC *thisVC=nil;
     {
         inputUserPhoneNumber=_phoneNumber.text;
         self.sendMsgButton.enabled=YES;
-        [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
+        [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]];
         
     }else{
         inputUserPhoneNumber=nil;
@@ -374,7 +374,7 @@ static  MLLoginVC *thisVC=nil;
         [timer invalidate];
         [self.sendMsgButton setTitle:@"发送短信验证码" forState:UIControlStateNormal];
         self.sendMsgButton.enabled=YES;
-        [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0]];
+        [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]];
         seconds=60;
     }
 }
