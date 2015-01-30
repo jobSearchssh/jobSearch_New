@@ -29,7 +29,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UIView *containTopView;
 @property (weak, nonatomic) IBOutlet UIView *indicatorcontainview;
 
-- (IBAction)continueAction:(UIButton *)sender;
 
 @property (nonatomic, strong) MCPagerView *pageIndicator;
 
@@ -81,8 +80,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //navigator
 
     [self.navigationItem setTitle:@"新建简历"];
-    
-    
 
     //上部分
     self.pickerView = [[AKPickerView alloc] initWithFrame:self.containTopView.bounds];
@@ -448,7 +445,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
  // Pass the selected object to the new view controller.
  }
  */
-- (IBAction)continueAction:(UIBarButtonItem *)sender {
+
+- (IBAction)continueAction:(id)sender {
     NSInteger currentpage = [self.pickerView selectedItem];
     if (currentpage == self.pages-1) {
         return;
@@ -458,6 +456,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.scrollviewOutlet setContentOffset:offset animated:YES];
     self.pageIndicator.page = nextpage;
     [self.pickerView selectItem:nextpage animated:YES];
+
 }
 
 

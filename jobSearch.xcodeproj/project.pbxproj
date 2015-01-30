@@ -39,6 +39,8 @@
 		3B1439771A7B6EEE0062368E /* RSCircaPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1439721A7B6EEE0062368E /* RSCircaPageControl.m */; };
 		3B14397B1A7B6F010062368E /* MLLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B1439791A7B6F010062368E /* MLLoginVC.m */; };
 		3B14397C1A7B6F010062368E /* MLLoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B14397A1A7B6F010062368E /* MLLoginVC.xib */; };
+		3B1439801A7B74A90062368E /* MLResumeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B14397E1A7B74A90062368E /* MLResumeVC.m */; };
+		3B1439811A7B74A90062368E /* MLResumeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B14397F1A7B74A90062368E /* MLResumeVC.xib */; };
 		3B176BAE1A6BDA7D0012A350 /* jobDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B176BAC1A6BDA7D0012A350 /* jobDetailVC.m */; };
 		3B176BAF1A6BDA7D0012A350 /* jobDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B176BAD1A6BDA7D0012A350 /* jobDetailVC.xib */; };
 		3B313DA71A71E9CA002FE8B3 /* tabbarBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B313DA61A71E9CA002FE8B3 /* tabbarBackground.png */; };
@@ -182,8 +184,6 @@
 		3BD4DC261A77C4CD00B061D0 /* radio_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DC201A77C4CD00B061D0 /* radio_unchecked@2x.png */; };
 		3BD4DC271A77C4CD00B061D0 /* QRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD4DC221A77C4CD00B061D0 /* QRadioButton.m */; };
 		3BD4DC371A77C4D800B061D0 /* AKPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD4DC291A77C4D800B061D0 /* AKPickerView.m */; };
-		3BD4DC381A77C4D800B061D0 /* MLResumeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD4DC2B1A77C4D800B061D0 /* MLResumeVC.m */; };
-		3BD4DC391A77C4D800B061D0 /* MLResumeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DC2C1A77C4D800B061D0 /* MLResumeVC.xib */; };
 		3BD4DC3A1A77C4D800B061D0 /* MCPagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD4DC2E1A77C4D800B061D0 /* MCPagerView.m */; };
 		3BD4DC3B1A77C4D800B061D0 /* freeselectViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD4DC301A77C4D800B061D0 /* freeselectViewCell.m */; };
 		3BD4DC3C1A77C4D800B061D0 /* freeselectViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DC311A77C4D800B061D0 /* freeselectViewCell.xib */; };
@@ -326,6 +326,9 @@
 		3B1439781A7B6F010062368E /* MLLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLLoginVC.h; sourceTree = "<group>"; };
 		3B1439791A7B6F010062368E /* MLLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLLoginVC.m; sourceTree = "<group>"; };
 		3B14397A1A7B6F010062368E /* MLLoginVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLLoginVC.xib; sourceTree = "<group>"; };
+		3B14397D1A7B74A90062368E /* MLResumeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MLResumeVC.h; path = resumeIIcon/MLResumeVC.h; sourceTree = "<group>"; };
+		3B14397E1A7B74A90062368E /* MLResumeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MLResumeVC.m; path = resumeIIcon/MLResumeVC.m; sourceTree = "<group>"; };
+		3B14397F1A7B74A90062368E /* MLResumeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MLResumeVC.xib; path = resumeIIcon/MLResumeVC.xib; sourceTree = "<group>"; };
 		3B176BAB1A6BDA7D0012A350 /* jobDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobDetailVC.h; sourceTree = "<group>"; };
 		3B176BAC1A6BDA7D0012A350 /* jobDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jobDetailVC.m; sourceTree = "<group>"; };
 		3B176BAD1A6BDA7D0012A350 /* jobDetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = jobDetailVC.xib; sourceTree = "<group>"; };
@@ -516,9 +519,6 @@
 		3BD4DC221A77C4CD00B061D0 /* QRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRadioButton.m; sourceTree = "<group>"; };
 		3BD4DC281A77C4D800B061D0 /* AKPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKPickerView.h; sourceTree = "<group>"; };
 		3BD4DC291A77C4D800B061D0 /* AKPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKPickerView.m; sourceTree = "<group>"; };
-		3BD4DC2A1A77C4D800B061D0 /* MLResumeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLResumeVC.h; sourceTree = "<group>"; };
-		3BD4DC2B1A77C4D800B061D0 /* MLResumeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLResumeVC.m; sourceTree = "<group>"; };
-		3BD4DC2C1A77C4D800B061D0 /* MLResumeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLResumeVC.xib; sourceTree = "<group>"; };
 		3BD4DC2D1A77C4D800B061D0 /* MCPagerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPagerView.h; sourceTree = "<group>"; };
 		3BD4DC2E1A77C4D800B061D0 /* MCPagerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPagerView.m; sourceTree = "<group>"; };
 		3BD4DC2F1A77C4D800B061D0 /* freeselectViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = freeselectViewCell.h; sourceTree = "<group>"; };
@@ -1164,14 +1164,14 @@
 				3BD4DC411A77C4FC00B061D0 /* resumeIIcon */,
 				3BD4DC281A77C4D800B061D0 /* AKPickerView.h */,
 				3BD4DC291A77C4D800B061D0 /* AKPickerView.m */,
-				3BD4DC2A1A77C4D800B061D0 /* MLResumeVC.h */,
-				3BD4DC2B1A77C4D800B061D0 /* MLResumeVC.m */,
-				3BD4DC2C1A77C4D800B061D0 /* MLResumeVC.xib */,
 				3BD4DC2D1A77C4D800B061D0 /* MCPagerView.h */,
 				3BD4DC2E1A77C4D800B061D0 /* MCPagerView.m */,
 				3BD4DC2F1A77C4D800B061D0 /* freeselectViewCell.h */,
 				3BD4DC301A77C4D800B061D0 /* freeselectViewCell.m */,
 				3BD4DC311A77C4D800B061D0 /* freeselectViewCell.xib */,
+				3B14397D1A7B74A90062368E /* MLResumeVC.h */,
+				3B14397E1A7B74A90062368E /* MLResumeVC.m */,
+				3B14397F1A7B74A90062368E /* MLResumeVC.xib */,
 				3BD4DC321A77C4D800B061D0 /* MLResumePreviewVC.h */,
 				3BD4DC331A77C4D800B061D0 /* MLResumePreviewVC.m */,
 				3BD4DC341A77C4D800B061D0 /* MLResumePreviewVC.xib */,
@@ -1451,7 +1451,6 @@
 				3B313E081A7299B0002FE8B3 /* tourists@2x.png in Resources */,
 				3BC8AE131A73605E00417741 /* cellBackground1@3x.png in Resources */,
 				3BD4DC9B1A77D38100B061D0 /* agreeInvite@3x.png in Resources */,
-				3BD4DC391A77C4D800B061D0 /* MLResumeVC.xib in Resources */,
 				3B07851E1A6A6F9500ACD76C /* icon_location@3x.png in Resources */,
 				3B313DC41A71EBAC002FE8B3 /* target@2x.png in Resources */,
 				3BD4DC251A77C4CD00B061D0 /* radio_unchecked.png in Resources */,
@@ -1471,6 +1470,7 @@
 				3BD4DCA61A77D40900B061D0 /* checkbox1_unchecked.png in Resources */,
 				3BD4DC6F1A77C50600B061D0 /* resume_night1.png in Resources */,
 				3B313E011A7296D8002FE8B3 /* sideNormalTableViewCell.xib in Resources */,
+				3B1439811A7B74A90062368E /* MLResumeVC.xib in Resources */,
 				3BC8AE0D1A735FE100417741 /* cellBackground.png in Resources */,
 				3B313E101A72A60F002FE8B3 /* apply@2x.png in Resources */,
 				B77578DC1A7A9EF000660BB7 /* capture_rec_base@2x.png in Resources */,
@@ -1585,6 +1585,7 @@
 				B7D32BCB1A78EC6900871277 /* netAPI.m in Sources */,
 				3B0785231A6A79FB00ACD76C /* NiftySearchView.m in Sources */,
 				3B92364C1A67FAFA00347D9C /* AppDelegate.m in Sources */,
+				3B1439801A7B74A90062368E /* MLResumeVC.m in Sources */,
 				3BC8AE311A738D4B00417741 /* Reachability.m in Sources */,
 				3BD4DC181A778A2300B061D0 /* MLMyApplication.m in Sources */,
 				3B9236491A67FAFA00347D9C /* main.m in Sources */,
@@ -1612,7 +1613,6 @@
 				3BC8AE3D1A76256300417741 /* MLLoginBusiness.m in Sources */,
 				3BD4DC3F1A77C4D800B061D0 /* coverFlowView.m in Sources */,
 				3BD4DC3D1A77C4D800B061D0 /* MLResumePreviewVC.m in Sources */,
-				3BD4DC381A77C4D800B061D0 /* MLResumeVC.m in Sources */,
 				B7D32BB21A78E14D00871277 /* UIView+toastView.m in Sources */,
 				B7D32BCC1A78EC6900871277 /* URLOperationWithBlock.m in Sources */,
 				3BC051D51A70DEC20099A2DF /* MLCell2.m in Sources */,
