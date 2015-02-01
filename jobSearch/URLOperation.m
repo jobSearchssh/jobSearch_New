@@ -7,7 +7,7 @@
 //
 
 #import "URLOperation.h"
-static NSString *baseURL = @"http://182.92.177.56:3000/";
+static NSString *baseURL = @"http://182.92.177.56:8081/";
 @implementation URLOperation
 - (id)initWithURL:(NSData*)getInfo serveceFunction:(NSString *)getPostLoca target:(id)getTarget action:(SEL)getAction isPost:(BOOL)postOrGet{
     self = [super init];

@@ -47,10 +47,11 @@
                     flag = false;
                 }
             }
-            if (status.intValue == BASE_FAILED) {
-                break;
-            }
+
             if (flag) {
+                if (status.intValue == BASE_FAILED) {
+                    break;
+                }
                 savejobsArray = [[NSMutableArray alloc]init];
                 NSArray *jobsJSON = [a objectForKey:@"datas"];
                 for (NSDictionary *dictionary in jobsJSON) {
