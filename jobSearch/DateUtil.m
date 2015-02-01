@@ -9,6 +9,14 @@
 #import "DateUtil.h"
 static long long daySeconds = 60*60*24;
 @implementation DateUtil
+
++(NSDate *)dateFromString:(NSString *)dateString{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+    NSDate *destDate= [dateFormatter dateFromString:dateString];
+    return destDate;
+    
+}
 +(NSString *)stringFromDate:(NSDate *)date{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy年MM月dd日 HH:mm"];

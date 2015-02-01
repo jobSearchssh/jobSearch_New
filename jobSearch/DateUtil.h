@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface DateUtil : NSObject
++(NSDate *)dateFromString:(NSString *)dateString;
 +(NSString *)stringFromDate:(NSDate *)date;
 +(NSString *)birthdayStringFromDate:(NSDate *)date;
 +(NSString *)startTimeStringFromDate:(NSDate *)date;

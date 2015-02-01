@@ -6,8 +6,14 @@
 //  Copyright (c) 2015年 麻辣工作室. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "baseModel.h"
+#import "newestJobModel.h"
 
-@interface newestJobListModel : NSObject
+@interface newestJobListModel : baseModel{
+    NSMutableArray *newestJobList;
+}
+-(newestJobListModel *)initWithData:(NSData *)mainData;
+-(newestJobListModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error;
+-(NSMutableArray *)getnewestJobListArray;
 
 @end

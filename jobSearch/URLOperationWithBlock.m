@@ -7,7 +7,7 @@
 //
 
 #import "URLOperationWithBlock.h"
-static NSString *baseURL = @"http://182.92.177.56:3000/";
+static NSString *baseURL = @"http://182.92.177.56:8081/";
 @implementation URLOperationWithBlock
 //data为post数据 postFunction为post地址 block为回调函数
 - (id)initWithURL:(NSData*)getInfo serveceFunction:(NSString *)getPostLoca returnblock:(returnBlock)rblock isPost:(BOOL)postOrGet{
@@ -26,7 +26,6 @@ static NSString *baseURL = @"http://182.92.177.56:3000/";
     @try {
         //第一步，生成链接地址
         NSURL *url = [NSURL URLWithString:[[NSString alloc]initWithFormat:@"%@%@",baseURL,postLoca]];
-        
         //第二步，创建请求
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:3];
         
@@ -46,13 +45,12 @@ static NSString *baseURL = @"http://182.92.177.56:3000/";
             BOOL flag = TRUE;
             if (!error) {
                 flag = TRUE;
-                URLReturnModel *objRe = [[URLReturnModel alloc]initWithData:flag data:data error:error];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    block(objRe);
-                });
             }else{
                 flag = FALSE;
-                URLReturnModel *objRe = [[URLReturnModel alloc]initWithData:flag data:data error:error];
+            }
+            
+            URLReturnModel *objRe = [[URLReturnModel alloc]initWithData:flag data:data error:error];
+            if (block !=Nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     block(objRe);
                 });

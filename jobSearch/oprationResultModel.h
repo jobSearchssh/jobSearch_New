@@ -8,6 +8,10 @@
 
 #import "baseModel.h"
 
-@interface oprationResultModel : baseModel
-
+@interface oprationResultModel : baseModel{
+    NSString *datas;
+}
+-(oprationResultModel *)initWithData:(NSData *)mainData;
+-(oprationResultModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error;
+-(NSString *)getOprationID;
 @end

@@ -7,7 +7,13 @@
 //
 
 #import "baseModel.h"
+#import "saveJobModel.h"
 
-@interface jobsModel : baseModel
+@interface saveJobListModel : baseModel{
+    NSMutableArray *savejobsArray;
+}
 
+-(saveJobListModel *)initWithData:(NSData *)mainData;
+-(saveJobListModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error;
+-(NSMutableArray *)getsaveJobsArray;
 @end

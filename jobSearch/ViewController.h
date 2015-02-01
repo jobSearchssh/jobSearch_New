@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "RESideMenu.h"
+#import "netAPI.h"
+
 #define IS_WIDESCREEN ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 
 @interface ViewController : UIViewController

@@ -7,7 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#define STATIS_OK 0
+#define STATIS_NO 1
 
-@interface registerModel : NSObject
+@interface registerModel : NSObject{
+    NSNumber *status;
+    NSString *info;
+    NSString *usrID;
+}
 
+-(registerModel *)initWithData:(NSData *)mainData;
+-(registerModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error usrID:(NSString *)defaultID;
+-(NSNumber *)getStatus;
+-(NSString *)getInfo;
+-(NSString *)getUsrID;
 @end

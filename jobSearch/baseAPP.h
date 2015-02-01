@@ -13,5 +13,7 @@
 -(id)init;
 
 +(NSOperationQueue *)getBaseNSOperationQueue;
++(void)setUsrID:(NSString *)setUsrID;
++(NSString *)getUsrID;
 
 @end

@@ -6,8 +6,13 @@
 //  Copyright (c) 2015年 麻辣工作室. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "baseModel.h"
+#import "nearByJobModel.h"
 
-@interface nearByJobListModel : NSObject
-
+@interface nearByJobListModel : baseModel{
+    NSMutableArray *nearByJobList;
+}
+-(nearByJobListModel *)initWithData:(NSData *)mainData;
+-(nearByJobListModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error;
+-(NSMutableArray *)getnearByJobListArray;
 @end

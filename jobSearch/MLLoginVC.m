@@ -12,6 +12,7 @@
 #import "SMS_SDK/SMS_SDK.h"
 static NSString *usrAccountText = @"usrAccountText";
 static NSString *usrPhoneText = @"usrPhoneText";
+typedef void (^loginReturnBlock)(loginModel *loginModel);
 
 @interface MLLoginVC ()<QCheckBoxDelegate,loginResult,registerResult,UIGestureRecognizerDelegate>{
     
@@ -214,6 +215,7 @@ static  MLLoginVC *thisVC=nil;
 }
 
 - (IBAction)touchLoginBtn:(id)sender {
+    //test
     if ([inputUserAccount length]==0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入手机号码或账户名" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
@@ -221,13 +223,16 @@ static  MLLoginVC *thisVC=nil;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入登陆密码" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
     }else{
+        
         @try {
             [self.view makeToastActivity];
         }
         @catch (NSException *exception) {
             
         }
-        [netAPI usrLogin:inputUserAccount usrPassword:inputUserPassword withBlock:^(URLReturnModel *returnModel) {
+        
+        [netAPI usrLogin:inputUserAccount usrPassword:inputUserPassword withBlock:^(loginModel *returnModel) {
+            
             if ([self.view isToastActivityShow]) {
                 @try {
                     [self.view hideToastActivity];
@@ -238,11 +243,10 @@ static  MLLoginVC *thisVC=nil;
             
             UIAlertView *alterTittle = nil ;
             
-            if (returnModel.getFlag) {
-                NSString *receiveStr = [[NSString alloc]initWithData:[returnModel getData] encoding:NSUTF8StringEncoding];
-                alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:receiveStr delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            if ([returnModel getStatus].intValue == STATIS_OK) {
+                alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:[returnModel getInfo] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
             }else{
-                alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:[[returnModel getError] localizedDescription] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:[returnModel getInfo] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
             }
             
             [alterTittle show];

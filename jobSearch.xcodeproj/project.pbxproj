@@ -243,6 +243,19 @@
 		3BD4DCA71A77D40900B061D0 /* checkbox1_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DCA11A77D40900B061D0 /* checkbox1_unchecked@2x.png */; };
 		3BD4DCB61A77D88C00B061D0 /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DCB41A77D88C00B061D0 /* right.png */; };
 		3BD4DCB71A77D88C00B061D0 /* wrong.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DCB51A77D88C00B061D0 /* wrong.png */; };
+		B751EB931A7E128200A6361A /* baseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EB921A7E128200A6361A /* baseModel.m */; };
+		B751EB961A7E14D300A6361A /* saveJobListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EB951A7E14D300A6361A /* saveJobListModel.m */; };
+		B751EB991A7E19A500A6361A /* saveJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EB981A7E19A500A6361A /* saveJobModel.m */; };
+		B751EB9C1A7E2B7C00A6361A /* loginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EB9B1A7E2B7C00A6361A /* loginModel.m */; };
+		B751EB9F1A7E2B9500A6361A /* registerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EB9E1A7E2B9500A6361A /* registerModel.m */; };
+		B751EBA21A7E46D000A6361A /* nearByJobListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBA11A7E46D000A6361A /* nearByJobListModel.m */; };
+		B751EBA51A7E498F00A6361A /* nearByJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBA41A7E498F00A6361A /* nearByJobModel.m */; };
+		B751EBA81A7E4FCF00A6361A /* newestJobListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBA71A7E4FCF00A6361A /* newestJobListModel.m */; };
+		B751EBAB1A7E509300A6361A /* newestJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBAA1A7E509300A6361A /* newestJobModel.m */; };
+		B751EBAE1A7E525000A6361A /* applyJobListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBAD1A7E525000A6361A /* applyJobListModel.m */; };
+		B751EBB11A7E526800A6361A /* applyJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBB01A7E526800A6361A /* applyJobModel.m */; };
+		B751EBB41A7E541200A6361A /* baseJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBB31A7E541200A6361A /* baseJobModel.m */; };
+		B751EBBB1A7E5B4000A6361A /* oprationResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBBA1A7E5B4000A6361A /* oprationResultModel.m */; };
 		B75CE4011A7B512B00974815 /* resume_female.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CE3FD1A7B512B00974815 /* resume_female.png */; };
 		B75CE4021A7B512B00974815 /* resume_male.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CE3FE1A7B512B00974815 /* resume_male.png */; };
 		B75CE4031A7B512B00974815 /* resume_phone.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CE3FF1A7B512B00974815 /* resume_phone.png */; };
@@ -582,6 +595,32 @@
 		3BD4DCA11A77D40900B061D0 /* checkbox1_unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox1_unchecked@2x.png"; sourceTree = "<group>"; };
 		3BD4DCB41A77D88C00B061D0 /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
 		3BD4DCB51A77D88C00B061D0 /* wrong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wrong.png; sourceTree = "<group>"; };
+		B751EB911A7E128200A6361A /* baseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseModel.h; sourceTree = "<group>"; };
+		B751EB921A7E128200A6361A /* baseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = baseModel.m; sourceTree = "<group>"; };
+		B751EB941A7E14D300A6361A /* saveJobListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = saveJobListModel.h; sourceTree = "<group>"; };
+		B751EB951A7E14D300A6361A /* saveJobListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = saveJobListModel.m; sourceTree = "<group>"; };
+		B751EB971A7E19A500A6361A /* saveJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = saveJobModel.h; sourceTree = "<group>"; };
+		B751EB981A7E19A500A6361A /* saveJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = saveJobModel.m; sourceTree = "<group>"; };
+		B751EB9A1A7E2B7C00A6361A /* loginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loginModel.h; sourceTree = "<group>"; };
+		B751EB9B1A7E2B7C00A6361A /* loginModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = loginModel.m; sourceTree = "<group>"; };
+		B751EB9D1A7E2B9500A6361A /* registerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registerModel.h; sourceTree = "<group>"; };
+		B751EB9E1A7E2B9500A6361A /* registerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = registerModel.m; sourceTree = "<group>"; };
+		B751EBA01A7E46D000A6361A /* nearByJobListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nearByJobListModel.h; sourceTree = "<group>"; };
+		B751EBA11A7E46D000A6361A /* nearByJobListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = nearByJobListModel.m; sourceTree = "<group>"; };
+		B751EBA31A7E498F00A6361A /* nearByJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nearByJobModel.h; sourceTree = "<group>"; };
+		B751EBA41A7E498F00A6361A /* nearByJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = nearByJobModel.m; sourceTree = "<group>"; };
+		B751EBA61A7E4FCF00A6361A /* newestJobListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newestJobListModel.h; sourceTree = "<group>"; };
+		B751EBA71A7E4FCF00A6361A /* newestJobListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newestJobListModel.m; sourceTree = "<group>"; };
+		B751EBA91A7E509300A6361A /* newestJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newestJobModel.h; sourceTree = "<group>"; };
+		B751EBAA1A7E509300A6361A /* newestJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newestJobModel.m; sourceTree = "<group>"; };
+		B751EBAC1A7E525000A6361A /* applyJobListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = applyJobListModel.h; sourceTree = "<group>"; };
+		B751EBAD1A7E525000A6361A /* applyJobListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = applyJobListModel.m; sourceTree = "<group>"; };
+		B751EBAF1A7E526800A6361A /* applyJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = applyJobModel.h; sourceTree = "<group>"; };
+		B751EBB01A7E526800A6361A /* applyJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = applyJobModel.m; sourceTree = "<group>"; };
+		B751EBB21A7E541200A6361A /* baseJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseJobModel.h; sourceTree = "<group>"; };
+		B751EBB31A7E541200A6361A /* baseJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = baseJobModel.m; sourceTree = "<group>"; };
+		B751EBB91A7E5B4000A6361A /* oprationResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oprationResultModel.h; sourceTree = "<group>"; };
+		B751EBBA1A7E5B4000A6361A /* oprationResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = oprationResultModel.m; sourceTree = "<group>"; };
 		B75CE3FD1A7B512B00974815 /* resume_female.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resume_female.png; sourceTree = "<group>"; };
 		B75CE3FE1A7B512B00974815 /* resume_male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resume_male.png; sourceTree = "<group>"; };
 		B75CE3FF1A7B512B00974815 /* resume_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resume_phone.png; sourceTree = "<group>"; };
@@ -873,6 +912,7 @@
 		3B9236451A67FAFA00347D9C /* jobSearch */ = {
 			isa = PBXGroup;
 			children = (
+				B751EB901A7E127000A6361A /* model */,
 				B7D32BB31A78E15A00871277 /* network */,
 				B7D32BAF1A78E13E00871277 /* widget */,
 				B7D32BA51A78E0FF00871277 /* baseAPP */,
@@ -1250,6 +1290,71 @@
 			path = resumeIIcon;
 			sourceTree = "<group>";
 		};
+		B751EB901A7E127000A6361A /* model */ = {
+			isa = PBXGroup;
+			children = (
+				B751EBB81A7E5A1600A6361A /* operations */,
+				B751EBB71A7E59C800A6361A /* base */,
+				B751EBB61A7E59B000A6361A /* login&register */,
+				B751EBB51A7E599D00A6361A /* listArray */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
+		B751EBB51A7E599D00A6361A /* listArray */ = {
+			isa = PBXGroup;
+			children = (
+				B751EB941A7E14D300A6361A /* saveJobListModel.h */,
+				B751EB951A7E14D300A6361A /* saveJobListModel.m */,
+				B751EB971A7E19A500A6361A /* saveJobModel.h */,
+				B751EB981A7E19A500A6361A /* saveJobModel.m */,
+				B751EBA01A7E46D000A6361A /* nearByJobListModel.h */,
+				B751EBA11A7E46D000A6361A /* nearByJobListModel.m */,
+				B751EBA31A7E498F00A6361A /* nearByJobModel.h */,
+				B751EBA41A7E498F00A6361A /* nearByJobModel.m */,
+				B751EBA61A7E4FCF00A6361A /* newestJobListModel.h */,
+				B751EBA71A7E4FCF00A6361A /* newestJobListModel.m */,
+				B751EBA91A7E509300A6361A /* newestJobModel.h */,
+				B751EBAA1A7E509300A6361A /* newestJobModel.m */,
+				B751EBAC1A7E525000A6361A /* applyJobListModel.h */,
+				B751EBAD1A7E525000A6361A /* applyJobListModel.m */,
+				B751EBAF1A7E526800A6361A /* applyJobModel.h */,
+				B751EBB01A7E526800A6361A /* applyJobModel.m */,
+			);
+			name = listArray;
+			sourceTree = "<group>";
+		};
+		B751EBB61A7E59B000A6361A /* login&register */ = {
+			isa = PBXGroup;
+			children = (
+				B751EB9D1A7E2B9500A6361A /* registerModel.h */,
+				B751EB9E1A7E2B9500A6361A /* registerModel.m */,
+				B751EB9A1A7E2B7C00A6361A /* loginModel.h */,
+				B751EB9B1A7E2B7C00A6361A /* loginModel.m */,
+			);
+			name = "login&register";
+			sourceTree = "<group>";
+		};
+		B751EBB71A7E59C800A6361A /* base */ = {
+			isa = PBXGroup;
+			children = (
+				B751EB911A7E128200A6361A /* baseModel.h */,
+				B751EB921A7E128200A6361A /* baseModel.m */,
+				B751EBB21A7E541200A6361A /* baseJobModel.h */,
+				B751EBB31A7E541200A6361A /* baseJobModel.m */,
+			);
+			name = base;
+			sourceTree = "<group>";
+		};
+		B751EBB81A7E5A1600A6361A /* operations */ = {
+			isa = PBXGroup;
+			children = (
+				B751EBB91A7E5B4000A6361A /* oprationResultModel.h */,
+				B751EBBA1A7E5B4000A6361A /* oprationResultModel.m */,
+			);
+			name = operations;
+			sourceTree = "<group>";
+		};
 		B77578C61A7A94A900660BB7 /* resumevideo */ = {
 			isa = PBXGroup;
 			children = (
@@ -1599,22 +1704,30 @@
 				3B0785581A6AA9A100ACD76C /* CardView.m in Sources */,
 				3B0785541A6AA89500ACD76C /* ZLPanGestureRecognizer.m in Sources */,
 				3B1439751A7B6EEE0062368E /* PiPeiView.m in Sources */,
+				B751EBA21A7E46D000A6361A /* nearByJobListModel.m in Sources */,
 				3B313DFF1A7296D8002FE8B3 /* RESideMenuItem.m in Sources */,
 				3BD4DC371A77C4D800B061D0 /* AKPickerView.m in Sources */,
 				3B14397B1A7B6F010062368E /* MLLoginVC.m in Sources */,
 				3B1439771A7B6EEE0062368E /* RSCircaPageControl.m in Sources */,
 				3B313DFD1A7296D8002FE8B3 /* RESideMenu.m in Sources */,
 				3BD4DC3A1A77C4D800B061D0 /* MCPagerView.m in Sources */,
+				B751EBA51A7E498F00A6361A /* nearByJobModel.m in Sources */,
 				3B176BAE1A6BDA7D0012A350 /* jobDetailVC.m in Sources */,
 				B77578CC1A7A94B900660BB7 /* PBJVisionUtilities.m in Sources */,
 				3BD4DC0D1A777F8900B061D0 /* MLMyCollection.m in Sources */,
 				3B313DCE1A722771002FE8B3 /* MLNavigation.m in Sources */,
 				3B0785391A6A851900ACD76C /* MLMapView.m in Sources */,
+				B751EBBB1A7E5B4000A6361A /* oprationResultModel.m in Sources */,
 				3BC8AE3D1A76256300417741 /* MLLoginBusiness.m in Sources */,
 				3BD4DC3F1A77C4D800B061D0 /* coverFlowView.m in Sources */,
 				3BD4DC3D1A77C4D800B061D0 /* MLResumePreviewVC.m in Sources */,
 				B7D32BB21A78E14D00871277 /* UIView+toastView.m in Sources */,
 				B7D32BCC1A78EC6900871277 /* URLOperationWithBlock.m in Sources */,
+				B751EB991A7E19A500A6361A /* saveJobModel.m in Sources */,
+				B751EBB41A7E541200A6361A /* baseJobModel.m in Sources */,
+				B751EB9F1A7E2B9500A6361A /* registerModel.m in Sources */,
+				B751EBAE1A7E525000A6361A /* applyJobListModel.m in Sources */,
+				B751EBAB1A7E509300A6361A /* newestJobModel.m in Sources */,
 				3BC051D51A70DEC20099A2DF /* MLCell2.m in Sources */,
 				3B65240E1A6CBDDD005FD671 /* SWCellScrollView.m in Sources */,
 				3B65240D1A6CBDDD005FD671 /* NSMutableArray+SWUtilityButtons.m in Sources */,
@@ -1622,13 +1735,18 @@
 				3B0785491A6AA76900ACD76C /* DailyMatchVC.m in Sources */,
 				3B07854E1A6AA88600ACD76C /* UIColor+FlatColors.m in Sources */,
 				3BC8AE3A1A7624AB00417741 /* User.m in Sources */,
+				B751EBA81A7E4FCF00A6361A /* newestJobListModel.m in Sources */,
 				3BC051D01A70DE340099A2DF /* MLMessageVC.m in Sources */,
 				3B313DF81A7296D8002FE8B3 /* AccelerationAnimation.m in Sources */,
 				3BCBBD0D1A6CCBF600E581FD /* KVNMaskedPageControl.m in Sources */,
 				B7D32BA81A78E11300871277 /* baseAPP.m in Sources */,
+				B751EB931A7E128200A6361A /* baseModel.m in Sources */,
+				B751EB9C1A7E2B7C00A6361A /* loginModel.m in Sources */,
 				3B0785551A6AA89500ACD76C /* ZLSwipeableView.m in Sources */,
 				3B6524121A6CBDDD005FD671 /* SWUtilityButtonView.m in Sources */,
 				3B313DFE1A7296D8002FE8B3 /* RESideMenuCell.m in Sources */,
+				B751EBB11A7E526800A6361A /* applyJobModel.m in Sources */,
+				B751EB961A7E14D300A6361A /* saveJobListModel.m in Sources */,
 				3B313DFC1A7296D8002FE8B3 /* REBackgroundView.m in Sources */,
 				B7D32BAE1A78E13800871277 /* DateUtil.m in Sources */,
 				3B6524101A6CBDDD005FD671 /* SWTableViewCell.m in Sources */,

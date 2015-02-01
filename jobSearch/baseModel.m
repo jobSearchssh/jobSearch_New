@@ -9,5 +9,13 @@
 #import "baseModel.h"
 
 @implementation baseModel
-
+-(NSNumber *)getStatus{
+    return status;
+}
+-(NSNumber *)getCount{
+    return count;
+}
+-(NSString *)getInfo{
+    return info;
+}
 @end

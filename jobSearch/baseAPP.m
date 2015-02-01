@@ -9,7 +9,7 @@
 #import "baseAPP.h"
 
 static NSOperationQueue *queue;
-
+static NSString *usrID;
 @implementation baseAPP
 -(id)init{
     self = [super init];
@@ -24,9 +24,16 @@ static NSOperationQueue *queue;
     return self;
 }
 -(void)initData{
-
     queue = [[NSOperationQueue alloc]init];
+//    usrID = [[NSString alloc]init];
+    usrID = [NSString stringWithFormat:@"54cdee5b3ed1ccf5358b458a"];
+}
 
++(void)setUsrID:(NSString *)setUsrID{
+    usrID = setUsrID;
+}
++(NSString *)getUsrID{
+    return usrID;
 }
 
 +(NSOperationQueue *)getBaseNSOperationQueue{
