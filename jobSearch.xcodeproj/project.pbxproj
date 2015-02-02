@@ -97,6 +97,7 @@
 		3B313E261A72A785002FE8B3 /* logout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B313E231A72A785002FE8B3 /* logout@2x.png */; };
 		3B313E271A72A785002FE8B3 /* logout@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B313E241A72A785002FE8B3 /* logout@3x.png */; };
 		3B313E281A72A785002FE8B3 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B313E251A72A785002FE8B3 /* logout.png */; };
+		3B32E41C1A7F6A3A00CD9055 /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B32E41B1A7F6A3A00CD9055 /* PopoverView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3B3C09E51A68F30900B8C343 /* MLFirstVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3C09E31A68F30900B8C343 /* MLFirstVC.m */; };
 		3B3C09E61A68F30900B8C343 /* MLFirstVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B3C09E41A68F30900B8C343 /* MLFirstVC.xib */; };
 		3B3C0A011A68F73700B8C343 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B3C09FF1A68F71500B8C343 /* QuartzCore.framework */; };
@@ -410,6 +411,8 @@
 		3B313E231A72A785002FE8B3 /* logout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logout@2x.png"; sourceTree = "<group>"; };
 		3B313E241A72A785002FE8B3 /* logout@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logout@3x.png"; sourceTree = "<group>"; };
 		3B313E251A72A785002FE8B3 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
+		3B32E41A1A7F6A3A00CD9055 /* PopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopoverView.h; sourceTree = "<group>"; };
+		3B32E41B1A7F6A3A00CD9055 /* PopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopoverView.m; sourceTree = "<group>"; };
 		3B3C09E21A68F30900B8C343 /* MLFirstVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLFirstVC.h; sourceTree = "<group>"; };
 		3B3C09E31A68F30900B8C343 /* MLFirstVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLFirstVC.m; sourceTree = "<group>"; };
 		3B3C09E41A68F30900B8C343 /* MLFirstVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLFirstVC.xib; sourceTree = "<group>"; };
@@ -781,6 +784,8 @@
 				3B1439701A7B6EEE0062368E /* PiPeiView.xib */,
 				3B1439711A7B6EEE0062368E /* RSCircaPageControl.h */,
 				3B1439721A7B6EEE0062368E /* RSCircaPageControl.m */,
+				3B32E41A1A7F6A3A00CD9055 /* PopoverView.h */,
+				3B32E41B1A7F6A3A00CD9055 /* PopoverView.m */,
 			);
 			name = pipei;
 			sourceTree = "<group>";
@@ -1681,6 +1686,7 @@
 			files = (
 				3BC8AE211A73769500417741 /* QCheckBox.m in Sources */,
 				3BCBBD081A6CCBC600E581FD /* MLProfileVC.m in Sources */,
+				3B32E41C1A7F6A3A00CD9055 /* PopoverView.m in Sources */,
 				3BD4DC271A77C4CD00B061D0 /* QRadioButton.m in Sources */,
 				3B65241C1A6CBE77005FD671 /* MLCell1.m in Sources */,
 				3BC051F91A714A080099A2DF /* jobRecmendVC.m in Sources */,

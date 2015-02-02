@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -13,12 +13,18 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kqu-d9-P0k">
-                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kqu-d9-P0k">
+                        <rect key="frame" x="3" y="2" width="25" height="25"/>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
+            <constraints>
+                <constraint firstItem="kqu-d9-P0k" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="3" id="BpC-t2-Zde"/>
+                <constraint firstItem="kqu-d9-P0k" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="2" id="Jre-DQ-ZE3"/>
+                <constraint firstAttribute="trailing" secondItem="kqu-d9-P0k" secondAttribute="trailing" constant="2" id="o5k-uo-cJc"/>
+                <constraint firstAttribute="bottom" secondItem="kqu-d9-P0k" secondAttribute="bottom" constant="3" id="obi-Wb-qWT"/>
+            </constraints>
             <connections>
                 <outlet property="imageView" destination="kqu-d9-P0k" id="w00-Bi-RWh"/>
             </connections>

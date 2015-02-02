@@ -65,6 +65,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     CGRect coverflowFrame = CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width,self.coverflowOutlet.frame.size.height -20);
     //添加coverflow
     coverFlowView *cfView = [coverFlowView coverFlowViewWithFrame:coverflowFrame andImages:sourceImages sideImageCount:2 sideImageScale:0.55 middleImageScale:0.7];
+    
     [self.coverflowOutlet addSubview:cfView];
     [self.mainScrollviewOutlet addSubview:self.coverflowOutlet];
     
