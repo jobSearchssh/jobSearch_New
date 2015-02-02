@@ -12,7 +12,9 @@
 
 #define DISTNACE_TO_MAKE_MOVE_FOR_SWIPE 60
 
-@interface coverFlowView ()
+@interface coverFlowView (){
+    CFTimeInterval durationTime;
+}
 
 //setup templates
 -(void)setupTemplateLayers;
@@ -57,6 +59,10 @@
 @synthesize sideVisibleImageScale = _sideVisibleImageScale;
 @synthesize middleImageScale = _middleImageScale;
 
+-(void)setDuration:(CFTimeInterval)dration{
+    durationTime = dration;
+}
+
 
 - (void)adjustReflectionBounds:(CALayer *)layer scale:(CGFloat)scale {
     // set originLayer's reflection bounds
@@ -85,7 +91,7 @@
         CALayer *originLayer = [self.imageLayers objectAtIndex:i];
         CALayer *targetTemplate = [self.templateLayers objectAtIndex: i + indexOffsetFromImageLayersToTemplates];
         
-        [CATransaction setAnimationDuration:1];
+        [CATransaction setAnimationDuration:durationTime];
         originLayer.position = targetTemplate.position;
         originLayer.zPosition = targetTemplate.zPosition;
         originLayer.transform = targetTemplate.transform;
@@ -215,6 +221,7 @@
         CATransform3D transformPerspective = CATransform3DIdentity;
         transformPerspective.m34 = -1.0 / 500.0;
         self.layer.sublayerTransform = transformPerspective;
+        durationTime = 1;
     }
     
     return self;

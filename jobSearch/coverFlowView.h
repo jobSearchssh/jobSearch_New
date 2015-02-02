@@ -31,6 +31,9 @@
 //show the progress of browser : pagecontrol
 @property (nonatomic, retain) UIPageControl *pageControl;
 
+-(void)setDuration:(CFTimeInterval)dration;
+
+
 //factory method
 + (id)coverFlowViewWithFrame:(CGRect)frame
                    andImages: (NSMutableArray *)rawImages
