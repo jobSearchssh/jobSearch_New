@@ -10,7 +10,6 @@
 #import "MLFirstVC.h"
 #import "MobClick.h"
 #import "Reachability.h"
-#import <BmobSDK/Bmob.h>
 #import "MLLoginBusiness.h"
 #import "SMS_SDK/SMS_SDK.h"
 
@@ -52,7 +51,7 @@
     [MobClick checkUpdate:@"兼职精灵有新版本啦" cancelButtonTitle:@"无情的忽略" otherButtonTitles:@"欣然前往下载"];
 
     //Bmob后台服务
-    [Bmob registerWithAppKey:@"feda8b57c5da4a0364a3406906f77e2d"];
+    //[Bmob registerWithAppKey:@"feda8b57c5da4a0364a3406906f77e2d"];
     
     //短信验证模块
     [SMS_SDK registerApp:@"57cd980818a9" withSecret:@"3bf26f5a30d5c3317f17887c4ee4986d"];

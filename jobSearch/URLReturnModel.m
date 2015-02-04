@@ -8,6 +8,7 @@
 
 #import "URLReturnModel.h"
 
+
 @implementation URLReturnModel
 @synthesize object;
 @synthesize error;

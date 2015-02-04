@@ -66,6 +66,7 @@
     }
     return self;
 }
+
 -(nearByJobListModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error{
     self = [super init];
     if (self) {
@@ -74,6 +75,7 @@
     }
     return self;
 }
+
 -(NSMutableArray *)getnearByJobListArray{
     return nearByJobList;
 }

@@ -11,6 +11,21 @@
 
 
 @interface jobDetailVC ()
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *jobDescribleLabelHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *jobRequireLabelHeightConstraint;
+
+@property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UIImageView *entepriseLogoView;
+@property (weak, nonatomic) IBOutlet UILabel *jobTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobAddressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobDistanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobPublishTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobWorkPeriodLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobRecuitNumLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobSalaryLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobDescribeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobRequireLabel;
 
 @end
 
@@ -27,10 +42,28 @@
     self.navigationItem.rightBarButtonItems = @[buttonItem1,buttonItem2];
     
     MLMapView *mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 200)];
-    [self.view addSubview:mapView];
+    [self.containerView addSubview:mapView];
     
     [self.applyButton setTitle:self.buttonTitle forState:UIControlStateNormal];
 }
+
+- (void)updateConstraints{
+    NSString *str=@"1.负责在本学校的推广。梅州转发官方微信或微博信息至少3条，以及配合e兼职线下的活动。\n2.定期反馈学校的情况，包括学校大型活动的安排（量力而行）以及用于的反馈意见和建议。\n3.定期反馈学校的情况，包括学校大型活动的安排（量力而行）以及用于的反馈意见和建议。";
+    
+    //工作描述label
+    self.jobDescribeLabel.text=str;
+    CGRect rect1 =[self.jobDescribeLabel.text boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width-16, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]}  context:nil];
+    self.jobDescribleLabelHeightConstraint.constant=rect1.size.height;
+    
+    //任职要求label
+    self.jobRequireLabel.text=str;
+    CGRect rect2 =[self.jobDescribeLabel.text boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width-16, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]}  context:nil];
+    self.jobRequireLabelHeightConstraint.constant=rect2.size.height;
+
+    
+    self.containerViewHeightConstraint.constant=360+rect1.size.height+rect2.size.height;
+}
+
 
 - (void)shareJob{
     

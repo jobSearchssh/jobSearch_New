@@ -14,14 +14,17 @@
 #import "jobDetailVC.h"
 #import "MLMessageVC.h"
 #import "MLMatchVC.h"
+#import "MBProgressHUD.h"
 
 @interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate>
 {
     NSInteger cellNum;
     NiftySearchView *searchView;
     MLMapView *mapView;
-    
+    NSMutableArray *recordArray;
     BOOL mapDisplaying;
+    
+    NSDateFormatter *dateFormatter;
 }
 
 @property (weak, nonatomic) IBOutlet UITabBar *tabbar;
@@ -44,6 +47,8 @@ static  MLFirstVC *thisVC=nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
  
+    cellNum=0;
+    
     searchView = [[NiftySearchView alloc] initWithFrame:CGRectMake(0, -76, [[UIScreen mainScreen] bounds].size.width, 76)];
     searchView.delegate = self;
     [_tableView addSubview:searchView];
@@ -55,12 +60,20 @@ static  MLFirstVC *thisVC=nil;
     
     self.title=@"附近的工作";
     
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy年MM月dd日"];
     
     [self tableViewInit];
     
     mapDisplaying=NO;
     
     [self initTabbar];
+    
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    
 
 }
 
@@ -76,6 +89,25 @@ static  MLFirstVC *thisVC=nil;
     [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
     
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
+}
+
+- (void)refreshData{
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    [netAPI getNearByJobs:116.46 latitude:49.92 withBlock:^(nearByJobListModel *nearByJobListModel) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        if (![nearByJobListModel.getStatus intValue]==0) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:@"网络有点不给力哦，请稍后再试~" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }else{
+            recordArray=nearByJobListModel.getnearByJobListArray;
+            cellNum=[recordArray count];
+            [self.tableView reloadData];
+        }
+    }];
+    
 }
 
 - (void)initTabbar{
@@ -251,7 +283,7 @@ static  MLFirstVC *thisVC=nil;
 
 //*********************tableView********************//
 - (void)tableViewInit{
-    cellNum=10;
+    [self refreshData];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     _tableView.scrollEnabled=YES;
@@ -273,8 +305,15 @@ static  MLFirstVC *thisVC=nil;
     [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
     cell.delegate = self;
     
-//    [cell.portraitView.layer setCornerRadius:CGRectGetHeight(cell.portraitView.bounds)/2];
-//    [cell.portraitView.layer setMasksToBounds:YES];
+    
+    nearByJobModel *jobObject=[recordArray objectAtIndex:[indexPath row]];
+    
+    cell.jobTitleLabel.text=jobObject.getjobTitle;
+    cell.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@",jobObject.getjobWorkPlaceCity,jobObject.getjobWorkPlaceDistrict];
+    cell.jobTimeLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:jobObject.getjobBeginTime],[dateFormatter stringFromDate:jobObject.getjobEndTime]];
+    cell.jobDistance.text=@"1.2km";
+    cell.jobNumberRemainLabel.text=[NSString stringWithFormat:@"还剩%@人",jobObject.getjobRecruitNum];
+    cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/天",jobObject.getjobSalaryRange];
     
     return cell;
 }

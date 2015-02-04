@@ -7,80 +7,75 @@
 //
 
 #import "MLLoginBusiness.h"
-#import <BmobSDK/Bmob.h>
+#import "netAPI.h"
+#import "registerModel.h"
+#import "loginModel.h"
 
 @implementation MLLoginBusiness
 
 - (void)registerInBackground:(NSString*)username Password:(NSString*)pwd{
     
-    BmobQuery *query=[BmobQuery queryWithClassName:@"JobUser"];
-    [query whereKey:@"userName" equalTo:username];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        if (!error) {
-            if ([array count]==0) {
-                BmobObject *jobUser=[BmobObject objectWithClassName:@"JobUser"];
-                [jobUser setObject:username forKey:@"userName"];
-                [jobUser setObject:pwd forKey:@"userPassword"];
-                [jobUser saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-                    if (isSuccessful) {
-                        [self saveUserInfoLocally:jobUser];
-                        [self registerIsSucceed:YES feedback:@"注册成功"];
-                    }else{
-                        [self registerIsSucceed:NO feedback:@"网络请求错误，注册失败"];
-                    }
-                }];
-            }else{
-                [self registerIsSucceed:NO feedback:@"该用户名已被注册"];
-            }
+    [netAPI usrRegister:username usrPassword:pwd withBlock:^(registerModel *registerModel) {
+        
+        if ([registerModel.getStatus intValue]==0) {
+            
+            [self saveUserInfoLocallyWithUserName:username userObjectId:registerModel.getUsrID];
+            
+            [self registerIsSucceed:YES feedback:@"注册成功"];
+            
         }else{
-            [self registerIsSucceed:NO feedback:@"网络请求错误，注册失败"];
+            NSString *error;
+            if ([registerModel.getInfo isEqualToString:@"CREATE_ERROR"])
+                error=@"数据创建失败";
+            else if ([registerModel.getInfo isEqualToString:@"USER_EXISTED"])
+                error=@"该手机号已经被注册";
+            else if ([registerModel.getInfo isEqualToString:@"INVALID_INPUT"])
+                error=@"该手机号已经被注册";
+            [self registerIsSucceed:NO feedback:error];
         }
     }];
+    
 }
 
 -(void)registerIsSucceed:(BOOL)result feedback:(NSString*)feedback{
-    NSLog(@"%@",feedback);
     [self.registerResultDelegate registerResult:result Feedback:feedback];
 }
 
--(void) loginInBackground:(NSString*) username Password:(NSString*)pwd{
-    BmobQuery *query=[BmobQuery queryWithClassName:@"JobUser"];
-    [query whereKey:@"userName" equalTo:username];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        if (!error) {
-            if ([array count]>0) {
-                BmobObject *object=[array firstObject];
-                NSLog(@"%@",[object objectForKey:@"userPassword"]);
-                if ([pwd isEqualToString:[object objectForKey:@"userPassword"]]) {
-                    [self saveUserInfoLocally:object];
-                    [self loginIsSucceed:YES feedback:@"登录成功"];
-                }else{
-                    [self loginIsSucceed:NO feedback:@"密码错误"];
-                }
-            }else{
-                [self loginIsSucceed:NO feedback:@"该用户不存在"];
-            }
+-(void)loginInBackground:(NSString*) username Password:(NSString*)pwd{
+    
+    [netAPI usrLogin:username usrPassword:pwd withBlock:^(loginModel *loginModel) {
+        if ([loginModel.getStatus intValue]==0) {
+            [self saveUserInfoLocallyWithUserName:username userObjectId:loginModel.getUsrID];
+            [self loginIsSucceed:YES feedback:@"登录成功"];
+            
         }else{
-            [self loginIsSucceed:NO feedback:@"请求错误"];
+            
+            NSString *error;
+            if ([loginModel.getInfo isEqualToString:@"QUERY_ERROR"])
+                error=@"登录名或密码有误";
+            else if ([loginModel.getInfo isEqualToString:@"INVALID_INPUT"])
+                error=@"您的输入有误";
+            
+            [self loginIsSucceed:NO feedback:error];
         }
     }];
 }
 
 -(void)loginIsSucceed:(BOOL)result feedback:(NSString*)feedback
 {
-    NSLog(@"%@",feedback);
 
     [self.loginResultDelegate loginResult:result Feedback:feedback];
 
 }
 
-- (void)saveUserInfoLocally:(BmobObject *)jobUser{
-    if (jobUser) {
-        NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
-        [mySettingData setObject:[jobUser objectForKey:@"userName"] forKey:@"currentUserName"];
-        [mySettingData setObject:jobUser.objectId forKey:@"currentUserObjectId"];
-        [mySettingData synchronize];
-    }
+- (void)saveUserInfoLocallyWithUserName:(NSString*)userName userObjectId:(NSString*)userObjectId{
+
+    
+    NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+    [mySettingData setObject:userName forKey:@"currentUserName"];
+    [mySettingData setObject:userObjectId forKey:@"currentUserObjectId"];
+    [mySettingData synchronize];
+
 }
 
 + (void)logout{
