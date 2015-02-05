@@ -7,8 +7,10 @@
 //
 
 #import "MLFilterVC.h"
+#import "MLSelectJobTypeVC.h"
 
 @interface MLFilterVC ()
+@property (weak, nonatomic) IBOutlet UISegmentedControl *distanceSeg;
 
 @end
 
@@ -21,12 +23,19 @@
 }
 
 - (void)done{
-    [self popoverPresentationController];
+    [self.navigationController popViewControllerAnimated:YES];
 }
-- (IBAction)setApplicationDirection:(id)sender {
-    
+
+- (IBAction)selectDistance:(id)sender {
+    NSLog(@"%ld",(long)self.distanceSeg.selectedSegmentIndex);
 }
+
 - (IBAction)setApplicationType:(id)sender {
+    MLSelectJobTypeVC *selectVC=[[MLSelectJobTypeVC alloc]init];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    backItem.title = @"";
+    self.navigationItem.backBarButtonItem = backItem;
+    [self.navigationController pushViewController:selectVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

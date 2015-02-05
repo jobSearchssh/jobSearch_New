@@ -55,31 +55,6 @@
                         </mask>
                     </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnd-Mn-DgF">
-                    <rect key="frame" x="12" y="129" width="292" height="100"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="157" id="Cea-iP-CFb"/>
-                    </constraints>
-                    <string key="text">任职要求：
-1.年龄18-40岁
-2.农村市内户口不限
-3.良好的顾客服务意识和团队合作精神
-4.喜欢快节奏的工作，适应弹性的工作时间</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="Cea-iP-CFb"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                        <mask key="constraints">
-                            <include reference="Cea-iP-CFb"/>
-                        </mask>
-                    </variation>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工作时间：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vf-2W-v6D">
                     <rect key="frame" x="195" y="100" width="111" height="26"/>
                     <constraints>
@@ -484,6 +459,33 @@
                         </mask>
                     </variation>
                 </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnd-Mn-DgF">
+                    <rect key="frame" x="12" y="129" width="292" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="157" id="Cea-iP-CFb">
+                            <variation key="heightClass=regular-widthClass=compact" constant="100"/>
+                        </constraint>
+                    </constraints>
+                    <string key="text">任职要求：
+1.年龄18-40岁
+2.农村市内户口不限
+3.良好的顾客服务意识和团队合作精神
+4.喜欢快节奏的工作，适应弹性的工作时间</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Cea-iP-CFb"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                        <mask key="constraints">
+                            <include reference="Cea-iP-CFb"/>
+                        </mask>
+                    </variation>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -499,7 +501,9 @@
                 <constraint firstItem="aHQ-nG-Zf9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="71" id="EXi-FB-wib"/>
                 <constraint firstItem="9vf-2W-v6D" firstAttribute="top" secondItem="4w7-od-Vdz" secondAttribute="bottom" constant="35" id="FXe-IR-qQM"/>
                 <constraint firstAttribute="trailing" secondItem="UJW-RF-eFF" secondAttribute="trailing" constant="9" id="HQp-Xp-hM1"/>
-                <constraint firstItem="vnd-Mn-DgF" firstAttribute="top" secondItem="aHQ-nG-Zf9" secondAttribute="bottom" constant="3" id="Ilq-LN-ZqU"/>
+                <constraint firstItem="vnd-Mn-DgF" firstAttribute="top" secondItem="aHQ-nG-Zf9" secondAttribute="bottom" constant="3" id="Ilq-LN-ZqU">
+                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                </constraint>
                 <constraint firstItem="4w7-od-Vdz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="13" id="J8D-oW-8Ez"/>
                 <constraint firstItem="HrF-79-S0w" firstAttribute="leading" secondItem="QY5-gV-TY1" secondAttribute="trailing" constant="2" id="JEf-8V-uSk"/>
                 <constraint firstItem="t78-IF-uBC" firstAttribute="leading" secondItem="4w7-od-Vdz" secondAttribute="trailing" constant="15" id="JGP-Lr-wYm"/>
@@ -546,7 +550,6 @@
                 <mask key="subviews">
                     <exclude reference="yHw-cH-3zf"/>
                     <exclude reference="t78-IF-uBC"/>
-                    <exclude reference="vnd-Mn-DgF"/>
                     <exclude reference="9vf-2W-v6D"/>
                     <exclude reference="QY5-gV-TY1"/>
                     <exclude reference="HrF-79-S0w"/>
@@ -567,6 +570,7 @@
                     <exclude reference="ocw-RS-84O"/>
                     <exclude reference="8xs-GY-cCY"/>
                     <exclude reference="ao5-Ou-qMx"/>
+                    <exclude reference="vnd-Mn-DgF"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="dho-8i-87t"/>
@@ -629,7 +633,6 @@
                 <mask key="subviews">
                     <include reference="yHw-cH-3zf"/>
                     <include reference="t78-IF-uBC"/>
-                    <include reference="vnd-Mn-DgF"/>
                     <include reference="9vf-2W-v6D"/>
                     <include reference="QY5-gV-TY1"/>
                     <include reference="HrF-79-S0w"/>
@@ -650,6 +653,7 @@
                     <include reference="ocw-RS-84O"/>
                     <include reference="8xs-GY-cCY"/>
                     <include reference="ao5-Ou-qMx"/>
+                    <include reference="vnd-Mn-DgF"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="dho-8i-87t"/>
@@ -708,7 +712,7 @@
                     <include reference="y6i-ON-dll"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="292" y="302"/>
+            <point key="canvasLocation" x="256" y="357"/>
         </view>
         <view contentMode="scaleToFill" id="CfX-vD-vCB">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>

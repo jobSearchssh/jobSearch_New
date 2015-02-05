@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ViewController.h"
 #import "saveJobListModel.h"
 
-@interface MLLoginVC : ViewController<UITextFieldDelegate>
+@interface MLLoginVC : UIViewController<UITextFieldDelegate>
 {
     NSString *inputUserAccount;
     NSString *inputUserPassword;

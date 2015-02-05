@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "nearByJobModel.h"
 
 @interface jobRecmendVC : UIViewController
-
+@property (strong, nonatomic)nearByJobModel*jobModel;
 @end

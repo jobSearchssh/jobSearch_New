@@ -31,4 +31,14 @@
     [MAMapServices sharedServices].apiKey =@"c38130d72c3068f07be6c23c7e791f47";
 }
 
+- (void)addAnnotation:(NSArray*)point{
+    MAPointAnnotation *sellerPoint = [[MAPointAnnotation alloc] init];
+    
+    CLLocationCoordinate2D coord=CLLocationCoordinate2DMake([[point objectAtIndex:1] doubleValue], [[point objectAtIndex:0] doubleValue]);
+    sellerPoint.coordinate = coord;
+    [_mapView addAnnotation:sellerPoint];
+    
+    _mapView.region = MACoordinateRegionMake(coord,MACoordinateSpanMake(0.005, 0.005));
+}
+
 @end

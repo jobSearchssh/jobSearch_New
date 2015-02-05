@@ -15,8 +15,12 @@
 #import "MLMessageVC.h"
 #import "MLMatchVC.h"
 #import "MBProgressHUD.h"
+#import "MJRefresh.h"
+#import <AMapSearchKit/AMapSearchAPI.h>
+#import <MAMapKit/MAMapKit.h>
+#import "AJLocationManager.h"
 
-@interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate>
+@interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate>
 {
     NSInteger cellNum;
     NiftySearchView *searchView;
@@ -25,6 +29,13 @@
     BOOL mapDisplaying;
     
     NSDateFormatter *dateFormatter;
+    
+    BOOL firstLoad;
+    
+    BOOL headerRefreshing;
+    BOOL footerRefreshing;
+    
+    AMapSearchAPI *search;
 }
 
 @property (weak, nonatomic) IBOutlet UITabBar *tabbar;
@@ -48,6 +59,10 @@ static  MLFirstVC *thisVC=nil;
     [super viewDidLoad];
  
     cellNum=0;
+    firstLoad=YES;
+    headerRefreshing=NO;
+    footerRefreshing=NO;
+    
     
     searchView = [[NiftySearchView alloc] initWithFrame:CGRectMake(0, -76, [[UIScreen mainScreen] bounds].size.width, 76)];
     searchView.delegate = self;
@@ -69,12 +84,11 @@ static  MLFirstVC *thisVC=nil;
     
     [self initTabbar];
     
-    
+    [self searchCity];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    
-
+    [super viewDidAppear:animated];
 }
 
 - (void)viewWillLayoutSubviews{
@@ -92,23 +106,34 @@ static  MLFirstVC *thisVC=nil;
 }
 
 - (void)refreshData{
-    
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    if (!headerRefreshing)
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     [netAPI getNearByJobs:116.46 latitude:49.92 withBlock:^(nearByJobListModel *nearByJobListModel) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        if (!headerRefreshing)
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        else
+            headerRefreshing=NO;
+        
+        [self.tableView headerEndRefreshing];
         
         if (![nearByJobListModel.getStatus intValue]==0) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:@"网络有点不给力哦，请稍后再试~" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
         }else{
-            recordArray=nearByJobListModel.getnearByJobListArray;
+            
+            [recordArray removeAllObjects];
+            
+            for (id object in nearByJobListModel.getnearByJobListArray) {
+                [recordArray addObject:object];
+            }
+            
             cellNum=[recordArray count];
             [self.tableView reloadData];
         }
     }];
-    
 }
+
 
 - (void)initTabbar{
     [[self.tabbar.items objectAtIndex:0] setFinishedSelectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -283,10 +308,25 @@ static  MLFirstVC *thisVC=nil;
 
 //*********************tableView********************//
 - (void)tableViewInit{
-    [self refreshData];
+    recordArray=[[NSMutableArray alloc]init];
+    
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     _tableView.scrollEnabled=YES;
+    [_tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+    [self refreshData];
+}
+
+- (void)headerRereshing{
+    headerRefreshing=YES;
+    //skipTimes=0;
+    [self refreshData];
+}
+
+- (void)footerRereshing{
+    footerRefreshing=YES;
+    [self refreshData];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -351,6 +391,10 @@ static  MLFirstVC *thisVC=nil;
 {
     
     jobDetailVC *detailVC=[[jobDetailVC alloc]init];
+    if ([recordArray objectAtIndex:[indexPath row]]) {
+        detailVC.jobModel=[recordArray objectAtIndex:[indexPath row]];
+    }
+    
     detailVC.buttonTitle=@"一键申请";
     detailVC.hidesBottomBarWhenPushed=YES;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
@@ -449,6 +493,61 @@ static  MLFirstVC *thisVC=nil;
     }
     
     return YES;
+}
+
+- (void)searchCity
+{
+    //获得用户位置信息
+    [[AJLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
+        
+        NSLog(@"%f  %f",locationCorrrdinate.latitude,locationCorrrdinate.longitude);
+//        NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+//        [mySettingData setObject:NSStringFromCGPoint(CGPointMake(locationCorrrdinate.longitude, locationCorrrdinate.latitude)) forKey:@"currentCoordinate"];
+//        
+//        [MAMapServices sharedServices].apiKey =@"269c3b70b59f61d9885ca37fbd74f582";
+//        
+//        search=[[AMapSearchAPI alloc] initWithSearchKey: @"41f0145aa2a77c39924ee9aa0664701f" Delegate:self];
+//        search.delegate=self;
+//        AMapReGeocodeSearchRequest *regeoRequest = [[AMapReGeocodeSearchRequest alloc] init];
+//        regeoRequest.searchType = AMapSearchType_ReGeocode;
+//        regeoRequest.location = [AMapGeoPoint locationWithLatitude:locationCorrrdinate.latitude longitude:locationCorrrdinate.longitude];
+//        regeoRequest.radius = 10000;
+//        regeoRequest.requireExtension = YES;
+//        
+//        [search AMapReGoecodeSearch: regeoRequest];
+        
+    }];
+}
+
+- (void)onReGeocodeSearchDone:(AMapReGeocodeSearchRequest *)request response:(AMapReGeocodeSearchResponse *)response
+{
+//    if (response) {
+//        
+//        if ([response.regeocode.addressComponent.city length]>0) {
+//            if (![response.regeocode.addressComponent.city isEqualToString:currentCity]) {
+//                
+//                currentCity=response.regeocode.addressComponent.city;
+//                currentCityCode=response.regeocode.addressComponent.citycode;
+//                
+//                
+//                NSString *str=[NSString stringWithFormat:@"亲爱的用户，定位到您再%@，是否切换城市？",currentCity];
+//                changeCityAlert = [[UIAlertView alloc] initWithTitle:@"切换城市" message:str delegate:nil cancelButtonTitle:@"切换" otherButtonTitles:@"取消",nil];
+//                changeCityAlert.delegate=self;
+//                [changeCityAlert show];
+//            }
+//        }else{
+//            if (![response.regeocode.addressComponent.province isEqualToString:currentCity]) {
+//                
+//                currentCity=response.regeocode.addressComponent.province;
+//                currentCityCode=response.regeocode.addressComponent.citycode;
+//                
+//                NSString *str=[NSString stringWithFormat:@"亲爱的用户，定位到您再%@，是否切换城市？",currentCity];
+//                changeCityAlert = [[UIAlertView alloc] initWithTitle:@"切换城市" message:str delegate:nil cancelButtonTitle:@"切换" otherButtonTitles:@"取消",nil];
+//                changeCityAlert.delegate=self;
+//                [changeCityAlert show];
+//            }
+//        }
+//    }
 }
 
 

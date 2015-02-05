@@ -12,4 +12,6 @@
 
 @interface MLMapView : UIView<MAMapViewDelegate,AMapSearchDelegate,UIGestureRecognizerDelegate>
 @property(nonatomic, retain) MAMapView *mapView;
+
+- (void)addAnnotation:(NSArray*)point;
 @end

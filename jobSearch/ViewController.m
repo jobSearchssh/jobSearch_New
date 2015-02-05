@@ -17,10 +17,12 @@
 #import "MLLoginVC.h"
 #import "MLMatchVC.h"
 #import "MLResumePreviewVC.h"
-
+#import "MLFeedBackVC.h"
 
 @interface ViewController ()
-
+{
+    UINavigationController *currentnavigationController;
+}
 @end
 
 @implementation ViewController
@@ -30,6 +32,7 @@
     
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"mainItem"] style:UIBarButtonItemStyleBordered target:self action:@selector(showMenu)];
     self.navigationController.navigationBar.translucent = NO;
+    currentnavigationController=self.navigationController;
 }
 
 #pragma mark -
@@ -42,13 +45,10 @@
     if (!_sideMenu) {
         
         RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:@"未登录" setFlag:USRCELL setSubtitle:@"游客"  image:[UIImage imageNamed:@"tourists"] highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
+            [menu hide];
             
             MLLoginVC *viewController = [MLLoginVC sharedInstance];
-            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
-            navigationController.navigationBar.translucent = NO;
-            navigationController.tabBarController.tabBar.translucent = NO;
-            navigationController.toolbar.translucent = NO;
-            [menu setRootViewController:navigationController];
+            [currentnavigationController pushViewController:viewController animated:YES];
             
         }];
         
@@ -58,6 +58,7 @@
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
+            currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
         
@@ -67,6 +68,7 @@
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
+            currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
         
@@ -77,24 +79,33 @@
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
+            currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
             
         }];
         
         RESideMenuItem *dailymatchItem = [[RESideMenuItem alloc] initWithTitle:@"我的简历" setFlag:NORMALCELL image:[UIImage imageNamed:@"calendar"] highlightedImage:[UIImage imageNamed:@"calendar"] action:^(RESideMenu *menu, RESideMenuItem *item)  {
-            [menu hide];
+
             MLResumePreviewVC *_dailyMatchVC=[[MLResumePreviewVC alloc] init];
 
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:_dailyMatchVC];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
+            currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
         
         RESideMenuItem *feedbackItem = [[RESideMenuItem alloc] initWithTitle:@"发送反馈" setFlag:NORMALCELL image:[UIImage imageNamed:@"send"] highlightedImage:[UIImage imageNamed:@"send"] action:^(RESideMenu *menu, RESideMenuItem *item) {
-            [menu hide];
-            NSLog(@"Item %@", item);
+            
+            MLFeedBackVC *feedBackVC=[MLFeedBackVC sharedInstance];
+            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:feedBackVC];
+            navigationController.navigationBar.translucent = NO;
+            navigationController.tabBarController.tabBar.translucent = NO;
+            navigationController.toolbar.translucent = NO;
+            currentnavigationController=navigationController;
+            [menu setRootViewController:navigationController];
+
         }];
         
         RESideMenuItem *aboutusItem = [[RESideMenuItem alloc] initWithTitle:@"声明" setFlag:NORMALCELL image:[UIImage imageNamed:@"notice"] highlightedImage:[UIImage imageNamed:@"notice"] action:^(RESideMenu *menu, RESideMenuItem *item) {
