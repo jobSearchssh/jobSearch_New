@@ -54,6 +54,7 @@ static  MLMyApplication *thisVC=nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     cellNum=0;
     sectionNum=0;
@@ -64,7 +65,6 @@ static  MLMyApplication *thisVC=nil;
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM月dd日"];
 
-    
     [self tableViewInit];
 }
 
@@ -76,7 +76,7 @@ static  MLMyApplication *thisVC=nil;
     if (firstLoad){
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
-    [netAPI getApplyJobs:@"apply" start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+    [netAPI getApplyJobs:@"54ceddc6910d78bb68004293" start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
         [self headHandler:jobListModel];
     }];
 }
@@ -157,14 +157,18 @@ static  MLMyApplication *thisVC=nil;
     }
 }
 
-
-
 //*********************tableView********************//
 - (void)tableViewInit{
-    cellNum=10;
+    recordArray=[[NSMutableArray alloc]init];
+    
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     _tableView.scrollEnabled=YES;
+    [_tableView addHeaderWithTarget:self action:@selector(headRefreshData)];
+    [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
+    _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+
+    [self headRefreshData];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -225,6 +229,7 @@ static  MLMyApplication *thisVC=nil;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     jobDetailVC *detailVC=[[jobDetailVC alloc]init];
+    
     if ([recordArray objectAtIndex:[indexPath row]]) {
         detailVC.jobModel=[recordArray objectAtIndex:[indexPath row]];
     }
