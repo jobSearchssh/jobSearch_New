@@ -7,7 +7,8 @@
 //
 
 #import "URLOperation.h"
-static NSString *baseURL = @"http://182.92.177.56:8081/";
+static NSString *baseURL = @"http://123.57.5.113:8081/";
+
 @implementation URLOperation
 - (id)initWithURL:(NSData*)getInfo serveceFunction:(NSString *)getPostLoca target:(id)getTarget action:(SEL)getAction isPost:(BOOL)postOrGet{
     self = [super init];
@@ -42,16 +43,8 @@ static NSString *baseURL = @"http://182.92.177.56:8081/";
         
 
         NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            BOOL flag = TRUE;
-            if (!error) {
-                flag = TRUE;
-                URLReturnModel *objRe = [[URLReturnModel alloc]initWithData:flag data:data error:error];
+                URLReturnModel *objRe = [[URLReturnModel alloc]initWithData:data error:error];
                 [target performSelectorOnMainThread:action withObject:objRe waitUntilDone:NO];
-            }else{
-                flag = FALSE;
-                URLReturnModel *objRe = [[URLReturnModel alloc]initWithData:flag data:data error:error];
-                [target performSelectorOnMainThread:action withObject:objRe waitUntilDone:NO];
-            }
         }];
         
         [task resume];

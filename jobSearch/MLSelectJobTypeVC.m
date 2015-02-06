@@ -23,14 +23,17 @@
     [super viewDidLoad];
     
     typeArray=[[NSArray alloc]initWithObjects:@"模特/礼仪 ",@"促销/导购",@"销售",@"传单派发",@"安保",@"钟点工",@"法律事务",@"服务员",@"婚庆",@"配送/快递",@"化妆",@"护工/保姆",@"演出",@"问卷调查",@"志愿者",@"网络营销",@"导游",@"游戏代练",@"家教",@"软件/网站开发",@"会计",@"平面设计/制作",@"翻译",@"装修",@"影视制作",@"搬家",@"其他", nil];
-    self.selectedTypeArray=[[NSMutableArray alloc]initWithObjects:@"1",@"3",@"5", nil];
+    self.selectedTypeArray=[[NSMutableArray alloc]init];
     
     UIBarButtonItem *finishItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(finishSelecting)];
 
     self.navigationItem.rightBarButtonItem = finishItem;
 }
+
 - (void)finishSelecting{
     [self.navigationController popViewControllerAnimated:YES];
+    [self.selectDelegate finishSelect:self.selectedTypeArray];
+
 }
 
 - (void)didReceiveMemoryWarning {

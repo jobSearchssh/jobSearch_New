@@ -16,6 +16,7 @@
 
 #define BASE_SUCCESS 0
 #define BASE_FAILED 1
+#define BASE_SPAN 10
 
 @interface baseModel : NSObject{
     NSNumber *status;

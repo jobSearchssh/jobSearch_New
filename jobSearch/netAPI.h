@@ -13,10 +13,7 @@
 #import "URLReturnModel.h"
 #import "loginModel.h"
 #import "registerModel.h"
-#import "saveJobListModel.h"
-#import "nearByJobListModel.h"
-#import "newestJobListModel.h"
-#import "applyJobListModel.h"
+#import "jobListModel.h"
 #import "oprationResultModel.h"
 
 @interface netAPI : NSObject
@@ -24,10 +21,7 @@
 typedef void (^returnBlock)(URLReturnModel *returnModel);
 typedef void (^loginReturnBlock)(loginModel *loginModel);
 typedef void (^registerReturnBlock)(registerModel *registerModel);
-typedef void (^saveJobListReturnBlock)(saveJobListModel *saveJobListModel);
-typedef void (^nearByJobReturnBlock)(nearByJobListModel *nearByJobListModel);
-typedef void (^newestJobReturnBlock)(newestJobListModel *newestJobListModel);
-typedef void (^applyJobReturnBlock)(applyJobListModel *applyJobListModel);
+typedef void (^jobListReturnBlock)(jobListModel *jobListModel);
 typedef void (^oprationReturnBlock)(oprationResultModel *oprationResultModel);
 
 #define STATIS_OK 0
@@ -55,19 +49,34 @@ typedef void (^oprationReturnBlock)(oprationResultModel *oprationResultModel);
 
 //保存的job列表
 //用户id，回调block
-+(void)getSaveJobList:(NSString *)usrID withBlock:(saveJobListReturnBlock)saveJobListBlock;
++(void)getSaveJobList:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobListReturnBlock)saveJobListBlock;
 
 //附近的兼职信息
-//longtitude，latitude，回调block
-+(void)getNearByJobs:(double)longtitude latitude:(double)latitude withBlock:(nearByJobReturnBlock)nearByBlock;
+//lon:经度坐标;lat:纬度坐标;start:起始位置;length:获取长度;_id:用户唯一标示;回调block;
++(void)getNearByJobs:(NSString *)usrID longtitude:(double)longtitude latitude:(double)latitude start:(int)start length:(int)length withBlock:(jobListReturnBlock)nearByBlock;
+
+//根据距离
+//lon:经度坐标;lat:纬度坐标;start:起始位置;length:获取长度;distance:距离长度(km);_id:用户唯一标示;回调block;
++(void)getJobByDistance:(NSString *)usrID longtitude:(double)longtitude latitude:(double)latitude start:(int)start length:(int)length distance:(int)distance withBlock:(jobListReturnBlock)distanceBlock;
+
+//根据工作类型
+//start:起始位置;length:获取长度;typeArray:如[1,2,3]m,不为空，nsnumber类型;回调block;
++(void)getJobByJobType:(NSString *)usrID start:(int)start length:(int)length jobType:(NSMutableArray *)typeArray withBlock:(jobListReturnBlock)byTypeBlock;
+
+//根据工作类型与距离
+//lon:经度坐标;lat:纬度坐标;distance:距离长度(km);start:起始位置;length:获取长度;typeArray:如[1,2,3]m,不为空，nsnumber类型;回调block;
++(void)getJobByTypeAndDistance:(NSString *)usrID start:(int)start length:(int)length longtitude:(double)longtitude latitude:(double)latitude distance:(int)distance jobType:(NSMutableArray *)typeArray withBlock:(jobListReturnBlock)byTypeAndDisBlock;
+
+//根据关键字
++(void)getJobByKeyWord:(NSString *)usrID start:(int)start length:(int)length keyWord:(NSString *)keyWord withBlock:(jobListReturnBlock)bykeyBlock;
 
 //最新的兼职信息
 //用户id，回调block
-+(void)getNewestJobs:(NSString *)usrID withBlock:(newestJobReturnBlock)newestJobListBlock;
++(void)getNewestJobs:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobListReturnBlock)newestJobListBlock;
 
 //申请的兼职信息
 //用户id，回调block
-+(void)getApplyJobs:(NSString *)usrID withBlock:(applyJobReturnBlock)applyJobListBlock;
++(void)getApplyJobs:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobListReturnBlock)applyJobListBlock;
 
 //保存该job到用户save列表
 //用户id，jobid，回调block

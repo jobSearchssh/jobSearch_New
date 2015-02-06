@@ -9,9 +9,12 @@
 #import "MLFilterVC.h"
 #import "MLSelectJobTypeVC.h"
 
-@interface MLFilterVC ()
+@interface MLFilterVC ()<finishSelectDelegate,UINavigationControllerDelegate>{
+    
+}
 @property (weak, nonatomic) IBOutlet UISegmentedControl *distanceSeg;
-
+@property (nonatomic) int distance;
+@property (strong,nonatomic) NSMutableArray *typeArray;
 @end
 
 @implementation MLFilterVC
@@ -20,22 +23,46 @@
     [super viewDidLoad];
 
     self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(done)];
+    
+    self.typeArray=[[NSMutableArray alloc]init];
+    self.distance=20;
+    self.distanceSeg.selectedSegmentIndex=4;
 }
 
 - (void)done{
+    
+    [self.filterDelegate finishFilter:self.distance Type:self.typeArray];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
 - (IBAction)selectDistance:(id)sender {
-    NSLog(@"%ld",(long)self.distanceSeg.selectedSegmentIndex);
+    
+    if ((long)self.distanceSeg.selectedSegmentIndex==0) {
+        self.distance=1;
+    }else if ((long)self.distanceSeg.selectedSegmentIndex==1)
+        self.distance=3;
+    else if ((long)self.distanceSeg.selectedSegmentIndex==2)
+        self.distance=5;
+    else if ((long)self.distanceSeg.selectedSegmentIndex==3)
+        self.distance=10;
+    else if ((long)self.distanceSeg.selectedSegmentIndex==4)
+        self.distance=20;
 }
 
 - (IBAction)setApplicationType:(id)sender {
     MLSelectJobTypeVC *selectVC=[[MLSelectJobTypeVC alloc]init];
+    selectVC.selectDelegate=self;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"";
     self.navigationItem.backBarButtonItem = backItem;
     [self.navigationController pushViewController:selectVC animated:YES];
+}
+
+
+- (void)finishSelect:(NSMutableArray *)type{
+    self.typeArray=type;
 }
 
 - (void)didReceiveMemoryWarning {

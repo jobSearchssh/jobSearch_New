@@ -7,7 +7,7 @@
 //
 
 #import "URLOperationWithBlock.h"
-static NSString *baseURL = @"http://182.92.177.56:8081/";
+static NSString *baseURL = @"http://123.57.5.113:8081/";
 @implementation URLOperationWithBlock
 //data为post数据 postFunction为post地址 block为回调函数
 - (id)initWithURL:(NSData*)getInfo serveceFunction:(NSString *)getPostLoca returnblock:(returnBlock)rblock isPost:(BOOL)postOrGet{
@@ -41,18 +41,15 @@ static NSString *baseURL = @"http://182.92.177.56:8081/";
         }
         
         NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-
-            BOOL flag = TRUE;
-            if (!error) {
-                flag = TRUE;
-            }else{
-                flag = FALSE;
-            }
             
-            URLReturnModel *objRe = [[URLReturnModel alloc]initWithData:flag data:data error:error];
-            if (block !=Nil) {
+            URLReturnModel *objRe = [[URLReturnModel alloc]initWithData:data error:error];
+            if (block != Nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     block(objRe);
+                });
+            }else{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    block(Nil);
                 });
             }
         }];

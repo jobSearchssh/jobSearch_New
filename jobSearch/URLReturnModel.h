@@ -15,7 +15,7 @@
 @property (copy, nonatomic) NSData *object;
 @property (copy, nonatomic) NSError *error;
 
-- (URLReturnModel *)initWithData:(BOOL)isSuccess data:(NSData *)getObject error:(NSError *)getError;
+- (URLReturnModel *)initWithData:(NSData *)getObject error:(NSError *)getError;
 - (BOOL)getFlag;
 - (NSData *)getData;
 - (NSError *)getError;

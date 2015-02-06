@@ -122,16 +122,33 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if (self.jobModel) {
 
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy年MM月dd日"];
+        [dateFormatter setDateFormat:@"MM月dd日"];
 
         self.jobTitleLabel.text=self.jobModel.getjobTitle;
-        self.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@",self.jobModel.getjobWorkPlaceCity,self.jobModel.getjobWorkPlaceDistrict];
-        self.jobPublishTimeLabel.text=[dateFormatter stringFromDate:self.jobModel.getjobBirthdayMonthYear];
+        self.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@%@",self.jobModel.getjobWorkPlaceCity,self.jobModel.getjobWorkPlaceDistrict,self.jobModel.getjobWorkAddressDetail];
+        
+        self.jobDistanceLabel.text=[NSString stringWithFormat:@"%.1f千米",[self getDistance:self.jobModel.getjobWorkPlaceGeoPoint]];
+        
+        self.jobPublishTimeLabel.text=[dateFormatter stringFromDate:self.jobModel.getcreated_at];
         self.jobWorkPeriodLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:self.jobModel.getjobBeginTime],[dateFormatter stringFromDate:self.jobModel.getjobEndTime]];
-        self.jobRecuitNumLabel.text=[NSString stringWithFormat:@"还剩%@人",self.jobModel.getjobRecruitNum];
-        self.jobSalaryLabel.text=[NSString stringWithFormat:@"%@元/天",self.jobModel.getjobSalaryRange];
+        
+        self.jobRecuitNumLabel.text=[NSString stringWithFormat:@"招募数量：%d/%d人",[self.jobModel.getjobHasAccepted intValue],[self.jobModel.getjobRecruitNum intValue]];
+        
+        NSString *settlement;
+
+        if ([self.jobModel.getjobSettlementWay isEqualToString:@"0"])
+            settlement=@"日";
+        else if ([self.jobModel.getjobSettlementWay isEqualToString:@"1"])
+            settlement=@"月";
+        else if ([self.jobModel.getjobSettlementWay isEqualToString:@"2"])
+            settlement=@"项目";
+        
+        self.jobSalaryLabel.text=[NSString stringWithFormat:@"%@元/%@",self.jobModel.getjobSalaryRange,settlement];
+        
         self.jobDescribeLabel.text=[NSString stringWithFormat:@"工作描述：%@",self.jobModel.getjobIntroduction];
+        
         //NSString *gender=[NSString stringWithFormat:@"性别要求：%@",self.jobModel.getjobGender];
+        
         NSString *degree=[NSString stringWithFormat:@"学历要求：%@",self.jobModel.getjobDegreeReq];
         NSString *age=[NSString stringWithFormat:@"年龄要求：%@——%@",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
         NSString *height=[NSString stringWithFormat:@"年龄要求：%@——%@",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
@@ -143,6 +160,25 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [mapView addAnnotation:self.jobModel.getjobWorkPlaceGeoPoint];
     }
 }
+
+- (float)getDistance:(NSArray*)p1{
+    
+    float _distance=0.0f;
+    
+    if ([p1 count]==2) {
+        MAMapPoint point1=MAMapPointForCoordinate(CLLocationCoordinate2DMake([[p1 objectAtIndex:1] floatValue], [[p1 objectAtIndex:0] floatValue]));
+        
+        NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+        CGPoint p2=CGPointFromString([mySettingData objectForKey:@"currentCoordinate"]);
+        
+        MAMapPoint point2=MAMapPointForCoordinate(CLLocationCoordinate2DMake(p2.y,p2.x));
+        
+        _distance=MAMetersBetweenMapPoints(point1, point2);
+    }
+    
+    return _distance;
+}
+
 
 - (void)shareJob{
     

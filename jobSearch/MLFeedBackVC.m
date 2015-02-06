@@ -38,7 +38,7 @@ static  MLFeedBackVC *thisVC=nil;
     self.starRateView1.allowIncompleteStar = NO;
     self.starRateView1.hasAnimation = YES;
     self.starRateView1.delegate=self;
-    [self.containerView addSubview:self.starRateView1];
+    [self.view addSubview:self.starRateView1];
     value=5.0f;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -59,16 +59,9 @@ static  MLFeedBackVC *thisVC=nil;
 
 - (void)keyboardWillShow:(NSNotification *)notification{
     
-//    CGRect rect2;
-//    if ([[UIScreen mainScreen] bounds].size.height==480) {
-//        rect2=CGRectMake(rect1.origin.x, rect1.origin.y-300, rect1.size.width, rect1.size.height);
-//    }else{
-//        rect2=CGRectMake(rect1.origin.x, rect1.origin.y-200, rect1.size.width, rect1.size.height);
-//    }
-//    
     [UIView animateWithDuration:0.3 animations:^{
         
-        self.constraint.constant=10;
+        self.constraint.constant=-30;
     }];
 }
 

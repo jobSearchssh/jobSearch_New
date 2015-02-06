@@ -187,6 +187,19 @@
 		3BCEA0C11A83581F0005F080 /* b27_icon_star_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BCEA0BD1A83581F0005F080 /* b27_icon_star_gray@2x.png */; };
 		3BCEA0C21A83581F0005F080 /* b27_icon_star_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BCEA0BE1A83581F0005F080 /* b27_icon_star_yellow@2x.png */; };
 		3BCEA0C31A83581F0005F080 /* CWStarRateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0C01A83581F0005F080 /* CWStarRateView.m */; };
+		3BCEA0C81A8363640005F080 /* MLLegalVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0C61A8363640005F080 /* MLLegalVC.m */; };
+		3BCEA0C91A8363640005F080 /* MLLegalVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BCEA0C71A8363640005F080 /* MLLegalVC.xib */; };
+		3BCEA0CD1A8366360005F080 /* oprationResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0CC1A8366360005F080 /* oprationResultModel.m */; };
+		3BCEA0D21A8366440005F080 /* baseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0CF1A8366440005F080 /* baseModel.m */; };
+		3BCEA0D31A8366440005F080 /* baseJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0D11A8366440005F080 /* baseJobModel.m */; };
+		3BCEA0D81A8366500005F080 /* registerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0D51A8366500005F080 /* registerModel.m */; };
+		3BCEA0D91A8366500005F080 /* loginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0D71A8366500005F080 /* loginModel.m */; };
+		3BCEA0DE1A8366610005F080 /* jobListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0DB1A8366610005F080 /* jobListModel.m */; };
+		3BCEA0DF1A8366610005F080 /* jobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0DD1A8366610005F080 /* jobModel.m */; };
+		3BCEA0E81A8366720005F080 /* URLOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0E11A8366720005F080 /* URLOperation.m */; };
+		3BCEA0E91A8366720005F080 /* URLReturnModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0E31A8366720005F080 /* URLReturnModel.m */; };
+		3BCEA0EA1A8366720005F080 /* netAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0E51A8366720005F080 /* netAPI.m */; };
+		3BCEA0EB1A8366720005F080 /* URLOperationWithBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BCEA0E71A8366720005F080 /* URLOperationWithBlock.m */; };
 		3BD13E961A80A5D4005BCCA8 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD13E911A80A5D4005BCCA8 /* MBProgressHUD.m */; };
 		3BD13E971A80A5D4005BCCA8 /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD13E921A80A5D4005BCCA8 /* MBProgressHUD+Add.m */; };
 		3BD4DC061A77366900B061D0 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BD4DC051A77366900B061D0 /* SMS_SDK.framework */; };
@@ -263,19 +276,6 @@
 		3BD4DCA71A77D40900B061D0 /* checkbox1_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DCA11A77D40900B061D0 /* checkbox1_unchecked@2x.png */; };
 		3BD4DCB61A77D88C00B061D0 /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DCB41A77D88C00B061D0 /* right.png */; };
 		3BD4DCB71A77D88C00B061D0 /* wrong.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DCB51A77D88C00B061D0 /* wrong.png */; };
-		B751EB931A7E128200A6361A /* baseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EB921A7E128200A6361A /* baseModel.m */; };
-		B751EB961A7E14D300A6361A /* saveJobListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EB951A7E14D300A6361A /* saveJobListModel.m */; };
-		B751EB991A7E19A500A6361A /* saveJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EB981A7E19A500A6361A /* saveJobModel.m */; };
-		B751EB9C1A7E2B7C00A6361A /* loginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EB9B1A7E2B7C00A6361A /* loginModel.m */; };
-		B751EB9F1A7E2B9500A6361A /* registerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EB9E1A7E2B9500A6361A /* registerModel.m */; };
-		B751EBA21A7E46D000A6361A /* nearByJobListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBA11A7E46D000A6361A /* nearByJobListModel.m */; };
-		B751EBA51A7E498F00A6361A /* nearByJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBA41A7E498F00A6361A /* nearByJobModel.m */; };
-		B751EBA81A7E4FCF00A6361A /* newestJobListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBA71A7E4FCF00A6361A /* newestJobListModel.m */; };
-		B751EBAB1A7E509300A6361A /* newestJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBAA1A7E509300A6361A /* newestJobModel.m */; };
-		B751EBAE1A7E525000A6361A /* applyJobListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBAD1A7E525000A6361A /* applyJobListModel.m */; };
-		B751EBB11A7E526800A6361A /* applyJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBB01A7E526800A6361A /* applyJobModel.m */; };
-		B751EBB41A7E541200A6361A /* baseJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBB31A7E541200A6361A /* baseJobModel.m */; };
-		B751EBBB1A7E5B4000A6361A /* oprationResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B751EBBA1A7E5B4000A6361A /* oprationResultModel.m */; };
 		B75CE4011A7B512B00974815 /* resume_female.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CE3FD1A7B512B00974815 /* resume_female.png */; };
 		B75CE4021A7B512B00974815 /* resume_male.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CE3FE1A7B512B00974815 /* resume_male.png */; };
 		B75CE4031A7B512B00974815 /* resume_phone.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CE3FF1A7B512B00974815 /* resume_phone.png */; };
@@ -297,10 +297,6 @@
 		B7D32BA81A78E11300871277 /* baseAPP.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D32BA71A78E11300871277 /* baseAPP.m */; };
 		B7D32BAD1A78E13800871277 /* stringUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D32BAA1A78E13800871277 /* stringUtil.m */; };
 		B7D32BAE1A78E13800871277 /* DateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D32BAC1A78E13800871277 /* DateUtil.m */; };
-		B7D32BC91A78EC6900871277 /* URLOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D32BC21A78EC6900871277 /* URLOperation.m */; };
-		B7D32BCA1A78EC6900871277 /* URLReturnModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D32BC41A78EC6900871277 /* URLReturnModel.m */; };
-		B7D32BCB1A78EC6900871277 /* netAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D32BC61A78EC6900871277 /* netAPI.m */; };
-		B7D32BCC1A78EC6900871277 /* URLOperationWithBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D32BC81A78EC6900871277 /* URLOperationWithBlock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -563,6 +559,31 @@
 		3BCEA0BE1A83581F0005F080 /* b27_icon_star_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b27_icon_star_yellow@2x.png"; sourceTree = "<group>"; };
 		3BCEA0BF1A83581F0005F080 /* CWStarRateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWStarRateView.h; sourceTree = "<group>"; };
 		3BCEA0C01A83581F0005F080 /* CWStarRateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWStarRateView.m; sourceTree = "<group>"; };
+		3BCEA0C51A8363640005F080 /* MLLegalVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLLegalVC.h; sourceTree = "<group>"; };
+		3BCEA0C61A8363640005F080 /* MLLegalVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLLegalVC.m; sourceTree = "<group>"; };
+		3BCEA0C71A8363640005F080 /* MLLegalVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLLegalVC.xib; sourceTree = "<group>"; };
+		3BCEA0CB1A8366360005F080 /* oprationResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oprationResultModel.h; sourceTree = "<group>"; };
+		3BCEA0CC1A8366360005F080 /* oprationResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = oprationResultModel.m; sourceTree = "<group>"; };
+		3BCEA0CE1A8366440005F080 /* baseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseModel.h; sourceTree = "<group>"; };
+		3BCEA0CF1A8366440005F080 /* baseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = baseModel.m; sourceTree = "<group>"; };
+		3BCEA0D01A8366440005F080 /* baseJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseJobModel.h; sourceTree = "<group>"; };
+		3BCEA0D11A8366440005F080 /* baseJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = baseJobModel.m; sourceTree = "<group>"; };
+		3BCEA0D41A8366500005F080 /* registerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registerModel.h; sourceTree = "<group>"; };
+		3BCEA0D51A8366500005F080 /* registerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = registerModel.m; sourceTree = "<group>"; };
+		3BCEA0D61A8366500005F080 /* loginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loginModel.h; sourceTree = "<group>"; };
+		3BCEA0D71A8366500005F080 /* loginModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = loginModel.m; sourceTree = "<group>"; };
+		3BCEA0DA1A8366610005F080 /* jobListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobListModel.h; sourceTree = "<group>"; };
+		3BCEA0DB1A8366610005F080 /* jobListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jobListModel.m; sourceTree = "<group>"; };
+		3BCEA0DC1A8366610005F080 /* jobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobModel.h; sourceTree = "<group>"; };
+		3BCEA0DD1A8366610005F080 /* jobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jobModel.m; sourceTree = "<group>"; };
+		3BCEA0E01A8366720005F080 /* URLOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLOperation.h; sourceTree = "<group>"; };
+		3BCEA0E11A8366720005F080 /* URLOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLOperation.m; sourceTree = "<group>"; };
+		3BCEA0E21A8366720005F080 /* URLReturnModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLReturnModel.h; sourceTree = "<group>"; };
+		3BCEA0E31A8366720005F080 /* URLReturnModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLReturnModel.m; sourceTree = "<group>"; };
+		3BCEA0E41A8366720005F080 /* netAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = netAPI.h; sourceTree = "<group>"; };
+		3BCEA0E51A8366720005F080 /* netAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = netAPI.m; sourceTree = "<group>"; };
+		3BCEA0E61A8366720005F080 /* URLOperationWithBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLOperationWithBlock.h; sourceTree = "<group>"; };
+		3BCEA0E71A8366720005F080 /* URLOperationWithBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLOperationWithBlock.m; sourceTree = "<group>"; };
 		3BD13E901A80A5D4005BCCA8 /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		3BD13E911A80A5D4005BCCA8 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		3BD13E921A80A5D4005BCCA8 /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
@@ -649,32 +670,6 @@
 		3BD4DCA11A77D40900B061D0 /* checkbox1_unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox1_unchecked@2x.png"; sourceTree = "<group>"; };
 		3BD4DCB41A77D88C00B061D0 /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
 		3BD4DCB51A77D88C00B061D0 /* wrong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wrong.png; sourceTree = "<group>"; };
-		B751EB911A7E128200A6361A /* baseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseModel.h; sourceTree = "<group>"; };
-		B751EB921A7E128200A6361A /* baseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = baseModel.m; sourceTree = "<group>"; };
-		B751EB941A7E14D300A6361A /* saveJobListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = saveJobListModel.h; sourceTree = "<group>"; };
-		B751EB951A7E14D300A6361A /* saveJobListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = saveJobListModel.m; sourceTree = "<group>"; };
-		B751EB971A7E19A500A6361A /* saveJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = saveJobModel.h; sourceTree = "<group>"; };
-		B751EB981A7E19A500A6361A /* saveJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = saveJobModel.m; sourceTree = "<group>"; };
-		B751EB9A1A7E2B7C00A6361A /* loginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = loginModel.h; sourceTree = "<group>"; };
-		B751EB9B1A7E2B7C00A6361A /* loginModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = loginModel.m; sourceTree = "<group>"; };
-		B751EB9D1A7E2B9500A6361A /* registerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registerModel.h; sourceTree = "<group>"; };
-		B751EB9E1A7E2B9500A6361A /* registerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = registerModel.m; sourceTree = "<group>"; };
-		B751EBA01A7E46D000A6361A /* nearByJobListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nearByJobListModel.h; sourceTree = "<group>"; };
-		B751EBA11A7E46D000A6361A /* nearByJobListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = nearByJobListModel.m; sourceTree = "<group>"; };
-		B751EBA31A7E498F00A6361A /* nearByJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nearByJobModel.h; sourceTree = "<group>"; };
-		B751EBA41A7E498F00A6361A /* nearByJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = nearByJobModel.m; sourceTree = "<group>"; };
-		B751EBA61A7E4FCF00A6361A /* newestJobListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newestJobListModel.h; sourceTree = "<group>"; };
-		B751EBA71A7E4FCF00A6361A /* newestJobListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newestJobListModel.m; sourceTree = "<group>"; };
-		B751EBA91A7E509300A6361A /* newestJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newestJobModel.h; sourceTree = "<group>"; };
-		B751EBAA1A7E509300A6361A /* newestJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newestJobModel.m; sourceTree = "<group>"; };
-		B751EBAC1A7E525000A6361A /* applyJobListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = applyJobListModel.h; sourceTree = "<group>"; };
-		B751EBAD1A7E525000A6361A /* applyJobListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = applyJobListModel.m; sourceTree = "<group>"; };
-		B751EBAF1A7E526800A6361A /* applyJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = applyJobModel.h; sourceTree = "<group>"; };
-		B751EBB01A7E526800A6361A /* applyJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = applyJobModel.m; sourceTree = "<group>"; };
-		B751EBB21A7E541200A6361A /* baseJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseJobModel.h; sourceTree = "<group>"; };
-		B751EBB31A7E541200A6361A /* baseJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = baseJobModel.m; sourceTree = "<group>"; };
-		B751EBB91A7E5B4000A6361A /* oprationResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oprationResultModel.h; sourceTree = "<group>"; };
-		B751EBBA1A7E5B4000A6361A /* oprationResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = oprationResultModel.m; sourceTree = "<group>"; };
 		B75CE3FD1A7B512B00974815 /* resume_female.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resume_female.png; sourceTree = "<group>"; };
 		B75CE3FE1A7B512B00974815 /* resume_male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resume_male.png; sourceTree = "<group>"; };
 		B75CE3FF1A7B512B00974815 /* resume_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resume_phone.png; sourceTree = "<group>"; };
@@ -703,14 +698,6 @@
 		B7D32BAA1A78E13800871277 /* stringUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = stringUtil.m; sourceTree = "<group>"; };
 		B7D32BAB1A78E13800871277 /* DateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateUtil.h; sourceTree = "<group>"; };
 		B7D32BAC1A78E13800871277 /* DateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtil.m; sourceTree = "<group>"; };
-		B7D32BC11A78EC6900871277 /* URLOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLOperation.h; sourceTree = "<group>"; };
-		B7D32BC21A78EC6900871277 /* URLOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLOperation.m; sourceTree = "<group>"; };
-		B7D32BC31A78EC6900871277 /* URLReturnModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLReturnModel.h; sourceTree = "<group>"; };
-		B7D32BC41A78EC6900871277 /* URLReturnModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLReturnModel.m; sourceTree = "<group>"; };
-		B7D32BC51A78EC6900871277 /* netAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = netAPI.h; sourceTree = "<group>"; };
-		B7D32BC61A78EC6900871277 /* netAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = netAPI.m; sourceTree = "<group>"; };
-		B7D32BC71A78EC6900871277 /* URLOperationWithBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLOperationWithBlock.h; sourceTree = "<group>"; };
-		B7D32BC81A78EC6900871277 /* URLOperationWithBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLOperationWithBlock.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1001,10 +988,8 @@
 		3B9236451A67FAFA00347D9C /* jobSearch */ = {
 			isa = PBXGroup;
 			children = (
-				3BCEA0BC1A83581F0005F080 /* CWStarRateView */,
-				3BCEA0B71A8356590005F080 /* MLFeedBackVC.h */,
-				3BCEA0B81A8356590005F080 /* MLFeedBackVC.m */,
-				3BCEA0B91A8356590005F080 /* MLFeedBackVC.xib */,
+				3BCEA0CA1A83636C0005F080 /* Legal */,
+				3BCEA0C41A8363250005F080 /* FeedBack */,
 				3B4AB49B1A81F1700053236C /* LocationManager */,
 				3B4AB47E1A81CB2F0053236C /* MJRefresh */,
 				B751EB901A7E127000A6361A /* model */,
@@ -1282,6 +1267,27 @@
 			path = CWStarRateView;
 			sourceTree = "<group>";
 		};
+		3BCEA0C41A8363250005F080 /* FeedBack */ = {
+			isa = PBXGroup;
+			children = (
+				3BCEA0BC1A83581F0005F080 /* CWStarRateView */,
+				3BCEA0B71A8356590005F080 /* MLFeedBackVC.h */,
+				3BCEA0B81A8356590005F080 /* MLFeedBackVC.m */,
+				3BCEA0B91A8356590005F080 /* MLFeedBackVC.xib */,
+			);
+			name = FeedBack;
+			sourceTree = "<group>";
+		};
+		3BCEA0CA1A83636C0005F080 /* Legal */ = {
+			isa = PBXGroup;
+			children = (
+				3BCEA0C51A8363640005F080 /* MLLegalVC.h */,
+				3BCEA0C61A8363640005F080 /* MLLegalVC.m */,
+				3BCEA0C71A8363640005F080 /* MLLegalVC.xib */,
+			);
+			name = Legal;
+			sourceTree = "<group>";
+		};
 		3BD4DC091A777F3400B061D0 /* mycollection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1410,22 +1416,10 @@
 		B751EBB51A7E599D00A6361A /* listArray */ = {
 			isa = PBXGroup;
 			children = (
-				B751EB941A7E14D300A6361A /* saveJobListModel.h */,
-				B751EB951A7E14D300A6361A /* saveJobListModel.m */,
-				B751EB971A7E19A500A6361A /* saveJobModel.h */,
-				B751EB981A7E19A500A6361A /* saveJobModel.m */,
-				B751EBA01A7E46D000A6361A /* nearByJobListModel.h */,
-				B751EBA11A7E46D000A6361A /* nearByJobListModel.m */,
-				B751EBA31A7E498F00A6361A /* nearByJobModel.h */,
-				B751EBA41A7E498F00A6361A /* nearByJobModel.m */,
-				B751EBA61A7E4FCF00A6361A /* newestJobListModel.h */,
-				B751EBA71A7E4FCF00A6361A /* newestJobListModel.m */,
-				B751EBA91A7E509300A6361A /* newestJobModel.h */,
-				B751EBAA1A7E509300A6361A /* newestJobModel.m */,
-				B751EBAC1A7E525000A6361A /* applyJobListModel.h */,
-				B751EBAD1A7E525000A6361A /* applyJobListModel.m */,
-				B751EBAF1A7E526800A6361A /* applyJobModel.h */,
-				B751EBB01A7E526800A6361A /* applyJobModel.m */,
+				3BCEA0DA1A8366610005F080 /* jobListModel.h */,
+				3BCEA0DB1A8366610005F080 /* jobListModel.m */,
+				3BCEA0DC1A8366610005F080 /* jobModel.h */,
+				3BCEA0DD1A8366610005F080 /* jobModel.m */,
 			);
 			name = listArray;
 			sourceTree = "<group>";
@@ -1433,10 +1427,10 @@
 		B751EBB61A7E59B000A6361A /* login&register */ = {
 			isa = PBXGroup;
 			children = (
-				B751EB9D1A7E2B9500A6361A /* registerModel.h */,
-				B751EB9E1A7E2B9500A6361A /* registerModel.m */,
-				B751EB9A1A7E2B7C00A6361A /* loginModel.h */,
-				B751EB9B1A7E2B7C00A6361A /* loginModel.m */,
+				3BCEA0D41A8366500005F080 /* registerModel.h */,
+				3BCEA0D51A8366500005F080 /* registerModel.m */,
+				3BCEA0D61A8366500005F080 /* loginModel.h */,
+				3BCEA0D71A8366500005F080 /* loginModel.m */,
 			);
 			name = "login&register";
 			sourceTree = "<group>";
@@ -1444,10 +1438,10 @@
 		B751EBB71A7E59C800A6361A /* base */ = {
 			isa = PBXGroup;
 			children = (
-				B751EB911A7E128200A6361A /* baseModel.h */,
-				B751EB921A7E128200A6361A /* baseModel.m */,
-				B751EBB21A7E541200A6361A /* baseJobModel.h */,
-				B751EBB31A7E541200A6361A /* baseJobModel.m */,
+				3BCEA0CE1A8366440005F080 /* baseModel.h */,
+				3BCEA0CF1A8366440005F080 /* baseModel.m */,
+				3BCEA0D01A8366440005F080 /* baseJobModel.h */,
+				3BCEA0D11A8366440005F080 /* baseJobModel.m */,
 			);
 			name = base;
 			sourceTree = "<group>";
@@ -1455,8 +1449,8 @@
 		B751EBB81A7E5A1600A6361A /* operations */ = {
 			isa = PBXGroup;
 			children = (
-				B751EBB91A7E5B4000A6361A /* oprationResultModel.h */,
-				B751EBBA1A7E5B4000A6361A /* oprationResultModel.m */,
+				3BCEA0CB1A8366360005F080 /* oprationResultModel.h */,
+				3BCEA0CC1A8366360005F080 /* oprationResultModel.m */,
 			);
 			name = operations;
 			sourceTree = "<group>";
@@ -1507,14 +1501,14 @@
 		B7D32BB31A78E15A00871277 /* network */ = {
 			isa = PBXGroup;
 			children = (
-				B7D32BC11A78EC6900871277 /* URLOperation.h */,
-				B7D32BC21A78EC6900871277 /* URLOperation.m */,
-				B7D32BC31A78EC6900871277 /* URLReturnModel.h */,
-				B7D32BC41A78EC6900871277 /* URLReturnModel.m */,
-				B7D32BC51A78EC6900871277 /* netAPI.h */,
-				B7D32BC61A78EC6900871277 /* netAPI.m */,
-				B7D32BC71A78EC6900871277 /* URLOperationWithBlock.h */,
-				B7D32BC81A78EC6900871277 /* URLOperationWithBlock.m */,
+				3BCEA0E01A8366720005F080 /* URLOperation.h */,
+				3BCEA0E11A8366720005F080 /* URLOperation.m */,
+				3BCEA0E21A8366720005F080 /* URLReturnModel.h */,
+				3BCEA0E31A8366720005F080 /* URLReturnModel.m */,
+				3BCEA0E41A8366720005F080 /* netAPI.h */,
+				3BCEA0E51A8366720005F080 /* netAPI.m */,
+				3BCEA0E61A8366720005F080 /* URLOperationWithBlock.h */,
+				3BCEA0E71A8366720005F080 /* URLOperationWithBlock.m */,
 				3BC8AE2E1A738D4B00417741 /* Reachability */,
 			);
 			name = network;
@@ -1702,6 +1696,7 @@
 				3BC051FA1A714A080099A2DF /* jobRecmendVC.xib in Resources */,
 				3BD4DC0E1A777F8900B061D0 /* MLMyCollection.xib in Resources */,
 				3BD4DC7A1A77C50600B061D0 /* resume_am.png in Resources */,
+				3BCEA0C91A8363640005F080 /* MLLegalVC.xib in Resources */,
 				3BD4DC891A77C50600B061D0 /* resume_icon1.png in Resources */,
 				3BD4DC961A77D38100B061D0 /* agreeInvite.png in Resources */,
 				B77578C31A7A939100660BB7 /* resume_change.png in Resources */,
@@ -1793,8 +1788,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BCEA0EA1A8366720005F080 /* netAPI.m in Sources */,
 				3BC8AE211A73769500417741 /* QCheckBox.m in Sources */,
 				3BCBBD081A6CCBC600E581FD /* MLProfileVC.m in Sources */,
+				3BCEA0D21A8366440005F080 /* baseModel.m in Sources */,
 				3B32E41C1A7F6A3A00CD9055 /* PopoverView.m in Sources */,
 				3BD4DC271A77C4CD00B061D0 /* QRadioButton.m in Sources */,
 				3BC051F91A714A080099A2DF /* jobRecmendVC.m in Sources */,
@@ -1803,77 +1800,70 @@
 				3B4AB4A71A823CBC0053236C /* MLCell4.m in Sources */,
 				3B92364F1A67FAFA00347D9C /* ViewController.m in Sources */,
 				B77578CB1A7A94B900660BB7 /* PBJVision.m in Sources */,
-				B7D32BCB1A78EC6900871277 /* netAPI.m in Sources */,
 				3B0785231A6A79FB00ACD76C /* NiftySearchView.m in Sources */,
+				3BCEA0DE1A8366610005F080 /* jobListModel.m in Sources */,
 				3B92364C1A67FAFA00347D9C /* AppDelegate.m in Sources */,
 				3B1439801A7B74A90062368E /* MLResumeVC.m in Sources */,
+				3BCEA0CD1A8366360005F080 /* oprationResultModel.m in Sources */,
 				3B4AB4951A81CB2F0053236C /* UIScrollView+MJRefresh.m in Sources */,
 				3B4AB4A21A823C750053236C /* MLSelectJobTypeVC.m in Sources */,
+				3BCEA0D91A8366500005F080 /* loginModel.m in Sources */,
 				3BC8AE311A738D4B00417741 /* Reachability.m in Sources */,
 				3BD4DC181A778A2300B061D0 /* MLMyApplication.m in Sources */,
 				3B9236491A67FAFA00347D9C /* main.m in Sources */,
 				3B313E001A7296D8002FE8B3 /* sideNormalTableViewCell.m in Sources */,
+				3BCEA0EB1A8366720005F080 /* URLOperationWithBlock.m in Sources */,
 				B77578D81A7A9ED000660BB7 /* PBJStrobeView.m in Sources */,
 				3BD4DC3B1A77C4D800B061D0 /* freeselectViewCell.m in Sources */,
 				3B313DFA1A7296D8002FE8B3 /* loginTableViewCell.m in Sources */,
 				3B6524111A6CBDDD005FD671 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				3B4AB4931A81CB2F0053236C /* MJRefreshHeaderView.m in Sources */,
 				B77578C01A7A912800660BB7 /* MLResumeVideoVC.m in Sources */,
+				3BCEA0DF1A8366610005F080 /* jobModel.m in Sources */,
 				3BD13E971A80A5D4005BCCA8 /* MBProgressHUD+Add.m in Sources */,
 				3B1439731A7B6EEE0062368E /* MLMatchVC.m in Sources */,
 				3B0785581A6AA9A100ACD76C /* CardView.m in Sources */,
 				3B0785541A6AA89500ACD76C /* ZLPanGestureRecognizer.m in Sources */,
 				3B1439751A7B6EEE0062368E /* PiPeiView.m in Sources */,
-				B751EBA21A7E46D000A6361A /* nearByJobListModel.m in Sources */,
 				3B313DFF1A7296D8002FE8B3 /* RESideMenuItem.m in Sources */,
 				3BD4DC371A77C4D800B061D0 /* AKPickerView.m in Sources */,
+				3BCEA0D81A8366500005F080 /* registerModel.m in Sources */,
 				3B14397B1A7B6F010062368E /* MLLoginVC.m in Sources */,
 				3B1439771A7B6EEE0062368E /* RSCircaPageControl.m in Sources */,
 				3B313DFD1A7296D8002FE8B3 /* RESideMenu.m in Sources */,
 				3BD4DC3A1A77C4D800B061D0 /* MCPagerView.m in Sources */,
-				B751EBA51A7E498F00A6361A /* nearByJobModel.m in Sources */,
 				3B4AB4901A81CB2F0053236C /* MJRefreshBaseView.m in Sources */,
 				3B176BAE1A6BDA7D0012A350 /* jobDetailVC.m in Sources */,
 				B77578CC1A7A94B900660BB7 /* PBJVisionUtilities.m in Sources */,
+				3BCEA0D31A8366440005F080 /* baseJobModel.m in Sources */,
 				3BD4DC0D1A777F8900B061D0 /* MLMyCollection.m in Sources */,
 				3B313DCE1A722771002FE8B3 /* MLNavigation.m in Sources */,
 				3B0785391A6A851900ACD76C /* MLMapView.m in Sources */,
-				B751EBBB1A7E5B4000A6361A /* oprationResultModel.m in Sources */,
 				3B4AB4941A81CB2F0053236C /* UIScrollView+Extension.m in Sources */,
 				3BC8AE3D1A76256300417741 /* MLLoginBusiness.m in Sources */,
 				3B4AB4921A81CB2F0053236C /* MJRefreshFooterView.m in Sources */,
 				3BD4DC3F1A77C4D800B061D0 /* coverFlowView.m in Sources */,
 				3BD4DC3D1A77C4D800B061D0 /* MLResumePreviewVC.m in Sources */,
-				B7D32BCC1A78EC6900871277 /* URLOperationWithBlock.m in Sources */,
-				B751EB991A7E19A500A6361A /* saveJobModel.m in Sources */,
-				B751EBB41A7E541200A6361A /* baseJobModel.m in Sources */,
+				3BCEA0C81A8363640005F080 /* MLLegalVC.m in Sources */,
 				3BCEA0C31A83581F0005F080 /* CWStarRateView.m in Sources */,
 				3B8A28B41A80AF2500EB42B0 /* MLCell1.m in Sources */,
 				3BD13E961A80A5D4005BCCA8 /* MBProgressHUD.m in Sources */,
-				B751EB9F1A7E2B9500A6361A /* registerModel.m in Sources */,
-				B751EBAE1A7E525000A6361A /* applyJobListModel.m in Sources */,
-				B751EBAB1A7E509300A6361A /* newestJobModel.m in Sources */,
 				3BC051D51A70DEC20099A2DF /* MLCell2.m in Sources */,
 				3B65240E1A6CBDDD005FD671 /* SWCellScrollView.m in Sources */,
 				3B65240D1A6CBDDD005FD671 /* NSMutableArray+SWUtilityButtons.m in Sources */,
-				B7D32BC91A78EC6900871277 /* URLOperation.m in Sources */,
 				3B0785491A6AA76900ACD76C /* DailyMatchVC.m in Sources */,
 				3B07854E1A6AA88600ACD76C /* UIColor+FlatColors.m in Sources */,
 				3BC8AE3A1A7624AB00417741 /* User.m in Sources */,
 				3BCEA0BA1A8356590005F080 /* MLFeedBackVC.m in Sources */,
-				B751EBA81A7E4FCF00A6361A /* newestJobListModel.m in Sources */,
 				3BC051D01A70DE340099A2DF /* MLMessageVC.m in Sources */,
 				3B313DF81A7296D8002FE8B3 /* AccelerationAnimation.m in Sources */,
 				3BCBBD0D1A6CCBF600E581FD /* KVNMaskedPageControl.m in Sources */,
 				B7D32BA81A78E11300871277 /* baseAPP.m in Sources */,
-				B751EB931A7E128200A6361A /* baseModel.m in Sources */,
-				B751EB9C1A7E2B7C00A6361A /* loginModel.m in Sources */,
 				3B0785551A6AA89500ACD76C /* ZLSwipeableView.m in Sources */,
 				3B6524121A6CBDDD005FD671 /* SWUtilityButtonView.m in Sources */,
 				3B313DFE1A7296D8002FE8B3 /* RESideMenuCell.m in Sources */,
-				B751EBB11A7E526800A6361A /* applyJobModel.m in Sources */,
-				B751EB961A7E14D300A6361A /* saveJobListModel.m in Sources */,
 				3B313DFC1A7296D8002FE8B3 /* REBackgroundView.m in Sources */,
+				3BCEA0E91A8366720005F080 /* URLReturnModel.m in Sources */,
 				B7D32BAE1A78E13800871277 /* DateUtil.m in Sources */,
 				3B6524101A6CBDDD005FD671 /* SWTableViewCell.m in Sources */,
 				3B313E031A7296D8002FE8B3 /* usrTableViewCell.m in Sources */,
@@ -1882,9 +1872,9 @@
 				3B3C09E51A68F30900B8C343 /* MLFirstVC.m in Sources */,
 				3B07853D1A6A8F0D00ACD76C /* MLFilterVC.m in Sources */,
 				3B4AB4911A81CB2F0053236C /* MJRefreshConst.m in Sources */,
+				3BCEA0E81A8366720005F080 /* URLOperation.m in Sources */,
 				B7D32BAD1A78E13800871277 /* stringUtil.m in Sources */,
 				3B65240F1A6CBDDD005FD671 /* SWLongPressGestureRecognizer.m in Sources */,
-				B7D32BCA1A78EC6900871277 /* URLReturnModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

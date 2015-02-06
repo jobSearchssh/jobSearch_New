@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol finishFilterDelegate <NSObject>
+@required
+- (void)finishFilter:(int)_distance Type:(NSMutableArray*)type;
+@end
+
+
 @interface MLFilterVC : UIViewController
+
+@property(nonatomic,weak) id<finishFilterDelegate> filterDelegate;
 
 @end

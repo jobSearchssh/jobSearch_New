@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol finishSelectDelegate <NSObject>
+@required
+- (void)finishSelect:(NSMutableArray*)type;
+@end
+
 @interface MLSelectJobTypeVC : UITableViewController
 
 @property (nonatomic,strong) NSMutableArray *selectedTypeArray;
-
+@property(nonatomic,weak) id<finishSelectDelegate> selectDelegate;
 @end

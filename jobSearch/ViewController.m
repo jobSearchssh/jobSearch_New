@@ -18,6 +18,7 @@
 #import "MLMatchVC.h"
 #import "MLResumePreviewVC.h"
 #import "MLFeedBackVC.h"
+#import "MLLegalVC.h"
 
 @interface ViewController ()
 {
@@ -109,8 +110,13 @@
         }];
         
         RESideMenuItem *aboutusItem = [[RESideMenuItem alloc] initWithTitle:@"声明" setFlag:NORMALCELL image:[UIImage imageNamed:@"notice"] highlightedImage:[UIImage imageNamed:@"notice"] action:^(RESideMenu *menu, RESideMenuItem *item) {
-            NSLog(@"Item %@", item);
-            [menu hide];
+            MLLegalVC *legalVC=[MLLegalVC sharedInstance];
+            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:legalVC];
+            navigationController.navigationBar.translucent = NO;
+            navigationController.tabBarController.tabBar.translucent = NO;
+            navigationController.toolbar.translucent = NO;
+            currentnavigationController=navigationController;
+            [menu setRootViewController:navigationController];
         }];
         
 //        RESideMenuItem *logoutsItem = [[RESideMenuItem alloc] initWithTitle:@"退出" setFlag:NORMALCELL image:[UIImage imageNamed:@"logout"] highlightedImage:[UIImage imageNamed:@"logout"] action:^(RESideMenu *menu, RESideMenuItem *item) {

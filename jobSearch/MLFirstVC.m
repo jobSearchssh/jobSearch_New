@@ -20,9 +20,10 @@
 #import <MAMapKit/MAMapKit.h>
 #import "AJLocationManager.h"
 
-@interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate>
+@interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate,finishFilterDelegate,UINavigationControllerDelegate>
 {
     NSInteger cellNum;
+    NSInteger sectionNum;
     NiftySearchView *searchView;
     MLMapView *mapView;
     NSMutableArray *recordArray;
@@ -31,11 +32,20 @@
     NSDateFormatter *dateFormatter;
     
     BOOL firstLoad;
-    
     BOOL headerRefreshing;
     BOOL footerRefreshing;
     
     AMapSearchAPI *search;
+    
+    //页数
+    int skipTimes;
+    
+    //查询类型  nearest/newest/keyword/distanceAndType
+    NSString *searchType;
+    NSString *keyWord;
+    CLLocationCoordinate2D locationCoord;
+    int distance;
+    NSMutableArray *jobTypeArray;
 }
 
 @property (weak, nonatomic) IBOutlet UITabBar *tabbar;
@@ -57,12 +67,18 @@ static  MLFirstVC *thisVC=nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
- 
+    
+    //初始化参数
+    distance=20;
+    jobTypeArray=[[NSMutableArray alloc]init];
+    searchType=@"nearest";
+    
     cellNum=0;
+    sectionNum=0;
+    skipTimes=0;
     firstLoad=YES;
     headerRefreshing=NO;
     footerRefreshing=NO;
-    
     
     searchView = [[NiftySearchView alloc] initWithFrame:CGRectMake(0, -76, [[UIScreen mainScreen] bounds].size.width, 76)];
     searchView.delegate = self;
@@ -76,15 +92,15 @@ static  MLFirstVC *thisVC=nil;
     self.title=@"附近的工作";
     
     dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy年MM月dd日"];
-    
-    [self tableViewInit];
+    [dateFormatter setDateFormat:@"MM月dd日"];
     
     mapDisplaying=NO;
+    [self tableViewInit];
     
     [self initTabbar];
     
     [self searchCity];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -105,37 +121,246 @@ static  MLFirstVC *thisVC=nil;
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
 }
 
-- (void)refreshData{
-    if (!headerRefreshing)
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+- (void)finishFilter:(int)_distance Type:(NSMutableArray *)type{
+    jobTypeArray=type;
+    distance=_distance;
+    firstLoad=YES;
+    searchType=@"distanceAndType";
+    [self headRefreshData];
+}
+
+- (void)headRefreshData{
     
-    [netAPI getNearByJobs:116.46 latitude:49.92 withBlock:^(nearByJobListModel *nearByJobListModel) {
-        if (!headerRefreshing)
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-        else
-            headerRefreshing=NO;
+    headerRefreshing=YES;
+    skipTimes=0;
+    
+    if (firstLoad){
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
+    [self refreshDataByType:NO];
+
+}
+
+- (void)footRefreshData{
+    footerRefreshing=YES;
+    
+    [self refreshDataByType:YES];
+}
+
+- (void)refreshDataByType:(BOOL)_footer{
+    
+    //上拉加载继续
+    if (_footer) {
+        //按距离远近排序
+        if ([searchType isEqualToString:@"nearest"]) {
+            if (abs(locationCoord.latitude-99999.99)<0.001) {
+                [self.tableView footerEndRefreshing];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+            }else{
+                [netAPI getNearByJobs:@"nearest" longtitude:locationCoord.longitude latitude:locationCoord.latitude start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+                    [self footHandler:jobListModel];
+                }];
+            }
+        }
+        //最新发布的职位
+        else if ([searchType isEqualToString:@"newest"]){
+            
+            [netAPI getNewestJobs:@"newest" start:skipTimes*BASE_SPAN+1  length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+                [self footHandler:jobListModel];
+            }];
+            
+        }
+        //按关键字查询
+        else if ([searchType isEqualToString:@"keyword"]){
+            if ([keyWord length]<1) {
+                [self.tableView footerEndRefreshing];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入关键字" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+            }else{
+                [netAPI getJobByKeyWord:@"keyword" start:skipTimes*BASE_SPAN+1 length:BASE_SPAN keyWord:keyWord withBlock:^(jobListModel *jobListModel) {
+                    [self footHandler:jobListModel];
+                }];
+            }
+        }
+        //按距离和类型排序
+        else if ([searchType isEqualToString:@"distanceAndType"]){
+            if ([jobTypeArray count]==0) {
+                if (abs(locationCoord.latitude-99999.99)<0.001) {
+                    [self.tableView footerEndRefreshing];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    [alert show];
+                }else{
+                    [netAPI getJobByDistance:@"distance" longtitude:locationCoord.longitude latitude:locationCoord.latitude start:skipTimes*BASE_SPAN+1 length:BASE_SPAN distance:distance withBlock:^(jobListModel *jobListModel) {
+                        [self footHandler:jobListModel];
+                    }];
+                }
+            }else{
+                if (abs(locationCoord.latitude-99999.99)<0.001) {
+                    [self.tableView footerEndRefreshing];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    [alert show];
+                }else{
+                    [netAPI getJobByTypeAndDistance:@"distanceAndType" start:skipTimes*BASE_SPAN+1 length:BASE_SPAN longtitude:locationCoord.longitude latitude:locationCoord.latitude distance:distance jobType:jobTypeArray withBlock:^(jobListModel *jobListModel) {
+                        [self footHandler:jobListModel];
+                    }];
+                }
+            }
+        }
+    }
+    
+    //下拉加载刷新
+    else{
+        //按距离远近排序
+        if ([searchType isEqualToString:@"nearest"]) {
+            if (abs(locationCoord.latitude-99999.99)<0.001) {
+                [self.tableView headerEndRefreshing];
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                firstLoad=NO;
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+            }else{
+                [netAPI getNearByJobs:@"nearby" longtitude:locationCoord.longitude latitude:locationCoord.latitude start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+                    [self headHandler:jobListModel];
+                }];
+            }
+        }
+        //最新发布的职位
+        else if ([searchType isEqualToString:@"newest"]){
+            [netAPI getNewestJobs:@"newest" start:1  length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+                [self headHandler:jobListModel];
+            }];
+        }
+        //按关键字查询
+        else if ([searchType isEqualToString:@"keyword"]){
+            if ([keyWord length]<1) {
+                firstLoad=NO;
+                [self.tableView headerEndRefreshing];
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入关键字" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+            }else{
+                [netAPI getJobByKeyWord:@"keyword" start:1 length:BASE_SPAN keyWord:keyWord withBlock:^(jobListModel *jobListModel) {
+                    [self headHandler:jobListModel];
+                }];
+            }
+        }
+        //按距离和类型排序
+        else if ([searchType isEqualToString:@"distanceAndType"]){
+            if ([jobTypeArray count]==0) {
+                if (abs(locationCoord.latitude-99999.99)<0.001) {
+                    firstLoad=NO;
+                    [self.tableView headerEndRefreshing];
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    [alert show];
+                }else{
+                    if (abs(locationCoord.latitude-99999.99)<0.001) {
+                        [self.tableView footerEndRefreshing];
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                        [alert show];
+                    }else{
+                        [netAPI getJobByDistance:@"distance" longtitude:locationCoord.longitude latitude:locationCoord.latitude start:1 length:BASE_SPAN distance:distance withBlock:^(jobListModel *jobListModel) {
+                            [self headHandler:jobListModel];
+                        }];
+                    }
+                }
+            }else{
+                if (abs(locationCoord.latitude-99999.99)<0.001) {
+                    firstLoad=NO;
+                    [self.tableView headerEndRefreshing];
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    [alert show];
+                }else{
+                    if (abs(locationCoord.latitude-99999.99)<0.001) {
+                        [self.tableView footerEndRefreshing];
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                        [alert show];
+                    }else{
+                        [netAPI getJobByTypeAndDistance:@"distanceAndType" start:1 length:BASE_SPAN longtitude:locationCoord.longitude latitude:locationCoord.latitude distance:distance jobType:jobTypeArray withBlock:^(jobListModel *jobListModel) {
+                            [self headHandler:jobListModel];
+                        }];
+//                        [netAPI getJobByJobType:@"type" start:1 length:BASE_SPAN jobType:jobTypeArray withBlock:^(jobListModel *jobListModel) {
+//                            [self headHandler:jobListModel];
+//                        }];
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+- (void)headHandler:(jobListModel *)jobListModel{
+    [self refreshData:jobListModel];
+    
+    skipTimes=1;
+    if (firstLoad){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        firstLoad=NO;
+    }
+    headerRefreshing=NO;
+    [self.tableView headerEndRefreshing];
+}
+
+- (void)footHandler:(jobListModel *)jobListModel{
+    [self refreshData:jobListModel];
+    
+    footerRefreshing=NO;
+    skipTimes+=1;
+    [self.tableView footerEndRefreshing];
+}
+
+- (void)refreshData:(jobListModel *)jobListModel{
+    
+    if (footerRefreshing) {
+        if (![jobListModel.getStatus intValue]==0) {
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:@"数据请求失败，请稍后再试" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+            
+        }else{
+            
+            for (id object in jobListModel.getJobArray) {
+                [recordArray addObject:object];
+            }
+            
+            NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
+            
+            NSInteger n=[recordArray count];
+            NSInteger m=[jobListModel.getJobArray count];
+            
+            for (NSInteger k=n-m; k<[recordArray count];k++) {
+                NSIndexPath *newPath = [NSIndexPath indexPathForRow:k inSection:0];
+                [insertIndexPaths addObject:newPath];
+            }
+            cellNum=[recordArray count];
+            [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }
+    
+    else{
         
-        [self.tableView headerEndRefreshing];
-        
-        if (![nearByJobListModel.getStatus intValue]==0) {
+        if (![jobListModel.getStatus intValue]==0) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:@"网络有点不给力哦，请稍后再试~" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
         }else{
             
             [recordArray removeAllObjects];
             
-            for (id object in nearByJobListModel.getnearByJobListArray) {
+            for (id object in jobListModel.getJobArray) {
                 [recordArray addObject:object];
             }
             
             cellNum=[recordArray count];
             [self.tableView reloadData];
         }
-    }];
+    }
 }
 
-
 - (void)initTabbar{
+    
     [[self.tabbar.items objectAtIndex:0] setFinishedSelectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [[self.tabbar.items objectAtIndex:0] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                         [UIColor whiteColor], UITextAttributeTextColor,
@@ -208,6 +433,7 @@ static  MLFirstVC *thisVC=nil;
 
 - (void)filter{
     MLFilterVC *filterVC=[[MLFilterVC alloc]init];
+    filterVC.filterDelegate=self;
     [self.navigationController pushViewController:filterVC animated:YES];
 }
 
@@ -218,7 +444,7 @@ static  MLFirstVC *thisVC=nil;
                                   delegate:self
                                   cancelButtonTitle:@"取消"
                                   destructiveButtonTitle:nil
-                                  otherButtonTitles:@"智能排序", @"距离最近", @"最新发布",nil];
+                                  otherButtonTitles: @"距离最近", @"最新发布",nil];
 
     [actionSheet showInView:self.view];
 }
@@ -226,15 +452,14 @@ static  MLFirstVC *thisVC=nil;
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
-        
+        searchType=@"nearest";
+        firstLoad=YES;
+        [self headRefreshData];
     }else if (buttonIndex == 1) {
-        
-    }else if(buttonIndex == 2) {
-        
-    }else if(buttonIndex == 3) {
-        
+        searchType=@"newest";
+        firstLoad=YES;
+        [self headRefreshData];
     }
-    
 }
 
 //*********************searchView********************//
@@ -308,25 +533,16 @@ static  MLFirstVC *thisVC=nil;
 
 //*********************tableView********************//
 - (void)tableViewInit{
+    
     recordArray=[[NSMutableArray alloc]init];
     
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     _tableView.scrollEnabled=YES;
-    [_tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
-    [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
-    [self refreshData];
-}
-
-- (void)headerRereshing{
-    headerRefreshing=YES;
-    //skipTimes=0;
-    [self refreshData];
-}
-
-- (void)footerRereshing{
-    footerRefreshing=YES;
-    [self refreshData];
+    [_tableView addHeaderWithTarget:self action:@selector(headRefreshData)];
+    [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
+    _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+    
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -342,17 +558,19 @@ static  MLFirstVC *thisVC=nil;
     }
     
     MLCell1 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
-    [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
-    cell.delegate = self;
+    
+    //[cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
+    //cell.delegate = self;
     
     
-    nearByJobModel *jobObject=[recordArray objectAtIndex:[indexPath row]];
+    jobModel *jobObject=[recordArray objectAtIndex:[indexPath row]];
     
     cell.jobTitleLabel.text=jobObject.getjobTitle;
     cell.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@",jobObject.getjobWorkPlaceCity,jobObject.getjobWorkPlaceDistrict];
     cell.jobTimeLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:jobObject.getjobBeginTime],[dateFormatter stringFromDate:jobObject.getjobEndTime]];
-    cell.jobDistance.text=@"1.2km";
-    cell.jobNumberRemainLabel.text=[NSString stringWithFormat:@"还剩%@人",jobObject.getjobRecruitNum];
+    cell.jobDistance.text=[NSString stringWithFormat:@"%.1fKM",[jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint]];
+    int num=[jobObject.getjobRecruitNum intValue]-[jobObject.getjobHasAccepted intValue];
+    cell.jobNumberRemainLabel.text=[NSString stringWithFormat:@"还剩%d人",num];
     cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/天",jobObject.getjobSalaryRange];
     
     return cell;
@@ -379,7 +597,10 @@ static  MLFirstVC *thisVC=nil;
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    if (cellNum==0)
+        return 0;
+    else
+        return 1;
 }
 
 //改变行高
@@ -497,59 +718,31 @@ static  MLFirstVC *thisVC=nil;
 
 - (void)searchCity
 {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+    
     //获得用户位置信息
     [[AJLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
+        locationCoord=locationCorrrdinate;
         
-        NSLog(@"%f  %f",locationCorrrdinate.latitude,locationCorrrdinate.longitude);
-//        NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
-//        [mySettingData setObject:NSStringFromCGPoint(CGPointMake(locationCorrrdinate.longitude, locationCorrrdinate.latitude)) forKey:@"currentCoordinate"];
-//        
-//        [MAMapServices sharedServices].apiKey =@"269c3b70b59f61d9885ca37fbd74f582";
-//        
-//        search=[[AMapSearchAPI alloc] initWithSearchKey: @"41f0145aa2a77c39924ee9aa0664701f" Delegate:self];
-//        search.delegate=self;
-//        AMapReGeocodeSearchRequest *regeoRequest = [[AMapReGeocodeSearchRequest alloc] init];
-//        regeoRequest.searchType = AMapSearchType_ReGeocode;
-//        regeoRequest.location = [AMapGeoPoint locationWithLatitude:locationCorrrdinate.latitude longitude:locationCorrrdinate.longitude];
-//        regeoRequest.radius = 10000;
-//        regeoRequest.requireExtension = YES;
-//        
-//        [search AMapReGoecodeSearch: regeoRequest];
+        [mySettingData setObject:NSStringFromCGPoint(CGPointMake(locationCorrrdinate.longitude, locationCorrrdinate.latitude)) forKey:@"currentCoordinate"];
+        [mySettingData synchronize];
         
+        [self headRefreshData];
+        
+    } error:^(NSError *error) {
+        
+        if ([mySettingData objectForKey:@"currentCoordinate"]) {
+
+            CGPoint p=CGPointFromString([mySettingData objectForKey:@"currentCoordinate"]);
+            locationCoord=CLLocationCoordinate2DMake(p.y, p.x);
+
+        }else{
+            locationCoord=CLLocationCoordinate2DMake(38.92, 116.46);
+        }
+        [self headRefreshData];
     }];
 }
-
-- (void)onReGeocodeSearchDone:(AMapReGeocodeSearchRequest *)request response:(AMapReGeocodeSearchResponse *)response
-{
-//    if (response) {
-//        
-//        if ([response.regeocode.addressComponent.city length]>0) {
-//            if (![response.regeocode.addressComponent.city isEqualToString:currentCity]) {
-//                
-//                currentCity=response.regeocode.addressComponent.city;
-//                currentCityCode=response.regeocode.addressComponent.citycode;
-//                
-//                
-//                NSString *str=[NSString stringWithFormat:@"亲爱的用户，定位到您再%@，是否切换城市？",currentCity];
-//                changeCityAlert = [[UIAlertView alloc] initWithTitle:@"切换城市" message:str delegate:nil cancelButtonTitle:@"切换" otherButtonTitles:@"取消",nil];
-//                changeCityAlert.delegate=self;
-//                [changeCityAlert show];
-//            }
-//        }else{
-//            if (![response.regeocode.addressComponent.province isEqualToString:currentCity]) {
-//                
-//                currentCity=response.regeocode.addressComponent.province;
-//                currentCityCode=response.regeocode.addressComponent.citycode;
-//                
-//                NSString *str=[NSString stringWithFormat:@"亲爱的用户，定位到您再%@，是否切换城市？",currentCity];
-//                changeCityAlert = [[UIAlertView alloc] initWithTitle:@"切换城市" message:str delegate:nil cancelButtonTitle:@"切换" otherButtonTitles:@"取消",nil];
-//                changeCityAlert.delegate=self;
-//                [changeCityAlert show];
-//            }
-//        }
-//    }
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

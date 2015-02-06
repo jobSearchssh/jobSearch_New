@@ -15,6 +15,10 @@
 #define NEARBYJOBLIST_FUNCTION @"userService/queryNearestJobs"
 #define NEWESTJOBLIST_FUNCTION @"userService/queryNewestJobs"
 #define APPLYJOBLIST_FUNCTION @"userService/queryUserApplys"
+#define DISTANCEJOBLIST_FUNCTION @"userService/queryJobsByDistance"
+#define TYPEJOBLIST_FUNCTION @"userService/queryJobsByJobType"
+#define TYPEANDDISJOBLIST_FUNCTION @"userService/queryJobsByDistanceAndJobType"
+#define KEYWORDJOBLIST_FUNCTION @"userService/queryJobsByCondition"
 //opration
 #define SAVEJOB_FUNCTION @"user/createSaveList"
 #define DELETEJOB_FUNCTION @"user/createDeleteList"
@@ -22,32 +26,61 @@
 
 @implementation netAPI
 +(void)test{
-    [netAPI getNearByJobs:116.46 latitude:49.92 withBlock:^(nearByJobListModel *nearByJobListModel) {
-        NSMutableArray *a = [nearByJobListModel getnearByJobListArray];
-        for (nearByJobModel *job in a) {
-            NSLog(@"%@",[job getjobID]);
+//    //ok
+//    [netAPI getNearByJobs:@"54ceddc6910d78bb68004293" longtitude:116.46 latitude:49.92 start:1 length:2 withBlock:^(nearByJobListModel *nearByJobListModel) {
+//        NSMutableArray *a = [nearByJobListModel getnearByJobListArray];
+//        for (jobModel *job in a) {
+//            NSLog(@"getNearByJobs jobid = %@",[job getjobBeginTime]);
+//        }
+//    }];
+//    //ok
+//    [netAPI getJobByDistance:@"54ceddc6910d78bb68004293" longtitude:116.46 latitude:49.92 start:1 length:2 distance:2 withBlock:^(jobListModel *jobListModel) {
+//        NSMutableArray *a = [jobListModel getJobArray];
+//        for (jobModel *job in a) {
+//            NSLog(@"getNearByJobs jobid = %@",[job getjobBeginTime]);
+//        }
+//    }];
+    
+    
+    //
+    NSMutableArray *type1Array = [NSMutableArray arrayWithObjects:[NSNumber numberWithInt:1],[NSNumber numberWithInt:2], nil];
+    [netAPI getJobByJobType:@"54ceddc6910d78bb68004293" start:1 length:2 jobType:type1Array withBlock:^(jobListModel *jobListModel) {
+        NSMutableArray *a = [jobListModel getJobArray];
+        for (jobModel *job in a) {
+            NSLog(@"getNearByJobs jobid = %@",[job getjobID]);
         }
     }];
-    [netAPI getNewestJobs:@"54cdee5b3ed1ccf5358b458a" withBlock:^(newestJobListModel *newestJobListModel) {
-        NSMutableArray *a = [newestJobListModel getnewestJobListArray];
-        for (newestJobModel *job in a) {
-            NSLog(@"%@",[job getjobTitle]);
-        }
-    }];
-    [netAPI getApplyJobs:@"54cdee5b3ed1ccf5358b458a" withBlock:^(applyJobListModel *applyJobListModel) {
-        NSMutableArray *a = [applyJobListModel getapplyJobListArray];
-        for (applyJobModel *job in a) {
-            NSLog(@"%@",[job getjobTitle]);
-        }
-    }];
-    [netAPI usrRegister:@"18610782216" usrPassword:@"123456" withBlock:^(registerModel *registerModel) {
-        NSLog(@"register status= %@",[registerModel getInfo]);
-        NSLog(@"register id= %@",[registerModel getUsrID]);
-    }];
-    [netAPI saveTheJob:@"54cdfe873ed1ccf5358b45d3" jobID:@"54cdee5b3ed1ccf5358b458a" withBlock:^(oprationResultModel *oprationResultModel) {
-        NSLog(@"register status= %@",[oprationResultModel getInfo]);
-        NSLog(@"register id= %@",[oprationResultModel getOprationID]);
-    }];
+    
+    //
+//    NSMutableArray *type2Array = [NSMutableArray arrayWithObjects:[NSNumber numberWithInt:1], nil];
+//    [netAPI getJobByTypeAndDistance:@"54ceddc6910d78bb68004293" start:1 length:2 longtitude:116.46 latitude:49.92 distance:2 jobType:type2Array withBlock:^(jobListModel *jobListModel) {
+//        NSMutableArray *a = [jobListModel getJobArray];
+//        for (jobModel *job in a) {
+//            NSLog(@"getNearByJobs jobid = %@",[job getjobID]);
+//        }
+//    }];
+    
+    
+//    [netAPI getNewestJobs:@"54cdee5b3ed1ccf5358b458a" withBlock:^(newestJobListModel *newestJobListModel) {
+//        NSMutableArray *a = [newestJobListModel getnewestJobListArray];
+//        for (newestJobModel *job in a) {
+//            NSLog(@"getNewestJobs title = %@",[job getjobTitle]);
+//        }
+//    }];
+//    [netAPI getApplyJobs:@"54cdee5b3ed1ccf5358b458a" withBlock:^(applyJobListModel *applyJobListModel) {
+//        NSMutableArray *a = [applyJobListModel getapplyJobListArray];
+//        for (applyJobModel *job in a) {
+//            NSLog(@"getApplyJobs title = %@",[job getjobTitle]);
+//        }
+//    }];
+//    [netAPI usrRegister:@"18610782216" usrPassword:@"123456" withBlock:^(registerModel *registerModel) {
+//        NSLog(@"register info= %@",[registerModel getInfo]);
+//        NSLog(@"register id= %@",[registerModel getUsrID]);
+//    }];
+//    [netAPI saveTheJob:@"54cdfe873ed1ccf5358b45d3" jobID:@"54cdee5b3ed1ccf5358b458a" withBlock:^(oprationResultModel *oprationResultModel) {
+//        NSLog(@"saveTheJob info= %@",[oprationResultModel getInfo]);
+//        NSLog(@"saveTheJob id= %@",[oprationResultModel getOprationID]);
+//    }];
 }
 
 //用户登录
@@ -55,13 +88,14 @@
     NSString *str = [[NSString alloc]initWithFormat:@"userPhone=%@&userPassword=%@",name,password];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:LOGIN_FUNCTION block:^(URLReturnModel *returnModel) {
-        if ([returnModel getFlag]) {
+        if (returnModel != Nil && [returnModel getFlag]) {
             loginModel *a = [[loginModel alloc]initWithData:[returnModel getData]];
             loginBlock(a);
         }else{
             loginModel *a = [[loginModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription] usrID:[NSString stringWithFormat:@"-1"]];
             loginBlock(a);
         }
+        
     }];
 }
 
@@ -70,7 +104,7 @@
     NSString *str = [[NSString alloc]initWithFormat:@"userPhone=%@&userPassword=%@",name,password];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:REGISTER_FUNCTION block:^(URLReturnModel *returnModel) {
-        if ([returnModel getFlag]) {
+        if (returnModel != Nil && [returnModel getFlag]) {
             registerModel *a = [[registerModel alloc]initWithData:[returnModel getData]];
             registerBlock(a);
         }else{
@@ -81,60 +115,76 @@
 }
 
 //保存的job列表
-+(void)getSaveJobList:(NSString *)usrID withBlock:(saveJobListReturnBlock)saveJobListBlock{
-    NSString *str = [[NSString alloc]initWithFormat:@"_id=%@",usrID];
++(void)getSaveJobList:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobListReturnBlock)saveJobListBlock{
+    NSString *str = [[NSString alloc]initWithFormat:@"_id=%@&start=%d&length=%d",usrID,start,length];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:SAVEJOBLIST_FUNCTION block:^(URLReturnModel *returnModel) {
-        if ([returnModel getFlag]) {
-            saveJobListModel *a = [[saveJobListModel alloc]initWithData:[returnModel getData]];
+        if (returnModel != Nil && [returnModel getFlag]) {
+            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             saveJobListBlock(a);
         }else{
-            saveJobListModel *a = [[saveJobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
             saveJobListBlock(a);
         }
     }];
 }
 
 //附近的兼职信息
-+(void)getNearByJobs:(double)longtitude latitude:(double)latitude withBlock:(nearByJobReturnBlock)nearByBlock{
-    NSString *str = [[NSString alloc]initWithFormat:@"lon=%f&lat=%f",longtitude,latitude];
++(void)getNearByJobs:(NSString *)usrID longtitude:(double)longtitude latitude:(double)latitude start:(int)start length:(int)length withBlock:(jobListReturnBlock)nearByBlock{
+    NSString *str = [[NSString alloc]initWithFormat:
+                     @"_id=%@&start=%d&length=%d&lon=%f&lat=%f",usrID,start,length,longtitude,latitude];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:NEARBYJOBLIST_FUNCTION block:^(URLReturnModel *returnModel) {
-        if ([returnModel getFlag]) {
-            nearByJobListModel *a = [[nearByJobListModel alloc]initWithData:[returnModel getData]];
+        if (returnModel != Nil && [returnModel getFlag]) {
+            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             nearByBlock(a);
         }else{
-            nearByJobListModel *a = [[nearByJobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
             nearByBlock(a);
         }
     }];
 }
 
 //最新的兼职信息
-+(void)getNewestJobs:(NSString *)usrID withBlock:(newestJobReturnBlock)newestJobListBlock{
-    NSString *str = [[NSString alloc]initWithFormat:@"_id=%@",usrID];
++(void)getNewestJobs:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobListReturnBlock)newestJobListBlock{
+    NSString *str = [[NSString alloc]initWithFormat:@"_id=%@&start=%d&length=%d",usrID,start,length];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:NEWESTJOBLIST_FUNCTION block:^(URLReturnModel *returnModel) {
-        if ([returnModel getFlag]) {
-            newestJobListModel *a = [[newestJobListModel alloc]initWithData:[returnModel getData]];
+        if (returnModel != Nil && [returnModel getFlag]) {
+            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             newestJobListBlock(a);
         }else{
-            newestJobListModel *a = [[newestJobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
             newestJobListBlock(a);
         }
     }];
 }
 
+//根据关键字
++(void)getJobByKeyWord:(NSString *)usrID start:(int)start length:(int)length keyWord:(NSString *)keyWord withBlock:(jobListReturnBlock)bykeyBlock{
+    NSString *str = [[NSString alloc]initWithFormat:@"_id=%@&start=%d&length=%d&keyword=%@",usrID,start,length,keyWord];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:KEYWORDJOBLIST_FUNCTION block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
+            bykeyBlock(a);
+        }else{
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            bykeyBlock(a);
+        }
+    }];
+}
+
 //申请的兼职信息
-+(void)getApplyJobs:(NSString *)usrID withBlock:(applyJobReturnBlock)applyJobListBlock{
-    NSString *str = [[NSString alloc]initWithFormat:@"_id=%@",usrID];
++(void)getApplyJobs:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobListReturnBlock)applyJobListBlock{
+    NSString *str = [[NSString alloc]initWithFormat:@"_id=%@&start=%d&length=%d",usrID,start,length];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:APPLYJOBLIST_FUNCTION block:^(URLReturnModel *returnModel) {
-        if ([returnModel getFlag]) {
-            applyJobListModel *a = [[applyJobListModel alloc]initWithData:[returnModel getData]];
+        if (returnModel != Nil && [returnModel getFlag]) {
+            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             applyJobListBlock(a);
         }else{
-            applyJobListModel *a = [[applyJobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
             applyJobListBlock(a);
         }
     }];
@@ -146,12 +196,84 @@
     NSString *str = [[NSString alloc]initWithFormat:@"job_id=%@&job_user_id=%@",jobID,usrID];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:SAVEJOB_FUNCTION block:^(URLReturnModel *returnModel) {
-        if ([returnModel getFlag]) {
+        if (returnModel != Nil && [returnModel getFlag]) {
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);
         }else{
             oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
             oprationReturnBlock(a);
+        }
+    }];
+}
+
+//根据距离
+//lon:经度坐标;lat:纬度坐标;start:起始位置;length:获取长度;distance:距离长度(km);_id:用户唯一标示;回调block;
++(void)getJobByDistance:(NSString *)usrID longtitude:(double)longtitude latitude:(double)latitude start:(int)start length:(int)length distance:(int)distance withBlock:(jobListReturnBlock)distanceBlock{
+    NSString *str = [[NSString alloc]initWithFormat:
+                     @"_id=%@&start=%d&length=%d&lon=%f&lat=%f&distance=%d",usrID,start,length,longtitude,latitude,distance];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:DISTANCEJOBLIST_FUNCTION block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
+            distanceBlock(a);
+        }else{
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            distanceBlock(a);
+        }
+    }];
+}
+
+//根据工作类型
+//start:起始位置;length:获取长度;typeArray:如[1,2,3];回调block;
++(void)getJobByJobType:(NSString *)usrID start:(int)start length:(int)length jobType:(NSMutableArray *)typeArray withBlock:(jobListReturnBlock)byTypeBlock{
+    NSMutableString *getType = [[NSMutableString alloc]initWithFormat:@"\""];
+    for (int index = 0; index < [typeArray count] ; index++ ) {
+        NSNumber *number = [typeArray objectAtIndex:index];
+        [getType appendFormat:@"%d",number.intValue];
+        if (index != ([typeArray count] -1)) {
+            [getType appendFormat:@","];
+        }
+    }
+    [getType appendFormat:@"\""];
+    
+    NSString *str = [[NSString alloc]initWithFormat:
+                     @"_id=%@&start=%d&length=%d&jobType=%@",usrID,start,length,getType];
+    NSLog(@"%@",str);
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:TYPEJOBLIST_FUNCTION block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
+            byTypeBlock(a);
+        }else{
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            byTypeBlock(a);
+        }
+    }];
+}
+
+//根据工作类型与距离
+//lon:经度坐标;lat:纬度坐标;distance:距离长度(km);start:起始位置;length:获取长度;typeArray:如[1,2,3]m,不为空，nsnumber类型;回调block;
++(void)getJobByTypeAndDistance:(NSString *)usrID start:(int)start length:(int)length longtitude:(double)longtitude latitude:(double)latitude distance:(int)distance jobType:(NSMutableArray *)typeArray withBlock:(jobListReturnBlock)byTypeAndDisBlock{
+    NSMutableString *getType = [[NSMutableString alloc]initWithFormat:@"\""];
+    for (int index = 0; index < [typeArray count] ; index++ ) {
+        NSNumber *number = [typeArray objectAtIndex:index];
+        [getType appendFormat:@"%d",number.intValue];
+        if (index != ([typeArray count] -1)) {
+            [getType appendFormat:@","];
+        }
+    }
+    [getType appendFormat:@"\""];
+    
+    NSString *str = [[NSString alloc]initWithFormat:
+                     @"_id=%@&start=%d&length=%d&jobType=%@&lon=%f&lat=%f&distance=%d",usrID,start,length,getType,longtitude,latitude,distance];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:TYPEANDDISJOBLIST_FUNCTION block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
+            byTypeAndDisBlock(a);
+        }else{
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            byTypeAndDisBlock(a);
         }
     }];
 }
@@ -162,7 +284,7 @@
     NSString *str = [[NSString alloc]initWithFormat:@"job_id=%@&job_user_id=%@",jobID,usrID];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:DELETEJOB_FUNCTION block:^(URLReturnModel *returnModel) {
-        if ([returnModel getFlag]) {
+        if (returnModel != Nil && [returnModel getFlag]) {
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);
         }else{
@@ -178,7 +300,7 @@
     NSString *str = [[NSString alloc]initWithFormat:@"job_id=%@&job_user_id=%@",jobID,usrID];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:APPLYJOB_FUNCTION block:^(URLReturnModel *returnModel) {
-        if ([returnModel getFlag]) {
+        if (returnModel != Nil && [returnModel getFlag]) {
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);
         }else{

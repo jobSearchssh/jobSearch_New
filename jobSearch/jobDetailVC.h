@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "nearByJobModel.h"
+#import "jobModel.h"
 
 @interface jobDetailVC : UIViewController
 @property (strong, nonatomic) NSString *buttonTitle;
 @property (weak, nonatomic) IBOutlet UIButton *applyButton;
-@property (strong, nonatomic)nearByJobModel*jobModel;
+@property (strong, nonatomic)jobModel*jobModel;
 @end

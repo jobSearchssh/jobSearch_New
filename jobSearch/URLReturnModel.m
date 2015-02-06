@@ -8,14 +8,17 @@
 
 #import "URLReturnModel.h"
 
-
 @implementation URLReturnModel
 @synthesize object;
 @synthesize error;
-- (URLReturnModel *)initWithData:(BOOL)isSuccess data:(NSData *)getObject error:(NSError *)getError{
+- (URLReturnModel *)initWithData:(NSData *)getObject error:(NSError *)getError{
     self = [super init];
     if (self) {
-        flag = isSuccess;
+        if (getObject == Nil || getError) {
+            flag = FALSE;
+        }else{
+            flag = TRUE;
+        }
         object = getObject;
         error = getError;
     }

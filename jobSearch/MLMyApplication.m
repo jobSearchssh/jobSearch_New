@@ -9,10 +9,21 @@
 #import "MLMyApplication.h"
 #import "MLCell1.h"
 #import "jobDetailVC.h"
+#import "MBProgressHUD.h"
+#import "MJRefresh.h"
+
 
 @interface MLMyApplication ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate>
 {
     NSInteger cellNum;
+    NSDateFormatter *dateFormatter;
+    NSInteger sectionNum;
+    NSMutableArray *recordArray;
+    BOOL firstLoad;
+    BOOL headerRefreshing;
+    BOOL footerRefreshing;
+    //页数
+    int skipTimes;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -44,8 +55,109 @@ static  MLMyApplication *thisVC=nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    cellNum=0;
+    sectionNum=0;
+    skipTimes=0;
+    firstLoad=YES;
+    headerRefreshing=NO;
+    footerRefreshing=NO;
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM月dd日"];
+
+    
     [self tableViewInit];
 }
+
+- (void)headRefreshData{
+    
+    headerRefreshing=YES;
+    skipTimes=0;
+    
+    if (firstLoad){
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
+    [netAPI getApplyJobs:@"apply" start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+        [self headHandler:jobListModel];
+    }];
+}
+
+- (void)footRefreshData{
+    footerRefreshing=YES;
+    
+    [netAPI getApplyJobs:@"54ceddc6910d78bb68004293" start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+        [self footHandler:jobListModel];
+    }];
+}
+
+- (void)headHandler:(jobListModel *)jobListModel{
+    [self refreshData:jobListModel];
+    
+    skipTimes=1;
+    if (firstLoad){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        firstLoad=NO;
+    }
+    headerRefreshing=NO;
+    [self.tableView headerEndRefreshing];
+}
+
+- (void)footHandler:(jobListModel *)jobListModel{
+    [self refreshData:jobListModel];
+    
+    footerRefreshing=NO;
+    skipTimes+=1;
+    [self.tableView footerEndRefreshing];
+}
+
+
+- (void)refreshData:(jobListModel *)jobListModel{
+    
+    if (footerRefreshing) {
+        if (![jobListModel.getStatus intValue]==0) {
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:@"数据请求失败，请稍后再试" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+            
+        }else{
+            
+            for (id object in jobListModel.getJobArray) {
+                [recordArray addObject:object];
+            }
+            
+            NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
+            
+            NSInteger n=[recordArray count];
+            NSInteger m=[jobListModel.getJobArray count];
+            
+            for (NSInteger k=n-m; k<[recordArray count];k++) {
+                NSIndexPath *newPath = [NSIndexPath indexPathForRow:k inSection:0];
+                [insertIndexPaths addObject:newPath];
+            }
+            cellNum=[recordArray count];
+            [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }
+    
+    else{
+        
+        if (![jobListModel.getStatus intValue]==0) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:@"网络有点不给力哦，请稍后再试~" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }else{
+            
+            [recordArray removeAllObjects];
+            
+            for (id object in jobListModel.getJobArray) {
+                [recordArray addObject:object];
+            }
+            
+            cellNum=[recordArray count];
+            [self.tableView reloadData];
+        }
+    }
+}
+
+
 
 //*********************tableView********************//
 - (void)tableViewInit{
@@ -71,8 +183,15 @@ static  MLMyApplication *thisVC=nil;
     [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
     cell.delegate = self;
     
-    //    [cell.portraitView.layer setCornerRadius:CGRectGetHeight(cell.portraitView.bounds)/2];
-    //    [cell.portraitView.layer setMasksToBounds:YES];
+    jobModel *jobObject=[recordArray objectAtIndex:[indexPath row]];
+    
+    cell.jobTitleLabel.text=jobObject.getjobTitle;
+    cell.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@",jobObject.getjobWorkPlaceCity,jobObject.getjobWorkPlaceDistrict];
+    cell.jobTimeLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:jobObject.getjobBeginTime],[dateFormatter stringFromDate:jobObject.getjobEndTime]];
+    cell.jobDistance.text=[NSString stringWithFormat:@"%.1fKM",[jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint]];
+    int num=[jobObject.getjobRecruitNum intValue]-[jobObject.getjobHasAccepted intValue];
+    cell.jobNumberRemainLabel.text=[NSString stringWithFormat:@"还剩%d人",num];
+    cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/天",jobObject.getjobSalaryRange];
     
     return cell;
 }
@@ -106,6 +225,10 @@ static  MLMyApplication *thisVC=nil;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     jobDetailVC *detailVC=[[jobDetailVC alloc]init];
+    if ([recordArray objectAtIndex:[indexPath row]]) {
+        detailVC.jobModel=[recordArray objectAtIndex:[indexPath row]];
+    }
+    
     detailVC.buttonTitle=@"再次申请";
     
     detailVC.hidesBottomBarWhenPushed=YES;
