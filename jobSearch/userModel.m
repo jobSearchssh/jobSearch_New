@@ -14,7 +14,8 @@
     self = [super init];
     if (self) {
         NSString *receiveStr = [[NSString alloc]initWithData:mainData encoding:NSUTF8StringEncoding];
-//        NSLog(@"%@",receiveStr);
+        NSLog(@"%@",receiveStr);
+        NSLog(@"aaaa");
         NSError *error;
         NSData* aData = [receiveStr dataUsingEncoding: NSASCIIStringEncoding];
         NSDictionary *aDicMain = Nil;

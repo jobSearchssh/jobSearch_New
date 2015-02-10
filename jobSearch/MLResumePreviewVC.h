@@ -10,6 +10,10 @@
 #import "coverFlowView.h"
 #import "freeselectViewCell.h"
 #import "ViewController.h"
+#import "netAPI.h"
+#import "MBProgressHUD.h"
+#import "DateUtil.h"
+
 @interface MLResumePreviewVC : ViewController<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 
 @end
