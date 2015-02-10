@@ -30,6 +30,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UILabel *ageOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *locationOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *intentionOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *phoneOutlet;
 
 //第四项
 @property (strong, nonatomic) IBOutlet UIView *collectionViewOutlet;
@@ -39,7 +40,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UILabel *workexperienceOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *userIntroductionOutlet;
 
-@property (weak, nonatomic) IBOutlet UILabel *phoneOutlet;
+
 
 @end
 
@@ -131,6 +132,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }else{
         self.ageOutlet.text = @"未知年龄";
     }
+    //电话
+    self.phoneOutlet.text = [userModel getuserPhone];
     //位置
     NSString *usrLoaction = [NSString stringWithFormat:@"%@%@%@",[userModel getuserProvince],[userModel getuserCity],[userModel getuserDistrict]];
     [self.locationOutlet setNumberOfLines:0];

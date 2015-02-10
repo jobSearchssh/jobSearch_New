@@ -13,6 +13,7 @@
                 <outlet property="intentionOutlet" destination="kw0-aX-G1a" id="FZz-VY-Mes"/>
                 <outlet property="locationOutlet" destination="ZVv-SL-quh" id="tSy-M7-S8d"/>
                 <outlet property="mainScrollviewOutlet" destination="TPy-zr-tgW" id="q1I-o4-hnX"/>
+                <outlet property="phoneOutlet" destination="O22-4o-SJ1" id="sab-Hx-HWr"/>
                 <outlet property="selectfreeCollectionOutlet" destination="eUe-3E-sas" id="1L7-nJ-1jl"/>
                 <outlet property="sexOutlet" destination="izg-pX-j6I" id="N95-kK-Ugi"/>
                 <outlet property="userIntroductionOutlet" destination="XzT-3H-lSX" id="mPd-HB-XrY"/>

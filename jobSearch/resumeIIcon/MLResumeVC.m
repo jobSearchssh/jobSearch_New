@@ -134,12 +134,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [_radio2.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
     [self.view1outlet addSubview:_radio2];
     
-    QRadioButton *_radio3 = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
-    _radio3.frame = CGRectMake(_radio2.frame.origin.x+_radio2.frame.size.width, self.sexlabeloutlet.frame.origin.y-10, 70, 40);
-    [_radio3 setTitle:@"不限" forState:UIControlStateNormal];
-    [_radio3 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [_radio3.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
-    [self.view1outlet addSubview:_radio3];
+//    QRadioButton *_radio3 = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
+//    _radio3.frame = CGRectMake(_radio2.frame.origin.x+_radio2.frame.size.width, self.sexlabeloutlet.frame.origin.y-10, 70, 40);
+//    [_radio3 setTitle:@"不限" forState:UIControlStateNormal];
+//    [_radio3 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+//    [_radio3.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
+//    [self.view1outlet addSubview:_radio3];
     
     UIView *lineviewname = [[UIView alloc] initWithFrame:CGRectMake(self.nameoutlet.frame.origin.x, self.nameoutlet.frame.origin.y+self.nameoutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 125, 1)];
     lineviewname.alpha = 0.5;
