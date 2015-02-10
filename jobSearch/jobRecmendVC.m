@@ -86,7 +86,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     for (NSNumber *t in self.jobModel.getjobWorkTime) {
         if ([t intValue]>0) {
             int n=[t intValue];
-            if (n<21) {
+            if (n<21&&n>=0) {
                 selectFreeData[n]=TRUE;
             }
             
