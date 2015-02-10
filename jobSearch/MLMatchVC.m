@@ -117,6 +117,7 @@ static  MLMatchVC *thisVC=nil;
     for (int i = 0; i < [recordArray count]; i++) {
         
         PiPeiView* childView=[[PiPeiView alloc]init];
+        
         [self addChildViewController:childView];
         
         [childView.view setFrame:CGRectMake(0, currentY, self.scrollView.bounds.size.width, kScrollViewHeight-44)];

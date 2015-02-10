@@ -83,12 +83,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     
     
-    for (id t in self.jobModel.getjobWorkTime) {
+    for (NSNumber *t in self.jobModel.getjobWorkTime) {
         if ([t intValue]>0) {
-            selectFreeData[[t intValue] ]=YES;
+            int n=[t intValue];
+            if (n<21) {
+                selectFreeData[n]=TRUE;
+            }
+            
         }
     }
-    
     self.selectfreeCollectionOutlet.delegate = self;
     self.selectfreeCollectionOutlet.dataSource = self;
     UINib *niblogin = [UINib nibWithNibName:selectFreecellIdentifier bundle:nil];

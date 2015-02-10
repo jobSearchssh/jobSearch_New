@@ -106,7 +106,22 @@ static  MLFirstVC *thisVC=nil;
     
     [self searchCity];
     
-    
+//    UIImage *image1=[UIImage imageNamed:@"Pepsi"];
+//    UIImage *image2=[UIImage imageNamed:@"wrong"];
+//    UIImage *image3=[UIImage imageNamed:@"userAcount"];
+//    
+//    NSData *data1=UIImagePNGRepresentation(image1);
+//    NSData *data2=UIImagePNGRepresentation(image2);
+//    NSData *data3=UIImagePNGRepresentation(image3);
+//    
+//    BmobQuery *query=[BmobQuery queryWithClassName:@"UserImages"];
+//    [query getObjectInBackgroundWithId:@"KbMr555D" block:^(BmobObject *object, NSError *error) {
+//        if (!error) {
+//            
+//            BmobFile *bmobFile = (BmobFile *)[object objectForKey:@"userVideo"];
+//            NSLog(@"%@",bmobFile.url);
+//        }
+//    }];
     
 }
 

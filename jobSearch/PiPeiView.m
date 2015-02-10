@@ -9,6 +9,7 @@
 #import "PiPeiView.h"
 #import "PopoverView.h"
 #import "freeselectViewCell.h"
+
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 @interface PiPeiView ()<PopoverViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
@@ -22,7 +23,20 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 @property (weak, nonatomic) IBOutlet UICollectionView *selectfreeCollectionOutlet;
 
+@property (weak, nonatomic) IBOutlet UIImageView *entepriseLogoView;
+@property (weak, nonatomic) IBOutlet UILabel *jobTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobAddressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobDistanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobPublishTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobWorkPeriodLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobRecuitNumLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobSalaryLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobSettlementWay;
+@property (weak, nonatomic) IBOutlet UITextView *jobDescribleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobRequireLabel;
+
 @property (strong, nonatomic) IBOutlet UIView *view1;
+
 @end
 
 @implementation PiPeiView
@@ -30,7 +44,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.jobDescribleLabel.editable=NO;
 }
 
 - (IBAction)showWorkTime:(id)sender {
@@ -46,7 +60,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
 }
 
-- (void)timeCollectionViewInit{
+- (void)timeViewInit{
+    
     selectfreetimepicArray = [[NSMutableArray alloc]init];
     selectfreetimetitleArray = [[NSMutableArray alloc]init];
     freecellwidth = ([UIScreen mainScreen].bounds.size.width - 120)/7;
@@ -72,19 +87,30 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     for (int index = 0; index<21; index++) {
         selectFreeData[index] = FALSE;
     }
-    for (id t in self.jobModel.getjobWorkTime) {
-        if ([t intValue]>0) {
-            selectFreeData[[t intValue] ]=YES;
+    
+    if ([self.jobModel.getjobWorkTime count]>0) {
+        
+        for (NSNumber *t in self.jobModel.getjobWorkTime) {
+            if ([t intValue]>0) {
+                int n=[t intValue];
+                if (n<21) {
+                    selectFreeData[n]=TRUE;
+                }
+                
+            }
         }
-    }
 
+    }
+    
     self.selectfreeCollectionOutlet.delegate = self;
     self.selectfreeCollectionOutlet.dataSource = self;
     UINib *niblogin = [UINib nibWithNibName:selectFreecellIdentifier bundle:nil];
     [self.selectfreeCollectionOutlet registerNib:niblogin forCellWithReuseIdentifier:selectFreecellIdentifier];
+    
 }
 
 - (void)initData{
+    
     if (_jobModel) {
 
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -142,7 +168,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
     self.jobRequireLabel.text=[NSString stringWithFormat:@"%@\n%@\n%@\n%@",degree,age,gender,height];
         
-    [self timeCollectionViewInit];
+    [self timeViewInit];
+        
     }
 }
 
