@@ -449,16 +449,16 @@
 
 //申请该兼职
 //用户id，jobid，回调block
-+(void)applyTheJob:(NSString *)usrID jobID:(NSString *)jobID withBlock:(oprationReturnBlock)oprationReturnBlock{
++(void)applyTheJob:(NSString *)usrID jobID:(NSString *)jobID withBlock:(jobApplyReturnBlock)applyReturnBlock{
     NSString *str = [[NSString alloc]initWithFormat:@"job_id=%@&job_user_id=%@",jobID,usrID];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:APPLYJOB_FUNCTION block:^(URLReturnModel *returnModel) {
         if (returnModel != Nil && [returnModel getFlag]) {
-            oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
-            oprationReturnBlock(a);
+            jobApplyModel *a = [[jobApplyModel alloc]initWithData:[returnModel getData]];
+            applyReturnBlock(a);
         }else{
-            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
-            oprationReturnBlock(a);
+            jobApplyModel *a = [[jobApplyModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            applyReturnBlock(a);
         }
     }];
 }
