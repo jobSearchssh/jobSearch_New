@@ -11,12 +11,13 @@
 #import "MCPagerView.h"
 #import "freeselectViewCell.h"
 #import "MLResumeVideoVC.h"
+#import "fixedScrollView.h"
 
 @interface MLResumeVC : UIViewController<UIScrollViewDelegate,QRadioButtonDelegate,MCPagerViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 -(UIImage *)compressImage:(UIImage *)imgSrc size:(int)width;
 
 @property (nonatomic)NSInteger pages;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollviewOutlet;
+@property (weak, nonatomic) IBOutlet fixedScrollView *scrollviewOutlet;
 
 @end

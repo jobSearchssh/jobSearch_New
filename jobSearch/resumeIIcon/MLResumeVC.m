@@ -252,11 +252,34 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.workexperienceOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     [self.schollNewOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     
-    //整体 增加点击事件
-    UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapRegisnFirstRespond:)];
-    [self.scrollviewOutlet addGestureRecognizer:tap];
-    
+    [self.scrollviewOutlet setTarget:self selector:@selector(tapRegisnFirstRespond)];
 }
+
+//点击空白取消textfield响应
+-(void)tapRegisnFirstRespond{
+    if ([self.nameoutlet isFirstResponder]) {
+        [self.nameoutlet resignFirstResponder];
+    }
+    if ([self.iphoneOutlet isFirstResponder]) {
+        [self.iphoneOutlet resignFirstResponder];
+    }
+    if ([self.heightOutlet isFirstResponder]) {
+        [self.heightOutlet resignFirstResponder];
+    }
+    if ([self.schollNewOutlet isFirstResponder]) {
+        [self.schollNewOutlet resignFirstResponder];
+    }
+    if ([self.intentionOutlet isFirstResponder]) {
+        [self.intentionOutlet resignFirstResponder];
+    }
+    if ([self.introductionmeOutlet isFirstResponder]) {
+        [self.introductionmeOutlet resignFirstResponder];
+    }
+    if ([self.workexperienceOutlet isFirstResponder]) {
+        [self.workexperienceOutlet resignFirstResponder];
+    }
+}
+
 //响应回车
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
     [theTextField resignFirstResponder];
@@ -272,16 +295,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     CGPoint offset = CGPointMake([self.pickerView selectedItem]*[UIScreen mainScreen].bounds.size.width,yDiff);
     [self.scrollviewOutlet setContentOffset:offset animated:YES];
-}
-//点击空白取消textfield响应
--(void)tapRegisnFirstRespond:(UIScrollView *)sender{
-    [self.nameoutlet resignFirstResponder];
-    [self.iphoneOutlet resignFirstResponder];
-    [self.heightOutlet resignFirstResponder];
-    [self.schoolOutlet resignFirstResponder];
-    [self.intentionOutlet resignFirstResponder];
-    [self.introductionmeOutlet resignFirstResponder];
-    [self.workexperienceOutlet resignFirstResponder];
 }
 
 -(UIImage *)compressImage:(UIImage *)imgSrc size:(int)width

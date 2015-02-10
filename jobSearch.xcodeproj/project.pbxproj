@@ -308,6 +308,7 @@
 		B77578DD1A7A9EF000660BB7 /* capture_rec_blink@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B77578DA1A7A9EF000660BB7 /* capture_rec_blink@2x.png */; };
 		B77578DE1A7A9EF000660BB7 /* capture_rec_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B77578DB1A7A9EF000660BB7 /* capture_rec_off@2x.png */; };
 		B7E9F8D31A8A466A004BC570 /* jobApplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E9F8D21A8A466A004BC570 /* jobApplyModel.m */; };
+		B7E9F8D61A8A4836004BC570 /* fixedScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E9F8D51A8A4836004BC570 /* fixedScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -723,6 +724,8 @@
 		B77578DB1A7A9EF000660BB7 /* capture_rec_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "capture_rec_off@2x.png"; sourceTree = "<group>"; };
 		B7E9F8D11A8A466A004BC570 /* jobApplyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobApplyModel.h; sourceTree = "<group>"; };
 		B7E9F8D21A8A466A004BC570 /* jobApplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jobApplyModel.m; sourceTree = "<group>"; };
+		B7E9F8D41A8A4836004BC570 /* fixedScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fixedScrollView.h; sourceTree = "<group>"; };
+		B7E9F8D51A8A4836004BC570 /* fixedScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fixedScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1340,6 +1343,8 @@
 				3BD4DC291A77C4D800B061D0 /* AKPickerView.m */,
 				3BD4DC2D1A77C4D800B061D0 /* MCPagerView.h */,
 				3BD4DC2E1A77C4D800B061D0 /* MCPagerView.m */,
+				B7E9F8D41A8A4836004BC570 /* fixedScrollView.h */,
+				B7E9F8D51A8A4836004BC570 /* fixedScrollView.m */,
 				3B14397D1A7B74A90062368E /* MLResumeVC.h */,
 				3B14397E1A7B74A90062368E /* MLResumeVC.m */,
 				3B14397F1A7B74A90062368E /* MLResumeVC.xib */,
@@ -1854,6 +1859,7 @@
 				3B6524111A6CBDDD005FD671 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				3BA483F91A89E76900B6A200 /* MLMyCollection.m in Sources */,
 				3B4AB4931A81CB2F0053236C /* MJRefreshHeaderView.m in Sources */,
+				B7E9F8D61A8A4836004BC570 /* fixedScrollView.m in Sources */,
 				3BA4845E1A89E84E00B6A200 /* ViewController.m in Sources */,
 				B77578C01A7A912800660BB7 /* MLResumeVideoVC.m in Sources */,
 				3BA484011A89E77A00B6A200 /* stringUtil.m in Sources */,
