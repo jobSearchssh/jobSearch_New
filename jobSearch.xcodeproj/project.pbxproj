@@ -307,6 +307,7 @@
 		B77578DC1A7A9EF000660BB7 /* capture_rec_base@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B77578D91A7A9EF000660BB7 /* capture_rec_base@2x.png */; };
 		B77578DD1A7A9EF000660BB7 /* capture_rec_blink@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B77578DA1A7A9EF000660BB7 /* capture_rec_blink@2x.png */; };
 		B77578DE1A7A9EF000660BB7 /* capture_rec_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B77578DB1A7A9EF000660BB7 /* capture_rec_off@2x.png */; };
+		B7E9F8D31A8A466A004BC570 /* jobApplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E9F8D21A8A466A004BC570 /* jobApplyModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -720,6 +721,8 @@
 		B77578D91A7A9EF000660BB7 /* capture_rec_base@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "capture_rec_base@2x.png"; sourceTree = "<group>"; };
 		B77578DA1A7A9EF000660BB7 /* capture_rec_blink@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "capture_rec_blink@2x.png"; sourceTree = "<group>"; };
 		B77578DB1A7A9EF000660BB7 /* capture_rec_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "capture_rec_off@2x.png"; sourceTree = "<group>"; };
+		B7E9F8D11A8A466A004BC570 /* jobApplyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobApplyModel.h; sourceTree = "<group>"; };
+		B7E9F8D21A8A466A004BC570 /* jobApplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jobApplyModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1437,6 +1440,8 @@
 		B751EBB51A7E599D00A6361A /* listArray */ = {
 			isa = PBXGroup;
 			children = (
+				B7E9F8D11A8A466A004BC570 /* jobApplyModel.h */,
+				B7E9F8D21A8A466A004BC570 /* jobApplyModel.m */,
 				3BA483DC1A89E70800B6A200 /* jobListModel.h */,
 				3BA483DD1A89E70800B6A200 /* jobListModel.m */,
 				3BA483DE1A89E70800B6A200 /* jobModel.h */,
@@ -1882,6 +1887,7 @@
 				3B6993921A89E98E00A53760 /* sideNormalTableViewCell.m in Sources */,
 				3BD4DC3F1A77C4D800B061D0 /* coverFlowView.m in Sources */,
 				3BD4DC3D1A77C4D800B061D0 /* MLResumePreviewVC.m in Sources */,
+				B7E9F8D31A8A466A004BC570 /* jobApplyModel.m in Sources */,
 				3BCEA0C81A8363640005F080 /* MLLegalVC.m in Sources */,
 				3BA4841B1A89E79C00B6A200 /* MLLoginBusiness.m in Sources */,
 				3BCEA0C31A83581F0005F080 /* CWStarRateView.m in Sources */,
