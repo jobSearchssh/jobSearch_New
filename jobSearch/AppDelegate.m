@@ -41,12 +41,6 @@
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[MLFirstVC alloc] init]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    //基础网络初始化baseAPP
-    //初始化base信息
-    id base = [[baseAPP alloc]init];
-    if (base == [NSNull null]) {
-        NSLog(@"baseAPP初始化失败");
-    }
     
     //友盟
     [MobClick startWithAppkey:@"54c10ddbfd98c5b7c2000836" reportPolicy:BATCH  channelId:nil];
