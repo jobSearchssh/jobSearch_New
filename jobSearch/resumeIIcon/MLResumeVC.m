@@ -474,9 +474,75 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 //page3
 - (IBAction)addPicAction:(UIButton *)sender {
     
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:Nil
+                                  delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:Nil
+                                  otherButtonTitles:@"选择本地图片",@"拍照",nil];
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    actionSheet.tag = 0;
+    [actionSheet showInView:self.view];
+}
+
+//action
+//tag == 0 为选择图片按钮
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag == 0) {
+        if (buttonIndex == 0) {
+            UIImagePickerController *imagePickerController =[[UIImagePickerController alloc]init];
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            imagePickerController.delegate = self;
+            imagePickerController.allowsEditing = TRUE;
+            [self presentViewController:imagePickerController animated:YES completion:^{}];
+            return;
+        }
+        if (buttonIndex == 1) {
+            UIImagePickerController *imagePickerController =[[UIImagePickerController alloc]init];
+            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+            {
+                imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                imagePickerController.delegate = self;
+                imagePickerController.allowsEditing = TRUE;
+                [self presentViewController:imagePickerController animated:YES completion:^{}];
+            }else{
+                UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"无法使用照相功能" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                [alterTittle show];
+            }
+            return;
+        }
+    }
+}
+
+//action响应事件
+- (void)actionSheetCancel:(UIActionSheet *)actionSheet{
+    
+}
+-(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    
+}
+-(void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex{
+    
+}
+
+//图片获取
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
+    
+
+    
+    
+    UIImage *temp = image;
+    if (image.size.height > PIC_HEIGHT || image.size.width>PIC_WIDTH) {
+        float a = image.size.height>image.size.width?image.size.height:image.size.width;
+        temp = [self scaleImage:image toScale:320/a];
+    }
+    picker = Nil;
+    [self dismissModalViewControllerAnimated:YES];
+    
     //添加图片
     UIButton *btnPic=[[UIButton alloc]initWithFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
-    [btnPic setImage:[UIImage imageNamed:@"user"] forState:UIControlStateNormal];
+    [btnPic setImage:temp forState:UIControlStateNormal];
     [btnPic setFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
     [addedPicArray addObject:btnPic];
     [btnPic setRestorationIdentifier:[NSString stringWithFormat:@"%lu",(unsigned long)addedPicArray.count-1]];
@@ -496,6 +562,21 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     [self refreshScrollView];
 }
+
+-(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize{
+    
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width * scaleSize, image.size.height * scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height * scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return scaledImage;
+}
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    picker = Nil;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 -(IBAction)deletePicAction:(UIButton *)sender{
     NSInteger btnindex = [sender restorationIdentifier].integerValue;

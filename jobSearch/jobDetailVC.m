@@ -74,7 +74,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSLog(@"%@",self.jobModel.getjobID);
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [netAPI applyTheJob:userId jobID:self.jobModel.getjobID withBlock:^(oprationResultModel *oprationResultModel) {
+    [netAPI applyTheJob:userId jobID:self.jobModel.getjobID withBlock:^(jobApplyModel *oprationResultModel) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (![oprationResultModel.getStatus intValue]==0) {
             NSString *err=oprationResultModel.getInfo;
