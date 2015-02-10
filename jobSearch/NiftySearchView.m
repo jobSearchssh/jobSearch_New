@@ -42,7 +42,7 @@
         startTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         
         UILabel *preText = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 35, 29)];
-        preText.text = NSLocalizedString(@" 地点:", nil);
+        preText.text = NSLocalizedString(@"  地点:", nil);
         preText.backgroundColor = [UIColor clearColor];
         preText.textColor = [UIColor grayColor];
         preText.font = [UIFont systemFontOfSize:12];
@@ -73,20 +73,22 @@
         finishTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         
         UILabel *preTextFinish = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 35, 29)];
-        preTextFinish.text = NSLocalizedString(@" 职位:", nil);
+        preTextFinish.text = NSLocalizedString(@"  职位:", nil);
         preTextFinish.backgroundColor = [UIColor clearColor];
         preTextFinish.textColor = [UIColor grayColor];
         preTextFinish.font = [UIFont systemFontOfSize:12];
         finishTextField.leftViewMode = UITextFieldViewModeAlways;
         finishTextField.leftView = preTextFinish;
-        [self addSubview:finishTextField];
+        [self addSubview:finishTextField]; 
     }
     return self;
 }
 
 -(void) startBookmarkButtonClicked:(id)sender 
 {
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(startBookmarkButtonClicked:)]) {
+        
         [self.delegate startBookmarkButtonClicked:startTextField];
     }
 }

@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "jobModel.h"
+#import "messageModel.h"
 
 @interface jobRecmendVC : UIViewController
-@property (strong, nonatomic)jobModel*jobModel;
+@property (strong, nonatomic)messageModel*jobModel;
 @end

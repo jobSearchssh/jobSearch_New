@@ -14,4 +14,5 @@
 +(NSString *)birthdayStringFromDate:(NSDate *)date;
 +(NSString *)startTimeStringFromDate:(NSDate *)date;
 +(NSString *)msgTimetoCurrent:(NSDate *)date;
++(NSDate *)BirthdateFromString:(NSString *)dateString;
 @end

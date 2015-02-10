@@ -11,5 +11,8 @@
 
 @interface MLCell2 : SWTableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *portraitView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobAddressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *jobPriceLabel;
 
 @end

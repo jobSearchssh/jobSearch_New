@@ -9,11 +9,24 @@
 #import "MLMessageVC.h"
 #import "MLCell2.h"
 #import "jobRecmendVC.h"
+#import "MBProgressHUD.h"
+#import "MJRefresh.h"
+#import "netAPI.h"
+#import "jobModel.h"
 
+static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 @interface MLMessageVC ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate>
 {
-    int cellNum;
+    NSInteger cellNum;
+    NSDateFormatter *dateFormatter;
+    NSInteger sectionNum;
+    NSMutableArray *recordArray;
+    BOOL firstLoad;
+    BOOL headerRefreshing;
+    BOOL footerRefreshing;
+    //页数
+    int skipTimes;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -23,16 +36,123 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    cellNum=0;
+    sectionNum=0;
+    skipTimes=0;
+    firstLoad=YES;
+    headerRefreshing=NO;
+    footerRefreshing=NO;
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM月dd日"];
+    
     [self tableViewInit];
 }
 
+- (void)headRefreshData{
+    
+    headerRefreshing=YES;
+    skipTimes=0;
+    
+    if (firstLoad){
+        [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
+        firstLoad=NO;
+    }
+    [netAPI getMessageList:userId start:1 length:BASE_SPAN withBlock:^(messageListModel *messageListModel) {
+        [self headHandler:messageListModel];
+    }];
+    
+}
+
+- (void)footRefreshData{
+    footerRefreshing=YES;
+    [netAPI getMessageList:userId start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(messageListModel *messageListModel) {
+        [self footHandler:messageListModel];
+    }];
+
+}
+
+- (void)headHandler:(messageListModel *)jobListModel{
+    [self refreshData:jobListModel];
+    [MBProgressHUD hideHUDForView:_tableView animated:YES];
+    skipTimes=1;
+    if (firstLoad){
+        firstLoad=NO;
+    }
+    headerRefreshing=NO;
+    [self.tableView headerEndRefreshing];
+}
+
+- (void)footHandler:(messageListModel *)jobListModel{
+    [self refreshData:jobListModel];
+    
+    footerRefreshing=NO;
+    skipTimes+=1;
+    [self.tableView footerEndRefreshing];
+}
+
+
+- (void)refreshData:(messageListModel *)jobListModel{
+    
+    if (footerRefreshing) {
+        if (![jobListModel.getStatus intValue]==0) {
+            NSString *err=jobListModel.getInfo;
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+            
+        }else{
+            
+            for (id object in jobListModel.getMessageArray) {
+                [recordArray addObject:object];
+            }
+            
+            NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
+            
+            NSInteger n=[recordArray count];
+            NSInteger m=[jobListModel.getMessageArray count];
+            
+            for (NSInteger k=n-m; k<[recordArray count];k++) {
+                NSIndexPath *newPath = [NSIndexPath indexPathForRow:k inSection:0];
+                [insertIndexPaths addObject:newPath];
+            }
+            cellNum=[recordArray count];
+            [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }
+    
+    else{
+        
+        if (![jobListModel.getStatus intValue]==0) {
+            NSString *err=jobListModel.getInfo;
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }else{
+            
+            [recordArray removeAllObjects];
+            
+            for (id object in jobListModel.getMessageArray) {
+                [recordArray addObject:object];
+            }
+            
+            cellNum=[recordArray count];
+            [self.tableView reloadData];
+        }
+    }
+}
+
+
 //*********************tableView********************//
 - (void)tableViewInit{
-    cellNum=10;
+    recordArray=[[NSMutableArray alloc]init];
+    
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     _tableView.scrollEnabled=YES;
-}
+    [_tableView addHeaderWithTarget:self action:@selector(headRefreshData)];
+    [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
+    _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+    
+    [self headRefreshData];}
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -57,11 +177,8 @@
 {
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
     [rightUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0]
-                                                title:@"More"];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
-                                                title:@"Delete"];
+     [UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]
+                                                 icon:[UIImage imageNamed:@"trash"]];
     
     return rightUtilityButtons;
 }
@@ -69,7 +186,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return cellNum;
+    return [recordArray count];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -84,8 +201,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     jobRecmendVC *detailVC=[[jobRecmendVC alloc]init];
+    
+    if ([recordArray objectAtIndex:[indexPath row]]) {
+        detailVC.jobModel=[recordArray objectAtIndex:[indexPath row]];
+    }
+    
     detailVC.hidesBottomBarWhenPushed=YES;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"";
@@ -144,11 +265,12 @@
     switch (index) {
         case 0:
         {
-            NSLog(@"More button was pressed");
-            UIAlertView *alertTest = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"More more more" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles: nil];
-            [alertTest show];
+            NSIndexPath *cellIndexPath = [_tableView indexPathForCell:cell];
             
-            [cell hideUtilityButtonsAnimated:YES];
+            [recordArray removeObjectAtIndex:[cellIndexPath row]];
+            cellNum=[recordArray count];
+            [_tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            
             break;
         }
         case 1:

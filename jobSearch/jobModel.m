@@ -50,6 +50,7 @@
         jobHasAccepted=[initDictionary objectForKey:jobModel_jobHasAccepted];
         jobHasRejected=[initDictionary objectForKey:jobModel_jobHasRejected];
 //        jobEmail = [initDictionary objectForKey:jobModel_jobEmail];
+        jobGenderReq=[initDictionary objectForKeyedSubscript:jobModel_jobGenderReq];
         
         tempstring = [initDictionary objectForKey:jobModel_created_at];
         created_at = [DateUtil dateFromString:tempstring];
@@ -166,19 +167,26 @@
     return jobHasRejected;
 }
 
+-(NSString*)getjobGenderReq{
+    return jobGenderReq;
+}
+
 + (float)getDistance:(NSArray*)p1{
     
     float _distance=0.0f;
     
     if ([p1 count]==2) {
-        MAMapPoint point1=MAMapPointForCoordinate(CLLocationCoordinate2DMake([[p1 objectAtIndex:1] floatValue], [[p1 objectAtIndex:0] floatValue]));
+        NSNumber *lat=[p1 objectAtIndex:1];
+        NSNumber *lon=[p1 objectAtIndex:0];
+        
+        MAMapPoint point1=MAMapPointForCoordinate(CLLocationCoordinate2DMake([lat floatValue], [lon floatValue]));
         
         NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
         CGPoint p2=CGPointFromString([mySettingData objectForKey:@"currentCoordinate"]);
         
         MAMapPoint point2=MAMapPointForCoordinate(CLLocationCoordinate2DMake(p2.y,p2.x));
         
-        _distance=MAMetersBetweenMapPoints(point1, point2);
+        _distance=MAMetersBetweenMapPoints(point1, point2)/1000;
     }
     
     return _distance;

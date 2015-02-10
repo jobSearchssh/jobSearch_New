@@ -53,6 +53,9 @@
                             <include reference="0mj-bi-aSW"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="applyTheJob:" destination="-1" eventType="touchUpInside" id="pr5-18-Hye"/>
+                    </connections>
                 </button>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i5j-Nc-y66">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>

@@ -12,13 +12,15 @@
 #import "SMS_SDK/SMS_SDK.h"
 #import "MBProgressHUD.h"
 #import "loginModel.h"
+#import "MBProgressHUD.h"
+#import "RESideMenu.h"
 
 
 static NSString *usrAccountText = @"usrAccountText";
 static NSString *usrPhoneText = @"usrPhoneText";
 typedef void (^loginReturnBlock)(loginModel *loginModel);
 
-@interface MLLoginVC ()<QCheckBoxDelegate,loginResult,registerResult,UIGestureRecognizerDelegate>{
+@interface MLLoginVC ()<QCheckBoxDelegate,loginResult,registerResult,UIGestureRecognizerDelegate,UIAlertViewDelegate>{
     
     UIButton *chooseLoginBtn;
     UIButton *chooseRegisterBtn;
@@ -127,6 +129,12 @@ static  MLLoginVC *thisVC=nil;
     self.securityCode.delegate = self;
     self.userPassword1.delegate = self;
     self.userPassword2.delegate = self;
+    
+    if (!loginer) {
+        loginer=[[MLLoginBusiness alloc]init];
+        loginer.loginResultDelegate=self;
+        loginer.registerResultDelegate=self;
+    }
 }
 
 //textfield上移
@@ -229,21 +237,30 @@ static  MLLoginVC *thisVC=nil;
     }else{
         
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.loginButton.enabled=NO;
 
-        if (!loginer) {
-            loginer=[[MLLoginBusiness alloc]init];
-            loginer.loginResultDelegate=self;
-        }
         [loginer loginInBackground:inputUserAccount Password:inputUserPassword];
     }
 }
 
 - (void)loginResult:(BOOL)isSucceed Feedback:(NSString*)feedback{
     
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    self.loginButton.enabled=YES;
     
     if (isSucceed) {
+        
+        NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+        
+        if ([mySettingData objectForKey:@"currentUserName"]) {
+            NSString *currentUsrName=[mySettingData objectForKey:@"currentUserName"];
+            RESideMenu* _sideMenu=[RESideMenu sharedInstance];
+            
+            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:@"点击退出" Image:[UIImage imageNamed:@"tourists"]];
+        }
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"登录成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        alert.delegate=self;
         [alert show];
     }
     else{
@@ -254,16 +271,32 @@ static  MLLoginVC *thisVC=nil;
 
 - (void)registerResult:(BOOL)isSucceed Feedback:(NSString *)feedback{
     
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    self.registerButton.enabled=YES;
     if (isSucceed) {
+        
+        NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+        
+        if ([mySettingData objectForKey:@"currentUserName"]) {
+            NSString *currentUsrName=[mySettingData objectForKey:@"currentUserName"];
+            RESideMenu* _sideMenu=[RESideMenu sharedInstance];
+            
+            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:@"点击退出" Image:[UIImage imageNamed:@"tourists"]];
+        }
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        alert.delegate=self;
         [alert show];
     }
     else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册失败" message:feedback delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)phoneEditingChanged:(id)sender {
@@ -370,16 +403,18 @@ static  MLLoginVC *thisVC=nil;
 
 - (void)startRegisting{
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.registerButton.enabled=NO;
+    
     [SMS_SDK commitVerifyCode:inputSecurityCode result:^(enum SMS_ResponseState state) {
         if (1==state) {
-            if (!loginer) {
-                loginer=[[MLLoginBusiness alloc]init];
-                loginer.registerResultDelegate=self;
-            }
+            
             [loginer registerInBackground:inputUserPhoneNumber Password:inputUserPassword2];
         }
         else if(0==state)
         {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            self.registerButton.enabled=YES;
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"验证码错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
         }

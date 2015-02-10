@@ -18,7 +18,7 @@
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nen-B2-zRR">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <mutableString key="text">用户注册服务协议
+                    <string key="text">用户注册服务协议
 
 前言
 协议是由用户（以下简称为“您”）与天下网游移动游戏平台（以下简称为“我们”）就我们所提供的产品和服务（包括我们的网站以及我们现在正在提供和将来可能向您提供的网络服务和游戏服务，以下统称为“产品和服务”）所订立的协议。
@@ -228,7 +228,7 @@
 我们保留对本协议条款、产品和服务以及我们所提供的产品和服务的相关官方网站的最终解释权。
 
 抵制不良游戏，拒绝盗版游戏，注意自我保护，谨防受骗上当，适度游戏益脑，沉迷游戏伤身，合理安排时间，享受健康生活。
-适合18岁及以上成年人游戏，建议游戏者适当游戏。</mutableString>
+适合18岁及以上成年人游戏，建议游戏者适当游戏。</string>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>

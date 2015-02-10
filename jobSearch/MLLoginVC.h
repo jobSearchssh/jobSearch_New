@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "jobModel.h"
 
+@protocol finishLoginDelegate <NSObject>
+@required
+- (void)finishLogin;
+@end
+
 @interface MLLoginVC : UIViewController<UITextFieldDelegate>
 {
     NSString *inputUserAccount;
@@ -33,4 +38,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIButton *sendMsgButton;
+
+@property(nonatomic,weak) id<finishLoginDelegate> loginDelegate;
+
 @end

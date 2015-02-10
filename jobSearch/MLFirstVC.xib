@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MLFirstVC">
             <connections>
+                <outlet property="mapItem" destination="i4c-Uu-9PM" id="SWa-6z-Tbf"/>
                 <outlet property="tabbar" destination="hq5-HG-YjK" id="5Tz-gx-d5c"/>
                 <outlet property="tableView" destination="4Zw-aG-ERW" id="0Bl-e8-1Jh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -27,7 +28,7 @@
                         <tabBarItem tag="1" title="分类" image="catagory.png" selectedImage="catagory.png" id="qDR-4l-c4X"/>
                         <tabBarItem tag="2" title="消息" image="letter.png" selectedImage="letter.png" id="IDM-zW-qqE"/>
                         <tabBarItem tag="3" title="筛选" image="target.png" selectedImage="target.png" id="yGw-lO-0HX"/>
-                        <tabBarItem tag="4" title="精灵匹配" image="calendar.png" selectedImage="calendar.png" id="750-FT-GBd"/>
+                        <tabBarItem tag="4" title="精灵管家" image="calendar.png" selectedImage="calendar.png" id="750-FT-GBd"/>
                     </items>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -87,7 +88,7 @@
                     <include reference="i5a-ju-B0P"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-356" y="270"/>
+            <point key="canvasLocation" x="-315" y="226"/>
         </view>
     </objects>
     <resources>

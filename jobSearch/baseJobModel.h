@@ -42,6 +42,8 @@
 #define jobModel_updated_at @"updated_at"
 #define jobModel_jobHasAccepted @"jobHasAccepted"
 #define jobModel_jobHasRejected @"jobHasRejected"
+#define jobModel_jobGenderReq @"jobGenderReq"
+
 @interface baseJobModel : NSObject
 
 @end

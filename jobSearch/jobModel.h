@@ -44,6 +44,7 @@
     NSDate * updated_at;
     NSNumber *jobHasAccepted;
     NSNumber *jobHasRejected;
+    NSString *jobGenderReq;
 }
 
 -(jobModel *)initWithDictionary:(NSDictionary *)initDictionary;
@@ -81,7 +82,7 @@
 -(NSDate *)getupdated_at;
 -(NSNumber*)getjobHasAccepted;
 -(NSNumber*)getjobHasRejected;
-
+-(NSString*)getjobGenderReq;
 + (float)getDistance:(NSArray*)p1;
 
 @end

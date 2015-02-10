@@ -11,7 +11,6 @@
 
 @interface MLFirstVC : ViewController
 {
-    
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

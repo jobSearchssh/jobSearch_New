@@ -24,13 +24,14 @@
             [self registerIsSucceed:YES feedback:@"注册成功"];
             
         }else{
-            NSString *error;
-            if ([registerModel.getInfo isEqualToString:@"CREATE_ERROR"])
-                error=@"数据创建失败";
-            else if ([registerModel.getInfo isEqualToString:@"USER_EXISTED"])
-                error=@"该手机号已经被注册";
-            else if ([registerModel.getInfo isEqualToString:@"INVALID_INPUT"])
-                error=@"该手机号已经被注册";
+            NSString *error=registerModel.getInfo;
+            
+//            if ([registerModel.getInfo isEqualToString:@"CREATE_ERROR"])
+//                error=@"数据创建失败";
+//            else if ([registerModel.getInfo isEqualToString:@"USER_EXISTED"])
+//                error=@"该手机号已经被注册";
+//            else if ([registerModel.getInfo isEqualToString:@"INVALID_INPUT"])
+//                error=@"该手机号已经被注册";
             [self registerIsSucceed:NO feedback:error];
         }
     }];
@@ -38,6 +39,7 @@
 }
 
 -(void)registerIsSucceed:(BOOL)result feedback:(NSString*)feedback{
+    
     [self.registerResultDelegate registerResult:result Feedback:feedback];
 }
 
@@ -50,11 +52,11 @@
             
         }else{
             
-            NSString *error;
-            if ([loginModel.getInfo isEqualToString:@"QUERY_ERROR"])
-                error=@"登录名或密码有误";
-            else if ([loginModel.getInfo isEqualToString:@"INVALID_INPUT"])
-                error=@"您的输入有误";
+             NSString *error=loginModel.getInfo;
+//            if ([loginModel.getInfo isEqualToString:@"QUERY_ERROR"])
+//                error=@"登录名或密码有误";
+//            else if ([loginModel.getInfo isEqualToString:@"INVALID_INPUT"])
+//                error=@"您的输入有误";
             
             [self loginIsSucceed:NO feedback:error];
         }

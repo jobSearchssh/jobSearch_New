@@ -10,8 +10,23 @@
 #import <MAMapKit/MAMapKit.h>
 #import <AMapSearchKit/AMapSearchAPI.h>
 
+@protocol showDetailDelegate <NSObject>
+@required
+- (void)showDetail:(NSInteger)tag;
+@end
+
+
 @interface MLMapView : UIView<MAMapViewDelegate,AMapSearchDelegate,UIGestureRecognizerDelegate>
+{
+    NSMutableArray *pointAnnoArray;
+    int nowTag;
+
+}
 @property(nonatomic, retain) MAMapView *mapView;
 
-- (void)addAnnotation:(NSArray*)point;
+- (void)addAnnotation:(NSArray*)point Title:(NSString*)title tag:(int)tag;
+- (void)removeAllAnnotations;
+
+@property(nonatomic,weak) id<showDetailDelegate> showDetailDelegate;
+
 @end

@@ -17,9 +17,17 @@ static long long daySeconds = 60*60*24;
     return destDate;
     
 }
+
++(NSDate *)BirthdateFromString:(NSString *)dateString{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat: @"yyyy-MM-dd"];
+    NSDate *destDate= [dateFormatter dateFromString:dateString];
+    return destDate;
+    
+}
 +(NSString *)stringFromDate:(NSDate *)date{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy年MM月dd日 HH:mm"];
+    [dateFormatter setDateFormat:@"yyyy年MM月dd日 HH:mm:ss"];
     NSString *destDateString = [dateFormatter stringFromDate:date];
     return destDateString;
 }
@@ -31,7 +39,7 @@ static long long daySeconds = 60*60*24;
 }
 +(NSString *)startTimeStringFromDate:(NSDate *)date{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
     NSString *destDateString = [dateFormatter stringFromDate:date];
     return destDateString;
 }
@@ -44,7 +52,7 @@ static long long daySeconds = 60*60*24;
         NSString *msgday = [dateFormatter stringFromDate:date];
         NSTimeInterval secondsBetweenDates= [[NSDate date] timeIntervalSinceDate:date];
         if ([today isEqualToString:msgday]) {
-            [dateFormatter setDateFormat:@"hh:mm"];
+            [dateFormatter setDateFormat:@"hh:mm:ss"];
             returnString = [dateFormatter stringFromDate:date];
         }else{
             if (secondsBetweenDates < daySeconds) {

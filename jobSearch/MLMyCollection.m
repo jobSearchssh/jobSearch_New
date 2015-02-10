@@ -12,6 +12,8 @@
 #import "MBProgressHUD.h"
 #import "MJRefresh.h"
 
+static NSString *userId = @"54d76bd496d9aece6f8b4568";
+
 @interface MLMyCollection ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate>
 {
     NSInteger cellNum;
@@ -73,10 +75,10 @@ static  MLMyCollection *thisVC=nil;
     skipTimes=0;
     
     if (firstLoad){
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
     }
 
-    [netAPI getSaveJobList:@"54ceddc6910d78bb68004293" start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+    [netAPI getSaveJobList:userId start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
         [self headHandler:jobListModel];
     }];
 }
@@ -84,7 +86,7 @@ static  MLMyCollection *thisVC=nil;
 - (void)footRefreshData{
     footerRefreshing=YES;
     
-    [netAPI getSaveJobList:@"54ceddc6910d78bb68004293" start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+    [netAPI getSaveJobList:userId start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
         [self footHandler:jobListModel];
     }];
 }
@@ -94,7 +96,7 @@ static  MLMyCollection *thisVC=nil;
     
     skipTimes=1;
     if (firstLoad){
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:_tableView animated:YES];
         firstLoad=NO;
     }
     headerRefreshing=NO;
@@ -114,8 +116,8 @@ static  MLMyCollection *thisVC=nil;
     
     if (footerRefreshing) {
         if (![jobListModel.getStatus intValue]==0) {
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:@"数据请求失败，请稍后再试" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            NSString *err=jobListModel.getInfo;
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
             
         }else{
@@ -141,7 +143,8 @@ static  MLMyCollection *thisVC=nil;
     else{
         
         if (![jobListModel.getStatus intValue]==0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:@"网络有点不给力哦，请稍后再试~" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            NSString *err=jobListModel.getInfo;
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
         }else{
             
@@ -292,10 +295,29 @@ static  MLMyCollection *thisVC=nil;
 {
     switch (index) {
         case 0:
-        {   NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+        {
+            [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
             
-            //[_testArray[cellIndexPath.section] removeObjectAtIndex:cellIndexPath.row];
-            [self.tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            NSIndexPath *cellIndexPath = [_tableView indexPathForCell:cell];
+            
+            NSInteger row=[cellIndexPath row];
+            
+            jobModel *jm=[recordArray objectAtIndex:row];
+            
+            [netAPI deleteTheJob:userId jobID:jm.getjobID withBlock:^(oprationResultModel *oprationResultModel) {
+                
+                [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
+                
+                if ([oprationResultModel.getStatus intValue]==0) {
+                    [recordArray removeObjectAtIndex:row];
+                    cellNum=[recordArray count];
+                    [_tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                }else{
+                    NSString *err=oprationResultModel.getInfo;
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络请求错误" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    [alert show];
+                }
+            }];
             
             break;
         }

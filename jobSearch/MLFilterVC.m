@@ -14,6 +14,7 @@
 }
 @property (weak, nonatomic) IBOutlet UISegmentedControl *distanceSeg;
 @property (nonatomic) int distance;
+@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (strong,nonatomic) NSMutableArray *typeArray;
 @end
 
@@ -61,8 +62,15 @@
 }
 
 
-- (void)finishSelect:(NSMutableArray *)type{
+- (void)finishSelect:(NSMutableArray *)type SelectName:(NSMutableArray *)nameArray{
     self.typeArray=type;
+    
+    NSString *typeString=[[NSString alloc]init];
+    for (NSString *str in nameArray ) {
+        typeString=[typeString stringByAppendingString:[NSString stringWithFormat:@"、%@",str]];
+    }
+    
+    self.typeLabel.text=[NSString stringWithFormat:@"%@",typeString];
 }
 
 - (void)didReceiveMemoryWarning {

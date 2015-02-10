@@ -9,6 +9,10 @@
 #import "MLMatchVC.h"
 #import "RSCircaPageControl.h"
 #import "PiPeiView.h"
+#import "MBProgressHUD.h"
+#import "netAPI.h"
+
+static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 @interface RSView : UIView
 
@@ -35,6 +39,8 @@
     int kScrollViewHeight;
     int kScrollViewContentHeight;
     int kScrollViewTagBase;
+    
+    NSMutableArray *recordArray;
 
 }
 
@@ -76,6 +82,8 @@ static  MLMatchVC *thisVC=nil;
     kScrollViewContentHeight=kScrollViewHeight;
     kScrollViewTagBase=kScrollViewHeight;
     
+    recordArray=[[NSMutableArray alloc]init];
+    
     self.clipView = [[RSView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     self.clipView.clipsToBounds = YES;
     [self.view addSubview:self.clipView];
@@ -99,28 +107,65 @@ static  MLMatchVC *thisVC=nil;
     [self.pageControl setCurrentPage:0 usingScroller:NO];
     [self.view addSubview:self.pageControl];
     
+    [self initData];
+}
+
+- (void)refreshScrollView{
+    
     CGFloat currentY = 0;
     
-    
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < [recordArray count]; i++) {
         
         PiPeiView* childView=[[PiPeiView alloc]init];
         [self addChildViewController:childView];
         
         [childView.view setFrame:CGRectMake(0, currentY, self.scrollView.bounds.size.width, kScrollViewHeight-44)];
-        //childView.label.text=[NSString stringWithFormat:@"第%d页",i];
         
         childView.view.tag = kScrollViewTagBase + i;
         
         childView.view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
-        [self.scrollView addSubview:childView.view];
+        jobModel *_jobModel=[recordArray objectAtIndex:i];
         
+        if (_jobModel) {
+        
+            childView.jobModel=_jobModel;
+            [childView initData];
+        }
+        [self.scrollView addSubview:childView.view];
         currentY += kScrollViewHeight;
     }
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, currentY);
 
+}
+
+- (void)initData{
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [netAPI queryJingLingMatch:userId start:1 length:5 withBlock:^(jobListModel *jobListModel) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        if ([jobListModel.getStatus intValue]!=0) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:jobListModel.getInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }
+        else{
+            if ([jobListModel.getJobArray count]<1) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"暂时没有适合你的职位哦~" message:jobListModel.getInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+
+            }else{
+                
+                for (jobModel *jobModel in jobListModel.getJobArray) {
+                    [recordArray addObject:jobModel];
+                }
+                
+                [self refreshScrollView];
+            }
+            
+        }
+        
+    }];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

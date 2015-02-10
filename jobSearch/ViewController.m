@@ -12,15 +12,15 @@
 #import "MLFirstVC.h"
 #import "MLMyCollection.h"
 #import "MLMyApplication.h"
-#import "DailyMatchVC.h"
 #import "MLProfileVC.h"
 #import "MLLoginVC.h"
 #import "MLMatchVC.h"
 #import "MLResumePreviewVC.h"
 #import "MLFeedBackVC.h"
 #import "MLLegalVC.h"
+#import "MLLoginBusiness.h"
 
-@interface ViewController ()
+@interface ViewController ()<UIAlertViewDelegate>
 {
     UINavigationController *currentnavigationController;
 }
@@ -39,17 +39,49 @@
 #pragma mark -
 #pragma mark Button actions
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==0) {
+        
+    }else if (buttonIndex==1) {
+        [MLLoginBusiness logout];
+        
+        RESideMenu* _side=[RESideMenu sharedInstance];
+            
+        [_side setTableItem:0 Title:@"未登录" Subtitle:@"游客" Image:[UIImage imageNamed:@"tourists"]];
+
+    }
+}
+
 - (void)showMenu
 {
     _sideMenu=[RESideMenu sharedInstance];
     
     if (!_sideMenu) {
+       //登录逻辑
+        NSString *title;
+        NSString *subtitle;
+        UIImage *image=[UIImage imageNamed:@"tourists"];
         
-        RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:@"未登录" setFlag:USRCELL setSubtitle:@"游客"  image:[UIImage imageNamed:@"tourists"] highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
-            [menu hide];
+        NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+        NSString *currentUserObjectId=[mySettingData objectForKey:@"currentUserObjectId"];
+        
+       if ([currentUserObjectId length]>0)  {
+            title=[mySettingData objectForKey:@"currentUserName"];
+           subtitle=@"点击退出";
+       }else{
+           title=@"未登录";
+           subtitle=@"游客";
+       }
+        RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:title setFlag:USRCELL setSubtitle:subtitle  image:image highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
             
-            MLLoginVC *viewController = [MLLoginVC sharedInstance];
-            [currentnavigationController pushViewController:viewController animated:YES];
+            if ([currentUserObjectId length]>0) {
+                UIAlertView *logoutAlert=[[UIAlertView alloc] initWithTitle:@"确定要退出该账号？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+                [logoutAlert show];
+            }else{
+                [menu hide];
+                MLLoginVC *viewController = [[MLLoginVC alloc] init];
+                [currentnavigationController pushViewController:viewController animated:YES];
+            }
             
         }];
         

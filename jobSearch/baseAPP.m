@@ -8,7 +8,7 @@
 
 #import "baseAPP.h"
 
-static NSOperationQueue *queue;
+static NSOperationQueue *queue = Nil;
 static NSString *usrID;
 @implementation baseAPP
 -(id)init{
@@ -37,6 +37,12 @@ static NSString *usrID;
 }
 
 +(NSOperationQueue *)getBaseNSOperationQueue{
+    static dispatch_once_t onceToken;
+    if (queue == Nil) {
+        dispatch_once(&onceToken, ^{
+            queue = [[NSOperationQueue alloc]init];
+        });
+    }
     return queue;
 }
 

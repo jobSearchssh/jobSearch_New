@@ -26,16 +26,24 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @end
 
 @implementation PiPeiView
+@synthesize jobModel= _jobModel;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self timeCollectionViewInit];
 }
 
 - (IBAction)showWorkTime:(id)sender {
     [self.view1 setFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width-40, 160)];
     [PopoverView showPopoverAtPoint:CGPointMake(88, 135) inView:self.view withTitle:@"工作时间" withContentView:self.view1 delegate:self];
+}
+
+- (IBAction)delete:(id)sender {
+    
+}
+
+- (IBAction)apply:(id)sender {
+    
 }
 
 - (void)timeCollectionViewInit{
@@ -64,10 +72,78 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     for (int index = 0; index<21; index++) {
         selectFreeData[index] = FALSE;
     }
+    for (id t in self.jobModel.getjobWorkTime) {
+        if ([t intValue]>0) {
+            selectFreeData[[t intValue] ]=YES;
+        }
+    }
+
     self.selectfreeCollectionOutlet.delegate = self;
     self.selectfreeCollectionOutlet.dataSource = self;
     UINib *niblogin = [UINib nibWithNibName:selectFreecellIdentifier bundle:nil];
     [self.selectfreeCollectionOutlet registerNib:niblogin forCellWithReuseIdentifier:selectFreecellIdentifier];
+}
+
+- (void)initData{
+    if (_jobModel) {
+
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM月dd日"];
+    
+    self.jobTitleLabel.text=_jobModel.getjobTitle;
+    self.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@%@",_jobModel.getjobWorkPlaceCity,_jobModel.getjobWorkPlaceDistrict,_jobModel.getjobWorkAddressDetail];
+    
+    self.jobDistanceLabel.text=[NSString stringWithFormat:@"%.1f千米",[jobModel getDistance:_jobModel.getjobWorkPlaceGeoPoint]];
+    
+    self.jobPublishTimeLabel.text=[dateFormatter stringFromDate:_jobModel.getcreated_at];
+    self.jobWorkPeriodLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:_jobModel.getjobBeginTime],[dateFormatter stringFromDate:_jobModel.getjobEndTime]];
+    
+    self.jobRecuitNumLabel.text=[NSString stringWithFormat:@"招募数量：%d/%d人",[_jobModel.getjobHasAccepted intValue],[_jobModel.getjobRecruitNum intValue]];
+    
+    NSString *settlement;
+    NSString *str=[NSString stringWithFormat:@"%@",_jobModel.getjobSettlementWay];
+    
+    if ([str isEqualToString:@"0"])
+        settlement=@"日结";
+    else if ([str isEqualToString:@"1"])
+        settlement=@"月结";
+    else if ([str isEqualToString:@"2"])
+        settlement=@"项目结";
+    
+    self.jobSalaryLabel.text=[NSString stringWithFormat:@"%@元",_jobModel.getjobSalaryRange];
+    self.jobSettlementWay.text=settlement;
+    
+    self.jobDescribleLabel.text=[NSString stringWithFormat:@"工作描述：%@",_jobModel.getjobIntroduction];
+    
+        NSString *gender;
+        if ([_jobModel.getjobGenderReq isEqualToString:@"0"]) {
+            gender=@"性别要求：不限";
+        }else if ([_jobModel.getjobGenderReq isEqualToString:@"1"]){
+            gender=@"性别要求：男";
+        }else if ([_jobModel.getjobGenderReq isEqualToString:@"2"]){
+            gender=@"性别要求：女";
+        }
+        NSString *degree;
+        if ([_jobModel.getjobDegreeReq intValue]==1){
+            degree=@"学历要求：初中";
+        }else if ([_jobModel.getjobDegreeReq intValue]==2){
+            degree=@"学历要求：高中";
+        }else if ([_jobModel.getjobDegreeReq intValue]==3){
+            degree=@"学历要求：大专";
+        }else if ([_jobModel.getjobDegreeReq intValue]==4){
+            degree=@"学历要求：本科";
+        }else if ([_jobModel.getjobDegreeReq intValue]==5){
+            degree=@"学历要求：硕士";
+        }else if ([_jobModel.getjobDegreeReq intValue]==6){
+            degree=@"学历要求：博士及以上";
+        }
+    NSString *age=[NSString stringWithFormat:@"年龄要求：%@—%@岁",_jobModel.getjobAgeStartReq,_jobModel.getjobAgeEndReq];
+    NSString *height=[NSString stringWithFormat:@"身高要求：%@—%@cm",_jobModel.getjobHeightStartReq,_jobModel.getjobHeightEndReq];
+        
+    self.jobRequireLabel.text=[NSString stringWithFormat:@"%@\n%@\n%@\n%@",degree,age,gender,height];
+        
+    [self timeCollectionViewInit];
+    }
 }
 
 #pragma mark - Collection View Data Source

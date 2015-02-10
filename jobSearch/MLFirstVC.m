@@ -19,8 +19,9 @@
 #import <AMapSearchKit/AMapSearchAPI.h>
 #import <MAMapKit/MAMapKit.h>
 #import "AJLocationManager.h"
+#import <BmobSDK/Bmob.h>
 
-@interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate,finishFilterDelegate,UINavigationControllerDelegate>
+@interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate,finishFilterDelegate,UINavigationControllerDelegate,showDetailDelegate>
 {
     NSInteger cellNum;
     NSInteger sectionNum;
@@ -34,6 +35,8 @@
     BOOL firstLoad;
     BOOL headerRefreshing;
     BOOL footerRefreshing;
+    
+    BOOL searchViewDisplaying;
     
     AMapSearchAPI *search;
     
@@ -49,6 +52,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UITabBar *tabbar;
+@property (weak, nonatomic) IBOutlet UITabBarItem *mapItem;
 
 @end
 
@@ -82,13 +86,14 @@ static  MLFirstVC *thisVC=nil;
     
     searchView = [[NiftySearchView alloc] initWithFrame:CGRectMake(0, -76, [[UIScreen mainScreen] bounds].size.width, 76)];
     searchView.delegate = self;
+    searchViewDisplaying=NO;
     [_tableView addSubview:searchView];
     searchView.alpha=0.0f;
     self.navigationController.navigationBar.translucent=NO;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"] style:UIBarButtonItemStylePlain target:self action:@selector(search)];
     self.navigationItem.rightBarButtonItem.tintColor=[UIColor whiteColor];
     self.navigationItem.leftBarButtonItem.tintColor=[UIColor whiteColor];
-    
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     self.title=@"附近的工作";
     
     dateFormatter = [[NSDateFormatter alloc] init];
@@ -100,6 +105,8 @@ static  MLFirstVC *thisVC=nil;
     [self initTabbar];
     
     [self searchCity];
+    
+    
     
 }
 
@@ -135,7 +142,7 @@ static  MLFirstVC *thisVC=nil;
     skipTimes=0;
     
     if (firstLoad){
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
     }
     [self refreshDataByType:NO];
 
@@ -215,7 +222,7 @@ static  MLFirstVC *thisVC=nil;
         if ([searchType isEqualToString:@"nearest"]) {
             if (abs(locationCoord.latitude-99999.99)<0.001) {
                 [self.tableView headerEndRefreshing];
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
                 firstLoad=NO;
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alert show];
@@ -236,7 +243,7 @@ static  MLFirstVC *thisVC=nil;
             if ([keyWord length]<1) {
                 firstLoad=NO;
                 [self.tableView headerEndRefreshing];
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入关键字" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alert show];
             }else{
@@ -251,7 +258,7 @@ static  MLFirstVC *thisVC=nil;
                 if (abs(locationCoord.latitude-99999.99)<0.001) {
                     firstLoad=NO;
                     [self.tableView headerEndRefreshing];
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                     [alert show];
                 }else{
@@ -269,7 +276,7 @@ static  MLFirstVC *thisVC=nil;
                 if (abs(locationCoord.latitude-99999.99)<0.001) {
                     firstLoad=NO;
                     [self.tableView headerEndRefreshing];
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                     [alert show];
                 }else{
@@ -281,9 +288,7 @@ static  MLFirstVC *thisVC=nil;
                         [netAPI getJobByTypeAndDistance:@"distanceAndType" start:1 length:BASE_SPAN longtitude:locationCoord.longitude latitude:locationCoord.latitude distance:distance jobType:jobTypeArray withBlock:^(jobListModel *jobListModel) {
                             [self headHandler:jobListModel];
                         }];
-//                        [netAPI getJobByJobType:@"type" start:1 length:BASE_SPAN jobType:jobTypeArray withBlock:^(jobListModel *jobListModel) {
-//                            [self headHandler:jobListModel];
-//                        }];
+
                     }
 
                 }
@@ -297,7 +302,7 @@ static  MLFirstVC *thisVC=nil;
     
     skipTimes=1;
     if (firstLoad){
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
         firstLoad=NO;
     }
     headerRefreshing=NO;
@@ -317,7 +322,9 @@ static  MLFirstVC *thisVC=nil;
     if (footerRefreshing) {
         if (![jobListModel.getStatus intValue]==0) {
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:@"数据请求失败，请稍后再试" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            NSString *err=jobListModel.getInfo;
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
             
         }else{
@@ -401,7 +408,7 @@ static  MLFirstVC *thisVC=nil;
 }
 
 - (void)showMatchInfo{
-    MLMatchVC *matchVC=[MLMatchVC sharedInstance];
+    MLMatchVC *matchVC=[[MLMatchVC alloc] init];
     matchVC.title=@"精灵匹配";
     [self.navigationController pushViewController:matchVC animated:YES];
 }
@@ -410,20 +417,43 @@ static  MLFirstVC *thisVC=nil;
     if (!mapDisplaying) {
         if (!mapView) {
             mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-113)];
+            mapView.showDetailDelegate=self;
             mapView.alpha=0.0f;
             [self.view addSubview:mapView];
         }
         mapDisplaying=YES;
+        [self addannotations];
         [UIView animateWithDuration:0.4 animations:^{
             mapView.alpha=1.0f;
         }];
+        [self.mapItem setTitle:@"列表"];
+        [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        self.navigationItem.rightBarButtonItem.enabled=NO;
     }else {
         [UIView animateWithDuration:0.4 animations:^{
             mapView.alpha=0.0f;
+            [mapView removeAllAnnotations];
         }];
         mapDisplaying=NO;
+        [self.mapItem setTitle:@"地图"];
+        [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        self.navigationItem.rightBarButtonItem.enabled=YES;
     }
 }
+
+- (void)addannotations{
+    if ([recordArray count]>0) {
+        for (int i=0;i<[recordArray count]-1;i++){
+            
+            jobModel *jm=[recordArray objectAtIndex:i];
+            
+            NSArray *arr=jm.getjobWorkPlaceGeoPoint;
+            
+            [mapView addAnnotation:arr Title:jm.getjobTitle tag:i];
+        }
+    }
+}
+
 - (void)showMessage{
     MLMessageVC *messageVC=[[MLMessageVC alloc]init];
     messageVC.title=@"消息";
@@ -435,6 +465,21 @@ static  MLFirstVC *thisVC=nil;
     MLFilterVC *filterVC=[[MLFilterVC alloc]init];
     filterVC.filterDelegate=self;
     [self.navigationController pushViewController:filterVC animated:YES];
+}
+
+- (void)showDetail:(NSInteger)tag{
+    jobDetailVC *detailVC=[[jobDetailVC alloc]init];
+    if ([recordArray objectAtIndex:tag]) {
+        detailVC.jobModel=[recordArray objectAtIndex:tag];
+    }
+    
+    detailVC.buttonTitle=@"一键申请";
+    detailVC.hidesBottomBarWhenPushed=YES;
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    backItem.title = @"";
+    self.navigationItem.backBarButtonItem = backItem;
+    
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 //*********************ActionSheet********************//
@@ -472,12 +517,7 @@ static  MLFirstVC *thisVC=nil;
     } else {
         searchView.startTextField.textColor = [UIColor blackColor];
     }
-    if ([searchView.finishTextField.text isEqualToString:NSLocalizedString(@"Current Location", nil)]) {
-        searchView.finishTextField.textColor = [UIColor blueColor];
-    } else {
-        searchView.finishTextField.textColor = [UIColor blackColor];
-    }
-    
+    searchViewDisplaying=YES;
     CGRect searchBarFrame = searchView.frame;
     searchBarFrame.origin.y = 0;
     [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
@@ -485,7 +525,7 @@ static  MLFirstVC *thisVC=nil;
                          searchView.frame = searchBarFrame;
                      }
                      completion:^(BOOL completion) {
-                         [searchView.startTextField becomeFirstResponder];
+                         [searchView.finishTextField becomeFirstResponder];
                      }];
 }
 
@@ -503,7 +543,6 @@ static  MLFirstVC *thisVC=nil;
 
 - (void)niftySearchViewResigend
 {
-    NSLog(@"resignSearchView");
     [self hideSearchBar:self];
     
     [UIView animateWithDuration:0.4 animations:^{
@@ -511,9 +550,22 @@ static  MLFirstVC *thisVC=nil;
     }];
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    if (searchViewDisplaying) {
+        [self hideSearchBar:self];
+        [UIView animateWithDuration:0.4 animations:^{
+            searchView.alpha=0.0f;
+        }];
+    }
+}
+
+
 - (void)routeButtonClicked:(UITextField *)startTextField finishTextField:(UITextField *)finishTextField
 {
-    NSLog(@"routeButtonClicked");
+    firstLoad=YES;
+    searchType=@"keyword";
+    keyWord=finishTextField.text;
+    [self headRefreshData];
 }
 
 - (IBAction)hideSearchBar:(id)sender
@@ -527,7 +579,7 @@ static  MLFirstVC *thisVC=nil;
                          searchView.frame = searchBarFrame;
                      }
                      completion:^(BOOL completion){
-                         
+                         searchViewDisplaying=NO;
                      }];
 }
 
@@ -569,6 +621,7 @@ static  MLFirstVC *thisVC=nil;
     cell.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@",jobObject.getjobWorkPlaceCity,jobObject.getjobWorkPlaceDistrict];
     cell.jobTimeLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:jobObject.getjobBeginTime],[dateFormatter stringFromDate:jobObject.getjobEndTime]];
     cell.jobDistance.text=[NSString stringWithFormat:@"%.1fKM",[jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint]];
+
     int num=[jobObject.getjobRecruitNum intValue]-[jobObject.getjobHasAccepted intValue];
     cell.jobNumberRemainLabel.text=[NSString stringWithFormat:@"还剩%d人",num];
     cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/天",jobObject.getjobSalaryRange];
@@ -620,7 +673,7 @@ static  MLFirstVC *thisVC=nil;
     detailVC.hidesBottomBarWhenPushed=YES;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"";
-    backItem.tintColor=[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:50.0/255.0 alpha:1.0];
+    //backItem.tintColor=[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:50.0/255.0 alpha:1.0];
     self.navigationItem.backBarButtonItem = backItem;
     
     [self.navigationController pushViewController:detailVC animated:YES];
@@ -718,7 +771,7 @@ static  MLFirstVC *thisVC=nil;
 
 - (void)searchCity
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
     NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
     
     //获得用户位置信息

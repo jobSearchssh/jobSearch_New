@@ -25,7 +25,7 @@
         BOOL flag = TRUE;
         do{
             NSString *receiveStr = [[NSString alloc]initWithData:mainData encoding:NSUTF8StringEncoding];
-            NSLog(@"%@",receiveStr);
+//            NSLog(@"%@",receiveStr);
             NSError *error;
             NSData* aData = [receiveStr dataUsingEncoding: NSASCIIStringEncoding];
             NSDictionary *a = Nil;
