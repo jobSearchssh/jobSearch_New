@@ -67,7 +67,7 @@
     
     NSString *typeString=[[NSString alloc]init];
     for (NSString *str in nameArray ) {
-        typeString=[typeString stringByAppendingString:[NSString stringWithFormat:@"、%@",str]];
+        typeString=[typeString stringByAppendingString:[NSString stringWithFormat:@",%@",str]];
     }
     
     self.typeLabel.text=[NSString stringWithFormat:@"%@",typeString];
