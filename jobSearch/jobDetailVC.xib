@@ -10,7 +10,7 @@
                 <outlet property="applyButton" destination="TEN-OG-YLW" id="7jA-bJ-1ws"/>
                 <outlet property="containerView" destination="fo4-Tc-6J3" id="4ce-mL-N8K"/>
                 <outlet property="containerViewHeightConstraint" destination="7Gv-hs-Ez0" id="iPn-Lb-qME"/>
-                <outlet property="entepriseLogoView" destination="ohT-Z8-CZF" id="ZWb-Ph-i4o"/>
+                <outlet property="entepriseLogoView" destination="ohT-Z8-CZF" id="AIF-ph-Y2h"/>
                 <outlet property="jobAddressLabel" destination="C29-80-ruv" id="YVJ-d3-tsb"/>
                 <outlet property="jobDescribeLabel" destination="fBV-eb-pkf" id="6Od-bv-TUq"/>
                 <outlet property="jobDescribleLabelHeightConstraint" destination="UsK-hJ-hUu" id="l3c-61-Tw2"/>
@@ -63,7 +63,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fo4-Tc-6J3" userLabel="containerView">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pepsi.png" translatesAutoresizingMaskIntoConstraints="NO" id="ohT-Z8-CZF">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="ohT-Z8-CZF" customClass="AsyncImageView">
                                     <rect key="frame" x="8" y="14" width="69" height="69"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="69" id="IPE-NM-Z0j"/>
@@ -662,8 +662,8 @@
         </view>
     </objects>
     <resources>
-        <image name="Pepsi.png" width="220" height="220"/>
         <image name="icon_location.png" width="15" height="15"/>
         <image name="just.png" width="30" height="30"/>
+        <image name="placeholder.png" width="60" height="60"/>
     </resources>
 </document>

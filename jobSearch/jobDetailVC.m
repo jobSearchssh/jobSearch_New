@@ -12,6 +12,8 @@
 #import "PopoverView.h"
 #import "freeselectViewCell.h"
 #import "netAPI.h"
+#import "AsyncImageView.h"
+
 
 static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
@@ -36,7 +38,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UICollectionView *selectfreeCollectionOutlet;
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (weak, nonatomic) IBOutlet UIImageView *entepriseLogoView;
+@property (weak, nonatomic) IBOutlet AsyncImageView *entepriseLogoView;
 @property (weak, nonatomic) IBOutlet UILabel *jobTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jobAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jobDistanceLabel;
@@ -70,8 +72,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 - (IBAction)applyTheJob:(id)sender {
-    
-    NSLog(@"%@",self.jobModel.getjobID);
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [netAPI applyTheJob:userId jobID:self.jobModel.getjobID withBlock:^(jobApplyModel *oprationResultModel) {
@@ -130,7 +130,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
     }
 
-
     self.selectfreeCollectionOutlet.delegate = self;
     self.selectfreeCollectionOutlet.dataSource = self;
     UINib *niblogin = [UINib nibWithNibName:selectFreecellIdentifier bundle:nil];
@@ -154,6 +153,27 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 - (void)initData{
     if (self.jobModel) {
 
+        
+        NSString *imageUrl;
+        
+        if ([self.jobModel.getjobEnterpriseImageURL length]>4) {
+            if ([[self.jobModel.getjobEnterpriseImageURL substringToIndex:4] isEqualToString:@"http"])
+                imageUrl=self.jobModel.getjobEnterpriseImageURL;
+        }else if ([self.jobModel.getjobEnterpriseLogoURL length]>4) {
+            if ([[self.jobModel.getjobEnterpriseLogoURL substringToIndex:4] isEqualToString:@"http"])
+                imageUrl=self.jobModel.getjobEnterpriseLogoURL;
+        }
+        
+        if ([imageUrl length]>4) {
+            self.entepriseLogoView.contentMode = UIViewContentModeScaleAspectFill;
+            self.entepriseLogoView.clipsToBounds = YES;
+            [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:self.entepriseLogoView];
+            self.entepriseLogoView.imageURL=[NSURL URLWithString:imageUrl];
+        }else{
+            self.entepriseLogoView.image=[UIImage imageNamed:@"placeholder"];
+        }
+
+        
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MM月dd日"];
 
@@ -210,7 +230,21 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
         NSString *age=[NSString stringWithFormat:@"年龄要求：%@—%@岁",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
         NSString *height=[NSString stringWithFormat:@"身高要求：%@—%@cm",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
-        self.jobRequireLabel.text=[NSString stringWithFormat:@"%@\n%@\n%@",degree,age,height];
+        
+        NSString *textString=[[NSString alloc]init];
+        if (age) {
+            textString=[textString stringByAppendingString:[NSString stringWithFormat:@"%@\n",age]];
+        }
+        if (degree) {
+            textString=[textString stringByAppendingString:[NSString stringWithFormat:@"%@\n",degree]];
+        }
+        if (height) {
+            textString=[textString stringByAppendingString:[NSString stringWithFormat:@"%@\n",height]];
+        }
+        if (gender) {
+            textString=[textString stringByAppendingString:[NSString stringWithFormat:@"%@\n",gender]];
+        }
+        self.jobRequireLabel.text=textString;
         
         [self updateConstraints];
         

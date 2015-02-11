@@ -16,7 +16,7 @@
 
 static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
-@interface MLMessageVC ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate>
+@interface MLMessageVC ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,finishHandle>
 {
     NSInteger cellNum;
     NSDateFormatter *dateFormatter;
@@ -27,6 +27,8 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     BOOL footerRefreshing;
     //页数
     int skipTimes;
+    
+    NSInteger nowCellNum;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -47,6 +49,11 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     [dateFormatter setDateFormat:@"MM月dd日"];
     
     [self tableViewInit];
+}
+
+- (void)finishHandle{
+    [recordArray removeObjectAtIndex:nowCellNum];
+    [self.tableView reloadData];
 }
 
 - (void)headRefreshData{
@@ -102,8 +109,11 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
             
         }else{
             
-            for (id object in jobListModel.getMessageArray) {
-                [recordArray addObject:object];
+            for (messageModel *object in jobListModel.getMessageArray) {
+                
+                if ([object.getinviteStatus intValue]==0) {
+                    [recordArray addObject:object];
+                }
             }
             
             NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
@@ -130,8 +140,11 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
             
             [recordArray removeAllObjects];
             
-            for (id object in jobListModel.getMessageArray) {
-                [recordArray addObject:object];
+            for (messageModel *object in jobListModel.getMessageArray) {
+                
+                if ([object.getinviteStatus intValue]==0) {
+                    [recordArray addObject:object];
+                }
             }
             
             cellNum=[recordArray count];
@@ -170,6 +183,44 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
     cell.delegate = self;
     
+    if ([recordArray objectAtIndex:[indexPath row]]) {
+        jobModel *jobObject=[recordArray objectAtIndex:[indexPath row]];
+        cell.titleLabel.text=jobObject.getjobTitle;
+        cell.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@",jobObject.getjobWorkPlaceCity,jobObject.getjobWorkPlaceDistrict];
+        
+        NSString *settlement;
+        NSString *str=[NSString stringWithFormat:@"%@",jobObject.getjobSettlementWay];
+        
+        if ([str isEqualToString:@"0"])
+            settlement=@"日";
+        else if ([str isEqualToString:@"1"])
+            settlement=@"月";
+        else if ([str isEqualToString:@"2"])
+            settlement=@"项目";
+        
+        cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/%@",jobObject.getjobSalaryRange,settlement];
+
+        NSString *imageUrl;
+        
+        if ([jobObject.getjobEnterpriseImageURL length]>4) {
+            if ([[jobObject.getjobEnterpriseImageURL substringToIndex:4] isEqualToString:@"http"])
+                imageUrl=jobObject.getjobEnterpriseImageURL;
+        }else if ([jobObject.getjobEnterpriseLogoURL length]>4) {
+            if ([[jobObject.getjobEnterpriseLogoURL substringToIndex:4] isEqualToString:@"http"])
+                imageUrl=jobObject.getjobEnterpriseLogoURL;
+        }
+        
+        if ([imageUrl length]>4) {
+            cell.portraitView.contentMode = UIViewContentModeScaleAspectFill;
+            cell.portraitView.clipsToBounds = YES;
+            [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:cell.portraitView];
+            cell.portraitView.imageURL=[NSURL URLWithString:imageUrl];
+        }else{
+            cell.portraitView.image=[UIImage imageNamed:@"placeholder"];
+        }
+
+    }
+    
     return cell;
 }
 
@@ -201,10 +252,13 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    nowCellNum=[indexPath row];
+    
     jobRecmendVC *detailVC=[[jobRecmendVC alloc]init];
+    detailVC.handleDelegate=self;
     
     if ([recordArray objectAtIndex:[indexPath row]]) {
-        detailVC.jobModel=[recordArray objectAtIndex:[indexPath row]];
+        detailVC.jobModel=[recordArray objectAtIndex:nowCellNum];
     }
     
     detailVC.hidesBottomBarWhenPushed=YES;
@@ -285,7 +339,6 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 - (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
 {
-    // allow just one cell's utility button to be open at once
     return YES;
 }
 
@@ -293,11 +346,11 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 {
     switch (state) {
         case 1:
-            // set to NO to disable all left utility buttons appearing
+            
             return YES;
             break;
         case 2:
-            // set to NO to disable all right utility buttons appearing
+            
             return YES;
             break;
         default:

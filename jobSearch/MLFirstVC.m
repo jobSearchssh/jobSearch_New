@@ -100,29 +100,25 @@ static  MLFirstVC *thisVC=nil;
     [dateFormatter setDateFormat:@"MM月dd日"];
     
     mapDisplaying=NO;
+    
     [self tableViewInit];
     
     [self initTabbar];
     
     [self searchCity];
     
-//    UIImage *image1=[UIImage imageNamed:@"Pepsi"];
-//    UIImage *image2=[UIImage imageNamed:@"wrong"];
-//    UIImage *image3=[UIImage imageNamed:@"userAcount"];
-//    
-//    NSData *data1=UIImagePNGRepresentation(image1);
-//    NSData *data2=UIImagePNGRepresentation(image2);
-//    NSData *data3=UIImagePNGRepresentation(image3);
-//    
-//    BmobQuery *query=[BmobQuery queryWithClassName:@"UserImages"];
-//    [query getObjectInBackgroundWithId:@"KbMr555D" block:^(BmobObject *object, NSError *error) {
+//    BmobQuery *query=[BmobQuery queryWithClassName:@"JobLogo"];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
 //        if (!error) {
-//            
-//            BmobFile *bmobFile = (BmobFile *)[object objectForKey:@"userVideo"];
-//            NSLog(@"%@",bmobFile.url);
+//            for (BmobObject *object in array )
+//            {
+//                BmobFile *bmobFile = (BmobFile *)[object objectForKey:@"jobLogo"];
+//                NSLog(@"%@",bmobFile.url);
+//            }
+//           
 //        }
+//
 //    }];
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -626,9 +622,6 @@ static  MLFirstVC *thisVC=nil;
     
     MLCell1 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
     
-    //[cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
-    //cell.delegate = self;
-    
     
     jobModel *jobObject=[recordArray objectAtIndex:[indexPath row]];
     
@@ -636,10 +629,42 @@ static  MLFirstVC *thisVC=nil;
     cell.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@",jobObject.getjobWorkPlaceCity,jobObject.getjobWorkPlaceDistrict];
     cell.jobTimeLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:jobObject.getjobBeginTime],[dateFormatter stringFromDate:jobObject.getjobEndTime]];
     cell.jobDistance.text=[NSString stringWithFormat:@"%.1fKM",[jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint]];
-
+    
     int num=[jobObject.getjobRecruitNum intValue]-[jobObject.getjobHasAccepted intValue];
+    
+    NSString *settlement;
+    NSString *str=[NSString stringWithFormat:@"%@",jobObject.getjobSettlementWay];
+    
+    if ([str isEqualToString:@"0"])
+        settlement=@"日";
+    else if ([str isEqualToString:@"1"])
+        settlement=@"月";
+    else if ([str isEqualToString:@"2"])
+        settlement=@"项目";
+    
+    cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/%@",jobObject.getjobSalaryRange,settlement];
+    
     cell.jobNumberRemainLabel.text=[NSString stringWithFormat:@"还剩%d人",num];
-    cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/天",jobObject.getjobSalaryRange];
+    
+    NSString *imageUrl;
+    
+    if ([jobObject.getjobEnterpriseImageURL length]>4) {
+        if ([[jobObject.getjobEnterpriseImageURL substringToIndex:4] isEqualToString:@"http"])
+            imageUrl=jobObject.getjobEnterpriseImageURL;
+    }else if ([jobObject.getjobEnterpriseLogoURL length]>4) {
+        if ([[jobObject.getjobEnterpriseLogoURL substringToIndex:4] isEqualToString:@"http"])
+            imageUrl=jobObject.getjobEnterpriseLogoURL;
+    }
+    
+    if ([imageUrl length]>4) {
+        cell.portraitView.contentMode = UIViewContentModeScaleAspectFill;
+        cell.portraitView.clipsToBounds = YES;
+        [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:cell.portraitView];
+        cell.portraitView.imageURL=[NSURL URLWithString:imageUrl];
+    }else{
+        cell.portraitView.image=[UIImage imageNamed:@"placeholder"];
+    }
+    
     
     return cell;
 }

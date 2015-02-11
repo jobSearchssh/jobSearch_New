@@ -12,10 +12,11 @@
 #import "freeselectViewCell.h"
 #import "netAPI.h"
 #import "MBProgressHUD.h"
+#import "AsyncImageView.h"
 
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
-@interface jobRecmendVC ()<UICollectionViewDataSource,UICollectionViewDelegate>{
+@interface jobRecmendVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate>{
     NSMutableArray  *addedPicArray;
     NSArray  *selectfreetimepicArray;
     NSArray  *selectfreetimetitleArray;
@@ -30,7 +31,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UICollectionView *selectfreeCollectionOutlet;
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (weak, nonatomic) IBOutlet UIImageView *entepriseLogoView;
+@property (weak, nonatomic) IBOutlet AsyncImageView *entepriseLogoView;
 @property (weak, nonatomic) IBOutlet UILabel *jobTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jobAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jobDistanceLabel;
@@ -117,6 +118,26 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MM月dd日"];
         
+        NSString *imageUrl;
+        
+        if ([self.jobModel.getjobEnterpriseImageURL length]>4) {
+            if ([[self.jobModel.getjobEnterpriseImageURL substringToIndex:4] isEqualToString:@"http"])
+                imageUrl=self.jobModel.getjobEnterpriseImageURL;
+        }else if ([self.jobModel.getjobEnterpriseLogoURL length]>4) {
+            if ([[self.jobModel.getjobEnterpriseLogoURL substringToIndex:4] isEqualToString:@"http"])
+                imageUrl=self.jobModel.getjobEnterpriseLogoURL;
+        }
+        
+        if ([imageUrl length]>4) {
+            self.entepriseLogoView.contentMode = UIViewContentModeScaleAspectFill;
+            self.entepriseLogoView.clipsToBounds = YES;
+            [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:self.entepriseLogoView];
+            self.entepriseLogoView.imageURL=[NSURL URLWithString:imageUrl];
+        }else{
+            self.entepriseLogoView.image=[UIImage imageNamed:@"placeholder"];
+        }
+
+        
         self.jobTitleLabel.text=self.jobModel.getjobTitle;
         self.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@",self.jobModel.getjobWorkPlaceCity,self.jobModel.getjobWorkPlaceDistrict];
         self.jobDistanceLabel.text=[NSString stringWithFormat:@"%.1f千米",[jobModel getDistance:self.jobModel.getjobWorkPlaceGeoPoint]];
@@ -163,7 +184,21 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         NSString *age=[NSString stringWithFormat:@"年龄要求：%@——%@",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
         NSString *height=[NSString stringWithFormat:@"身高要求：%@——%@",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
-        self.jobRequireLabel.text=[NSString stringWithFormat:@"%@\n%@\n%@\n%@",degree,age,height,gender];
+        
+        NSString *textString=[[NSString alloc]init];
+        if (age) {
+            textString=[textString stringByAppendingString:[NSString stringWithFormat:@"%@\n",age]];
+        }
+        if (degree) {
+            textString=[textString stringByAppendingString:[NSString stringWithFormat:@"%@\n",degree]];
+        }
+        if (height) {
+            textString=[textString stringByAppendingString:[NSString stringWithFormat:@"%@\n",height]];
+        }
+        if (gender) {
+            textString=[textString stringByAppendingString:[NSString stringWithFormat:@"%@\n",gender]];
+        }
+        self.jobRequireLabel.text=textString;
         
         [self updateConstraints];
         
@@ -183,7 +218,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             }else
             {
                 UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"成功接受职位" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                alertView.delegate=self;
+                
                 [alertView show];
+                
+                [self.handleDelegate finishHandle];
             }
         }];
     }
@@ -201,10 +240,18 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             }else
             {
                 UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"成功拒绝职位" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                alertView.delegate=self;
+
                 [alertView show];
+                
+                [self.handleDelegate finishHandle];
             }
         }];
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)showWorkTime:(id)sender {

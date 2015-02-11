@@ -33,7 +33,7 @@ static  MLFeedBackVC *thisVC=nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.starRateView1 = [[CWStarRateView alloc] initWithFrame:CGRectMake(20, 60, [[UIScreen mainScreen] bounds].size.width-40, 40) numberOfStars:5];
+    self.starRateView1 = [[CWStarRateView alloc] initWithFrame:CGRectMake(20, 40, [[UIScreen mainScreen] bounds].size.width-40, 40) numberOfStars:5];
     self.starRateView1.scorePercent = 1.0;
     self.starRateView1.allowIncompleteStar = NO;
     self.starRateView1.hasAnimation = YES;
@@ -46,6 +46,18 @@ static  MLFeedBackVC *thisVC=nil;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillhide:) name:UIKeyboardWillHideNotification object:nil];
 
 }
+
+- (void)viewWillLayoutSubviews{
+    self.title=@"发送反馈";
+    //设置导航栏标题颜色及返回按钮颜色
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
+    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
+}
+
 
 - (void)starRateView:(CWStarRateView *)starRateView scroePercentDidChange:(CGFloat)newScorePercent{
 

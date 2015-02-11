@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "messageModel.h"
 
+@protocol finishHandle <NSObject>
+@required
+- (void)finishHandle;
+@end
+
 @interface jobRecmendVC : UIViewController
 @property (strong, nonatomic)messageModel*jobModel;
+
+@property(nonatomic,weak) id<finishHandle> handleDelegate;
+
 @end

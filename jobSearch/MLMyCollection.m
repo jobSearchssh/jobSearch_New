@@ -197,7 +197,38 @@ static  MLMyCollection *thisVC=nil;
     cell.jobDistance.text=[NSString stringWithFormat:@"%.1fKM",[jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint]];
     int num=[jobObject.getjobRecruitNum intValue]-[jobObject.getjobHasAccepted intValue];
     cell.jobNumberRemainLabel.text=[NSString stringWithFormat:@"还剩%d人",num];
-    cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/天",jobObject.getjobSalaryRange];
+    
+    NSString *settlement;
+    NSString *str=[NSString stringWithFormat:@"%@",jobObject.getjobSettlementWay];
+    
+    if ([str isEqualToString:@"0"])
+        settlement=@"日";
+    else if ([str isEqualToString:@"1"])
+        settlement=@"月";
+    else if ([str isEqualToString:@"2"])
+        settlement=@"项目";
+    
+    cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/%@",jobObject.getjobSalaryRange,settlement];
+
+    
+    NSString *imageUrl;
+    
+    if ([jobObject.getjobEnterpriseImageURL length]>4) {
+        if ([[jobObject.getjobEnterpriseImageURL substringToIndex:4] isEqualToString:@"http"])
+            imageUrl=jobObject.getjobEnterpriseImageURL;
+    }else if ([jobObject.getjobEnterpriseLogoURL length]>4) {
+        if ([[jobObject.getjobEnterpriseLogoURL substringToIndex:4] isEqualToString:@"http"])
+            imageUrl=jobObject.getjobEnterpriseLogoURL;
+    }
+    
+    if ([imageUrl length]>4) {
+        cell.portraitView.contentMode = UIViewContentModeScaleAspectFill;
+        cell.portraitView.clipsToBounds = YES;
+        [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:cell.portraitView];
+        cell.portraitView.imageURL=[NSURL URLWithString:imageUrl];
+    }else{
+        cell.portraitView.image=[UIImage imageNamed:@"placeholder"];
+    }
 
     
     return cell;

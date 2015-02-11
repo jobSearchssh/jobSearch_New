@@ -292,6 +292,10 @@
 		3BF625311A8B3E4E0066816D /* arrow_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF6252E1A8B3E4E0066816D /* arrow_right.png */; };
 		3BF625321A8B3E4E0066816D /* arrow_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF6252F1A8B3E4E0066816D /* arrow_right@2x.png */; };
 		3BF625331A8B3E4E0066816D /* arrow_right@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF625301A8B3E4E0066816D /* arrow_right@3x.png */; };
+		3BF625371A8B55450066816D /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF625361A8B55450066816D /* AsyncImageView.m */; };
+		3BF6253B1A8B57AA0066816D /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF625381A8B57AA0066816D /* placeholder@2x.png */; };
+		3BF6253C1A8B57AA0066816D /* placeholder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF625391A8B57AA0066816D /* placeholder@3x.png */; };
+		3BF6253D1A8B57AA0066816D /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF6253A1A8B57AA0066816D /* placeholder.png */; };
 		B75CE4011A7B512B00974815 /* resume_female.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CE3FD1A7B512B00974815 /* resume_female.png */; };
 		B75CE4021A7B512B00974815 /* resume_male.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CE3FE1A7B512B00974815 /* resume_male.png */; };
 		B75CE4031A7B512B00974815 /* resume_phone.png in Resources */ = {isa = PBXBuildFile; fileRef = B75CE3FF1A7B512B00974815 /* resume_phone.png */; };
@@ -706,6 +710,11 @@
 		3BF6252E1A8B3E4E0066816D /* arrow_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_right.png; sourceTree = "<group>"; };
 		3BF6252F1A8B3E4E0066816D /* arrow_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_right@2x.png"; sourceTree = "<group>"; };
 		3BF625301A8B3E4E0066816D /* arrow_right@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_right@3x.png"; sourceTree = "<group>"; };
+		3BF625351A8B55450066816D /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
+		3BF625361A8B55450066816D /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
+		3BF625381A8B57AA0066816D /* placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder@2x.png"; sourceTree = "<group>"; };
+		3BF625391A8B57AA0066816D /* placeholder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder@3x.png"; sourceTree = "<group>"; };
+		3BF6253A1A8B57AA0066816D /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		B75CE3FD1A7B512B00974815 /* resume_female.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resume_female.png; sourceTree = "<group>"; };
 		B75CE3FE1A7B512B00974815 /* resume_male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resume_male.png; sourceTree = "<group>"; };
 		B75CE3FF1A7B512B00974815 /* resume_phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resume_phone.png; sourceTree = "<group>"; };
@@ -943,6 +952,9 @@
 		3B6993971A89E9B000A53760 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				3BF625381A8B57AA0066816D /* placeholder@2x.png */,
+				3BF625391A8B57AA0066816D /* placeholder@3x.png */,
+				3BF6253A1A8B57AA0066816D /* placeholder.png */,
 				3BF6252E1A8B3E4E0066816D /* arrow_right.png */,
 				3BF6252F1A8B3E4E0066816D /* arrow_right@2x.png */,
 				3BF625301A8B3E4E0066816D /* arrow_right@3x.png */,
@@ -1068,6 +1080,7 @@
 		3B9236451A67FAFA00347D9C /* jobSearch */ = {
 			isa = PBXGroup;
 			children = (
+				3BF625341A8B55450066816D /* AsyncImageView */,
 				3BCEA0CA1A83636C0005F080 /* Legal */,
 				3BCEA0C41A8363250005F080 /* FeedBack */,
 				3B4AB49B1A81F1700053236C /* LocationManager */,
@@ -1438,6 +1451,15 @@
 			path = resumeIIcon;
 			sourceTree = "<group>";
 		};
+		3BF625341A8B55450066816D /* AsyncImageView */ = {
+			isa = PBXGroup;
+			children = (
+				3BF625351A8B55450066816D /* AsyncImageView.h */,
+				3BF625361A8B55450066816D /* AsyncImageView.m */,
+			);
+			path = AsyncImageView;
+			sourceTree = "<group>";
+		};
 		B751EB901A7E127000A6361A /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1752,6 +1774,7 @@
 				3B6994461A89E9B000A53760 /* userAccount@2x.png in Resources */,
 				3BD4DC891A77C50600B061D0 /* resume_icon1.png in Resources */,
 				3B6993931A89E98E00A53760 /* sideNormalTableViewCell.xib in Resources */,
+				3BF6253C1A8B57AA0066816D /* placeholder@3x.png in Resources */,
 				B77578C31A7A939100660BB7 /* resume_change.png in Resources */,
 				3B6994161A89E9B000A53760 /* letter@2x.png in Resources */,
 				3B6993F21A89E9B000A53760 /* accept.png in Resources */,
@@ -1763,12 +1786,14 @@
 				3B69942B1A89E9B000A53760 /* percent@2x.png in Resources */,
 				3BD4DC6C1A77C50600B061D0 /* resume_img.png in Resources */,
 				3BD4DCA71A77D40900B061D0 /* checkbox1_unchecked@2x.png in Resources */,
+				3BF6253B1A8B57AA0066816D /* placeholder@2x.png in Resources */,
 				3BD4DCA21A77D40900B061D0 /* checkbox1_unchecked@3x.png in Resources */,
 				3B6994021A89E9B000A53760 /* cellBackground1.png in Resources */,
 				3B69941D1A89E9B000A53760 /* location@3x.png in Resources */,
 				3B85D8031A8A32FC0087ABEE /* MLMatchVC.xib in Resources */,
 				B77578DD1A7A9EF000660BB7 /* capture_rec_blink@2x.png in Resources */,
 				3B69941E1A89E9B000A53760 /* logout.png in Resources */,
+				3BF6253D1A8B57AA0066816D /* placeholder.png in Resources */,
 				3BD4DC7B1A77C50600B061D0 /* resume_focus.png in Resources */,
 				3B6994041A89E9B000A53760 /* cellBackground1@3x.png in Resources */,
 				3B69943E1A89E9B000A53760 /* textfieldBackground.png in Resources */,
@@ -1895,6 +1920,7 @@
 				3BD4DC3A1A77C4D800B061D0 /* MCPagerView.m in Sources */,
 				3B69944E1A89E9F900A53760 /* CustomAnnotationView.m in Sources */,
 				3B69938B1A89E98E00A53760 /* Evaluate.m in Sources */,
+				3BF625371A8B55450066816D /* AsyncImageView.m in Sources */,
 				3BA483D51A89E6F700B6A200 /* baseMessageModel.m in Sources */,
 				3B4AB4901A81CB2F0053236C /* MJRefreshBaseView.m in Sources */,
 				B77578CC1A7A94B900660BB7 /* PBJVisionUtilities.m in Sources */,

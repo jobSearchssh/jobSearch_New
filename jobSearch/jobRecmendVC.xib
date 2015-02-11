@@ -8,13 +8,16 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="jobRecmendVC">
             <connections>
                 <outlet property="containerView" destination="SSI-tt-Wya" id="rdj-t0-1f0"/>
-                <outlet property="entepriseLogoView" destination="fEf-gb-YNh" id="Ji6-YP-9Pj"/>
+                <outlet property="containerViewHeightConstraint" destination="8uc-XP-eq6" id="WaM-S5-Aag"/>
+                <outlet property="entepriseLogoView" destination="fEf-gb-YNh" id="woD-5i-xPg"/>
                 <outlet property="jobAddressLabel" destination="O0z-V3-62B" id="h0u-mt-gDu"/>
                 <outlet property="jobDescribeLabel" destination="IO1-iP-fZP" id="gZP-iD-CMZ"/>
+                <outlet property="jobDescribleLabelHeightConstraint" destination="vfB-MQ-qWu" id="hf0-bi-uQx"/>
                 <outlet property="jobDistanceLabel" destination="UQV-Tk-S9B" id="FMI-Me-Lle"/>
                 <outlet property="jobPublishTimeLabel" destination="LlI-JP-J6Z" id="iI8-LH-czv"/>
                 <outlet property="jobRecuitNumLabel" destination="R8B-u3-fEw" id="NuH-F6-XLy"/>
                 <outlet property="jobRequireLabel" destination="aOb-0J-CWJ" id="iV6-8q-kQx"/>
+                <outlet property="jobRequireLabelHeightConstraint" destination="79c-gE-pcQ" id="YWR-I2-W5z"/>
                 <outlet property="jobSalaryLabel" destination="9AC-s6-xYy" id="Dc8-FI-XYp"/>
                 <outlet property="jobTitleLabel" destination="h8b-vf-bT8" id="9Wv-Ll-WxR"/>
                 <outlet property="jobWorkPeriodLabel" destination="Mfp-8w-8xo" id="snK-3Y-6Ju"/>
@@ -282,7 +285,7 @@
                                         </mask>
                                     </variation>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pepsi.png" translatesAutoresizingMaskIntoConstraints="NO" id="fEf-gb-YNh">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="fEf-gb-YNh" customClass="AsyncImageView">
                                     <rect key="frame" x="8" y="14" width="69" height="69"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="69" id="AoV-aT-It8"/>
@@ -778,10 +781,10 @@
         </view>
     </objects>
     <resources>
-        <image name="Pepsi.png" width="220" height="220"/>
         <image name="accept.png" width="40" height="40"/>
         <image name="icon_location.png" width="15" height="15"/>
         <image name="just.png" width="30" height="30"/>
+        <image name="placeholder.png" width="60" height="60"/>
         <image name="refuse.png" width="40" height="40"/>
     </resources>
 </document>

@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "SWTableViewCell.h"
-
+#import "AsyncImageView.h"
 
 @interface MLCell1 : SWTableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *portraitView;
+@property (weak, nonatomic) IBOutlet AsyncImageView *portraitView;
 @property (weak, nonatomic) IBOutlet UILabel *jobTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jobAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jobTimeLabel;

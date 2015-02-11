@@ -33,7 +33,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pepsi.png" translatesAutoresizingMaskIntoConstraints="NO" id="Pyi-MV-gKd">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="Pyi-MV-gKd" customClass="AsyncImageView">
                         <rect key="frame" x="235" y="6" width="69" height="69"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="69" id="5uO-Jy-cTM"/>
@@ -67,13 +67,13 @@
             <connections>
                 <outlet property="jobAddressLabel" destination="qgC-Sx-Vr3" id="zP5-iW-BlM"/>
                 <outlet property="jobPriceLabel" destination="Y7Z-WC-Mlp" id="QqT-fj-M66"/>
-                <outlet property="portraitView" destination="Pyi-MV-gKd" id="IYe-bQ-Soz"/>
+                <outlet property="portraitView" destination="Pyi-MV-gKd" id="ApU-lM-Tp5"/>
                 <outlet property="titleLabel" destination="yqt-Xt-28b" id="DN6-Bf-NsY"/>
             </connections>
-            <point key="canvasLocation" x="421" y="316"/>
+            <point key="canvasLocation" x="280" y="312"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Pepsi.png" width="220" height="220"/>
+        <image name="placeholder.png" width="60" height="60"/>
     </resources>
 </document>

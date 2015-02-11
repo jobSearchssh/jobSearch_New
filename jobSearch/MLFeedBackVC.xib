@@ -110,20 +110,51 @@
                         </mask>
                     </variation>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P1Z-Zy-jcX">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <color key="backgroundColor" red="0.68235294117647061" green="0.77254901960784317" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="jmm-WD-cEq"/>
+                    </constraints>
+                    <state key="normal" title="提     交">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="jmm-WD-cEq"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="jmm-WD-cEq"/>
+                        </mask>
+                    </variation>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="HJ7-0w-FgU" secondAttribute="trailing" id="6ve-44-ghs"/>
                 <constraint firstAttribute="trailing" secondItem="K3s-MP-uG2" secondAttribute="trailing" constant="8" id="J95-7C-Lhb"/>
+                <constraint firstAttribute="trailing" secondItem="P1Z-Zy-jcX" secondAttribute="trailing" constant="40" id="OIT-0r-Gaw">
+                    <variation key="heightClass=regular-widthClass=compact" constant="20"/>
+                </constraint>
                 <constraint firstItem="HJ7-0w-FgU" firstAttribute="top" secondItem="K3s-MP-uG2" secondAttribute="bottom" constant="71" id="XxF-CN-oBt"/>
+                <constraint firstItem="P1Z-Zy-jcX" firstAttribute="top" secondItem="K3s-MP-uG2" secondAttribute="bottom" constant="326" id="ebc-wh-j2I">
+                    <variation key="heightClass=regular-widthClass=compact" constant="334"/>
+                </constraint>
                 <constraint firstItem="K3s-MP-uG2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="iIh-Bd-anL"/>
                 <constraint firstItem="K3s-MP-uG2" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="lq2-8I-VGs"/>
+                <constraint firstItem="P1Z-Zy-jcX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="40" id="nby-ZV-5H0">
+                    <variation key="heightClass=regular-widthClass=compact" constant="20"/>
+                </constraint>
                 <constraint firstItem="HJ7-0w-FgU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="tM8-MS-Me0"/>
             </constraints>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="K3s-MP-uG2"/>
                     <exclude reference="HJ7-0w-FgU"/>
+                    <exclude reference="P1Z-Zy-jcX"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="J95-7C-Lhb"/>
@@ -132,12 +163,16 @@
                     <exclude reference="6ve-44-ghs"/>
                     <exclude reference="XxF-CN-oBt"/>
                     <exclude reference="tM8-MS-Me0"/>
+                    <exclude reference="OIT-0r-Gaw"/>
+                    <exclude reference="ebc-wh-j2I"/>
+                    <exclude reference="nby-ZV-5H0"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
                     <include reference="K3s-MP-uG2"/>
                     <include reference="HJ7-0w-FgU"/>
+                    <include reference="P1Z-Zy-jcX"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="J95-7C-Lhb"/>
@@ -146,9 +181,12 @@
                     <include reference="6ve-44-ghs"/>
                     <include reference="XxF-CN-oBt"/>
                     <include reference="tM8-MS-Me0"/>
+                    <include reference="OIT-0r-Gaw"/>
+                    <include reference="ebc-wh-j2I"/>
+                    <include reference="nby-ZV-5H0"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="304" y="438"/>
+            <point key="canvasLocation" x="305" y="420"/>
         </view>
     </objects>
 </document>
