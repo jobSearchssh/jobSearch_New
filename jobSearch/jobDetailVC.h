@@ -10,7 +10,13 @@
 #import "jobModel.h"
 
 @interface jobDetailVC : UIViewController
-@property (strong, nonatomic) NSString *buttonTitle;
+
 @property (weak, nonatomic) IBOutlet UIButton *applyButton;
+
 @property (strong, nonatomic)jobModel*jobModel;
+
+@property (strong, nonatomic)NSString *origin;
+
+@property (strong, nonatomic)NSString *contactPhoneNumber;
+
 @end

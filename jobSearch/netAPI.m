@@ -285,15 +285,15 @@
 }
 
 //申请的兼职信息
-+(void)getApplyJobs:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobListReturnBlock)applyJobListBlock{
++(void)getApplyJobs:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobAppliedListReturnBlock)applyJobListBlock{
     NSString *str = [[NSString alloc]initWithFormat:@"_id=%@&start=%d&length=%d",usrID,start,length];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:APPLYJOBLIST_FUNCTION block:^(URLReturnModel *returnModel) {
         if (returnModel != Nil && [returnModel getFlag]) {
-            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
+            jobAppliedListModel *a = [[jobAppliedListModel alloc]initWithData:[returnModel getData]];
             applyJobListBlock(a);
         }else{
-            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobAppliedListModel *a = [[jobAppliedListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
             applyJobListBlock(a);
         }
     }];

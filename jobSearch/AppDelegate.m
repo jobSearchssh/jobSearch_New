@@ -13,7 +13,9 @@
 #import "MLLoginBusiness.h"
 #import "SMS_SDK/SMS_SDK.h"
 #import <BmobSDK/Bmob.h>
-
+#import <ShareSDK/ShareSDK.h>
+#import "WXApi.h"
+#import "WeiboSDK.h"
 
 @interface AppDelegate ()
 
@@ -52,6 +54,18 @@
     //短信验证模块
     [SMS_SDK registerApp:@"57cd980818a9" withSecret:@"3bf26f5a30d5c3317f17887c4ee4986d"];
 
+    //shareSDK 社会化分享
+    [ShareSDK registerApp:@"api20"];
+    
+    //新浪微博分享
+    [ShareSDK connectSinaWeiboWithAppKey:@"2652267694"
+                               appSecret:@"a85484d25a129269b314f75070ab9238"
+                             redirectUri:@"http://www.baidu.com"];
+    //微信分享
+//    [ShareSDK connectWeChatWithAppId:@"wx4868b35061f87885"
+//                           appSecret:@"64020361b8ec4c99936c0e3999a9f249"
+//                           wechatCls:[WXApi class]];
+    
     
     //网络连接监测
     self.isReachable=YES;
@@ -59,10 +73,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     self.internetReachability = [Reachability reachabilityWithHostName:@"www.bmob.cn"] ;
     //开始监听，会启动一个run loop
-    [self.internetReachability startNotifier];
-    
-    
-    
+    [self.internetReachability startNotifier];  
     
     return YES;
 }

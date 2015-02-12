@@ -64,6 +64,7 @@
     }
     return self;
 }
+
 //-(NSDate *)getjobBirthdayMonthYear{
 //    return jobBirthdayMonthYear;
 //}

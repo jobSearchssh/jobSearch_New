@@ -48,7 +48,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="hq5-HG-YjK" secondAttribute="trailing" id="0zu-XN-f1d"/>
                 <constraint firstAttribute="trailing" secondItem="4Zw-aG-ERW" secondAttribute="trailing" id="1tN-nS-kJq"/>
@@ -88,7 +88,7 @@
                     <include reference="i5a-ju-B0P"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-315" y="226"/>
+            <point key="canvasLocation" x="-371" y="230"/>
         </view>
     </objects>
     <resources>

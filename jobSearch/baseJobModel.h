@@ -43,6 +43,9 @@
 #define jobModel_jobHasAccepted @"jobHasAccepted"
 #define jobModel_jobHasRejected @"jobHasRejected"
 #define jobModel_jobGenderReq @"jobGenderReq"
+#define jobModel_jobApplyStatus @"applyStatus"
+#define jobModel_jobApplyId @"apply_id"
+
 
 @interface baseJobModel : NSObject
 

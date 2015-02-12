@@ -21,7 +21,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="tve-Uj-2c8" secondAttribute="bottom" id="3DA-wb-Sql"/>
                 <constraint firstItem="tve-Uj-2c8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3LJ-fp-F3G"/>

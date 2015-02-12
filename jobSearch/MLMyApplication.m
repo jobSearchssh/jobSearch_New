@@ -77,7 +77,7 @@ static  MLMyApplication *thisVC=nil;
         [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
         firstLoad=NO;
     }
-    [netAPI getApplyJobs:userId start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+    [netAPI getApplyJobs:userId start:1 length:BASE_SPAN withBlock:^(jobAppliedListModel *jobListModel) {
         [self headHandler:jobListModel];
     }];
 }
@@ -85,12 +85,12 @@ static  MLMyApplication *thisVC=nil;
 - (void)footRefreshData{
     footerRefreshing=YES;
     
-    [netAPI getApplyJobs:userId start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
+    [netAPI getApplyJobs:userId start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobAppliedListModel *jobListModel) {
         [self footHandler:jobListModel];
     }];
 }
 
-- (void)headHandler:(jobListModel *)jobListModel{
+- (void)headHandler:(jobAppliedListModel *)jobListModel{
     [self refreshData:jobListModel];
     [MBProgressHUD hideHUDForView:_tableView animated:YES];
     skipTimes=1;
@@ -101,7 +101,7 @@ static  MLMyApplication *thisVC=nil;
     [self.tableView headerEndRefreshing];
 }
 
-- (void)footHandler:(jobListModel *)jobListModel{
+- (void)footHandler:(jobAppliedListModel *)jobListModel{
     [self refreshData:jobListModel];
     
     footerRefreshing=NO;
@@ -110,7 +110,7 @@ static  MLMyApplication *thisVC=nil;
 }
 
 
-- (void)refreshData:(jobListModel *)jobListModel{
+- (void)refreshData:(jobAppliedListModel *)jobListModel{
     
     if (footerRefreshing) {
         if (![jobListModel.getStatus intValue]==0) {
@@ -120,14 +120,14 @@ static  MLMyApplication *thisVC=nil;
             
         }else{
             
-            for (id object in jobListModel.getJobArray) {
+            for (id object in jobListModel.getjobAppliedArray) {
                 [recordArray addObject:object];
             }
             
             NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
             
             NSInteger n=[recordArray count];
-            NSInteger m=[jobListModel.getJobArray count];
+            NSInteger m=[jobListModel.getjobAppliedArray count];
             
             for (NSInteger k=n-m; k<[recordArray count];k++) {
                 NSIndexPath *newPath = [NSIndexPath indexPathForRow:k inSection:0];
@@ -148,7 +148,7 @@ static  MLMyApplication *thisVC=nil;
             
             [recordArray removeAllObjects];
             
-            for (id object in jobListModel.getJobArray) {
+            for (id object in jobListModel.getjobAppliedArray) {
                 [recordArray addObject:object];
             }
             
@@ -188,14 +188,24 @@ static  MLMyApplication *thisVC=nil;
 //    [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
 //    cell.delegate = self;
     
-    jobModel *jobObject=[recordArray objectAtIndex:[indexPath row]];
+    jobAppliedModel *jobObject=[recordArray objectAtIndex:[indexPath row]];
     
     cell.jobTitleLabel.text=jobObject.getjobTitle;
     cell.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@",jobObject.getjobWorkPlaceCity,jobObject.getjobWorkPlaceDistrict];
     cell.jobTimeLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:jobObject.getjobBeginTime],[dateFormatter stringFromDate:jobObject.getjobEndTime]];
     cell.jobDistance.text=[NSString stringWithFormat:@"%.1fKM",[jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint]];
     
-    cell.jobNumberRemainLabel.text=[NSString stringWithFormat:@"未处理"];
+    NSString *status;
+    if ([jobObject.getjobApplyStatus intValue]==0) {
+        status=@"未处理";
+    }else if ([jobObject.getjobApplyStatus intValue]==1){
+        status=@"已拒绝";
+    }else if ([jobObject.getjobApplyStatus intValue]==2){
+        status=@"已接受";
+    }
+    if (status) {
+        cell.jobNumberRemainLabel.text=status;
+    }
     
     NSString *settlement;
     NSString *str=[NSString stringWithFormat:@"%@",jobObject.getjobSettlementWay];
@@ -228,6 +238,7 @@ static  MLMyApplication *thisVC=nil;
         cell.portraitView.image=[UIImage imageNamed:@"placeholder"];
     }
 
+    
     
     
     return cell;
@@ -263,11 +274,20 @@ static  MLMyApplication *thisVC=nil;
 {
     jobDetailVC *detailVC=[[jobDetailVC alloc]init];
     
+    jobAppliedModel *appliedModel=[recordArray objectAtIndex:[indexPath row]];
+    
     if ([recordArray objectAtIndex:[indexPath row]]) {
-        detailVC.jobModel=[recordArray objectAtIndex:[indexPath row]];
+        detailVC.jobModel=(jobModel*)appliedModel;
     }
     
-    detailVC.buttonTitle=@"再次申请";
+    if ([appliedModel.getjobApplyStatus intValue]==2) {
+        detailVC.origin=@"2";
+        if (appliedModel.getjobPhone) {
+            detailVC.contactPhoneNumber=appliedModel.getjobPhone;
+        }
+    }else{
+        detailVC.origin=@"1";
+    }
     
     detailVC.hidesBottomBarWhenPushed=YES;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];

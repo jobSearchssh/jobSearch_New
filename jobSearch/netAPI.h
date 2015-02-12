@@ -19,6 +19,7 @@
 #import "userModel.h"
 #import "messageListModel.h"
 #import "jobApplyModel.h"
+#import "jobAppliedListModel.h"
 
 @interface netAPI : NSObject
 
@@ -31,6 +32,8 @@ typedef void (^oprationReturnBlock)(oprationResultModel *oprationResultModel);
 typedef void (^userReturnBlock)(userReturnModel *userReturnModel);
 typedef void (^userBlock)(userModel *userModel);
 typedef void (^messageListReturnBlock)(messageListModel *messageListModel);
+typedef void (^jobAppliedListReturnBlock)(jobAppliedListModel *jobAppliedListModel);
+
 
 #define STATIS_OK 0
 #define STATIS_NO 1
@@ -88,7 +91,7 @@ typedef void (^messageListReturnBlock)(messageListModel *messageListModel);
 
 //申请的兼职信息
 //用户id，回调block
-+(void)getApplyJobs:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobListReturnBlock)applyJobListBlock;
++(void)getApplyJobs:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobAppliedListReturnBlock)applyJobListBlock;
 
 //保存该job到用户save列表
 //用户id，jobid，回调block

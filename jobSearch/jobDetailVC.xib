@@ -22,6 +22,7 @@
                 <outlet property="jobSalaryLabel" destination="P0L-1c-nfJ" id="wkn-Ca-wKh"/>
                 <outlet property="jobTitleLabel" destination="Uqi-ed-1iC" id="hWa-el-Fx4"/>
                 <outlet property="jobWorkPeriodLabel" destination="3Xd-xK-Yzt" id="oVe-gD-wx5"/>
+                <outlet property="scrollViewBottomConstraint" destination="XbO-dC-tQW" id="YvD-ww-5FI"/>
                 <outlet property="selectfreeCollectionOutlet" destination="cv7-Zc-tNU" id="DUf-il-Bw5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="view1" destination="q8O-D6-XRh" id="4Gh-FA-Hmj"/>
@@ -39,7 +40,7 @@
                         <constraint firstAttribute="height" constant="50" id="0mj-bi-aSW"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                    <state key="normal" title="申        请">
+                    <state key="normal" title="一键申请">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -612,7 +613,7 @@
                     <include reference="Ogx-EB-9LS"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="210" y="317"/>
+            <point key="canvasLocation" x="57" y="278"/>
         </view>
         <view contentMode="scaleToFill" id="q8O-D6-XRh">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>

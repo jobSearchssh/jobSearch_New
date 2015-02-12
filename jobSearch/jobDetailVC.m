@@ -13,13 +13,13 @@
 #import "freeselectViewCell.h"
 #import "netAPI.h"
 #import "AsyncImageView.h"
-
+#import <ShareSDK/ShareSDK.h>
 
 static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
-@interface jobDetailVC ()<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface jobDetailVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate>
 {
     NSMutableArray  *addedPicArray;
     NSArray  *selectfreetimepicArray;
@@ -30,6 +30,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     MLMapView *mapView;
     
 }
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewBottomConstraint;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *jobDescribleLabelHeightConstraint;
@@ -49,6 +50,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UILabel *jobDescribeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jobRequireLabel;
 
+@property (strong, nonatomic) NSString *buttonTitle;
+
 @end
 
 @implementation jobDetailVC
@@ -56,6 +59,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if ([self.origin isEqualToString:@"1"]) {
+        self.applyButton.hidden=YES;
+        self.scrollViewBottomConstraint.constant=-44;
+    }else if ([self.origin isEqualToString:@"2"]){
+        self.buttonTitle=@"联系企业";
+        [self.applyButton setTitle:self.buttonTitle forState:UIControlStateNormal];
+    }
     
     UIBarButtonItem *buttonItem1=[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"export"] style:UIBarButtonItemStylePlain target:self action:@selector(shareJob)];
     buttonItem1.tintColor=[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0];
@@ -66,12 +77,42 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 200)];
     [self.containerView addSubview:mapView];
     
-    [self.applyButton setTitle:self.buttonTitle forState:UIControlStateNormal];
+    
     [self initData];
     [self timeCollectionViewInit];
+    
 }
 
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==0) {
+        //打电话
+        NSString * str=[[NSString alloc] initWithFormat:@"tel:%@",self.contactPhoneNumber];
+        UIWebView * callWebview = [[UIWebView alloc] init];
+        [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+        [self.view addSubview:callWebview];
+        
+    }else if (buttonIndex==1){
+        //发短信
+        NSString *str=[[NSString alloc]initWithFormat:@"sms://%@",self.contactPhoneNumber];
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:str]];
+    }
+}
+
+
 - (IBAction)applyTheJob:(id)sender {
+    
+    if ([self.origin isEqualToString:@"2"]) {
+ 
+        if (self.contactPhoneNumber) {
+            UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"打电话给企业",@"发短信给企业", nil];
+            [actionSheet showInView:self.view];
+            
+        }else{
+            UIAlertView *makeCallAlert=[[UIAlertView alloc]initWithTitle:@"该企业暂未提供联系方式" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [makeCallAlert show];
+        }
+        
+    }else{
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [netAPI applyTheJob:userId jobID:self.jobModel.getjobID withBlock:^(jobApplyModel *oprationResultModel) {
@@ -87,6 +128,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             [alert show];
         }
     }];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -253,7 +295,37 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 - (void)shareJob{
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK" ofType:@"png"];
     
+    //构造分享内容
+    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
+                                       defaultContent:@"测试一下"
+                                                image:[ShareSDK imageWithPath:imagePath]
+                                                title:@"ShareSDK"
+                                                  url:@"http://www.mob.com"
+                                          description:@"这是一条测试信息"
+                                            mediaType:SSPublishContentMediaTypeNews];
+    //创建弹出菜单容器
+    id<ISSContainer> container = [ShareSDK container];
+    
+    //弹出分享菜单
+    [ShareSDK showShareActionSheet:container
+                         shareList:nil
+                           content:publishContent
+                     statusBarTips:YES
+                       authOptions:nil
+                      shareOptions:nil
+                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                
+                                if (state == SSResponseStateSuccess)
+                                {
+                                    NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
+                                }
+                                else if (state == SSResponseStateFail)
+                                {
+                                    NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
+                                }
+                            }];
 }
 
 - (void)saveJob{

@@ -484,7 +484,7 @@ static  MLFirstVC *thisVC=nil;
         detailVC.jobModel=[recordArray objectAtIndex:tag];
     }
     
-    detailVC.buttonTitle=@"一键申请";
+    detailVC.origin=@"0";
     detailVC.hidesBottomBarWhenPushed=YES;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"";
@@ -709,7 +709,7 @@ static  MLFirstVC *thisVC=nil;
         detailVC.jobModel=[recordArray objectAtIndex:[indexPath row]];
     }
     
-    detailVC.buttonTitle=@"一键申请";
+    detailVC.origin=@"0";
     detailVC.hidesBottomBarWhenPushed=YES;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"";
