@@ -38,6 +38,8 @@
     
     BOOL searchViewDisplaying;
     
+    BOOL refreshAdded;
+    
     AMapSearchAPI *search;
     
     //页数
@@ -73,6 +75,7 @@ static  MLFirstVC *thisVC=nil;
     [super viewDidLoad];
     
     //初始化参数
+    refreshAdded=NO;
     distance=20;
     jobTypeArray=[[NSMutableArray alloc]init];
     searchType=@"nearest";
@@ -309,6 +312,13 @@ static  MLFirstVC *thisVC=nil;
 }
 
 - (void)headHandler:(jobListModel *)jobListModel{
+    
+    if (!refreshAdded) {
+        refreshAdded=YES;
+        [_tableView addHeaderWithTarget:self action:@selector(headRefreshData)];
+        [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
+    }
+    
     [self refreshData:jobListModel];
     
     skipTimes=1;
@@ -602,8 +612,6 @@ static  MLFirstVC *thisVC=nil;
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     _tableView.scrollEnabled=YES;
-    [_tableView addHeaderWithTarget:self action:@selector(headRefreshData)];
-    [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
     _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
     
 }

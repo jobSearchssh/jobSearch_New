@@ -114,20 +114,21 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
     }else{
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [netAPI applyTheJob:userId jobID:self.jobModel.getjobID withBlock:^(jobApplyModel *oprationResultModel) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if (![oprationResultModel.getStatus intValue]==0) {
-            NSString *err=oprationResultModel.getInfo;
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [netAPI applyTheJob:userId jobID:self.jobModel.getjobID withBlock:^(jobApplyModel *oprationResultModel) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            if (![oprationResultModel.getStatus intValue]==0) {
+                NSString *err=oprationResultModel.getInfo;
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络请求失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
-        }
-        else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"申请成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
-        }
-    }];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:err message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+            }
+            else
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"申请成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+            }
+        }];
     }
 }
 
@@ -295,15 +296,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 - (void)shareJob{
-    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK" ofType:@"png"];
     
     //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
-                                       defaultContent:@"测试一下"
-                                                image:[ShareSDK imageWithPath:imagePath]
-                                                title:@"ShareSDK"
-                                                  url:@"http://www.mob.com"
-                                          description:@"这是一条测试信息"
+    id<ISSContent> publishContent = [ShareSDK content:@"http://www.baidu.com"
+                                       defaultContent:nil
+                                                image:[ShareSDK jpegImageWithImage:[self imageFromView:self.containerView] quality:1.0f]
+                                                title:@"兼职精灵"
+                                                  url:@"http://www.baidu.com"
+                                          description:@"兼职精灵，您的兼职助手"
                                             mediaType:SSPublishContentMediaTypeNews];
     //创建弹出菜单容器
     id<ISSContainer> container = [ShareSDK container];
@@ -326,6 +326,38 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                     NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
                                 }
                             }];
+}
+
+- (UIImage *)imageFromView: (UIView *) theView
+{
+    UIGraphicsBeginImageContext(theView.frame.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [theView.layer renderInContext:context];
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    //UIGraphicsEndImageContext();
+    
+    CGRect myImageRect = CGRectMake(0.0, 200.0, theView.frame.size.width, theView.frame.size.height-200);
+
+    CGImageRef imageRef = theImage.CGImage;
+    
+    CGImageRef subImageRef = CGImageCreateWithImageInRect(imageRef, myImageRect);
+    
+    CGSize size;
+    
+    size.width = theView.frame.size.width;
+    
+    size.height = theView.frame.size.height-200;
+    
+    UIGraphicsBeginImageContext(size);
+    
+    CGContextDrawImage(context, myImageRect, subImageRef);
+    
+    UIImage* smallImage = [UIImage imageWithCGImage:subImageRef];
+    
+    UIGraphicsEndImageContext();
+    
+    return smallImage;
+
 }
 
 - (void)saveJob{

@@ -27,7 +27,7 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     BOOL footerRefreshing;
     //页数
     int skipTimes;
-    
+    BOOL refreshAdded;
     NSInteger nowCellNum;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -38,7 +38,7 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    refreshAdded=NO;
     cellNum=0;
     sectionNum=0;
     skipTimes=0;
@@ -57,6 +57,12 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 }
 
 - (void)headRefreshData{
+    if (!refreshAdded) {
+        refreshAdded=YES;
+        [_tableView addHeaderWithTarget:self action:@selector(headRefreshData)];
+        [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
+    }
+
     
     headerRefreshing=YES;
     skipTimes=0;
@@ -161,8 +167,6 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     _tableView.scrollEnabled=YES;
-    [_tableView addHeaderWithTarget:self action:@selector(headRefreshData)];
-    [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
     _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
     
     [self headRefreshData];}
