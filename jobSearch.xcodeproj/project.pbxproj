@@ -331,6 +331,9 @@
 		B77578DE1A7A9EF000660BB7 /* capture_rec_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B77578DB1A7A9EF000660BB7 /* capture_rec_off@2x.png */; };
 		B7E9F8D31A8A466A004BC570 /* jobApplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E9F8D21A8A466A004BC570 /* jobApplyModel.m */; };
 		B7E9F8D61A8A4836004BC570 /* fixedScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E9F8D51A8A4836004BC570 /* fixedScrollView.m */; };
+		B7EF76E11A8CFFA100B230F9 /* MDRadialProgressLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EF76DC1A8CFFA100B230F9 /* MDRadialProgressLabel.m */; };
+		B7EF76E21A8CFFA100B230F9 /* MDRadialProgressTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EF76DE1A8CFFA100B230F9 /* MDRadialProgressTheme.m */; };
+		B7EF76E31A8CFFA100B230F9 /* MDRadialProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EF76E01A8CFFA100B230F9 /* MDRadialProgressView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -777,6 +780,12 @@
 		B7E9F8D21A8A466A004BC570 /* jobApplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jobApplyModel.m; sourceTree = "<group>"; };
 		B7E9F8D41A8A4836004BC570 /* fixedScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fixedScrollView.h; sourceTree = "<group>"; };
 		B7E9F8D51A8A4836004BC570 /* fixedScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fixedScrollView.m; sourceTree = "<group>"; };
+		B7EF76DB1A8CFFA100B230F9 /* MDRadialProgressLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRadialProgressLabel.h; sourceTree = "<group>"; };
+		B7EF76DC1A8CFFA100B230F9 /* MDRadialProgressLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRadialProgressLabel.m; sourceTree = "<group>"; };
+		B7EF76DD1A8CFFA100B230F9 /* MDRadialProgressTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRadialProgressTheme.h; sourceTree = "<group>"; };
+		B7EF76DE1A8CFFA100B230F9 /* MDRadialProgressTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRadialProgressTheme.m; sourceTree = "<group>"; };
+		B7EF76DF1A8CFFA100B230F9 /* MDRadialProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRadialProgressView.h; sourceTree = "<group>"; };
+		B7EF76E01A8CFFA100B230F9 /* MDRadialProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRadialProgressView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1679,6 +1688,7 @@
 		B7D32BAF1A78E13E00871277 /* widget */ = {
 			isa = PBXGroup;
 			children = (
+				B7EF76DA1A8CFF9000B230F9 /* progress */,
 				3BD13E901A80A5D4005BCCA8 /* MBProgressHUD+Add.h */,
 				3BD13E911A80A5D4005BCCA8 /* MBProgressHUD.m */,
 				3BD13E921A80A5D4005BCCA8 /* MBProgressHUD+Add.m */,
@@ -1701,6 +1711,19 @@
 				3BC8AE2E1A738D4B00417741 /* Reachability */,
 			);
 			name = network;
+			sourceTree = "<group>";
+		};
+		B7EF76DA1A8CFF9000B230F9 /* progress */ = {
+			isa = PBXGroup;
+			children = (
+				B7EF76DB1A8CFFA100B230F9 /* MDRadialProgressLabel.h */,
+				B7EF76DC1A8CFFA100B230F9 /* MDRadialProgressLabel.m */,
+				B7EF76DD1A8CFFA100B230F9 /* MDRadialProgressTheme.h */,
+				B7EF76DE1A8CFFA100B230F9 /* MDRadialProgressTheme.m */,
+				B7EF76DF1A8CFFA100B230F9 /* MDRadialProgressView.h */,
+				B7EF76E01A8CFFA100B230F9 /* MDRadialProgressView.m */,
+			);
+			name = progress;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1995,8 +2018,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7EF76E31A8CFFA100B230F9 /* MDRadialProgressView.m in Sources */,
 				3BA484511A89E83B00B6A200 /* MLCell1.m in Sources */,
 				3BA484551A89E83B00B6A200 /* MLCell4.m in Sources */,
+				B7EF76E11A8CFFA100B230F9 /* MDRadialProgressLabel.m in Sources */,
 				3BA483D41A89E6F700B6A200 /* baseJobModel.m in Sources */,
 				3BC8AE211A73769500417741 /* QCheckBox.m in Sources */,
 				3BA483EC1A89E72400B6A200 /* netAPI.m in Sources */,
@@ -2082,6 +2107,7 @@
 				3BA484021A89E77A00B6A200 /* DateUtil.m in Sources */,
 				3B6524101A6CBDDD005FD671 /* SWTableViewCell.m in Sources */,
 				3BA483D21A89E6F700B6A200 /* geoModel.m in Sources */,
+				B7EF76E21A8CFFA100B230F9 /* MDRadialProgressTheme.m in Sources */,
 				3BA483E01A89E70800B6A200 /* jobListModel.m in Sources */,
 				3BA484221A89E7BE00B6A200 /* MLProfileVC.m in Sources */,
 				3B4AB4961A81CB2F0053236C /* UIView+Extension.m in Sources */,

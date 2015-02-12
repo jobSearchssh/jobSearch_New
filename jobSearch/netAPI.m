@@ -113,31 +113,31 @@
 //        NSLog(@"saveTheJob id= %@",[oprationResultModel getOprationID]);
 //    }];
     
-//    //修改创建简历 ok
-//    userModel *usermodel = [[userModel alloc]init];
-//    [usermodel setjob_user_id:@"54d76bd496d9aece6f8b4569"];
-//    [usermodel setuserName:@"田原"];
-//    [usermodel setuserBirthday:[NSDate date]];
-//    [usermodel setuserProvince:@"重庆"];
-//    [usermodel setuserCity:@"重庆"];
-//    [usermodel setuserDistrict:@"沙坪坝"];
-//    [usermodel setuserAddressDetail:@"三峡广场"];
-//    [usermodel setuserSchool:@"北邮"];
-//    [usermodel setuserDegree:[NSNumber numberWithInt:5]];
-//    [usermodel setuserHopeJobType:[NSArray arrayWithObjects:[NSNumber numberWithInt:1], nil]];
-//    [usermodel setuserFreeTime:[NSArray arrayWithObjects:[NSNumber numberWithInt:4],[NSNumber numberWithInt:5],[NSNumber numberWithInt:6], nil]];
-//    [usermodel setuserHopeSettlement:[NSArray arrayWithObjects:[NSNumber numberWithInt:7],[NSNumber numberWithInt:8],[NSNumber numberWithInt:9], nil]];
-//    [usermodel setuserIntroduction:@"哈哈哈"];
-//    [usermodel setuserExperience:@"hehehe"];
-//    [usermodel setuserPhone:@"18610782215"];
-//    [usermodel setuserEmail:@"12@123.com"];
-//    [usermodel setuserVideoURL:@"www.www.ww"];
-//    [usermodel setImageFileURL:@"www.aaa.aa"];
-//    [usermodel setuserLocationGeo:[[geoModel alloc]initWith:111.11 lat:22.22]];
-//    NSLog(@"%@",[usermodel getBaseString]);
-//    [netAPI editUserDetail:usermodel withBlock:^(userReturnModel *userReturnModel) {
-//        NSLog(@"editUserDetail info = %@",[userReturnModel getInfo]);
-//    }];
+    //修改创建简历 ok
+    userModel *usermodel = [[userModel alloc]init];
+    [usermodel setjob_user_id:@"54d76bd496d9aece6f8b4569"];
+    [usermodel setuserName:@"田原"];
+    [usermodel setuserBirthday:[NSDate date]];
+    [usermodel setuserProvince:@"重庆"];
+    [usermodel setuserCity:@"重庆"];
+    [usermodel setuserDistrict:@"沙坪坝"];
+    [usermodel setuserAddressDetail:@"三峡广场"];
+    [usermodel setuserSchool:@"北邮"];
+    [usermodel setuserDegree:[NSNumber numberWithInt:5]];
+    [usermodel setuserHopeJobType:[NSArray arrayWithObjects:[NSNumber numberWithInt:1], nil]];
+    [usermodel setuserFreeTime:[NSArray arrayWithObjects:[NSNumber numberWithInt:4],[NSNumber numberWithInt:5],[NSNumber numberWithInt:6], nil]];
+    [usermodel setuserHopeSettlement:[NSArray arrayWithObjects:[NSNumber numberWithInt:7],[NSNumber numberWithInt:8],[NSNumber numberWithInt:9], nil]];
+    [usermodel setuserIntroduction:@"哈哈哈"];
+    [usermodel setuserExperience:@"hehehe"];
+    [usermodel setuserPhone:@"18610782215"];
+    [usermodel setuserEmail:@"12@123.com"];
+    [usermodel setuserVideoURL:@"www.www.ww"];
+    [usermodel setImageFileURL:@"www.aaa.aa"];
+    [usermodel setuserLocationGeo:[[geoModel alloc]initWith:111.11 lat:22.22]];
+    NSLog(@"%@",[usermodel getBaseString]);
+    [netAPI editUserDetail:usermodel withBlock:^(userReturnModel *userReturnModel) {
+        NSLog(@"editUserDetail info = %@",[userReturnModel getInfo]);
+    }];
     
 //    //获取简历 ok
 //    [netAPI getUserDetail:@"54d76bd496d9aece6f8b4569" withBlock:^(userModel *userModel) {
@@ -165,15 +165,15 @@
 //        NSLog(@"refusedInvite id= %@",[oprationResultModel getOprationID]);
 //    }];
     
-    //消息
-    [netAPI getMessageList:@"54d76bd496d9aece6f8b4568" start:1 length:2 withBlock:^(messageListModel *messageListModel) {
-        NSLog(@"getMessageList info = %@",[messageListModel getInfo]);
-        NSMutableArray *a = [messageListModel getMessageArray];
-        for (messageModel *job in a) {
-            NSLog(@"getMessageList title = %@",[job getjobTitle]);
-            NSLog(@"getMessageList invite_id = %@",[job getinvite_id]);
-        }
-    }];
+//    //消息
+//    [netAPI getMessageList:@"54d76bd496d9aece6f8b4568" start:1 length:2 withBlock:^(messageListModel *messageListModel) {
+//        NSLog(@"getMessageList info = %@",[messageListModel getInfo]);
+//        NSMutableArray *a = [messageListModel getMessageArray];
+//        for (messageModel *job in a) {
+//            NSLog(@"getMessageList title = %@",[job getjobTitle]);
+//            NSLog(@"getMessageList invite_id = %@",[job getinvite_id]);
+//        }
+//    }];
 }
 
 //用户登录

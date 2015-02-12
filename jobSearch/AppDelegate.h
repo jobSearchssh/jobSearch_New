@@ -14,6 +14,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 + (NSInteger)OSVersion;
+-(int)getCurrentConnectType;
 
 @end
 

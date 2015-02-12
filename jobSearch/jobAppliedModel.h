@@ -9,8 +9,7 @@
 #import "baseJobModel.h"
 #import "DateUtil.h"
 
-@interface jobAppliedModel : baseJobModel
-{
+@interface jobAppliedModel : baseJobModel{
     NSString *jobId;
     //    NSDate *jobBirthdayMonthYear;
     NSDate *jobBeginTime;

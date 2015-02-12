@@ -89,7 +89,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [cfView setDuration:0.3];
     [self.coverflowOutlet addSubview:cfView];
     
-    
     //第二项
     //    [self.usrinfo1Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,110)];
     //    [self.mainScrollviewOutlet addSubview:self.usrinfo1Outlet];
