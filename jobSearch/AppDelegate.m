@@ -17,7 +17,9 @@
 #import "WXApi.h"
 #import "WeiboSDK.h"
 
-@interface AppDelegate ()
+@interface AppDelegate (){
+    int currentConnectType;
+}
 
 @property (strong, nonatomic) Reachability *internetReachability;
 @property (nonatomic) BOOL isReachable;
@@ -90,6 +92,7 @@
     
     if(status == NotReachable)
     {
+        currentConnectType = NotReachable;
         if (self.isReachable) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接异常" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
@@ -97,14 +100,26 @@
         }
         return;
     }
-    if (status==ReachableViaWiFi||status==ReachableViaWWAN) {
-        
+    if (status==ReachableViaWiFi) {
+        currentConnectType = ReachableViaWiFi;
         if (!self.isReachable) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接信息" message:@"网络连接恢复" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
             self.isReachable = YES;
         }
     }
+    if (status==ReachableViaWWAN) {
+        currentConnectType = ReachableViaWWAN;
+        if (!self.isReachable) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接信息" message:@"网络连接恢复" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+            self.isReachable = YES;
+        }
+    }
+}
+
+-(int)getCurrentConnectType{
+    return currentConnectType;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

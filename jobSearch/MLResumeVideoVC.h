@@ -10,7 +10,12 @@
 #import "PBJVision.h"
 #import "PBJStrobeView.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
+#import <BmobSDK/Bmob.h>
+#import "AppDelegate.h"
+#import "Reachability.h"
 
 @interface MLResumeVideoVC : UIViewController<UIGestureRecognizerDelegate,PBJVisionDelegate,UIAlertViewDelegate>
-
+-(void)puloadVedio;
 @end
