@@ -57,12 +57,6 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 }
 
 - (void)headRefreshData{
-    if (!refreshAdded) {
-        refreshAdded=YES;
-        [_tableView addHeaderWithTarget:self action:@selector(headRefreshData)];
-        [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
-    }
-
     
     headerRefreshing=YES;
     skipTimes=0;
@@ -86,6 +80,14 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 }
 
 - (void)headHandler:(messageListModel *)jobListModel{
+    
+    if (!refreshAdded) {
+        refreshAdded=YES;
+        [_tableView addHeaderWithTarget:self action:@selector(headRefreshData)];
+        [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
+    }
+
+    
     [self refreshData:jobListModel];
     [MBProgressHUD hideHUDForView:_tableView animated:YES];
     skipTimes=1;
