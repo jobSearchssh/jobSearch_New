@@ -10,6 +10,7 @@
 #import "MLCell1.h"
 #import "jobDetailVC.h"
 #import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
 #import "MJRefresh.h"
 
 static NSString *userId = @"54d76bd496d9aece6f8b4568";
@@ -24,11 +25,12 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     BOOL headerRefreshing;
     BOOL footerRefreshing;
     BOOL refreshAdded;
+    
     //页数
     int skipTimes;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (nonatomic)BOOL inBackground;;
 
 @end
 
@@ -37,8 +39,10 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 static  MLMyApplication *thisVC=nil;
 
 + (MLMyApplication*)sharedInstance{
+    thisVC.inBackground=YES;
     if (thisVC==nil) {
         thisVC=[[MLMyApplication alloc]init];
+        thisVC.inBackground=NO;
     }
     return thisVC;
 }
@@ -56,6 +60,7 @@ static  MLMyApplication *thisVC=nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     refreshAdded=NO;
     cellNum=0;
     sectionNum=0;
@@ -63,10 +68,15 @@ static  MLMyApplication *thisVC=nil;
     firstLoad=YES;
     headerRefreshing=NO;
     footerRefreshing=NO;
+    self.inBackground=NO;
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM月dd日"];
 
     [self tableViewInit];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    //[self refreshInBackground];
 }
 
 - (void)headRefreshData{
@@ -122,8 +132,7 @@ static  MLMyApplication *thisVC=nil;
     if (footerRefreshing) {
         if (![jobListModel.getStatus intValue]==0) {
             NSString *err=jobListModel.getInfo;
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+            [MBProgressHUD showError:err toView:self.view];
             
         }else{
             
@@ -148,11 +157,15 @@ static  MLMyApplication *thisVC=nil;
     else{
         
         if (![jobListModel.getStatus intValue]==0) {
-            NSString *err=jobListModel.getInfo;
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+            if (self.inBackground) {
+                self.inBackground=NO;
+            }else{
+                NSString *err=jobListModel.getInfo;
+                [MBProgressHUD showError:err toView:self.view];
+            }
         }else{
-            
+            self.inBackground=NO;
+
             [recordArray removeAllObjects];
             
             for (id object in jobListModel.getjobAppliedArray) {
@@ -165,8 +178,19 @@ static  MLMyApplication *thisVC=nil;
     }
 }
 
+- (void)refreshInBackground{
+    if (self.inBackground) {
+        headerRefreshing=YES;
+        skipTimes=0;
+        [netAPI getApplyJobs:userId start:1 length:BASE_SPAN withBlock:^(jobAppliedListModel *jobListModel) {
+            [self headHandler:jobListModel];
+        }];
+    }
+}
+
 //*********************tableView********************//
 - (void)tableViewInit{
+    
     recordArray=[[NSMutableArray alloc]init];
     
     [_tableView setDelegate:self];
@@ -190,8 +214,6 @@ static  MLMyApplication *thisVC=nil;
     }
     
     MLCell1 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
-//    [cell setRightUtilityButtons:[self rightButtons] WithButtonWidth:58.0f];
-//    cell.delegate = self;
     
     jobAppliedModel *jobObject=[recordArray objectAtIndex:[indexPath row]];
     
@@ -242,9 +264,6 @@ static  MLMyApplication *thisVC=nil;
     }else{
         cell.portraitView.image=[UIImage imageNamed:@"placeholder"];
     }
-
-    
-    
     
     return cell;
 }
@@ -255,7 +274,6 @@ static  MLMyApplication *thisVC=nil;
     [rightUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]
                                                  icon:[UIImage imageNamed:@"trash"]];
-    
     return rightUtilityButtons;
 }
 

@@ -64,7 +64,7 @@ static  MLMatchVC *thisVC=nil;
 }
 
 - (void)viewWillLayoutSubviews{
-    self.title=@"精灵匹配";
+    self.title=@"精灵管家";
     //设置导航栏标题颜色及返回按钮颜色
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];

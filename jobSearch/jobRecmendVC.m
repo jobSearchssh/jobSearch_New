@@ -12,6 +12,7 @@
 #import "freeselectViewCell.h"
 #import "netAPI.h"
 #import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
 #import "AsyncImageView.h"
 
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
@@ -213,8 +214,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [netAPI acceptedInvite:self.jobModel.getinvite_id withBlock:^(oprationResultModel *oprationResultModel) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([oprationResultModel.getStatus intValue]!=0) {
-                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"数据提交失败" message:oprationResultModel.getInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [alertView show];
+                
+                [MBProgressHUD showError:oprationResultModel.getInfo toView:self.view];
+                
             }else
             {
                 UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"成功接受职位" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -235,12 +237,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [netAPI refusedInvite:self.jobModel.getinvite_id withBlock:^(oprationResultModel *oprationResultModel) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([oprationResultModel.getStatus intValue]!=0) {
-                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"数据提交失败" message:oprationResultModel.getInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [alertView show];
+                [MBProgressHUD showError:oprationResultModel.getInfo toView:self.view];
+
             }else
             {
-                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"成功拒绝职位" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                alertView.delegate=self;
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"成功拒绝职位" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
 
                 [alertView show];
                 

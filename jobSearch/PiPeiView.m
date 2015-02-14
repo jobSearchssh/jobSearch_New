@@ -23,8 +23,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     CGFloat freecellwidth;
     bool selectFreeData[21];
 }
-@property (weak, nonatomic) IBOutlet UICollectionView *selectfreeCollectionOutlet;
 
+@property (weak, nonatomic) IBOutlet UICollectionView *selectfreeCollectionOutlet;
 @property (weak, nonatomic) IBOutlet AsyncImageView *entepriseLogoView;
 @property (weak, nonatomic) IBOutlet UILabel *jobTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jobAddressLabel;
@@ -36,7 +36,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UILabel *jobSettlementWay;
 @property (weak, nonatomic) IBOutlet UITextView *jobDescribleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jobRequireLabel;
-
 @property (strong, nonatomic) IBOutlet UIView *view1;
 
 @end

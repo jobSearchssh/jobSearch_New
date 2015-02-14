@@ -34,6 +34,7 @@
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"mainItem"] style:UIBarButtonItemStyleBordered target:self action:@selector(showMenu)];
     self.navigationController.navigationBar.translucent = NO;
     currentnavigationController=self.navigationController;
+    
 }
 
 #pragma mark -
@@ -107,14 +108,13 @@
         
         RESideMenuItem *applicationItem = [[RESideMenuItem alloc] initWithTitle:@"我的申请" setFlag:NORMALCELL image:[UIImage imageNamed:@"apply"] highlightedImage:[UIImage imageNamed:@"apply"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             
-            MLMyApplication *_profilehVC=[[MLMyApplication alloc] init];
+            MLMyApplication *_profilehVC=[MLMyApplication sharedInstance];
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:_profilehVC];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
             currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
-            
         }];
         
         RESideMenuItem *dailymatchItem = [[RESideMenuItem alloc] initWithTitle:@"我的简历" setFlag:NORMALCELL image:[UIImage imageNamed:@"calendar"] highlightedImage:[UIImage imageNamed:@"calendar"] action:^(RESideMenu *menu, RESideMenuItem *item)  {
@@ -172,6 +172,9 @@
         _sideMenu.verticalOffset = IS_WIDESCREEN ? 110 : 76;
         _sideMenu.hideStatusBarArea = [AppDelegate OSVersion] < 7;
     }
+    
+    //显示未读消息
+    [_sideMenu setBadgeView:3 badgeText:@"7"];
     
     [_sideMenu show];
 }

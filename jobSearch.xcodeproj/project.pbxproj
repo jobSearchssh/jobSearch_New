@@ -161,6 +161,7 @@
 		3B9236541A67FAFA00347D9C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B9236531A67FAFA00347D9C /* Images.xcassets */; };
 		3B9236571A67FAFA00347D9C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B9236551A67FAFA00347D9C /* LaunchScreen.xib */; };
 		3B9236631A67FAFA00347D9C /* jobSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9236621A67FAFA00347D9C /* jobSearchTests.m */; };
+		3B954A701A8DD135006BC4B2 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B954A6F1A8DD135006BC4B2 /* JSBadgeView.m */; };
 		3BA483BE1A89E6B800B6A200 /* userModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA483BB1A89E6B800B6A200 /* userModel.m */; };
 		3BA483BF1A89E6B800B6A200 /* userReturnModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA483BD1A89E6B800B6A200 /* userReturnModel.m */; };
 		3BA483C41A89E6BE00B6A200 /* messageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA483C11A89E6BE00B6A200 /* messageModel.m */; };
@@ -304,6 +305,9 @@
 		3BD4DCA51A77D40900B061D0 /* checkbox1_checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DC9F1A77D40900B061D0 /* checkbox1_checked@2x.png */; };
 		3BD4DCA61A77D40900B061D0 /* checkbox1_unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DCA01A77D40900B061D0 /* checkbox1_unchecked.png */; };
 		3BD4DCA71A77D40900B061D0 /* checkbox1_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD4DCA11A77D40900B061D0 /* checkbox1_unchecked@2x.png */; };
+		3BD82C4F1A8E1278000B4462 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD82C4D1A8E1278000B4462 /* logo@2x.png */; };
+		3BD82C501A8E1278000B4462 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD82C4E1A8E1278000B4462 /* logo.png */; };
+		3BD82C521A8E15E2000B4462 /* launchImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD82C511A8E15E2000B4462 /* launchImage.png */; };
 		3BF625311A8B3E4E0066816D /* arrow_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF6252E1A8B3E4E0066816D /* arrow_right.png */; };
 		3BF625321A8B3E4E0066816D /* arrow_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF6252F1A8B3E4E0066816D /* arrow_right@2x.png */; };
 		3BF625331A8B3E4E0066816D /* arrow_right@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF625301A8B3E4E0066816D /* arrow_right@3x.png */; };
@@ -537,6 +541,8 @@
 		3B92365C1A67FAFA00347D9C /* jobSearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jobSearchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B9236611A67FAFA00347D9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B9236621A67FAFA00347D9C /* jobSearchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jobSearchTests.m; sourceTree = "<group>"; };
+		3B954A6E1A8DD135006BC4B2 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSBadgeView.h; sourceTree = "<group>"; };
+		3B954A6F1A8DD135006BC4B2 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSBadgeView.m; sourceTree = "<group>"; };
 		3BA483BA1A89E6B800B6A200 /* userModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userModel.h; sourceTree = "<group>"; };
 		3BA483BB1A89E6B800B6A200 /* userModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = userModel.m; sourceTree = "<group>"; };
 		3BA483BC1A89E6B800B6A200 /* userReturnModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userReturnModel.h; sourceTree = "<group>"; };
@@ -746,6 +752,9 @@
 		3BD4DC9F1A77D40900B061D0 /* checkbox1_checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox1_checked@2x.png"; sourceTree = "<group>"; };
 		3BD4DCA01A77D40900B061D0 /* checkbox1_unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox1_unchecked.png; sourceTree = "<group>"; };
 		3BD4DCA11A77D40900B061D0 /* checkbox1_unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox1_unchecked@2x.png"; sourceTree = "<group>"; };
+		3BD82C4D1A8E1278000B4462 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		3BD82C4E1A8E1278000B4462 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		3BD82C511A8E15E2000B4462 /* launchImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launchImage.png; sourceTree = "<group>"; };
 		3BF6252E1A8B3E4E0066816D /* arrow_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_right.png; sourceTree = "<group>"; };
 		3BF6252F1A8B3E4E0066816D /* arrow_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_right@2x.png"; sourceTree = "<group>"; };
 		3BF625301A8B3E4E0066816D /* arrow_right@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_right@3x.png"; sourceTree = "<group>"; };
@@ -1006,6 +1015,9 @@
 		3B6993971A89E9B000A53760 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				3BD82C511A8E15E2000B4462 /* launchImage.png */,
+				3BD82C4D1A8E1278000B4462 /* logo@2x.png */,
+				3BD82C4E1A8E1278000B4462 /* logo.png */,
 				3BF625381A8B57AA0066816D /* placeholder@2x.png */,
 				3BF625391A8B57AA0066816D /* placeholder@3x.png */,
 				3BF6253A1A8B57AA0066816D /* placeholder.png */,
@@ -1157,6 +1169,7 @@
 				3BC052071A714D600099A2DF /* messageVC */,
 				3B6524131A6CBDE1005FD671 /* swipeTable */,
 				3B3C09E71A68F31A00B8C343 /* firstVC */,
+				3B954A6D1A8DD135006BC4B2 /* JSBadgeView */,
 				3BA484601A89E91F00B6A200 /* ResideMenu */,
 				3BA484571A89E84E00B6A200 /* AppDelegate.h */,
 				3BA484581A89E84E00B6A200 /* AppDelegate.m */,
@@ -1198,6 +1211,15 @@
 				3B9236611A67FAFA00347D9C /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3B954A6D1A8DD135006BC4B2 /* JSBadgeView */ = {
+			isa = PBXGroup;
+			children = (
+				3B954A6E1A8DD135006BC4B2 /* JSBadgeView.h */,
+				3B954A6F1A8DD135006BC4B2 /* JSBadgeView.m */,
+			);
+			path = JSBadgeView;
 			sourceTree = "<group>";
 		};
 		3BA483B91A89E6A200B6A200 /* user */ = {
@@ -1834,6 +1856,7 @@
 				3B6994131A89E9B000A53760 /* just@2x.png in Resources */,
 				3B6994371A89E9B000A53760 /* star.png in Resources */,
 				3BF625321A8B3E4E0066816D /* arrow_right@2x.png in Resources */,
+				3BD82C501A8E1278000B4462 /* logo.png in Resources */,
 				3B6994221A89E9B000A53760 /* mainItem@2x.png in Resources */,
 				3B6993FB1A89E9B000A53760 /* calendar.png in Resources */,
 				3B69942E1A89E9B000A53760 /* refuse@2x.png in Resources */,
@@ -1867,6 +1890,7 @@
 				3BD4DC811A77C50600B061D0 /* user.png in Resources */,
 				3BD4DC701A77C50600B061D0 /* resume_night2.png in Resources */,
 				3B6994061A89E9B000A53760 /* cellBackground@3x.png in Resources */,
+				3BD82C521A8E15E2000B4462 /* launchImage.png in Resources */,
 				3BF625311A8B3E4E0066816D /* arrow_right.png in Resources */,
 				3B69940D1A89E9B000A53760 /* export@2x.png in Resources */,
 				3B6994321A89E9B000A53760 /* search@2x.png in Resources */,
@@ -1959,6 +1983,7 @@
 				3B69942D1A89E9B000A53760 /* refuse.png in Resources */,
 				B77578DE1A7A9EF000660BB7 /* capture_rec_off@2x.png in Resources */,
 				3B6994311A89E9B000A53760 /* search.png in Resources */,
+				3BD82C4F1A8E1278000B4462 /* logo@2x.png in Resources */,
 				3B69941F1A89E9B000A53760 /* logout@2x.png in Resources */,
 				3B69941B1A89E9B000A53760 /* location.png in Resources */,
 				3B6994301A89E9B000A53760 /* right.png in Resources */,
@@ -2053,6 +2078,7 @@
 				B77578C01A7A912800660BB7 /* MLResumeVideoVC.m in Sources */,
 				3BA484011A89E77A00B6A200 /* stringUtil.m in Sources */,
 				3B85D8071A8A32FC0087ABEE /* PopoverView.m in Sources */,
+				3B954A701A8DD135006BC4B2 /* JSBadgeView.m in Sources */,
 				3BD13E971A80A5D4005BCCA8 /* MBProgressHUD+Add.m in Sources */,
 				3BA4845F1A89E84E00B6A200 /* MLNavigation.m in Sources */,
 				3B6993941A89E98E00A53760 /* UIWindow+RESideMenuExtensions.m in Sources */,

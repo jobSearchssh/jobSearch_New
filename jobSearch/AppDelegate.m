@@ -57,16 +57,16 @@
     [SMS_SDK registerApp:@"57cd980818a9" withSecret:@"3bf26f5a30d5c3317f17887c4ee4986d"];
 
     //shareSDK 社会化分享
-    [ShareSDK registerApp:@"api20"];
+    [ShareSDK registerApp:@"1c4bbb89bd910c8432630a80804cdc7a"];
     
     //新浪微博分享
     [ShareSDK connectSinaWeiboWithAppKey:@"2652267694"
                                appSecret:@"a85484d25a129269b314f75070ab9238"
                              redirectUri:@"http://www.baidu.com"];
     //微信分享
-//    [ShareSDK connectWeChatWithAppId:@"wx4868b35061f87885"
-//                           appSecret:@"64020361b8ec4c99936c0e3999a9f249"
-//                           wechatCls:[WXApi class]];
+    [ShareSDK connectWeChatWithAppId:@"wx4649b5a8f915a066"
+                           appSecret:@"1698c5fe244127dba389b99849f0f8e5"
+                           wechatCls:[WXApi class]];
     
     
     //网络连接监测
@@ -120,6 +120,25 @@
 
 -(int)getCurrentConnectType{
     return currentConnectType;
+}
+
+
+- (BOOL)application:(UIApplication *)application
+      handleOpenURL:(NSURL *)url
+{
+    return [ShareSDK handleOpenURL:url
+                        wxDelegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return [ShareSDK handleOpenURL:url
+                 sourceApplication:sourceApplication
+                        annotation:annotation
+                        wxDelegate:self];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

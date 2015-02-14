@@ -10,6 +10,7 @@
 #import "MLCell1.h"
 #import "jobDetailVC.h"
 #import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
 #import "MJRefresh.h"
 
 static NSString *userId = @"54d76bd496d9aece6f8b4568";
@@ -126,8 +127,8 @@ static  MLMyCollection *thisVC=nil;
     if (footerRefreshing) {
         if (![jobListModel.getStatus intValue]==0) {
             NSString *err=jobListModel.getInfo;
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+
+            [MBProgressHUD showError:err toView:self.view];
             
         }else{
             
@@ -153,8 +154,7 @@ static  MLMyCollection *thisVC=nil;
         
         if (![jobListModel.getStatus intValue]==0) {
             NSString *err=jobListModel.getInfo;
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+            [MBProgressHUD showError:err toView:self.view];
         }else{
             
             [recordArray removeAllObjects];
@@ -352,8 +352,7 @@ static  MLMyCollection *thisVC=nil;
                     [_tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
                 }else{
                     NSString *err=oprationResultModel.getInfo;
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络请求错误" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                    [alert show];
+                    [MBProgressHUD showError:err toView:self.view];
                 }
             }];
             

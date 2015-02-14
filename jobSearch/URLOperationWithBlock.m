@@ -27,7 +27,7 @@ static NSString *baseURL = @"http://123.57.5.113:8081/";
         //第一步，生成链接地址
         NSURL *url = [NSURL URLWithString:[[NSString alloc]initWithFormat:@"%@%@",baseURL,postLoca]];
         //第二步，创建请求
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:3];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:5];
         
         if (isPost) {
             [request setHTTPMethod:@"POST"];

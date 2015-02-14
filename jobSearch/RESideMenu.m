@@ -118,6 +118,14 @@ static  RESideMenu *thisMenu=nil;
     }
 }
 
+-(void)setBadgeView:(NSInteger)index badgeText:(NSString*)badgeText{
+    
+    RESideMenuItem*usrItem=[_items objectAtIndex:index];
+    
+    usrItem.badgeText=badgeText;
+    
+}
+
 - (void) showItems:(NSArray *)items
 {
     // Animate to deappear
@@ -429,6 +437,10 @@ static  RESideMenu *thisMenu=nil;
         [normalcell setAction:item.title];
         normalcell.item = item;
         [normalcell notifyDatasetChange];
+        if ([item.badgeText length]>0) {
+            [normalcell setBadgeString:@"6"];
+        }
+        
         normalcell.selectionStyle = UITableViewCellSelectionStyleNone;
         return normalcell;
     }

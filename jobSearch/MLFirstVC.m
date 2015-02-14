@@ -15,6 +15,7 @@
 #import "MLMessageVC.h"
 #import "MLMatchVC.h"
 #import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
 #import "MJRefresh.h"
 #import <AMapSearchKit/AMapSearchAPI.h>
 #import <MAMapKit/MAMapKit.h>
@@ -110,18 +111,6 @@ static  MLFirstVC *thisVC=nil;
     
     [self searchCity];
     
-//    BmobQuery *query=[BmobQuery queryWithClassName:@"JobLogo"];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-//        if (!error) {
-//            for (BmobObject *object in array )
-//            {
-//                BmobFile *bmobFile = (BmobFile *)[object objectForKey:@"jobLogo"];
-//                NSLog(@"%@",bmobFile.url);
-//            }
-//           
-//        }
-//
-//    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -176,6 +165,7 @@ static  MLFirstVC *thisVC=nil;
         if ([searchType isEqualToString:@"nearest"]) {
             if (abs(locationCoord.latitude-99999.99)<0.001) {
                 [self.tableView footerEndRefreshing];
+                
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alert show];
             }else{
@@ -345,8 +335,7 @@ static  MLFirstVC *thisVC=nil;
             
             NSString *err=jobListModel.getInfo;
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+            [MBProgressHUD showSuccess:err toView:self.view];
             
         }else{
             
@@ -371,8 +360,9 @@ static  MLFirstVC *thisVC=nil;
     else{
         
         if (![jobListModel.getStatus intValue]==0) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:@"网络有点不给力哦，请稍后再试~" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+            
+            [MBProgressHUD showError:@"信息加载失败" toView:self.view];
+
         }else{
             
             [recordArray removeAllObjects];

@@ -10,6 +10,7 @@
 #import "MLCell2.h"
 #import "jobRecmendVC.h"
 #import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
 #import "MJRefresh.h"
 #import "netAPI.h"
 #import "jobModel.h"
@@ -111,9 +112,9 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     
     if (footerRefreshing) {
         if (![jobListModel.getStatus intValue]==0) {
-            NSString *err=jobListModel.getInfo;
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+            
+            
+            [MBProgressHUD showError:jobListModel.getInfo toView:self.view];
             
         }else{
             
@@ -142,8 +143,7 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
         
         if (![jobListModel.getStatus intValue]==0) {
             NSString *err=jobListModel.getInfo;
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+            [MBProgressHUD showError:err toView:self.view];
         }else{
             
             [recordArray removeAllObjects];

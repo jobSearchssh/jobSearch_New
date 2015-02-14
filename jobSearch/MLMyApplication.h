@@ -11,6 +11,8 @@
 
 @interface MLMyApplication : ViewController
 
+- (void)refreshInBackground;
+
 + (MLMyApplication*)sharedInstance;
 
 @end

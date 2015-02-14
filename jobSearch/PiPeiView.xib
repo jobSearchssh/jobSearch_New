@@ -729,7 +729,7 @@
                     <include reference="y6i-ON-dll"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="256" y="357"/>
+            <point key="canvasLocation" x="67" y="357"/>
         </view>
         <view contentMode="scaleToFill" id="CfX-vD-vCB">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -775,7 +775,7 @@
                     <include reference="y8F-1J-bfa"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="703" y="357"/>
+            <point key="canvasLocation" x="520" y="357"/>
         </view>
     </objects>
     <resources>

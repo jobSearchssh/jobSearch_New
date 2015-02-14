@@ -9,6 +9,7 @@
 #import "jobDetailVC.h"
 #import "MLMapView.h"
 #import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
 #import "PopoverView.h"
 #import "freeselectViewCell.h"
 #import "netAPI.h"
@@ -108,8 +109,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             [actionSheet showInView:self.view];
             
         }else{
-            UIAlertView *makeCallAlert=[[UIAlertView alloc]initWithTitle:@"该企业暂未提供联系方式" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [makeCallAlert show];
+            [MBProgressHUD showError:@"该企业暂未提供联系方式" toView:self.view];
         }
         
     }else{
@@ -119,14 +119,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if (![oprationResultModel.getStatus intValue]==0) {
                 NSString *err=oprationResultModel.getInfo;
-            
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:err message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                [alert show];
+                [MBProgressHUD showError:err toView:self.view];
             }
             else
             {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"申请成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                [alert show];
+                [MBProgressHUD showSuccess:@"申请成功" toView:self.view];
+                
             }
         }];
     }
@@ -185,12 +183,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //工作描述label
     CGRect rect1 =[self.jobDescribeLabel.text boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width-16, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]}  context:nil];
     self.jobDescribleLabelHeightConstraint.constant=rect1.size.height;
-    
+
     //任职要求label
-    CGRect rect2 =[self.jobDescribeLabel.text boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width-16, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]}  context:nil];
+    CGRect rect2 =[self.jobRequireLabel.text boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width-16, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]}  context:nil];
     self.jobRequireLabelHeightConstraint.constant=rect2.size.height;
-    
-    self.containerViewHeightConstraint.constant=360+rect1.size.height+rect2.size.height;
+
+    self.containerViewHeightConstraint.constant=370+rect1.size.height+rect2.size.height;
 }
 
 - (void)initData{
@@ -242,37 +240,36 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         self.jobSalaryLabel.text=[NSString stringWithFormat:@"%@元/%@",self.jobModel.getjobSalaryRange,settlement];
 
-        self.jobDescribeLabel.text=[NSString stringWithFormat:@"工作描述：%@",self.jobModel.getjobIntroduction];
-        
+        self.jobDescribeLabel.text=[NSString stringWithFormat:@"【工作描述】%@",self.jobModel.getjobIntroduction];
         
         NSString *gender;
         if ([_jobModel.getjobGenderReq isEqualToString:@"0"]) {
-            gender=@"性别要求：不限";
+            gender=@"【性别要求】不限";
         }else if ([_jobModel.getjobGenderReq isEqualToString:@"1"]){
-            gender=@"性别要求：男";
+            gender=@"【性别要求】男";
         }else if ([_jobModel.getjobGenderReq isEqualToString:@"2"]){
-            gender=@"性别要求：女";
+            gender=@"【性别要求】女";
         }
         
         NSString *degree;
         NSLog(@"%@",_jobModel.getjobDegreeReq);
         
         if ([_jobModel.getjobDegreeReq intValue]==1){
-            degree=@"学历要求：初中";
+            degree=@"【学历要求】初中";
         }else if ([_jobModel.getjobDegreeReq intValue]==2){
-            degree=@"学历要求：高中";
+            degree=@"【学历要求】高中";
         }else if ([_jobModel.getjobDegreeReq intValue]==3){
-            degree=@"学历要求：大专";
+            degree=@"【学历要求】大专";
         }else if ([_jobModel.getjobDegreeReq intValue]==4){
-            degree=@"学历要求：本科";
+            degree=@"【学历要求】本科";
         }else if ([_jobModel.getjobDegreeReq intValue]==5){
-            degree=@"学历要求：硕士";
+            degree=@"【学历要求】硕士";
         }else if ([_jobModel.getjobDegreeReq intValue]==6){
-            degree=@"学历要求：博士及以上";
+            degree=@"【学历要求】博士及以上";
         }
 
-        NSString *age=[NSString stringWithFormat:@"年龄要求：%@—%@岁",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
-        NSString *height=[NSString stringWithFormat:@"身高要求：%@—%@cm",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
+        NSString *age=[NSString stringWithFormat:@"【年龄要求】%@—%@岁",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
+        NSString *height=[NSString stringWithFormat:@"【身高要求】%@—%@cm",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
         
         NSString *textString=[[NSString alloc]init];
         if (age) {
@@ -298,7 +295,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 - (void)shareJob{
     
     //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:@"http://www.baidu.com"
+    id<ISSContent> publishContent = [ShareSDK content:@"我在兼职精灵找到工作啦！你要不要来尝试？猛戳链接http://www.baidu.com"
                                        defaultContent:nil
                                                 image:[ShareSDK jpegImageWithImage:[self imageFromView:self.containerView] quality:1.0f]
                                                 title:@"兼职精灵"
@@ -319,22 +316,24 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                 
                                 if (state == SSResponseStateSuccess)
                                 {
-                                    NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
+                                    [MBProgressHUD showSuccess:@"分享成功" toView:self.view];
                                 }
                                 else if (state == SSResponseStateFail)
                                 {
-                                    NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
+                                    [MBProgressHUD showError:@"分享失败" toView:self.view];
                                 }
                             }];
 }
-
+//截屏
 - (UIImage *)imageFromView: (UIView *) theView
 {
     UIGraphicsBeginImageContext(theView.frame.size);
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
+    
     [theView.layer renderInContext:context];
+    
     UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
-    //UIGraphicsEndImageContext();
     
     CGRect myImageRect = CGRectMake(0.0, 200.0, theView.frame.size.width, theView.frame.size.height-200);
 
@@ -362,19 +361,16 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (void)saveJob{
     
-    NSLog(@"%@",self.jobModel.getjobID);
-    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [netAPI saveTheJob:userId jobID:self.jobModel.getjobID withBlock:^(oprationResultModel *oprationResultModel) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (![oprationResultModel.getStatus intValue]==0) {
             NSString *err=oprationResultModel.getInfo;
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络请求失败" message:err delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+
+            [MBProgressHUD showError:err toView:self.view];
         }
         else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alert show];
+            [MBProgressHUD showSuccess:@"收藏成功" toView:self.view];
         }
     }];
 }
