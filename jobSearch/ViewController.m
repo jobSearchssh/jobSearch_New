@@ -92,9 +92,14 @@
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
+            [self setNavigationBar:navigationController];
+            viewController.title=@"搜索职位";
             currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
+
+        [searchItem setIsClick:YES];
+        
         
         RESideMenuItem *savedItem = [[RESideMenuItem alloc] initWithTitle:@"我的收藏" setFlag:NORMALCELL image:[UIImage imageNamed:@"collection"] highlightedImage:[UIImage imageNamed:@"collection"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             MLMyCollection *secondViewController = [MLMyCollection sharedInstance];
@@ -102,6 +107,8 @@
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
+            [self setNavigationBar:navigationController];
+            secondViewController.title=@"我的收藏";
             currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
@@ -113,6 +120,8 @@
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
+            [self setNavigationBar:navigationController];
+            _profilehVC.title=@"我的申请";
             currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
@@ -125,6 +134,8 @@
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
+            [self setNavigationBar:navigationController];
+            _dailyMatchVC.title=@"我的简历";
             currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
@@ -136,6 +147,8 @@
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
+            [self setNavigationBar:navigationController];
+            feedBackVC.title=@"发送反馈";
             currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
 
@@ -147,6 +160,8 @@
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
+            [self setNavigationBar:navigationController];
+            legalVC.title=@"声明";
             currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
@@ -178,6 +193,17 @@
     
     [_sideMenu show];
 }
+
+- (void)setNavigationBar:(UINavigationController*)navigationController{
+
+    navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
+    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    
+    [navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

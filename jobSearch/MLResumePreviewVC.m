@@ -51,7 +51,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     // Do any additional setup after loading the view from its nib.
     
     self.mainScrollviewOutlet.delegate=self;
-    [self.navigationItem setTitle:@"简历预览"];
     
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(editResume)];
     [self.navigationItem.rightBarButtonItem setTitle:@"编辑"];
@@ -226,16 +225,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //设置最终长度
     [self.mainScrollviewOutlet setContentSize:CGSizeMake(0,self.usrinfo3Outet.frame.origin.y+self.usrinfo3Outet.frame.size.height)];
     
-}
-
-- (void)viewWillLayoutSubviews{
-    //设置导航栏标题颜色及返回按钮颜色
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
-    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
-    
-    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
 }
 
 - (void)editResume{

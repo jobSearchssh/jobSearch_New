@@ -46,6 +46,7 @@
 @property (assign, readwrite, nonatomic) BOOL hideStatusBarArea;
 @property (assign, readwrite, nonatomic) BOOL isShowing;
 
+
 - (void)show;
 - (void)hide;
 - (void)setRootViewController:(UIViewController *)viewController;

@@ -75,6 +75,10 @@ static  MLFirstVC *thisVC=nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:54.0/255.0 green:59.0/255.0 blue:81.0/255.0 alpha:1.0]];
+    [self.tabbar setSelectedImageTintColor: [UIColor whiteColor]];
+    
+    
     //初始化参数
     refreshAdded=NO;
     distance=20;
@@ -98,7 +102,6 @@ static  MLFirstVC *thisVC=nil;
     self.navigationItem.rightBarButtonItem.tintColor=[UIColor whiteColor];
     self.navigationItem.leftBarButtonItem.tintColor=[UIColor whiteColor];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    self.title=@"附近的工作";
     
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM月dd日"];
@@ -117,19 +120,6 @@ static  MLFirstVC *thisVC=nil;
     [super viewDidAppear:animated];
 }
 
-- (void)viewWillLayoutSubviews{
-    
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:54.0/255.0 green:59.0/255.0 blue:81.0/255.0 alpha:1.0]];
-    [self.tabbar setSelectedImageTintColor: [UIColor whiteColor]];
-    
-    //设置导航栏标题颜色及返回按钮颜色
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
-    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
-    
-    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
-}
 
 - (void)finishFilter:(int)_distance Type:(NSMutableArray *)type{
     jobTypeArray=type;

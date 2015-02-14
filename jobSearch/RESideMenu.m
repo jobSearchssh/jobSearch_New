@@ -71,7 +71,6 @@ static  RESideMenu *thisMenu=nil;
     self.hideStatusBarArea = YES;
     
     self.menuStack = [NSMutableArray array];
-    
     return self;
 }
 
@@ -460,7 +459,6 @@ static  RESideMenu *thisMenu=nil;
 }
 
 #pragma mark - Table view delegate
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -508,5 +506,4 @@ static  RESideMenu *thisMenu=nil;
     if (item.action)
         item.action(self, item);
 }
-
 @end

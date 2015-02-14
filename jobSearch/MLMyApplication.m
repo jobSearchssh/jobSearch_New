@@ -39,23 +39,15 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 static  MLMyApplication *thisVC=nil;
 
 + (MLMyApplication*)sharedInstance{
-    thisVC.inBackground=YES;
+    //thisVC.inBackground=YES;
     if (thisVC==nil) {
         thisVC=[[MLMyApplication alloc]init];
-        thisVC.inBackground=NO;
+        //thisVC.inBackground=NO;
     }
     return thisVC;
 }
 
 - (void)viewWillLayoutSubviews{
-    self.title=@"我的申请";
-    //设置导航栏标题颜色及返回按钮颜色
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
-    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
-    
-    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
 }
 
 - (void)viewDidLoad {
@@ -68,7 +60,7 @@ static  MLMyApplication *thisVC=nil;
     firstLoad=YES;
     headerRefreshing=NO;
     footerRefreshing=NO;
-    self.inBackground=NO;
+    //self.inBackground=NO;
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM月dd日"];
 
@@ -157,14 +149,14 @@ static  MLMyApplication *thisVC=nil;
     else{
         
         if (![jobListModel.getStatus intValue]==0) {
-            if (self.inBackground) {
-                self.inBackground=NO;
-            }else{
+//            if (self.inBackground) {
+//                self.inBackground=NO;
+//            }else{
                 NSString *err=jobListModel.getInfo;
                 [MBProgressHUD showError:err toView:self.view];
-            }
+            //}
         }else{
-            self.inBackground=NO;
+            //self.inBackground=NO;
 
             [recordArray removeAllObjects];
             
