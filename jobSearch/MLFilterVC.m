@@ -63,14 +63,19 @@
 
 
 - (void)finishSelect:(NSMutableArray *)type SelectName:(NSMutableArray *)nameArray{
-    self.typeArray=type;
-    
-    NSString *typeString=[[NSString alloc]init];
-    for (NSString *str in nameArray ) {
-        typeString=[typeString stringByAppendingString:[NSString stringWithFormat:@"%@,",str]];
+    if([type count]>0){
+        self.typeArray=type;
+        
+        NSString *typeString=[[NSString alloc]init];
+        for (NSString *str in nameArray ) {
+            typeString=[typeString stringByAppendingString:[NSString stringWithFormat:@"%@,",str]];
+        }
+        self.typeLabel.text=[NSString stringWithFormat:@"%@",typeString];
     }
-    
-    self.typeLabel.text=[NSString stringWithFormat:@"%@",typeString];
+    else {
+        self.typeLabel.text=@"全部";
+        [self.typeArray removeAllObjects];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

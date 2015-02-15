@@ -75,6 +75,15 @@ static  MLFirstVC *thisVC=nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title=@"搜索职位";
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
+    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
+
+    
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:54.0/255.0 green:59.0/255.0 blue:81.0/255.0 alpha:1.0]];
     [self.tabbar setSelectedImageTintColor: [UIColor whiteColor]];
     
@@ -122,11 +131,11 @@ static  MLFirstVC *thisVC=nil;
 
 
 - (void)finishFilter:(int)_distance Type:(NSMutableArray *)type{
-    jobTypeArray=type;
-    distance=_distance;
-    firstLoad=YES;
-    searchType=@"distanceAndType";
-    [self headRefreshData];
+        jobTypeArray=type;
+        distance=_distance;
+        firstLoad=YES;
+        searchType=@"distanceAndType";
+        [self headRefreshData];
 }
 
 - (void)headRefreshData{

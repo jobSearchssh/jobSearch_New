@@ -275,6 +275,7 @@ static  MLLoginVC *thisVC=nil;
         NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
         
         if ([mySettingData objectForKey:@"currentUserName"]) {
+            
             NSString *currentUsrName=[mySettingData objectForKey:@"currentUserName"];
             RESideMenu* _sideMenu=[RESideMenu sharedInstance];
             

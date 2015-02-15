@@ -47,6 +47,7 @@
     
     [netAPI usrLogin:username usrPassword:pwd withBlock:^(loginModel *loginModel) {
         if ([loginModel.getStatus intValue]==0) {
+            
             [self saveUserInfoLocallyWithUserName:username userObjectId:loginModel.getUsrID];
             [self loginIsSucceed:YES feedback:@"登录成功"];
             
