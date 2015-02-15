@@ -80,11 +80,37 @@
                         
                     }
                     userDegree = [dictionary objectForKey:@"userDegree"];
-                    userHopeJobType = [dictionary objectForKey:@"userHopeJobType"];
-                    userFreeTime = [dictionary objectForKey:@"userFreeTime"];
-                    userHopeSettlement = [dictionary objectForKey:@"userHopeSettlement"];
+                    
+                    NSArray *tempuserHopeJobType = [dictionary objectForKey:@"userHopeJobType"];
+                    if (tempuserHopeJobType != Nil) {
+                        userHopeJobType = [[NSMutableArray alloc]initWithArray:tempuserHopeJobType];
+                    }else{
+                        userHopeJobType = [[NSMutableArray alloc]init];
+                    }
+                    
+                    NSArray *tempuserFreeTime = [dictionary objectForKey:@"userFreeTime"];
+                    if (tempuserFreeTime != Nil) {
+                        userFreeTime = [[NSMutableArray alloc]initWithArray:tempuserFreeTime];
+                    }else{
+                        userFreeTime = [[NSMutableArray alloc]init];
+                    }
+                    
+                    NSArray *tempuserHopeSettlement = [dictionary objectForKey:@"userHopeSettlement"];
+                    if (tempuserHopeSettlement != Nil) {
+                        userHopeSettlement = [[NSMutableArray alloc]initWithArray:tempuserHopeSettlement];
+                    }else{
+                        userHopeSettlement = [[NSMutableArray alloc]init];
+                    }
+                    
+                    NSArray *tempImageFileURL = [dictionary objectForKey:@"ImageFileURL"];
+                    if (tempImageFileURL != Nil) {
+                        ImageFileURL = [[NSMutableArray alloc]initWithArray:tempImageFileURL];
+                    }else{
+                        ImageFileURL = [[NSMutableArray alloc]init];
+                    }
+                    
                     userInfoComplete = [dictionary objectForKey:@"userInfoComplete"];
-                    NSArray *temparray = [dictionary objectForKey:@"userLocationGeo"];
+                    NSMutableArray *temparray = [dictionary objectForKey:@"userLocationGeo"];
                     if (temparray != Nil && [temparray count] == 2) {
                         NSNumber *lon = [temparray objectAtIndex:0];
                         NSNumber *lat = [temparray objectAtIndex:1];
@@ -246,23 +272,23 @@
     userDegree = value;
 }
 
--(NSArray *)getuserHopeJobType{
+-(NSMutableArray *)getuserHopeJobType{
     return userHopeJobType;
 }
--(void)setuserHopeJobType:(NSArray *)value{
+-(void)setuserHopeJobType:(NSMutableArray *)value{
     userHopeJobType = value;
 }
 
--(NSArray *)getuserFreeTime{
+-(NSMutableArray *)getuserFreeTime{
     return userFreeTime;
 }
--(void)setuserFreeTime:(NSArray *)value{
+-(void)setuserFreeTime:(NSMutableArray *)value{
     userFreeTime = value;
 }
--(NSArray *)getuserHopeSettlement{
+-(NSMutableArray *)getuserHopeSettlement{
     return userHopeSettlement;
 }
--(void)setuserHopeSettlement:(NSArray *)value{
+-(void)setuserHopeSettlement:(NSMutableArray *)value{
     userHopeSettlement = value;
 }
 
@@ -273,10 +299,10 @@
     userLocationGeo = value;
 }
 
--(NSString *)getImageFileURL{
+-(NSMutableArray *)getImageFileURL{
     return ImageFileURL;
 }
--(void)setImageFileURL:(NSString *)value{
+-(void)setImageFileURL:(NSMutableArray *)value{
     ImageFileURL = value;
 }
 
@@ -341,7 +367,15 @@
         [baseString appendFormat:@"&beiyong3=%@",beiyong3];
     }
     if (ImageFileURL != Nil) {
-        [baseString appendFormat:@"&ImageFileURL=%@",ImageFileURL];
+        NSMutableString *geturl = [[NSMutableString alloc]initWithFormat:@""];
+        for (int index = 0; index < [ImageFileURL count] ; index++ ) {
+            NSString *url = [ImageFileURL objectAtIndex:index];
+            [geturl appendFormat:@"%@",url];
+            if (index != ([ImageFileURL count] -1)) {
+                [geturl appendFormat:@","];
+            }
+        }
+        [baseString appendFormat:@"&ImageFileURL=%@",geturl];
     }
     if (userLocationGeo !=Nil) {
         NSString *geoPoint = [NSString stringWithFormat:@"%f,%f",[userLocationGeo getLon],[userLocationGeo getLat]];

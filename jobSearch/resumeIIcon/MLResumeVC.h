@@ -12,12 +12,18 @@
 #import "freeselectViewCell.h"
 #import "MLResumeVideoVC.h"
 #import "fixedScrollView.h"
+#import "userModel.h"
+#import "netAPI.h"
+#import "imageButton.h"
+#import <BmobSDK/Bmob.h>
+#import "UIImage+RTTint.h"
 
-@interface MLResumeVC : UIViewController<UIScrollViewDelegate,QRadioButtonDelegate,MCPagerViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface MLResumeVC : UIViewController<UIScrollViewDelegate,QRadioButtonDelegate,MCPagerViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,getVideoURLDelegate>
 
 -(UIImage *)compressImage:(UIImage *)imgSrc size:(int)width;
 
 @property (nonatomic)NSInteger pages;
 @property (weak, nonatomic) IBOutlet fixedScrollView *scrollviewOutlet;
+@property (strong, nonatomic) userModel *usermodel;
 
 @end

@@ -22,6 +22,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSArray *selectfreetimepicArray;
     bool selectFreeData[21];
     CGFloat freecellwidth;
+
+    QRadioButton *radio_male;
+    QRadioButton *radio_female;
+    
+    NSString *fileTempPath;
 }
 
 @property (nonatomic, strong) AKPickerView *pickerView;
@@ -58,10 +63,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 //page3
 @property (weak, nonatomic) IBOutlet UIScrollView *picscrollview;
 - (IBAction)callVideoAction:(UIButton *)sender;
+- (BOOL)writeImageToDoc:(UIImage*)image;
 
 //page4
 @property (weak, nonatomic) IBOutlet UICollectionView *selectfreetimeOutlet;
-@property (weak, nonatomic) IBOutlet UICollectionView *selectfreeCollectionOutlet;
 @property (weak, nonatomic) IBOutlet UITextField *intentionOutlet;
 
 //page5
@@ -80,6 +85,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //navigator
 
     [self.navigationItem setTitle:@"新建简历"];
+    
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(saveResume)];
+    [self.navigationItem.rightBarButtonItem setTitle:@"保存"];
 
     //上部分
     self.pickerView = [[AKPickerView alloc] initWithFrame:self.containTopView.bounds];
@@ -119,20 +127,22 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self createPages:self.pages];
     
     //page1
-    QRadioButton *_radio1 = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
-    _radio1.frame = CGRectMake(self.nameoutlet.frame.origin.x, self.sexlabeloutlet.frame.origin.y-10, 70, 40);
-    [_radio1 setTitle:@"男" forState:UIControlStateNormal];
-    [_radio1 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [_radio1.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
-    [self.view1outlet addSubview:_radio1];
-    [_radio1 setChecked:YES];
+    radio_male = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
+    radio_male.frame = CGRectMake(self.nameoutlet.frame.origin.x, self.sexlabeloutlet.frame.origin.y-10, 70, 40);
+    [radio_male setTitle:@"男" forState:UIControlStateNormal];
+    [radio_male setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [radio_male.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
+    [radio_male setStatus:maleStatus];
+    [self.view1outlet addSubview:radio_male];
+//    [_radio1 setChecked:YES];
     
-    QRadioButton *_radio2 = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
-    _radio2.frame = CGRectMake(_radio1.frame.origin.x+_radio1.frame.size.width, self.sexlabeloutlet.frame.origin.y-10, 70, 40);
-    [_radio2 setTitle:@"女" forState:UIControlStateNormal];
-    [_radio2 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [_radio2.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
-    [self.view1outlet addSubview:_radio2];
+    radio_female = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
+    radio_female.frame = CGRectMake(radio_male.frame.origin.x+radio_male.frame.size.width, self.sexlabeloutlet.frame.origin.y-10, 70, 40);
+    [radio_female setTitle:@"女" forState:UIControlStateNormal];
+    [radio_female setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [radio_female.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
+    [radio_female setStatus:femaleStatus];
+    [self.view1outlet addSubview:radio_female];
     
 //    QRadioButton *_radio3 = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
 //    _radio3.frame = CGRectMake(_radio2.frame.origin.x+_radio2.frame.size.width, self.sexlabeloutlet.frame.origin.y-10, 70, 40);
@@ -184,8 +194,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //page3
     addedPicArray =[[NSMutableArray alloc]init];
     //添加图片
-    UIButton *btnPic=[[UIButton alloc]initWithFrame:CGRectMake(INSETS, INSETS, PIC_WIDTH, PIC_HEIGHT)];
-    [btnPic setImage:[UIImage imageNamed:@"resume_add"] forState:UIControlStateNormal];
+    imageButton *btnPic=[[imageButton alloc]initWithFrame:CGRectMake(INSETS, INSETS, PIC_WIDTH, PIC_HEIGHT)];
+    [btnPic setBackgroundImage:[UIImage imageNamed:@"resume_add"] forState:UIControlStateNormal];
     [addedPicArray addObject:btnPic];
     [self.picscrollview addSubview:btnPic];
     [btnPic addTarget:self action:@selector(addPicAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -216,10 +226,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     for (int index = 0; index<21; index++) {
         selectFreeData[index] = FALSE;
     }
-    self.selectfreeCollectionOutlet.delegate = self;
-    self.selectfreeCollectionOutlet.dataSource = self;
+    self.selectfreetimeOutlet.delegate = self;
+    self.selectfreetimeOutlet.dataSource = self;
     UINib *niblogin = [UINib nibWithNibName:selectFreecellIdentifier bundle:nil];
-    [self.selectfreeCollectionOutlet registerNib:niblogin forCellWithReuseIdentifier:selectFreecellIdentifier];
+    [self.selectfreetimeOutlet registerNib:niblogin forCellWithReuseIdentifier:selectFreecellIdentifier];
     [self.intentionOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     self.intentionOutlet.delegate = self;
     UIView *lineviewIntention= [[UIView alloc] initWithFrame:CGRectMake(self.intentionOutlet.frame.origin.x, self.intentionOutlet.frame.origin.y+self.intentionOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
@@ -253,6 +263,73 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.schollNewOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     
     [self.scrollviewOutlet setTarget:self selector:@selector(tapRegisnFirstRespond)];
+    
+    //初始化信息
+    if (self.usermodel != Nil) {
+        //name
+        if ([self.usermodel getuserName] != Nil) {
+            self.nameoutlet.text = [self.usermodel getuserName];
+        }
+        
+        //gender
+        if ([self.usermodel getuserGender] != Nil) {
+            if ([self.usermodel getuserGender].intValue == 0) {
+                [radio_male setChecked:TRUE];
+            }
+            if ([self.usermodel getuserGender].intValue == 1) {
+                [radio_female setChecked:TRUE];
+            }
+        }
+        //生日
+        if ([self.usermodel getuserBirthday] != Nil) {
+            NSString *birthdayTemp = [DateUtil birthdayStringFromDate:[self.usermodel getuserBirthday]];
+            [self.birthdayOutlet setTitle:birthdayTemp forState:UIControlStateNormal];
+        }
+        //电话
+        if ([self.usermodel getuserPhone] != Nil) {
+            [self.iphoneOutlet setText:[self.usermodel getuserPhone]];
+        }
+        //求职意向
+//        if () {
+//            
+//        }
+        
+        //空闲时间
+        if ([self.usermodel getuserFreeTime] != Nil) {
+            for (NSNumber *freetimetemp in [self.usermodel getuserFreeTime]) {
+                if (freetimetemp.intValue>=0 && freetimetemp.intValue<21) {
+                    selectFreeData[freetimetemp.intValue] = TRUE;
+                }
+            }
+            [self.selectfreetimeOutlet reloadData];
+        }
+        //学校
+        if ([self.usermodel getuserSchool] != Nil) {
+            [self.schollNewOutlet setText:[self.usermodel getuserSchool]];
+        }
+        //自我介绍
+        if ([self.usermodel getuserIntroduction] != Nil) {
+            [self.introductionmeOutlet setText:[self.usermodel getuserIntroduction]];
+        }
+        //工作经验
+        if ([self.usermodel getuserExperience] != Nil) {
+            [self.workexperienceOutlet setText:[self.usermodel getuserExperience]];
+        }
+    }else{
+        self.usermodel = [[userModel alloc]init];
+    }
+}
+
+-(void)saveResume{
+    [netAPI editUserDetail:self.usermodel withBlock:^(userReturnModel *userReturnModel) {
+        if ([userReturnModel getStatus].intValue == STATIS_OK) {
+            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"更新成功" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            [alterTittle show];
+        }else{
+            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"更新失败:%@",[userReturnModel getInfo]] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            [alterTittle show];
+        }
+    }];
 }
 
 //点击空白取消textfield响应
@@ -477,7 +554,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 #pragma mark - QRadioButtonDelegate
 
 - (void)didSelectedRadioButton:(QRadioButton *)radio groupId:(NSString *)groupId {
-    NSLog(@"did selected radio:%@ groupId:%@", radio.titleLabel.text, groupId);
+//    NSLog(@"did selected radio:%@ groupId:%@ status:%d", radio.titleLabel.text, groupId,[radio getStatus]);
+    if ([radio getStatus] == maleStatus) {
+        [self.usermodel setuserGender:[NSNumber numberWithInt:maleStatus]];
+    }
+    if ([radio getStatus] == femaleStatus) {
+        [self.usermodel setuserGender:[NSNumber numberWithInt:femaleStatus]];
+    }
 }
 
 - (IBAction)birthdayAction:(UIButton *)sender {
@@ -485,6 +568,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 //page3
+//设置新的url
+- (void) getVideoURLDelegate:(NSObject *)videoURL{
+    NSString *URLTemp = (NSString *)videoURL;
+    if (URLTemp != Nil) {
+        [self.usermodel setuserVideoURL:URLTemp];
+    }
+    NSLog(@"获得videourl = %@",[self.usermodel getuserVideoURL]);
+}
+
 - (IBAction)addPicAction:(UIButton *)sender {
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
@@ -539,12 +631,19 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
 }
 
+-(BOOL)writeImageToDoc:(UIImage*)image{
+    BOOL result;
+    @synchronized(self) {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        fileTempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@UserDetailTemp.png",[baseAPP getUsrID]]];
+        result = [UIImagePNGRepresentation(image)writeToFile:fileTempPath atomically:YES];
+    }
+    return result;
+}
+
 //图片获取
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
-    
 
-    
-    
     UIImage *temp = image;
     if (image.size.height > PIC_HEIGHT || image.size.width>PIC_WIDTH) {
         float a = image.size.height>image.size.width?image.size.height:image.size.width;
@@ -552,28 +651,83 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     picker = Nil;
     [self dismissModalViewControllerAnimated:YES];
-    
-    //添加图片
-    UIButton *btnPic=[[UIButton alloc]initWithFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
-    [btnPic setImage:temp forState:UIControlStateNormal];
-    [btnPic setFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
-    [addedPicArray addObject:btnPic];
-    [btnPic setRestorationIdentifier:[NSString stringWithFormat:@"%lu",(unsigned long)addedPicArray.count-1]];
-    [btnPic addTarget:self action:@selector(deletePicAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.picscrollview addSubview:btnPic];
-    
-    for (UIButton *btn in addedPicArray) {
-        CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
-        [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x, btn.center.y)]];
-        [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)]];
-        [positionAnim setDelegate:self];
-        [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-        [positionAnim setDuration:0.25f];
-        [btn.layer addAnimation:positionAnim forKey:nil];
+    if (![self writeImageToDoc:image]) {
+        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"写入文件夹错误,请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        [alterTittle show];
+    }else{
+        //添加图片
+        imageButton *btnPic=[[imageButton alloc]initWithFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
+        btnPic.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+        btnPic.titleLabel.font = [UIFont systemFontOfSize:13];
+        UIImage *darkTemp = [temp rt_darkenWithLevel:0.5f];
+        [btnPic setBackgroundImage:darkTemp forState:UIControlStateNormal];
+        [btnPic setFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
+        [addedPicArray addObject:btnPic];
+        [btnPic setRestorationIdentifier:[NSString stringWithFormat:@"%lu",(unsigned long)addedPicArray.count-1]];
+        [btnPic addTarget:self action:@selector(deletePicAction:) forControlEvents:UIControlEventTouchUpInside];
+        [btnPic setStatus:uplaoding];
+        [self.picscrollview addSubview:btnPic];
         
-        [btn setCenter:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)];
+        for (imageButton *btn in addedPicArray) {
+            CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
+            [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x, btn.center.y)]];
+            [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)]];
+            [positionAnim setDelegate:self];
+            [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+            [positionAnim setDuration:0.25f];
+            [btn.layer addAnimation:positionAnim forKey:nil];
+            
+            [btn setCenter:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)];
+        }
+        [self refreshScrollView];
+        
+        
+        //上传图片
+        [BmobFile filesUploadBatchWithPaths:@[fileTempPath]
+                              progressBlock:^(int index, float progress) {
+                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                      [btnPic setTitle:[NSString stringWithFormat:@"上传:%ld％",(long)(progress*100)] forState:UIControlStateNormal];
+                                  });
+                              } resultBlock:^(NSArray *array, BOOL isSuccessful, NSError *error) {
+                                  
+                                  if (isSuccessful) {
+                                      NSString *imageTemp = Nil;
+                                      for (int i = 0 ; i < array.count ;i ++) {
+                                          BmobFile *file = array [i];
+                                          imageTemp = [file url];
+                                          if (imageTemp != Nil) {
+                                              
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  if ([self.usermodel getImageFileURL] == Nil) {
+                                                      [self.usermodel setImageFileURL:[[NSMutableArray alloc]init]];
+                                                  }
+                                                  [[self.usermodel getImageFileURL] addObject:imageTemp];
+                                                  [btnPic setStatus:uploadOK];
+                                                  
+                                                  [btnPic setTitle:@"" forState:UIControlStateNormal];
+                                                  [btnPic setBackgroundImage:temp forState:UIControlStateNormal];
+                                                  [MBProgressHUD showError:@"上传成功" toView:self.view];
+                                              });
+                                          }else{
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  [btnPic setTitle:@"失败" forState:UIControlStateNormal];
+                                                  [btnPic setBackgroundImage:temp forState:UIControlStateNormal];
+                                                  [btnPic setStatus:uploaderror];
+                                                  [MBProgressHUD showError:@"上传失败" toView:self.view];
+                                              });
+                                          }
+                                      }
+                                      
+                                  }else{
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          [btnPic setTitle:@"失败" forState:UIControlStateNormal];
+                                          [btnPic setBackgroundImage:temp forState:UIControlStateNormal];
+                                          [btnPic setStatus:uploaderror];
+                                          [MBProgressHUD showError:@"上传失败" toView:self.view];
+                                      });
+                                  }
+                              }];
     }
-    [self refreshScrollView];
 }
 
 -(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize{
@@ -590,12 +744,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
--(IBAction)deletePicAction:(UIButton *)sender{
+-(void)deletePicAction_uploadOKandfromNet:(imageButton *)sender{
     NSInteger btnindex = [sender restorationIdentifier].integerValue;
-    UIButton *btn = [addedPicArray objectAtIndex:btnindex];
+    imageButton *btn = [addedPicArray objectAtIndex:btnindex];
     [btn removeFromSuperview];
-    for (UIButton *tempbtn in addedPicArray) {
+    for (imageButton *tempbtn in addedPicArray) {
         if ([tempbtn restorationIdentifier].intValue > btnindex) {
             [tempbtn setRestorationIdentifier:[NSString stringWithFormat:@"%d",[tempbtn restorationIdentifier].intValue-1]];
             continue;
@@ -616,6 +769,34 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     [addedPicArray removeObjectAtIndex:btnindex];
     [self refreshScrollView];
+}
+
+-(void)deletePicAction_uplaoding{
+    
+}
+
+-(void)deletePicAction_uploaderror{
+    
+}
+
+
+-(IBAction)deletePicAction:(imageButton *)sender{
+    switch ([sender getStatus]) {
+        case uploadOK:
+            [self deletePicAction_uploadOKandfromNet:sender];
+            break;
+        case uplaoding:
+            [self deletePicAction_uplaoding];
+            break;
+        case uploaderror:
+            [self deletePicAction_uploaderror];
+            break;
+        case fromNet:
+            [self deletePicAction_uploadOKandfromNet:sender];
+            break;
+        default:
+            break;
+    }
 }
 - (void)refreshScrollView
 {
@@ -680,7 +861,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }else{
             cell.imageView.image = [selectfreetimepicArray objectAtIndex:0];
         }
-        
     }
     if (indexPath.row>=14 && indexPath.row<21) {
         if (selectFreeData[indexPath.row-7]) {
@@ -697,9 +877,5 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
     }
     return cell;
-};
-
-
-
-
+}
 @end

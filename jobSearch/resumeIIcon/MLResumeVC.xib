@@ -20,7 +20,6 @@
                 <outlet property="schollNewOutlet" destination="Aen-HW-GDO" id="d0g-aS-y1K"/>
                 <outlet property="schoolOutlet" destination="Z9P-H8-02c" id="kYf-hg-8XQ"/>
                 <outlet property="scrollviewOutlet" destination="LYR-4Y-dxl" id="pL2-tR-QaR"/>
-                <outlet property="selectfreeCollectionOutlet" destination="322-hg-gnc" id="nsh-fk-7Gh"/>
                 <outlet property="selectfreetimeOutlet" destination="322-hg-gnc" id="Zb8-fd-4vb"/>
                 <outlet property="sexlabeloutlet" destination="xhh-22-rAt" id="7I9-GD-ojV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -324,7 +323,7 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="时间控制在60秒以内哦" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bPX-jc-z1a">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间控制在60秒以内哦" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bPX-jc-z1a">
                     <rect key="frame" x="239" y="315" width="122" height="15"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
