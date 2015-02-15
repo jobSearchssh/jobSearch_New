@@ -342,7 +342,10 @@
                                           NSLog(@"删除临时文件成功");
                                       }
                                   }
-                                  
+                                  //回调
+                                  if (self.setVideoURLDelegate != Nil && vedioURL != Nil) {
+                                      [self.setVideoURLDelegate getVideoURLDelegate:vedioURL];
+                                  }
                                   isSave = false;
                               }else{
                                   [MBProgressHUD showError:@"上传失败" toView:self.view];

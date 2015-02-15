@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#define maleStatus 0
+#define femaleStatus 1
 
 @protocol QRadioButtonDelegate;
 
 @interface QRadioButton : UIButton {
     NSString                        *_groupId;
     BOOL                            _checked;
+    int status;
 }
 
 @property(nonatomic, assign)id<QRadioButtonDelegate>   delegate;
@@ -20,6 +23,8 @@
 @property(nonatomic, assign)BOOL checked;
 
 - (id)initWithDelegate:(id)delegate groupId:(NSString*)groupId;
+- (int)getStatus;
+- (void)setStatus:(int)value;
 
 @end
 

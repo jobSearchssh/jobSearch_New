@@ -25,9 +25,9 @@
     NSString *userAddressDetail;
     NSString *userSchool;
     NSNumber *userDegree;
-    NSArray *userHopeJobType;
-    NSArray *userFreeTime;
-    NSArray *userHopeSettlement;
+    NSMutableArray *userHopeJobType;
+    NSMutableArray *userFreeTime;
+    NSMutableArray *userHopeSettlement;
     NSString *userIntroduction;
     NSString *userExperience;
     NSString *userPhone;
@@ -39,7 +39,8 @@
     NSString *beiyong2;
     NSString *beiyong3;
     NSNumber *beiyong4;
-    NSString *ImageFileURL;
+    NSMutableArray *ImageFileURL;
+    NSNumber *userHeight;
 }
 
 -(userModel *)initWithData:(NSData *)mainData;
@@ -102,21 +103,21 @@
 -(NSNumber *)getuserDegree;
 -(void)setuserDegree:(NSNumber *)value;
 
--(NSArray *)getuserHopeJobType;
--(void)setuserHopeJobType:(NSArray *)value;
+-(NSMutableArray *)getuserHopeJobType;
+-(void)setuserHopeJobType:(NSMutableArray *)value;
 
--(NSArray *)getuserFreeTime;
--(void)setuserFreeTime:(NSArray *)value;
+-(NSMutableArray *)getuserFreeTime;
+-(void)setuserFreeTime:(NSMutableArray *)value;
 
 
--(NSArray *)getuserHopeSettlement;
--(void)setuserHopeSettlement:(NSArray *)value;
+-(NSMutableArray *)getuserHopeSettlement;
+-(void)setuserHopeSettlement:(NSMutableArray *)value;
 
 -(geoModel *)getuserLocationGeo;
 -(void)setuserLocationGeo:(geoModel *)value;
 
--(NSString *)getImageFileURL;
--(void)setImageFileURL:(NSString *)value;
+-(NSMutableArray *)getImageFileURL;
+-(void)setImageFileURL:(NSMutableArray *)value;
 
 
 @end

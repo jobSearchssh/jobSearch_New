@@ -39,6 +39,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (strong, nonatomic) IBOutlet UIView *usrinfo3Outet;
 @property (weak, nonatomic) IBOutlet UILabel *workexperienceOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *userIntroductionOutlet;
+@property (strong, nonatomic) userModel *mainUserModel;
 
 
 
@@ -58,14 +59,19 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.coverflowOutlet setFrame:CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.width*0.6)];
     [self.mainScrollviewOutlet addSubview:self.coverflowOutlet];
     
-    
+    self.mainUserModel = Nil;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     //获取简历 ok
-    [netAPI getUserDetail:@"54d76bd496d9aece6f8b4569" withBlock:^(userModel *userModel) {
+    [netAPI getUserDetail:@"54d76bd496d9aece6f8b4568" withBlock:^(userModel *userModel) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if ([userModel getStatus].intValue == STATIS_OK) {
             [self initfromNet:userModel];
+            NSMutableArray *array = [userModel getImageFileURL];
+            for (NSString *url in array) {
+                NSLog(@"urlurlurlurl");
+                NSLog(@"url = %@",url);
+            }
         }else{
             UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"数据获取错误" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
             [alterTittle show];
@@ -75,7 +81,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 -(void)initfromNet:(userModel *)userModel{
     
-    
+    self.mainUserModel = userModel;
     //第一项
     NSMutableArray *sourceImages = [[NSMutableArray alloc]init];
     [sourceImages addObject:[UIImage imageNamed:@"0.jpg"]];
@@ -229,6 +235,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (void)editResume{
     MLResumeVC *resumeVC=[[MLResumeVC alloc]init];
+    resumeVC.usermodel = self.mainUserModel;
     [self.navigationController pushViewController:resumeVC animated:YES];
 }
 

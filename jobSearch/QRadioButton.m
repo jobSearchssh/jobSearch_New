@@ -36,6 +36,13 @@ static NSMutableDictionary *_groupRadioDic = nil;
     return self;
 }
 
+- (int)getStatus{
+    return status;
+}
+- (void)setStatus:(int)value{
+    status = value;
+}
+
 - (void)addToGroup {
     if(!_groupRadioDic){
         _groupRadioDic = [NSMutableDictionary dictionary];
