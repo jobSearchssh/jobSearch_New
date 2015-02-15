@@ -39,10 +39,8 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 static  MLMyApplication *thisVC=nil;
 
 + (MLMyApplication*)sharedInstance{
-    //thisVC.inBackground=YES;
     if (thisVC==nil) {
         thisVC=[[MLMyApplication alloc]init];
-        //thisVC.inBackground=NO;
     }
     return thisVC;
 }
@@ -60,7 +58,6 @@ static  MLMyApplication *thisVC=nil;
     firstLoad=YES;
     headerRefreshing=NO;
     footerRefreshing=NO;
-    //self.inBackground=NO;
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM月dd日"];
 
@@ -68,7 +65,6 @@ static  MLMyApplication *thisVC=nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    //[self refreshInBackground];
 }
 
 - (void)headRefreshData{
@@ -149,14 +145,11 @@ static  MLMyApplication *thisVC=nil;
     else{
         
         if (![jobListModel.getStatus intValue]==0) {
-//            if (self.inBackground) {
-//                self.inBackground=NO;
-//            }else{
-                NSString *err=jobListModel.getInfo;
-                [MBProgressHUD showError:err toView:self.view];
-            //}
+
+            NSString *err=jobListModel.getInfo;
+            [MBProgressHUD showError:err toView:self.view];
+            
         }else{
-            //self.inBackground=NO;
 
             [recordArray removeAllObjects];
             

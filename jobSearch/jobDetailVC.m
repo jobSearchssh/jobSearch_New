@@ -243,16 +243,16 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.jobDescribeLabel.text=[NSString stringWithFormat:@"【工作描述】%@",self.jobModel.getjobIntroduction];
         
         NSString *gender;
-        if ([_jobModel.getjobGenderReq isEqualToString:@"0"]) {
+        NSString *genStr=[NSString stringWithFormat:@"%@",_jobModel.getjobGenderReq];
+        if ([genStr isEqualToString:@"0"]) {
             gender=@"【性别要求】不限";
-        }else if ([_jobModel.getjobGenderReq isEqualToString:@"1"]){
+        }else if ([genStr isEqualToString:@"1"]){
             gender=@"【性别要求】男";
-        }else if ([_jobModel.getjobGenderReq isEqualToString:@"2"]){
+        }else if ([genStr isEqualToString:@"2"]){
             gender=@"【性别要求】女";
         }
         
         NSString *degree;
-        NSLog(@"%@",_jobModel.getjobDegreeReq);
         
         if ([_jobModel.getjobDegreeReq intValue]==1){
             degree=@"【学历要求】初中";

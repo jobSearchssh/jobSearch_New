@@ -163,31 +163,40 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
         self.jobDescribleLabel.text=[NSString stringWithFormat:@"工作描述：%@",_jobModel.getjobIntroduction];
     
-            NSString *gender;
-            if ([_jobModel.getjobGenderReq isEqualToString:@"0"]) {
-                gender=@"性别要求：不限";
-            }else if ([_jobModel.getjobGenderReq isEqualToString:@"1"]){
-                gender=@"性别要求：男";
-            }else if ([_jobModel.getjobGenderReq isEqualToString:@"2"]){
-                gender=@"性别要求：女";
-            }
-            NSString *degree;
-            if ([_jobModel.getjobDegreeReq intValue]==1){
-                degree=@"学历要求：初中";
-            }else if ([_jobModel.getjobDegreeReq intValue]==2){
-                degree=@"学历要求：高中";
-            }else if ([_jobModel.getjobDegreeReq intValue]==3){
-                degree=@"学历要求：大专";
-            }else if ([_jobModel.getjobDegreeReq intValue]==4){
-                degree=@"学历要求：本科";
-            }else if ([_jobModel.getjobDegreeReq intValue]==5){
-                degree=@"学历要求：硕士";
-            }else if ([_jobModel.getjobDegreeReq intValue]==6){
-                degree=@"学历要求：博士及以上";
-            }
+        NSString *gender;
+        NSString *genStr=[NSString stringWithFormat:@"%@",_jobModel.getjobGenderReq];
+        if ([genStr isEqualToString:@"0"]) {
+            gender=@"【性别要求】不限";
+        }else if ([genStr isEqualToString:@"1"]){
+            gender=@"【性别要求】男";
+        }else if ([genStr isEqualToString:@"2"]){
+            gender=@"【性别要求】女";
+        }
         
-        NSString *age=[NSString stringWithFormat:@"年龄要求：%@—%@岁",_jobModel.getjobAgeStartReq,_jobModel.getjobAgeEndReq];
-        NSString *height=[NSString stringWithFormat:@"身高要求：%@—%@cm",_jobModel.getjobHeightStartReq,_jobModel.getjobHeightEndReq];
+        NSString *degree;
+        
+        if ([_jobModel.getjobDegreeReq intValue]==1){
+            degree=@"【学历要求】初中";
+        }else if ([_jobModel.getjobDegreeReq intValue]==2){
+            degree=@"【学历要求】高中";
+        }else if ([_jobModel.getjobDegreeReq intValue]==3){
+            degree=@"【学历要求】大专";
+        }else if ([_jobModel.getjobDegreeReq intValue]==4){
+            degree=@"【学历要求】本科";
+        }else if ([_jobModel.getjobDegreeReq intValue]==5){
+            degree=@"【学历要求】硕士";
+        }else if ([_jobModel.getjobDegreeReq intValue]==6){
+            degree=@"【学历要求】博士及以上";
+        }
+        
+        NSString *age;
+        if (_jobModel.getjobAgeStartReq) {
+            age=[NSString stringWithFormat:@"年龄要求：%@—%@岁",_jobModel.getjobAgeStartReq,_jobModel.getjobAgeEndReq];
+        }
+        NSString *height;
+        if (_jobModel.getjobHeightStartReq||_jobModel.getjobHeightEndReq) {
+            height=[NSString stringWithFormat:@"身高要求：%@—%@cm",_jobModel.getjobHeightStartReq,_jobModel.getjobHeightEndReq];
+        }
         
         NSString *textString=[[NSString alloc]init];
         if (age) {
