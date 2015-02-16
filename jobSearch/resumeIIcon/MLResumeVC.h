@@ -17,8 +17,9 @@
 #import "imageButton.h"
 #import <BmobSDK/Bmob.h>
 #import "UIImage+RTTint.h"
+#import "MLSelectJobTypeVC.h"
 
-@interface MLResumeVC : UIViewController<UIScrollViewDelegate,QRadioButtonDelegate,MCPagerViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,getVideoURLDelegate>
+@interface MLResumeVC : UIViewController<UIScrollViewDelegate,QRadioButtonDelegate,MCPagerViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,getVideoURLDelegate,finishSelectDelegate>
 
 -(UIImage *)compressImage:(UIImage *)imgSrc size:(int)width;
 

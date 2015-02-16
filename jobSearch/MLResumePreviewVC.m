@@ -17,6 +17,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSArray *selectfreetimepicArray;
     bool selectFreeData[21];
     CGFloat freecellwidth;
+    
+    const NSArray *jobHopeTypeArray;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollviewOutlet;
 //第一项
@@ -31,6 +33,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UILabel *locationOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *intentionOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *phoneOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *userHeightOutlet;
 
 //第四项
 @property (strong, nonatomic) IBOutlet UIView *collectionViewOutlet;
@@ -50,6 +53,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    jobHopeTypeArray = [[NSArray alloc]initWithObjects:@"模特/礼仪",@"促销/导购",@"销售",@"传单派发",@"安保",@"钟点工",@"法律事务",@"服务员",@"婚庆",@"配送/快递",@"化妆",@"护工/保姆",@"演出",@"问卷调查",@"志愿者",@"网络营销",@"导游",@"游戏代练",@"家教",@"软件/网站开发",@"会计",@"平面设计/制作",@"翻译",@"装修",@"影视制作",@"搬家",@"其他", nil];
     
     self.mainScrollviewOutlet.delegate=self;
     
@@ -79,18 +84,37 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }];
 }
 
+- (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
+    // 创建一个bitmap的context
+    // 并把它设置成为当前正在使用的context
+    UIGraphicsBeginImageContext(size);
+    // 绘制改变大小的图片
+    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    // 从当前context中创建一个改变大小后的图片
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    // 使当前的context出堆栈
+    UIGraphicsEndImageContext();
+    // 返回新的改变大小后的图片
+    return scaledImage;
+}
+
 -(void)initfromNet:(userModel *)userModel{
     
     self.mainUserModel = userModel;
     //第一项
     NSMutableArray *sourceImages = [[NSMutableArray alloc]init];
-    [sourceImages addObject:[UIImage imageNamed:@"0.jpg"]];
-    [sourceImages addObject:[UIImage imageNamed:@"1.jpg"]];
-    [sourceImages addObject:[UIImage imageNamed:@"2.jpg"]];
+    NSMutableArray *sourceImagesURL = [userModel getImageFileURL];
+    CGSize size = CGSizeMake(225, 225);
+    UIImage *temp = [self scaleToSize:[UIImage imageNamed:@"placeholder"] size:size];
+    
+    for (NSString *url in sourceImagesURL) {
+        [sourceImages addObject:temp];
+    }
+    
     //背景黑
     CGRect coverflowFrame = CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width,self.coverflowOutlet.frame.size.height -20);
     //添加coverflow
-    coverFlowView *cfView = [coverFlowView coverFlowViewWithFrame:coverflowFrame andImages:sourceImages sideImageCount:2 sideImageScale:0.55 middleImageScale:0.7];
+    coverFlowView *cfView = [coverFlowView coverFlowViewWithFrame:coverflowFrame andImages:sourceImages andURLs:sourceImagesURL sideImageCount:2 sideImageScale:0.55 middleImageScale:0.7];
     [cfView setDuration:0.3];
     [self.coverflowOutlet addSubview:cfView];
     
@@ -124,6 +148,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.sexOutlet.image = Nil;
     }
     
+    //身高
+    if ([userModel getuserHeight] != Nil) {
+        self.userHeightOutlet.text = [NSString stringWithFormat:@"%@cm",[userModel getuserHeight]];
+    }
+    
     //年龄
     if ([userModel getuserBirthday] != Nil) {
         @try {
@@ -147,7 +176,16 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                              self.locationOutlet.frame.origin.y, locationOutletlabelsize.width, locationOutletlabelsize.height)];
     [self.locationOutlet setText:usrLoaction];
     
-    NSString *usrintention = @"咨询经理、设计师、客服、文员、其他、临时工";
+    NSMutableString *usrintentionTemp = [[NSMutableString alloc]init];
+    NSMutableArray *usrintentionTempArray = [userModel getuserHopeJobType];
+    for (NSNumber *index in usrintentionTempArray ) {
+        if (index.intValue>=0 && index.intValue<jobHopeTypeArray.count) {
+            [usrintentionTemp appendFormat:@"%@,",[jobHopeTypeArray objectAtIndex:index.intValue]];
+        }
+    }
+    
+    
+    NSString *usrintention = usrintentionTemp;
     [self.intentionOutlet setNumberOfLines:0];
     [self.intentionOutlet setLineBreakMode:NSLineBreakByWordWrapping];
     CGSize intentionOutletlabelsize = [usrLoaction sizeWithFont:[self.intentionOutlet font] constrainedToSize:CGSizeMake(self.intentionOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
@@ -273,10 +311,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 -(BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row>=0 && indexPath.row<7) {
-        return NO;
-    }
-    return YES;
+    return NO;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -62,9 +62,8 @@
 }
 
 - (void)finishSelecting{
-    [self.navigationController popViewControllerAnimated:YES];
     [self.selectDelegate finishSelect:self.selectedTypeArray SelectName:self.selectedTypeName];
-
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

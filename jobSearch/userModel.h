@@ -120,4 +120,7 @@
 -(void)setImageFileURL:(NSMutableArray *)value;
 
 
+-(NSNumber *)getuserHeight;
+-(void)setuserHeight:(NSNumber *)value;
+
 @end

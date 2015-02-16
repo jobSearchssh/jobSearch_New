@@ -18,6 +18,7 @@
 
 //source images
 @property (nonatomic, retain) NSMutableArray *images;
+@property (nonatomic, retain) NSMutableArray *imagesURL;
 
 //images layers, to help remove previous sublayer
 @property (nonatomic, retain) NSMutableArray *imageLayers;
@@ -37,6 +38,7 @@
 //factory method
 + (id)coverFlowViewWithFrame:(CGRect)frame
                    andImages: (NSMutableArray *)rawImages
+                     andURLs: (NSMutableArray *)urls
               sideImageCount:(int) sideCount
               sideImageScale: (CGFloat) sideImageScale
             middleImageScale: (CGFloat) middleImageScale;

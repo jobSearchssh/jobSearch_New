@@ -20,6 +20,9 @@
                 <outlet property="schollNewOutlet" destination="Aen-HW-GDO" id="d0g-aS-y1K"/>
                 <outlet property="schoolOutlet" destination="Z9P-H8-02c" id="kYf-hg-8XQ"/>
                 <outlet property="scrollviewOutlet" destination="LYR-4Y-dxl" id="pL2-tR-QaR"/>
+                <outlet property="selectCityOutlet" destination="YEB-IW-weC" id="4GD-QT-V4g"/>
+                <outlet property="selectDisOutlet" destination="P0q-TT-quZ" id="JbW-8S-3Ks"/>
+                <outlet property="selectProOutlet" destination="fmb-Bw-HgG" id="8Vh-do-NW3"/>
                 <outlet property="selectfreetimeOutlet" destination="322-hg-gnc" id="Zb8-fd-4vb"/>
                 <outlet property="sexlabeloutlet" destination="xhh-22-rAt" id="7I9-GD-ojV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -134,6 +137,7 @@
                 </label>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入身高" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bek-Gy-MND">
                     <rect key="frame" x="93" y="100" width="444" height="17"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
@@ -166,6 +170,9 @@
                         <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="selectCityAction:" destination="-1" eventType="touchUpInside" id="M57-6a-k5F"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P0q-TT-quZ">
                     <rect key="frame" x="514" y="167" width="56" height="29"/>
@@ -174,6 +181,9 @@
                         <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="selectDisAction:" destination="-1" eventType="touchUpInside" id="fFy-yM-gPM"/>
+                    </connections>
                 </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入电话" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0ix-NE-xPQ">
                     <rect key="frame" x="93" y="210" width="477" height="17"/>
@@ -194,6 +204,9 @@
                         <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="selectProAction:" destination="-1" eventType="touchUpInside" id="de5-ek-aId"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
@@ -372,7 +385,7 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="还没填写" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7um-bT-bY5">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="userintention" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="还没填写" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7um-bT-bY5">
                     <rect key="frame" x="95" y="45" width="480" height="17"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>

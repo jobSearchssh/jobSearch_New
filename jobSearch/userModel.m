@@ -69,6 +69,7 @@
                     beiyong2 = [dictionary objectForKey:@"beiyong2"];
                     beiyong3 = [dictionary objectForKey:@"beiyong3"];
                     beiyong4 = [dictionary objectForKey:@"beiyong4"];
+                    userHeight = [dictionary objectForKey:@"userHeight"];
                     userGender = [dictionary objectForKey:@"userGender"];
                     NSString *tempstring = [dictionary objectForKey:@"userBirthday"];
                     @try {
@@ -141,6 +142,13 @@
         info = error;
     }
     return self;
+}
+
+-(NSNumber *)getuserHeight{
+    return userHeight;
+}
+-(void)setuserHeight:(NSNumber *)value{
+    userHeight = value;
 }
 
 
@@ -354,6 +362,9 @@
     if (userVideoURL != Nil) {
         [baseString appendFormat:@"&userVideoURL=%@",userVideoURL];
     }
+    if (userHeight != Nil) {
+        [baseString appendFormat:@"&userHeight=%@",userHeight];
+    }
     if (beiyong4 != Nil) {
         [baseString appendFormat:@"&beiyong4=%d",beiyong4.intValue];
     }
@@ -404,6 +415,7 @@
                 [temp appendFormat:@","];
             }
         }
+        NSLog(@"userFreeTime = %@",temp);
 //        [temp appendFormat:@"\""];
         [baseString appendFormat:@"&userFreeTime=%@",temp];
     }

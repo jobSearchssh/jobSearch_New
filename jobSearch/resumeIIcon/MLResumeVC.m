@@ -8,6 +8,7 @@
 
 #import "MLResumeVC.h"
 #import "AKPickerView.h"
+
 #define  PIC_WIDTH 60
 #define  PIC_HEIGHT 60
 #define  INSETS 10
@@ -15,6 +16,7 @@
 
 static NSString *scrollindentify = @"scrollviewdown";
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
+
 
 @interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate>{
     NSMutableArray *addedPicArray;
@@ -27,6 +29,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     QRadioButton *radio_female;
     
     NSString *fileTempPath;
+    NSMutableArray *typeArray;
+    
+    const NSArray *jobHopeTypeArray;
 }
 
 @property (nonatomic, strong) AKPickerView *pickerView;
@@ -55,6 +60,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UITextField *iphoneOutlet;
 @property (weak, nonatomic) IBOutlet UIButton *birthdayOutlet;
 - (IBAction)birthdayAction:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *selectProOutlet;
+- (IBAction)selectProAction:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *selectCityOutlet;
+- (IBAction)selectCityAction:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *selectDisOutlet;
+- (IBAction)selectDisAction:(UIButton *)sender;
+
+
 
 //page2
 @property (weak, nonatomic) IBOutlet UITextField *schoolOutlet;
@@ -83,6 +96,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //navigator
+    
+    jobHopeTypeArray = [[NSArray alloc]initWithObjects:@"模特/礼仪",@"促销/导购",@"销售",@"传单派发",@"安保",@"钟点工",@"法律事务",@"服务员",@"婚庆",@"配送/快递",@"化妆",@"护工/保姆",@"演出",@"问卷调查",@"志愿者",@"网络营销",@"导游",@"游戏代练",@"家教",@"软件/网站开发",@"会计",@"平面设计/制作",@"翻译",@"装修",@"影视制作",@"搬家",@"其他", nil];
 
     [self.navigationItem setTitle:@"新建简历"];
     
@@ -181,6 +196,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //text上移
     [self.heightOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     self.birthdayOutlet.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    
+    typeArray = Nil;
 
     //page2
     UIView *lineviewschool= [[UIView alloc] initWithFrame:CGRectMake(self.schoolOutlet.frame.origin.x, self.schoolOutlet.frame.origin.y+self.schoolOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 60, 1)];
@@ -280,6 +297,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                 [radio_female setChecked:TRUE];
             }
         }
+        //身高
+        if ([self.usermodel getuserHeight] != Nil) {
+            self.heightOutlet.text = [NSString stringWithFormat:@"%@",[self.usermodel getuserHeight]];
+        }
         //生日
         if ([self.usermodel getuserBirthday] != Nil) {
             NSString *birthdayTemp = [DateUtil birthdayStringFromDate:[self.usermodel getuserBirthday]];
@@ -289,10 +310,27 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         if ([self.usermodel getuserPhone] != Nil) {
             [self.iphoneOutlet setText:[self.usermodel getuserPhone]];
         }
+        //地区
+        if ([self.usermodel getuserProvince] != Nil) {
+            [self.selectProOutlet setTitle:[self.usermodel getuserProvince] forState:UIControlStateNormal];
+        }
+        if ([self.usermodel getuserCity] != Nil) {
+            [self.selectCityOutlet setTitle:[self.usermodel getuserCity] forState:UIControlStateNormal];
+        }
+        if ([self.usermodel getuserDistrict] != Nil) {
+            [self.selectDisOutlet setTitle:[self.usermodel getuserDistrict] forState:UIControlStateNormal];
+        }
         //求职意向
-//        if () {
-//            
-//        }
+        if ([self.usermodel getuserHopeJobType] != Nil) {
+            NSMutableString *usrintentionTemp = [[NSMutableString alloc]init];
+            NSMutableArray *usrintentionTempArray = [self.usermodel getuserHopeJobType];
+            for (NSNumber *index in usrintentionTempArray ) {
+                if (index.intValue>=0 && index.intValue<jobHopeTypeArray.count) {
+                    [usrintentionTemp appendFormat:@"%@,",[jobHopeTypeArray objectAtIndex:index.intValue]];
+                }
+            }
+            [self.intentionOutlet setText:usrintentionTemp];
+        }
         
         //空闲时间
         if ([self.usermodel getuserFreeTime] != Nil) {
@@ -320,7 +358,123 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
 }
 
+- (BOOL)validateMobile:(NSString *)mobileNum{
+    /**
+     * 手机号码
+     * 移动：134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188
+     * 联通：130,131,132,152,155,156,185,186
+     * 电信：133,1349,153,180,189
+     */
+    NSString * MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
+    /**
+     10         * 中国移动：China Mobile
+     11         * 134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188
+     12         */
+    NSString * CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+    /**
+     15         * 中国联通：China Unicom
+     16         * 130,131,132,152,155,156,185,186
+     17         */
+    NSString * CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+    /**
+     20         * 中国电信：China Telecom
+     21         * 133,1349,153,180,189
+     22         */
+    NSString * CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+    /**
+     25         * 大陆地区固话及小灵通
+     26         * 区号：010,020,021,022,023,024,025,027,028,029
+     27         * 号码：七位或八位
+     28         */
+    // NSString * PHS = @"^0(10|2[0-5789]|\\d{3})\\d{7,8}$";
+    
+    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
+    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];
+    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];
+    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];
+    
+    if (([regextestmobile evaluateWithObject:mobileNum] == YES)
+        || ([regextestcm evaluateWithObject:mobileNum] == YES)
+        || ([regextestct evaluateWithObject:mobileNum] == YES)
+        || ([regextestcu evaluateWithObject:mobileNum] == YES)){
+        return YES;
+    }
+    else{
+        return NO;
+    }
+}
+
+
 -(void)saveResume{
+    if (self.nameoutlet.text != Nil) {
+        [self.usermodel setuserName:self.nameoutlet.text];
+    }
+    
+    if (self.heightOutlet.text != Nil) {
+        NSNumber *temp = Nil;
+        @try {
+            temp = [NSNumber numberWithInt:self.heightOutlet.text.intValue];
+        }
+        @catch (NSException *exception) {
+            temp = Nil;
+        }
+        if (temp != Nil) {
+            [self.usermodel setuserHeight:temp];
+        }
+    }
+    
+    if (self.iphoneOutlet.text != Nil) {
+        if ([self validateMobile:self.iphoneOutlet.text]) {
+            [self.usermodel setuserPhone:self.iphoneOutlet.text];
+        }else{
+            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"电话号码错误" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            [alterTittle show];
+            return;
+        }
+    }
+    
+    if (typeArray != Nil) {
+        NSMutableArray *temp = [[NSMutableArray alloc]init];
+        for (NSString *value in typeArray) {
+            NSNumber *number = Nil;
+            @try {
+                number = [NSNumber numberWithInt:value.intValue];
+            }
+            @catch (NSException *exception) {
+                number = Nil;
+            }
+            if (number != Nil) {
+                [temp addObject:number];
+            }
+        }
+        [self.usermodel setuserHopeJobType:temp];
+    }
+    NSMutableArray *tempFreeTime = [[NSMutableArray alloc]init];
+    for (int index = 0; index<21 ; index++) {
+        
+        if (selectFreeData[index] == TRUE) {
+            [tempFreeTime addObject:[NSNumber numberWithInt:index]];
+        }
+    }
+    [self.usermodel setuserFreeTime:tempFreeTime];
+    
+    if (self.schollNewOutlet.text != Nil) {
+        [self.usermodel setuserSchool:self.schollNewOutlet.text];
+    }else{
+        [self.usermodel setuserSchool:@""];
+    }
+    
+    if (self.introductionmeOutlet.text != Nil) {
+        [self.usermodel setuserIntroduction:self.introductionmeOutlet.text];
+    }else{
+        [self.usermodel setuserIntroduction:@""];
+    }
+    
+    if (self.workexperienceOutlet.text) {
+        [self.usermodel setuserExperience:self.workexperienceOutlet.text];
+    }else{
+        [self.usermodel setuserExperience:@""];
+    }
     [netAPI editUserDetail:self.usermodel withBlock:^(userReturnModel *userReturnModel) {
         if ([userReturnModel getStatus].intValue == STATIS_OK) {
             UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"更新成功" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
@@ -364,14 +518,40 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.scrollviewOutlet setContentOffset:offset animated:YES];
     return YES;
 }
+
+- (void)finishSelect:(NSMutableArray *)type SelectName:(NSMutableArray *)nameArray{
+    if ([self.intentionOutlet isFirstResponder]) {
+        [self.intentionOutlet resignFirstResponder];
+    }
+    if([type count]>0){
+        typeArray=type;
+        
+        NSString *typeString=[[NSString alloc]init];
+        for (NSString *str in nameArray ) {
+            typeString=[typeString stringByAppendingString:[NSString stringWithFormat:@"%@,",str]];
+        }
+        self.intentionOutlet.text=[NSString stringWithFormat:@"%@",typeString];
+    }else{
+        self.intentionOutlet.text=@"全部";
+        [typeArray removeAllObjects];
+    }
+}
+
 //编辑上移
 -(void)textFieldOutletWork:(UITextField *)sender{
-    CGFloat yDiff = sender.frame.origin.y-sender.frame.size.height-10;
-    if (yDiff<10) {
-        return;
+    if ([[sender restorationIdentifier] isEqualToString:@"userintention"]) {
+        [sender resignFirstResponder];
+        MLSelectJobTypeVC *selectVC=[[MLSelectJobTypeVC alloc]init];
+        selectVC.selectDelegate=self;
+        [self.navigationController pushViewController:selectVC animated:YES];
+    }else{
+        CGFloat yDiff = sender.frame.origin.y-sender.frame.size.height-10;
+        if (yDiff<10) {
+            return;
+        }
+        CGPoint offset = CGPointMake([self.pickerView selectedItem]*[UIScreen mainScreen].bounds.size.width,yDiff);
+        [self.scrollviewOutlet setContentOffset:offset animated:YES];
     }
-    CGPoint offset = CGPointMake([self.pickerView selectedItem]*[UIScreen mainScreen].bounds.size.width,yDiff);
-    [self.scrollviewOutlet setContentOffset:offset animated:YES];
 }
 
 -(UIImage *)compressImage:(UIImage *)imgSrc size:(int)width
@@ -877,5 +1057,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
     }
     return cell;
+}
+- (IBAction)selectProAction:(UIButton *)sender {
+}
+- (IBAction)selectCityAction:(UIButton *)sender {
+}
+- (IBAction)selectDisAction:(UIButton *)sender {
 }
 @end

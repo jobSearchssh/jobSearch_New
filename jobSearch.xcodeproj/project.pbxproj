@@ -333,6 +333,7 @@
 		B77578DC1A7A9EF000660BB7 /* capture_rec_base@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B77578D91A7A9EF000660BB7 /* capture_rec_base@2x.png */; };
 		B77578DD1A7A9EF000660BB7 /* capture_rec_blink@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B77578DA1A7A9EF000660BB7 /* capture_rec_blink@2x.png */; };
 		B77578DE1A7A9EF000660BB7 /* capture_rec_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B77578DB1A7A9EF000660BB7 /* capture_rec_off@2x.png */; };
+		B778FA3A1A923DB600BD669A /* CALayer+urlImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B778FA391A923DB600BD669A /* CALayer+urlImage.m */; };
 		B7B8F7751A90DE69008F5BFE /* imageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B8F7741A90DE69008F5BFE /* imageButton.m */; };
 		B7B8F7781A90EA41008F5BFE /* UIImage+RTTint.m in Sources */ = {isa = PBXBuildFile; fileRef = B7B8F7771A90EA41008F5BFE /* UIImage+RTTint.m */; };
 		B7E9F8D31A8A466A004BC570 /* jobApplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E9F8D21A8A466A004BC570 /* jobApplyModel.m */; };
@@ -787,6 +788,8 @@
 		B77578D91A7A9EF000660BB7 /* capture_rec_base@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "capture_rec_base@2x.png"; sourceTree = "<group>"; };
 		B77578DA1A7A9EF000660BB7 /* capture_rec_blink@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "capture_rec_blink@2x.png"; sourceTree = "<group>"; };
 		B77578DB1A7A9EF000660BB7 /* capture_rec_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "capture_rec_off@2x.png"; sourceTree = "<group>"; };
+		B778FA381A923DB600BD669A /* CALayer+urlImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+urlImage.h"; sourceTree = "<group>"; };
+		B778FA391A923DB600BD669A /* CALayer+urlImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+urlImage.m"; sourceTree = "<group>"; };
 		B7B8F7731A90DE69008F5BFE /* imageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageButton.h; sourceTree = "<group>"; };
 		B7B8F7741A90DE69008F5BFE /* imageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imageButton.m; sourceTree = "<group>"; };
 		B7B8F7761A90EA41008F5BFE /* UIImage+RTTint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RTTint.h"; sourceTree = "<group>"; };
@@ -1539,6 +1542,8 @@
 				B77578BF1A7A912800660BB7 /* MLResumeVideoVC.xib */,
 				B7B8F7731A90DE69008F5BFE /* imageButton.h */,
 				B7B8F7741A90DE69008F5BFE /* imageButton.m */,
+				B778FA381A923DB600BD669A /* CALayer+urlImage.h */,
+				B778FA391A923DB600BD669A /* CALayer+urlImage.m */,
 				3BD4DC1C1A77C4B900B061D0 /* radioButton */,
 			);
 			name = resumeVC;
@@ -2095,6 +2100,7 @@
 				3B6993941A89E98E00A53760 /* UIWindow+RESideMenuExtensions.m in Sources */,
 				3BA484191A89E79C00B6A200 /* MLLoginVC.m in Sources */,
 				3BA483E11A89E70800B6A200 /* jobModel.m in Sources */,
+				B778FA3A1A923DB600BD669A /* CALayer+urlImage.m in Sources */,
 				3B85D8061A8A32FC0087ABEE /* RSCircaPageControl.m in Sources */,
 				3BA483C81A89E6C600B6A200 /* oprationResultModel.m in Sources */,
 				3B69938E1A89E98E00A53760 /* REBackgroundView.m in Sources */,

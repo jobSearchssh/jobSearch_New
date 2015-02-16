@@ -7,6 +7,7 @@
 //
 
 #import "coverFlowView.h"
+#import "CALayer+urlImage.h"
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
 
@@ -40,6 +41,7 @@
 @private
     
     NSMutableArray *_images;
+    NSMutableArray *_imagesURL;
     NSMutableArray *_imageLayers;
     NSMutableArray *_templateLayers;
     int _currentRenderingImageIndex;
@@ -51,6 +53,7 @@
 
 
 @synthesize images = _images;
+@synthesize imagesURL = _imagesURL;
 @synthesize imageLayers = _imageLayers;
 @synthesize templateLayers = _templateLayers;
 @synthesize currentRenderingImageIndex = _currentRenderingImageIndex;
@@ -122,6 +125,8 @@
             UIImage *candidateImage = [self.images objectAtIndex:self.currentRenderingImageIndex  + self.sideVisibleImageCount + 1];
             CALayer *candidateLayer = [CALayer layer];
             candidateLayer.contents = (__bridge id)candidateImage.CGImage;
+            NSString *url = [self.imagesURL objectAtIndex:self.currentRenderingImageIndex  + self.sideVisibleImageCount + 1];
+            [candidateLayer loadImageWithURL:url];
             CGFloat scale = self.sideVisibleImageScale;
             candidateLayer.bounds = CGRectMake(0, 0, candidateImage.size.width * scale, candidateImage.size.height * scale);
             [self.imageLayers addObject:candidateLayer];
@@ -149,6 +154,8 @@
             UIImage *candidateImage = [self.images objectAtIndex:self.currentRenderingImageIndex - 1 - self.sideVisibleImageCount];
             CALayer *candidateLayer = [CALayer layer];
             candidateLayer.contents = (__bridge id)candidateImage.CGImage;
+            NSString *url = [self.imagesURL objectAtIndex:self.currentRenderingImageIndex - 1 - self.sideVisibleImageCount];
+            [candidateLayer loadImageWithURL:url];
             CGFloat scale = self.sideVisibleImageScale;
             candidateLayer.bounds = CGRectMake(0, 0, candidateImage.size.width * scale, candidateImage.size.height * scale);
             [self.imageLayers insertObject:candidateLayer atIndex:0];
@@ -186,7 +193,7 @@
     
 }
 
-+ (id)coverFlowViewWithFrame:(CGRect)frame andImages:(NSMutableArray *)rawImages sideImageCount:(int)sideCount sideImageScale:(CGFloat)sideImageScale middleImageScale:(CGFloat)middleImageScale {
++ (id)coverFlowViewWithFrame:(CGRect)frame andImages: (NSMutableArray *)rawImages andURLs: (NSMutableArray *)urls sideImageCount:(int) sideCount sideImageScale: (CGFloat) sideImageScale middleImageScale: (CGFloat) middleImageScale {
     coverFlowView *flowView = [[coverFlowView alloc] initWithFrame:frame];
     
     flowView.sideVisibleImageCount = sideCount;
@@ -197,6 +204,7 @@
     flowView.currentRenderingImageIndex = (unsigned)rawImages.count/2;
     
     flowView.images = [NSMutableArray arrayWithArray:rawImages];
+    flowView.imagesURL = [NSMutableArray arrayWithArray:urls];
     flowView.imageLayers = [[NSMutableArray alloc] initWithCapacity:flowView.sideVisibleImageCount* 2 + 1];
     flowView.templateLayers = [[NSMutableArray alloc] initWithCapacity:(flowView.sideVisibleImageCount + 1)* 2 + 1];
     
@@ -276,6 +284,8 @@
         UIImage *image = [self.images objectAtIndex:i];
         CALayer *imageLayer = [CALayer layer];
         imageLayer.contents = (__bridge id)image.CGImage;
+        NSString *url = [self.imagesURL objectAtIndex:i];
+        [imageLayer loadImageWithURL:url];
         CGFloat scale = (i == self.currentRenderingImageIndex) ? self.middleImageScale : self.sideVisibleImageScale;
         imageLayer.bounds = CGRectMake(0, 0, image.size.width * scale, image.size.height*scale);
         [self.imageLayers addObject:imageLayer];

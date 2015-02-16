@@ -16,6 +16,7 @@
                 <outlet property="phoneOutlet" destination="O22-4o-SJ1" id="sab-Hx-HWr"/>
                 <outlet property="selectfreeCollectionOutlet" destination="eUe-3E-sas" id="1L7-nJ-1jl"/>
                 <outlet property="sexOutlet" destination="izg-pX-j6I" id="N95-kK-Ugi"/>
+                <outlet property="userHeightOutlet" destination="Pbu-Xm-azM" id="oPg-Wk-dqI"/>
                 <outlet property="userIntroductionOutlet" destination="XzT-3H-lSX" id="mPd-HB-XrY"/>
                 <outlet property="usrNameOutlet" destination="GQN-pg-ip7" id="SYK-uq-7jN"/>
                 <outlet property="usrinfo1Outlet" destination="x1u-RW-6aX" id="IVU-au-Ore"/>
