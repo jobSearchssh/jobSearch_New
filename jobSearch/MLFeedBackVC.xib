@@ -130,6 +130,9 @@
                             <include reference="jmm-WD-cEq"/>
                         </mask>
                     </variation>
+                    <connections>
+                        <action selector="sendFeedBack:" destination="-1" eventType="touchUpInside" id="DrG-mg-C7R"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -160,12 +163,12 @@
                     <exclude reference="J95-7C-Lhb"/>
                     <exclude reference="iIh-Bd-anL"/>
                     <exclude reference="lq2-8I-VGs"/>
-                    <exclude reference="6ve-44-ghs"/>
-                    <exclude reference="XxF-CN-oBt"/>
-                    <exclude reference="tM8-MS-Me0"/>
                     <exclude reference="OIT-0r-Gaw"/>
                     <exclude reference="ebc-wh-j2I"/>
                     <exclude reference="nby-ZV-5H0"/>
+                    <exclude reference="6ve-44-ghs"/>
+                    <exclude reference="XxF-CN-oBt"/>
+                    <exclude reference="tM8-MS-Me0"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -178,12 +181,12 @@
                     <include reference="J95-7C-Lhb"/>
                     <include reference="iIh-Bd-anL"/>
                     <include reference="lq2-8I-VGs"/>
-                    <include reference="6ve-44-ghs"/>
-                    <include reference="XxF-CN-oBt"/>
-                    <include reference="tM8-MS-Me0"/>
                     <include reference="OIT-0r-Gaw"/>
                     <include reference="ebc-wh-j2I"/>
                     <include reference="nby-ZV-5H0"/>
+                    <include reference="6ve-44-ghs"/>
+                    <include reference="XxF-CN-oBt"/>
+                    <include reference="tM8-MS-Me0"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="305" y="420"/>

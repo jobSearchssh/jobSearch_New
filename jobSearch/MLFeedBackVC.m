@@ -8,8 +8,11 @@
 
 #import "MLFeedBackVC.h"
 #import "CWStarRateView.h"
+#import "UMFeedback.h"
+#import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
 
-@interface MLFeedBackVC ()<CWStarRateViewDelegate>
+@interface MLFeedBackVC ()<CWStarRateViewDelegate,UMFeedbackDataDelegate>
 {
     float value;
     CGRect rect1;
@@ -18,6 +21,7 @@
 @property (strong, nonatomic) CWStarRateView *starRateView1;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraint;
+@property (strong, nonatomic) UMFeedback *feedback;
 @end
 
 @implementation MLFeedBackVC
@@ -44,14 +48,32 @@ static  MLFeedBackVC *thisVC=nil;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillhide:) name:UIKeyboardWillHideNotification object:nil];
-
+    
+    self.feedback = [UMFeedback sharedInstance];
+    self.feedback.delegate = self;
 }
 
+- (IBAction)sendFeedBack:(id)sender {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSString *feedBackString=[NSString stringWithFormat:@"评分：%.1f  评价：%@",value,self.textView.text];
+    NSDictionary *postContent = @{@"content":feedBackString};
+    [self.feedback post:postContent];
+}
+
+- (void)postFinishedWithError:(NSError *)error {
+    
+    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+    
+    if (error != nil) {
+        [MBProgressHUD showError:@"反馈提交失败" toView:self.view];
+    } else {
+        [MBProgressHUD showSuccess:@"反馈提交成功" toView:self.view];
+    }
+    
+}
 
 - (void)starRateView:(CWStarRateView *)starRateView scroePercentDidChange:(CGFloat)newScorePercent{
-
     value=starRateView.scorePercent*5;
-    
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -61,7 +83,6 @@ static  MLFeedBackVC *thisVC=nil;
 - (void)keyboardWillShow:(NSNotification *)notification{
     
     [UIView animateWithDuration:0.3 animations:^{
-        
         self.constraint.constant=-30;
     }];
 }
@@ -71,7 +92,6 @@ static  MLFeedBackVC *thisVC=nil;
     [UIView animateWithDuration:0.3 animations:^{
         self.constraint.constant=80;
     }];
-    
 }
 
 
