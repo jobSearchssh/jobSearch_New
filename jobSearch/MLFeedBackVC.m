@@ -17,6 +17,7 @@
     float value;
     CGRect rect1;
 }
+
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) CWStarRateView *starRateView1;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
@@ -69,7 +70,6 @@ static  MLFeedBackVC *thisVC=nil;
     } else {
         [MBProgressHUD showSuccess:@"反馈提交成功" toView:self.view];
     }
-    
 }
 
 - (void)starRateView:(CWStarRateView *)starRateView scroePercentDidChange:(CGFloat)newScorePercent{

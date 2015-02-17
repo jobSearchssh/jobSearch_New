@@ -8,6 +8,10 @@
 
 #import "MLResumeVC.h"
 #import "AKPickerView.h"
+#import "HZAreaPickerView.h"
+#import "AJLocationManager.h"
+#import <AMapSearchKit/AMapSearchAPI.h>
+#import <MAMapKit/MAMapKit.h>
 
 #define  PIC_WIDTH 60
 #define  PIC_HEIGHT 60
@@ -18,13 +22,13 @@ static NSString *scrollindentify = @"scrollviewdown";
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 
-@interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate>{
+@interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate,HZAreaPickerDelegate,AMapSearchDelegate>{
     NSMutableArray *addedPicArray;
     NSArray *selectfreetimetitleArray;
     NSArray *selectfreetimepicArray;
     bool selectFreeData[21];
     CGFloat freecellwidth;
-
+    
     QRadioButton *radio_male;
     QRadioButton *radio_female;
     
@@ -32,12 +36,25 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSMutableArray *typeArray;
     
     const NSArray *jobHopeTypeArray;
-}
+    
+    UIAlertController *birthDayActionView;
+    UIDatePicker *birthDatPicker;
+    
+    NSString *province;
+    NSString *city;
+    NSString *district;
+    NSString *detailAddress;
+    
+    AMapSearchAPI *search;}
 
 @property (nonatomic, strong) AKPickerView *pickerView;
 @property (nonatomic, strong) NSArray *titles;
 @property (weak, nonatomic) IBOutlet UIView *containTopView;
 @property (weak, nonatomic) IBOutlet UIView *indicatorcontainview;
+
+@property (weak, nonatomic) IBOutlet UIButton *selectCityOutlet;
+@property (weak, nonatomic) IBOutlet UITextField *detailAddressTextfield;
+@property (weak, nonatomic) IBOutlet UITextField *iphoneOutlet;
 
 
 @property (nonatomic, strong) MCPagerView *pageIndicator;
@@ -57,16 +74,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UILabel *sexlabeloutlet;
 @property (weak, nonatomic) IBOutlet UITextField *nameoutlet;
 @property (weak, nonatomic) IBOutlet UITextField *heightOutlet;
-@property (weak, nonatomic) IBOutlet UITextField *iphoneOutlet;
+
 @property (weak, nonatomic) IBOutlet UIButton *birthdayOutlet;
 - (IBAction)birthdayAction:(UIButton *)sender;
-@property (weak, nonatomic) IBOutlet UIButton *selectProOutlet;
-- (IBAction)selectProAction:(UIButton *)sender;
-@property (weak, nonatomic) IBOutlet UIButton *selectCityOutlet;
-- (IBAction)selectCityAction:(UIButton *)sender;
-@property (weak, nonatomic) IBOutlet UIButton *selectDisOutlet;
-- (IBAction)selectDisAction:(UIButton *)sender;
-
 
 
 //page2
@@ -87,6 +97,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UITextField *workexperienceOutlet;
 @property (weak, nonatomic) IBOutlet UITextField *schollNewOutlet;
 
+@property (strong, nonatomic) HZAreaPickerView *locatePicker;
 
 @end
 
@@ -98,12 +109,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //navigator
     
     jobHopeTypeArray = [[NSArray alloc]initWithObjects:@"模特/礼仪",@"促销/导购",@"销售",@"传单派发",@"安保",@"钟点工",@"法律事务",@"服务员",@"婚庆",@"配送/快递",@"化妆",@"护工/保姆",@"演出",@"问卷调查",@"志愿者",@"网络营销",@"导游",@"游戏代练",@"家教",@"软件/网站开发",@"会计",@"平面设计/制作",@"翻译",@"装修",@"影视制作",@"搬家",@"其他", nil];
-
+    
     [self.navigationItem setTitle:@"新建简历"];
     
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(saveResume)];
     [self.navigationItem.rightBarButtonItem setTitle:@"保存"];
-
+    
     //上部分
     self.pickerView = [[AKPickerView alloc] initWithFrame:self.containTopView.bounds];
     self.pickerView.delegate = self;
@@ -128,8 +139,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //indicator
     self.pageIndicator = [[MCPagerView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 - 44, self.pageIndicator.frame.origin.y,100, self.indicatorcontainview.frame.size.height-5)];
     [self.pageIndicator setImage:[self compressImage:[UIImage imageNamed:@"mark1"] size:14]
-       highlightedImage:[self compressImage:[UIImage imageNamed:@"mark2"] size:14]
-                 forKey:@"a"];
+                highlightedImage:[self compressImage:[UIImage imageNamed:@"mark2"] size:14]
+                          forKey:@"a"];
     [self.pageIndicator setPattern:@"aaaa"];
     
     self.pageIndicator.delegate = self;
@@ -149,7 +160,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [radio_male.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
     [radio_male setStatus:maleStatus];
     [self.view1outlet addSubview:radio_male];
-//    [_radio1 setChecked:YES];
+    //    [_radio1 setChecked:YES];
     
     radio_female = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
     radio_female.frame = CGRectMake(radio_male.frame.origin.x+radio_male.frame.size.width, self.sexlabeloutlet.frame.origin.y-10, 70, 40);
@@ -159,12 +170,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [radio_female setStatus:femaleStatus];
     [self.view1outlet addSubview:radio_female];
     
-//    QRadioButton *_radio3 = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
-//    _radio3.frame = CGRectMake(_radio2.frame.origin.x+_radio2.frame.size.width, self.sexlabeloutlet.frame.origin.y-10, 70, 40);
-//    [_radio3 setTitle:@"不限" forState:UIControlStateNormal];
-//    [_radio3 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-//    [_radio3.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
-//    [self.view1outlet addSubview:_radio3];
+    //    QRadioButton *_radio3 = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
+    //    _radio3.frame = CGRectMake(_radio2.frame.origin.x+_radio2.frame.size.width, self.sexlabeloutlet.frame.origin.y-10, 70, 40);
+    //    [_radio3 setTitle:@"不限" forState:UIControlStateNormal];
+    //    [_radio3 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    //    [_radio3.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
+    //    [self.view1outlet addSubview:_radio3];
     
     UIView *lineviewname = [[UIView alloc] initWithFrame:CGRectMake(self.nameoutlet.frame.origin.x, self.nameoutlet.frame.origin.y+self.nameoutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 125, 1)];
     lineviewname.alpha = 0.5;
@@ -186,19 +197,30 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     lineviewbirthday.backgroundColor = [UIColor grayColor];
     [self.view1outlet addSubview:lineviewbirthday];
     
+    UIView *lineviewAddress= [[UIView alloc] initWithFrame:CGRectMake(self.detailAddressTextfield.frame.origin.x, self.detailAddressTextfield.frame.origin.y+self.detailAddressTextfield.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 125, 1)];
+    lineviewAddress.alpha = 0.5;
+    lineviewAddress.backgroundColor = [UIColor grayColor];
+    [self.view1outlet addSubview:lineviewAddress];
+    
+    UIView *lineviewCity= [[UIView alloc] initWithFrame:CGRectMake(self.selectCityOutlet.frame.origin.x, self.selectCityOutlet.frame.origin.y+self.selectCityOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 125, 1)];
+    lineviewCity.alpha = 0.5;
+    lineviewCity.backgroundColor = [UIColor grayColor];
+    [self.view1outlet addSubview:lineviewCity];
+    
     self.nameoutlet.delegate = self;
     self.iphoneOutlet.delegate = self;
     self.heightOutlet.delegate = self;
+    self.detailAddressTextfield.delegate=self;
     //text上移
     [self.nameoutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     //text上移
     [self.iphoneOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     //text上移
     [self.heightOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
-    self.birthdayOutlet.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    
+    self.birthdayOutlet.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [self.detailAddressTextfield addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     typeArray = Nil;
-
+    
     //page2
     UIView *lineviewschool= [[UIView alloc] initWithFrame:CGRectMake(self.schoolOutlet.frame.origin.x, self.schoolOutlet.frame.origin.y+self.schoolOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 60, 1)];
     lineviewschool.alpha = 0.5;
@@ -217,8 +239,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.picscrollview addSubview:btnPic];
     [btnPic addTarget:self action:@selector(addPicAction:) forControlEvents:UIControlEventTouchUpInside];
     [self refreshScrollView];
-    
-    
     
     
     //page4
@@ -310,16 +330,24 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         if ([self.usermodel getuserPhone] != Nil) {
             [self.iphoneOutlet setText:[self.usermodel getuserPhone]];
         }
+        
         //地区
-        if ([self.usermodel getuserProvince] != Nil) {
-            [self.selectProOutlet setTitle:[self.usermodel getuserProvince] forState:UIControlStateNormal];
-        }
         if ([self.usermodel getuserCity] != Nil) {
-            [self.selectCityOutlet setTitle:[self.usermodel getuserCity] forState:UIControlStateNormal];
+            province=[self.usermodel getuserProvince];
+            city=[self.usermodel getuserCity];
+            district=[self.usermodel getuserDistrict];
+            NSString *addr=[NSString stringWithFormat:@"%@%@%@",province,city,district];
+            [self.selectCityOutlet setTitle:addr forState:UIControlStateNormal];
+            
+            if ([self.usermodel getuserAddressDetail]) {
+                detailAddress=[self.usermodel getuserAddressDetail];
+                self.detailAddressTextfield.text=detailAddress;
+            }
+            
+        }else{
+            [self searchCity];
         }
-        if ([self.usermodel getuserDistrict] != Nil) {
-            [self.selectDisOutlet setTitle:[self.usermodel getuserDistrict] forState:UIControlStateNormal];
-        }
+        
         //求职意向
         if ([self.usermodel getuserHopeJobType] != Nil) {
             NSMutableString *usrintentionTemp = [[NSMutableString alloc]init];
@@ -356,6 +384,31 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }else{
         self.usermodel = [[userModel alloc]init];
     }
+    
+    //生日选择picker
+    if (!birthDayActionView) {
+        birthDayActionView=[UIAlertController alertControllerWithTitle:@"请选择出生年月\n\n\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *archiveAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            NSString *birthdayTemp = [DateUtil birthdayStringFromDate:birthDatPicker.date];
+            
+            [self.birthdayOutlet setTitle:birthdayTemp forState:UIControlStateNormal];
+        }];
+        
+        [birthDayActionView addAction:cancelAction];
+        [birthDayActionView addAction:archiveAction];
+    }
+    if (!birthDatPicker) {
+        birthDatPicker=[[UIDatePicker alloc]initWithFrame:CGRectMake(0,30,[[UIScreen mainScreen] bounds].size.width,100)];
+        [birthDatPicker setDatePickerMode:UIDatePickerModeDate];
+    }
+    if (self.usermodel.getuserBirthday) {
+        [birthDatPicker setDate:self.usermodel.getuserBirthday animated:YES];
+    }else
+        [birthDatPicker setDate:[NSDate date] animated:YES];
+    
+    [birthDayActionView.view addSubview:birthDatPicker];
 }
 
 - (BOOL)validateMobile:(NSString *)mobileNum{
@@ -475,6 +528,28 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }else{
         [self.usermodel setuserExperience:@""];
     }
+    
+    if (birthDatPicker.date) {
+        [self.usermodel setuserBirthday:birthDatPicker.date];
+    }
+    
+    if (province) {
+        [self.usermodel setuserProvince:province];
+    }
+    
+    if (city) {
+        [self.usermodel setuserCity:city];
+    }
+    
+    if (district) {
+        [self.usermodel setuserDistrict:district];
+    }
+    
+    detailAddress=self.detailAddressTextfield.text;
+    if (detailAddress) {
+        [self.usermodel setuserAddressDetail:detailAddress];
+    }
+    
     [netAPI editUserDetail:self.usermodel withBlock:^(userReturnModel *userReturnModel) {
         if ([userReturnModel getStatus].intValue == STATIS_OK) {
             UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"更新成功" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
@@ -493,6 +568,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     if ([self.iphoneOutlet isFirstResponder]) {
         [self.iphoneOutlet resignFirstResponder];
+    }
+    if ([self.detailAddressTextfield isFirstResponder]) {
+        [self.detailAddressTextfield resignFirstResponder];
     }
     if ([self.heightOutlet isFirstResponder]) {
         [self.heightOutlet resignFirstResponder];
@@ -657,10 +735,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     [self.view5outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 3, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     
-//    [self.view5outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 4, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    //    [self.view5outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 4, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     
     [self.scrollviewOutlet addSubview:self.view1outlet];
-//    [self.scrollviewOutlet addSubview:self.view2outlet];
+    //    [self.scrollviewOutlet addSubview:self.view2outlet];
     [self.scrollviewOutlet addSubview:self.view4outlet];
     [self.scrollviewOutlet addSubview:self.view3outlet];
     [self.scrollviewOutlet addSubview:self.view5outlet];
@@ -726,7 +804,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.scrollviewOutlet setContentOffset:offset animated:YES];
     self.pageIndicator.page = nextpage;
     [self.pickerView selectItem:nextpage animated:YES];
-
+    
 }
 
 
@@ -734,7 +812,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 #pragma mark - QRadioButtonDelegate
 
 - (void)didSelectedRadioButton:(QRadioButton *)radio groupId:(NSString *)groupId {
-//    NSLog(@"did selected radio:%@ groupId:%@ status:%d", radio.titleLabel.text, groupId,[radio getStatus]);
+    //    NSLog(@"did selected radio:%@ groupId:%@ status:%d", radio.titleLabel.text, groupId,[radio getStatus]);
     if ([radio getStatus] == maleStatus) {
         [self.usermodel setuserGender:[NSNumber numberWithInt:maleStatus]];
     }
@@ -744,7 +822,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 - (IBAction)birthdayAction:(UIButton *)sender {
-    
+    [self presentViewController:birthDayActionView animated:YES completion:nil];
+}
+
+- (IBAction)selectCityAction:(id)sender {
+    [self cancelLocatePicker];
+    self.locatePicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];
+    [self.locatePicker showInView:self.view];
 }
 
 //page3
@@ -798,6 +882,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             return;
         }
     }
+    else if (actionSheet.tag==1) {
+        
+    }
 }
 
 //action响应事件
@@ -823,7 +910,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 //图片获取
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo{
-
+    
     UIImage *temp = image;
     if (image.size.height > PIC_HEIGHT || image.size.width>PIC_WIDTH) {
         float a = image.size.height>image.size.width?image.size.height:image.size.width;
@@ -1058,10 +1145,66 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     return cell;
 }
-- (IBAction)selectProAction:(UIButton *)sender {
+
+
+#pragma mark - HZAreaPicker delegate
+-(void)pickerDidChaneStatus:(HZAreaPickerView *)picker
+{
+    province=picker.locate.state;
+    city=picker.locate.city;
+    district=picker.locate.district;
+    NSString *addr=[NSString stringWithFormat:@"%@%@%@",province,city,district];
+    [self.selectCityOutlet setTitle:addr forState:UIControlStateNormal];
+    
 }
-- (IBAction)selectCityAction:(UIButton *)sender {
+
+-(void)cancelLocatePicker
+{
+    [self.locatePicker cancelPicker];
+    self.locatePicker.delegate = nil;
+    self.locatePicker = nil;
 }
-- (IBAction)selectDisAction:(UIButton *)sender {
+
+//GPS 定位
+- (void)searchCity
+{
+    //获得用户位置信息
+    [[AJLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
+        
+        [MAMapServices sharedServices].apiKey =@"c38130d72c3068f07be6c23c7e791f47";
+        
+        if (!search) {
+            search=[[AMapSearchAPI alloc] initWithSearchKey:@"c38130d72c3068f07be6c23c7e791f47" Delegate:self];
+            search.delegate=self;
+        }
+        
+        AMapReGeocodeSearchRequest *regeoRequest = [[AMapReGeocodeSearchRequest alloc] init];
+        regeoRequest.searchType = AMapSearchType_ReGeocode;
+        regeoRequest.location = [AMapGeoPoint locationWithLatitude:locationCorrrdinate.latitude longitude:locationCorrrdinate.longitude];
+        regeoRequest.radius = 10000;
+        regeoRequest.requireExtension = YES;
+        
+        [search AMapReGoecodeSearch: regeoRequest];
+    }];
 }
+
+- (void)onReGeocodeSearchDone:(AMapReGeocodeSearchRequest *)request response:(AMapReGeocodeSearchResponse *)response
+{
+    if (response) {
+        
+        if([response.regeocode.addressComponent.province length]>0)
+            province=response.regeocode.addressComponent.province;
+        
+        if ([response.regeocode.addressComponent.city length]>0)
+            city=response.regeocode.addressComponent.city;
+        
+        if ([response.regeocode.addressComponent.city length]>0)
+            district=response.regeocode.addressComponent.district;
+        
+        NSString *addr=[NSString stringWithFormat:@"%@%@%@",province,city,district];
+        [self.selectCityOutlet setTitle:addr forState:UIControlStateNormal];
+    }
+    
+}
+
 @end
