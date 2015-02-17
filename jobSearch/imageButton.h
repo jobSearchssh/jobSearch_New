@@ -14,8 +14,11 @@
 
 @interface imageButton : UIButton{
     int status;
+    NSString *buttomURL;
 }
-
+-(void)seturl:(NSString *)value;
+-(NSString *)geturl;
 -(int)getStatus;
 -(void)setStatus:(int)value;
+-(void)loadImageWithURL:(NSString *)url;
 @end

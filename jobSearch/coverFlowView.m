@@ -28,7 +28,7 @@
 //empty imagelayers
 -(void)cleanImageLayers;
 //add reflections
--(void)showImageAndReflection:(CALayer *)layer;
+- (void)showImageAndReflection:(CALayer*)layer withURL:(NSString *)url;
 //adjust the bounds
 -(void)scaleBounds: (CALayer *) layer x:(CGFloat)scaleWidth y:(CGFloat)scaleHeight;
 //add uipagecontrol
@@ -137,7 +137,7 @@
             candidateLayer.transform = template.transform;
             
             //show the layer
-            [self showImageAndReflection:candidateLayer];
+            [self showImageAndReflection:candidateLayer withURL:url];
         }
         
     }else{//if the right, then move the rightest layer and insert one to left (if left is full)
@@ -166,7 +166,7 @@
             candidateLayer.transform = template.transform;
             
             //show the layer
-            [self showImageAndReflection:candidateLayer];
+            [self showImageAndReflection:candidateLayer withURL:url];
         }
         
     }
@@ -302,18 +302,20 @@
         imageLayer.zPosition = correspondingTemplateLayer.zPosition;
         imageLayer.transform = correspondingTemplateLayer.transform;
         //show its reflections
-        [self showImageAndReflection:imageLayer];
+        NSString *url = [self.imagesURL objectAtIndex:i];
+        [self showImageAndReflection:imageLayer withURL:url];
     }
     
 }
 
 // 添加layer及其“倒影”
-- (void)showImageAndReflection:(CALayer*)layer
+- (void)showImageAndReflection:(CALayer*)layer withURL:(NSString *)url
 {
     
     // 制作reflection
     CALayer *reflectLayer = [CALayer layer];
     reflectLayer.contents = layer.contents;
+    [reflectLayer loadImageWithURL:url];
     reflectLayer.bounds = layer.bounds;
     reflectLayer.position = CGPointMake(layer.bounds.size.width/2, layer.bounds.size.height*1.5);
     reflectLayer.transform = CATransform3DMakeRotation(M_PI, 1, 0, 0);

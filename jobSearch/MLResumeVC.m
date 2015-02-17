@@ -45,7 +45,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSString *district;
     NSString *detailAddress;
     
-    AMapSearchAPI *search;}
+    AMapSearchAPI *search;
+
+}
 
 @property (nonatomic, strong) AKPickerView *pickerView;
 @property (nonatomic, strong) NSArray *titles;
@@ -381,6 +383,39 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         if ([self.usermodel getuserExperience] != Nil) {
             [self.workexperienceOutlet setText:[self.usermodel getuserExperience]];
         }
+        //已有图片列表
+        if ([self.usermodel getImageFileURL] != Nil) {
+            for (NSString *url in [self.usermodel getImageFileURL]) {
+                //添加图片
+                imageButton *btnPic=[[imageButton alloc]initWithFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
+                btnPic.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+                btnPic.titleLabel.font = [UIFont systemFontOfSize:13];
+                CGSize size = CGSizeMake(PIC_HEIGHT, PIC_HEIGHT);
+                UIImage *temp = [self scaleToSize:[UIImage imageNamed:@"placeholder"] size:size];
+                [btnPic setBackgroundImage:temp forState:UIControlStateNormal];
+                [btnPic setFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
+                [addedPicArray addObject:btnPic];
+                [btnPic setRestorationIdentifier:[NSString stringWithFormat:@"%lu",(unsigned long)addedPicArray.count-1]];
+                [btnPic addTarget:self action:@selector(deletePicAction:) forControlEvents:UIControlEventTouchUpInside];
+                [btnPic setStatus:fromNet];
+                [btnPic seturl:url];
+                [btnPic loadImageWithURL:url];
+                [self.picscrollview addSubview:btnPic];
+                
+                for (imageButton *btn in addedPicArray) {
+                    CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
+                    [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x, btn.center.y)]];
+                    [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)]];
+                    [positionAnim setDelegate:self];
+                    [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+                    [positionAnim setDuration:0.25f];
+                    [btn.layer addAnimation:positionAnim forKey:nil];
+                    
+                    [btn setCenter:CGPointMake(btn.center.x+INSETS+PIC_WIDTH, btn.center.y)];
+                }
+                [self refreshScrollView];
+            }
+        }
     }else{
         self.usermodel = [[userModel alloc]init];
     }
@@ -409,6 +444,20 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [birthDatPicker setDate:[NSDate date] animated:YES];
     
     [birthDayActionView.view addSubview:birthDatPicker];
+}
+
+- (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
+    // 创建一个bitmap的context
+    // 并把它设置成为当前正在使用的context
+    UIGraphicsBeginImageContext(size);
+    // 绘制改变大小的图片
+    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    // 从当前context中创建一个改变大小后的图片
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    // 使当前的context出堆栈
+    UIGraphicsEndImageContext();
+    // 返回新的改变大小后的图片
+    return scaledImage;
 }
 
 - (BOOL)validateMobile:(NSString *)mobileNum{
@@ -548,6 +597,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     detailAddress=self.detailAddressTextfield.text;
     if (detailAddress) {
         [self.usermodel setuserAddressDetail:detailAddress];
+    }
+    if (addedPicArray != Nil) {
+        NSMutableArray *tempArray = [[NSMutableArray alloc]init];
+        for (int index=1 ; index<addedPicArray.count ; index++ ) {
+            imageButton *btn = [addedPicArray objectAtIndex:index];
+            NSString *tempURL = [btn geturl];
+            [tempArray addObject:tempURL];
+        }
+        [self.usermodel setImageFileURL:tempArray];
     }
     
     [netAPI editUserDetail:self.usermodel withBlock:^(userReturnModel *userReturnModel) {
@@ -968,9 +1026,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                                   if ([self.usermodel getImageFileURL] == Nil) {
                                                       [self.usermodel setImageFileURL:[[NSMutableArray alloc]init]];
                                                   }
-                                                  [[self.usermodel getImageFileURL] addObject:imageTemp];
                                                   [btnPic setStatus:uploadOK];
-                                                  
+                                                  [btnPic seturl:imageTemp];
                                                   [btnPic setTitle:@"" forState:UIControlStateNormal];
                                                   [btnPic setBackgroundImage:temp forState:UIControlStateNormal];
                                                   [MBProgressHUD showError:@"上传成功" toView:self.view];
