@@ -602,8 +602,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         NSMutableArray *tempArray = [[NSMutableArray alloc]init];
         for (int index=1 ; index<addedPicArray.count ; index++ ) {
             imageButton *btn = [addedPicArray objectAtIndex:index];
-            NSString *tempURL = [btn geturl];
-            [tempArray addObject:tempURL];
+            if ([btn getStatus] == uploadOK || [btn getStatus] == fromNet) {
+                NSString *tempURL = [btn geturl];
+                if (tempURL != Nil) {
+                    [tempArray addObject:tempURL];
+                }
+            }
         }
         [self.usermodel setImageFileURL:tempArray];
     }
@@ -971,8 +975,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     UIImage *temp = image;
     if (image.size.height > PIC_HEIGHT || image.size.width>PIC_WIDTH) {
-        float a = image.size.height>image.size.width?image.size.height:image.size.width;
-        temp = [self scaleImage:image toScale:320/a];
+        CGSize size = CGSizeMake(320, 320);
+        temp = [self scaleToSize:image size:size];
     }
     picker = Nil;
     [self dismissModalViewControllerAnimated:YES];
