@@ -37,8 +37,6 @@
     BOOL headerRefreshing;
     BOOL footerRefreshing;
     
-    BOOL searchViewDisplaying;
-    
     BOOL refreshAdded;
     
     AMapSearchAPI *search;
@@ -52,6 +50,8 @@
     CLLocationCoordinate2D locationCoord;
     int distance;
     NSMutableArray *jobTypeArray;
+    
+    UIView *touchView;
 }
 
 @property (weak, nonatomic) IBOutlet UITabBar *tabbar;
@@ -103,7 +103,7 @@ static  MLFirstVC *thisVC=nil;
     
     searchView = [[NiftySearchView alloc] initWithFrame:CGRectMake(0, -76, [[UIScreen mainScreen] bounds].size.width, 76)];
     searchView.delegate = self;
-    searchViewDisplaying=NO;
+
     [_tableView addSubview:searchView];
     searchView.alpha=0.0f;
     self.navigationController.navigationBar.translucent=NO;
@@ -123,6 +123,10 @@ static  MLFirstVC *thisVC=nil;
     
     [self searchCity];
     
+    touchView=[[UIView alloc]initWithFrame:CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-108)];
+    touchView.backgroundColor=[UIColor clearColor];
+    UITapGestureRecognizer *Gesture1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideTouchView)];
+    [touchView addGestureRecognizer:Gesture1];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -527,16 +531,25 @@ static  MLFirstVC *thisVC=nil;
     } else {
         searchView.startTextField.textColor = [UIColor blackColor];
     }
-    searchViewDisplaying=YES;
+
     CGRect searchBarFrame = searchView.frame;
     searchBarFrame.origin.y = 0;
     [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          searchView.frame = searchBarFrame;
+                         [self.view addSubview:touchView];
                      }
                      completion:^(BOOL completion) {
                          [searchView.finishTextField becomeFirstResponder];
                      }];
+}
+
+- (void)hideTouchView{
+    [self hideSearchBar:self];
+    [UIView animateWithDuration:0.4 animations:^{
+        searchView.alpha=0.0f;
+    }];
+    [touchView removeFromSuperview];
 }
 
 #pragma mark -
@@ -560,16 +573,6 @@ static  MLFirstVC *thisVC=nil;
     }];
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    if (searchViewDisplaying) {
-        [self hideSearchBar:self];
-        [UIView animateWithDuration:0.4 animations:^{
-            searchView.alpha=0.0f;
-        }];
-    }
-}
-
-
 - (void)routeButtonClicked:(UITextField *)startTextField finishTextField:(UITextField *)finishTextField
 {
     firstLoad=YES;
@@ -589,7 +592,6 @@ static  MLFirstVC *thisVC=nil;
                          searchView.frame = searchBarFrame;
                      }
                      completion:^(BOOL completion){
-                         searchViewDisplaying=NO;
                      }];
 }
 
@@ -710,7 +712,6 @@ static  MLFirstVC *thisVC=nil;
     detailVC.hidesBottomBarWhenPushed=YES;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"";
-    //backItem.tintColor=[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:50.0/255.0 alpha:1.0];
     self.navigationItem.backBarButtonItem = backItem;
     
     [self.navigationController pushViewController:detailVC animated:YES];

@@ -9,12 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "jobModel.h"
 
+@protocol childViewDelegate <NSObject>
+@required
+- (void)deleteJob:(int)index;
+@end
+
 @interface PiPeiView : UIViewController
-{
-    
-}
 
 
 @property (strong, nonatomic) jobModel *jobModel;
+@property (strong, nonatomic)id <childViewDelegate>childViewDelegate;
+@property (nonatomic) int index;
 - (void)initData;
+
 @end

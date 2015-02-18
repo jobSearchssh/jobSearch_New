@@ -75,12 +75,16 @@
        }
         RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:title setFlag:USRCELL setSubtitle:subtitle  image:image highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
             
+            NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+            NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+            
             if ([currentUserObjectId length]>0) {
                 UIAlertView *logoutAlert=[[UIAlertView alloc] initWithTitle:@"确定要退出该账号？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
                 [logoutAlert show];
             }else{
                 [menu hide];
                 MLLoginVC *viewController = [[MLLoginVC alloc] init];
+
                 [currentnavigationController pushViewController:viewController animated:YES];
             }
             

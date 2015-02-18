@@ -416,7 +416,7 @@ static  MLLoginVC *thisVC=nil;
     
 }
 - (void)checkFinishedInput{
-    
+
     if ([inputUserPhoneNumber length]==11&&[inputSecurityCode length]>0&&[inputUserPassword1 isEqualToString:inputUserPassword2]&&agree) {
         [self startRegisting];
     }else{

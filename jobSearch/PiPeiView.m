@@ -10,9 +10,12 @@
 #import "PopoverView.h"
 #import "freeselectViewCell.h"
 #import "AsyncImageView.h"
-
+#import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
+#import "netAPI.h"
 
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
+static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 @interface PiPeiView ()<PopoverViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -54,11 +57,23 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 - (IBAction)delete:(id)sender {
-    
+    [self.childViewDelegate deleteJob:self.index];
 }
 
 - (IBAction)apply:(id)sender {
-    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [netAPI applyTheJob:userId jobID:self.jobModel.getjobID withBlock:^(jobApplyModel *oprationResultModel) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        if (![oprationResultModel.getStatus intValue]==0) {
+            NSString *err=oprationResultModel.getInfo;
+            [MBProgressHUD showError:err toView:self.view];
+        }
+        else
+        {
+            [MBProgressHUD showSuccess:@"申请成功" toView:self.view];
+            
+        }
+    }];
 }
 
 - (void)timeViewInit{

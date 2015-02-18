@@ -12,6 +12,8 @@
 #import "AJLocationManager.h"
 #import <AMapSearchKit/AMapSearchAPI.h>
 #import <MAMapKit/MAMapKit.h>
+#import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
 
 #define  PIC_WIDTH 60
 #define  PIC_HEIGHT 60
@@ -508,6 +510,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 
 -(void)saveResume{
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     if (self.nameoutlet.text != Nil) {
         [self.usermodel setuserName:self.nameoutlet.text];
     }
@@ -613,12 +618,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     
     [netAPI editUserDetail:self.usermodel withBlock:^(userReturnModel *userReturnModel) {
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+        
         if ([userReturnModel getStatus].intValue == STATIS_OK) {
-            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"更新成功" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-            [alterTittle show];
+            [MBProgressHUD showSuccess:@"简历更新成功" toView:self.view];
         }else{
-            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"更新失败:%@",[userReturnModel getInfo]] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-            [alterTittle show];
+            [MBProgressHUD showError:[userReturnModel getInfo] toView:self.view];
         }
     }];
 }

@@ -34,14 +34,14 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 @end
 
 
-@interface MLMatchVC ()<UIScrollViewDelegate>
+@interface MLMatchVC ()<UIScrollViewDelegate,childViewDelegate>
 {
     int kScrollViewHeight;
     int kScrollViewContentHeight;
     int kScrollViewTagBase;
     
     NSMutableArray *recordArray;
-
+    NSMutableArray *childViewArray;
 }
 
 @property (nonatomic, strong) RSView *clipView;
@@ -83,7 +83,7 @@ static  MLMatchVC *thisVC=nil;
     kScrollViewTagBase=kScrollViewHeight;
     
     recordArray=[[NSMutableArray alloc]init];
-    
+    childViewArray=[[NSMutableArray alloc]init];
     self.clipView = [[RSView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     self.clipView.clipsToBounds = YES;
     [self.view addSubview:self.clipView];
@@ -117,7 +117,7 @@ static  MLMatchVC *thisVC=nil;
     for (int i = 0; i < [recordArray count]; i++) {
         
         PiPeiView* childView=[[PiPeiView alloc]init];
-        
+        childView.childViewDelegate=self;
         [self addChildViewController:childView];
         
         [childView.view setFrame:CGRectMake(0, currentY, self.scrollView.bounds.size.width, kScrollViewHeight-44)];
@@ -131,8 +131,10 @@ static  MLMatchVC *thisVC=nil;
         if (_jobModel) {
         
             childView.jobModel=_jobModel;
+            childView.index=i;
             [childView initData];
         }
+        [childViewArray addObject:childView.view];
         [self.scrollView addSubview:childView.view];
         currentY += kScrollViewHeight;
     }
@@ -168,6 +170,24 @@ static  MLMatchVC *thisVC=nil;
         
     }];
 }
+
+- (void)deleteJob:(int)index{
+    
+    if (index>=0&&index<[recordArray count]) {
+        
+        [[childViewArray objectAtIndex:index] removeFromSuperview];
+        
+        for (int i=index+1;i<[recordArray count];i++ ) {
+            UIView *currentView=[childViewArray objectAtIndex:i];
+            
+            [UIView animateWithDuration:0.2 animations:^{
+                [currentView setCenter:CGPointMake(currentView.center.x, currentView.center.y-kScrollViewHeight)];
+            }];
+        }
+        self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, self.scrollView.contentSize.height-kScrollViewHeight);
+    }
+}
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
