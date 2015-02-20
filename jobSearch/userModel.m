@@ -64,6 +64,7 @@
                     userExperience = [dictionary objectForKey:@"userExperience"];
                     userPhone = [dictionary objectForKey:@"userPhone"];
                     userEmail = [dictionary objectForKey:@"userEmail"];
+                    userIdentityCardNum=[dictionary objectForKey:@"userIdentityCardNum"];
                     userVideoURL = [dictionary objectForKey:@"userVideoURL"];
                     beiyong1 = [dictionary objectForKey:@"beiyong1"];
                     beiyong2 = [dictionary objectForKey:@"beiyong2"];
@@ -71,6 +72,7 @@
                     beiyong4 = [dictionary objectForKey:@"beiyong4"];
                     userHeight = [dictionary objectForKey:@"userHeight"];
                     userGender = [dictionary objectForKey:@"userGender"];
+                    
                     NSString *tempstring = [dictionary objectForKey:@"userBirthday"];
                     @try {
                         if (tempstring !=Nil) {
@@ -314,6 +316,14 @@
     ImageFileURL = value;
 }
 
+-(NSString*)getuserIdentityCardNum{
+    return userIdentityCardNum;
+}
+
+-(void)setuserIdentityCardNum:(NSString*)num{
+    userIdentityCardNum=num;
+}
+
 
 -(NSString *)getBaseString{
     NSMutableString *baseString = [[NSMutableString alloc]initWithFormat:@"job_user_id=%@",job_user_id];
@@ -355,6 +365,9 @@
     }
     if (userEmail != Nil) {
         [baseString appendFormat:@"&userEmail=%@",userEmail];
+    }
+    if (userIdentityCardNum != Nil) {
+        [baseString appendFormat:@"&userIdentityCardNum=%@",userIdentityCardNum];
     }
     if (userInfoComplete != Nil) {
         [baseString appendFormat:@"&userInfoComplete=%d",userInfoComplete.intValue];

@@ -41,6 +41,7 @@
     NSNumber *beiyong4;
     NSMutableArray *ImageFileURL;
     NSNumber *userHeight;
+    NSString *userIdentityCardNum;
 }
 
 -(userModel *)initWithData:(NSData *)mainData;
@@ -123,4 +124,6 @@
 -(NSNumber *)getuserHeight;
 -(void)setuserHeight:(NSNumber *)value;
 
+-(NSString*)getuserIdentityCardNum;
+-(void)setuserIdentityCardNum:(NSString*)num;
 @end

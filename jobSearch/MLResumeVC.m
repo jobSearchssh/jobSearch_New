@@ -14,6 +14,8 @@
 #import <MAMapKit/MAMapKit.h>
 #import "MBProgressHUD.h"
 #import "MBProgressHUD+Add.h"
+#import "MLDatePickerView.h"
+
 
 #define  PIC_WIDTH 60
 #define  PIC_HEIGHT 60
@@ -24,7 +26,7 @@ static NSString *scrollindentify = @"scrollviewdown";
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 
-@interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate,HZAreaPickerDelegate,AMapSearchDelegate>{
+@interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate,HZAreaPickerDelegate,AMapSearchDelegate,MLDatePickerDelegate>{
     NSMutableArray *addedPicArray;
     NSArray *selectfreetimetitleArray;
     NSArray *selectfreetimepicArray;
@@ -39,16 +41,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     const NSArray *jobHopeTypeArray;
     
-    UIAlertController *birthDayActionView;
-    UIDatePicker *birthDatPicker;
-    
     NSString *province;
     NSString *city;
     NSString *district;
     NSString *detailAddress;
     
+    NSDate *birthday;
+    
     AMapSearchAPI *search;
-
+    MLDatePickerView *datePickerView;
 }
 
 @property (nonatomic, strong) AKPickerView *pickerView;
@@ -78,6 +79,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UILabel *sexlabeloutlet;
 @property (weak, nonatomic) IBOutlet UITextField *nameoutlet;
 @property (weak, nonatomic) IBOutlet UITextField *heightOutlet;
+@property (weak, nonatomic) IBOutlet UITextField *identityCardNumOutlet;
 
 @property (weak, nonatomic) IBOutlet UIButton *birthdayOutlet;
 - (IBAction)birthdayAction:(UIButton *)sender;
@@ -174,13 +176,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [radio_female setStatus:femaleStatus];
     [self.view1outlet addSubview:radio_female];
     
-    //    QRadioButton *_radio3 = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
-    //    _radio3.frame = CGRectMake(_radio2.frame.origin.x+_radio2.frame.size.width, self.sexlabeloutlet.frame.origin.y-10, 70, 40);
-    //    [_radio3 setTitle:@"不限" forState:UIControlStateNormal];
-    //    [_radio3 setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    //    [_radio3.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
-    //    [self.view1outlet addSubview:_radio3];
-    
     UIView *lineviewname = [[UIView alloc] initWithFrame:CGRectMake(self.nameoutlet.frame.origin.x, self.nameoutlet.frame.origin.y+self.nameoutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 125, 1)];
     lineviewname.alpha = 0.5;
     lineviewname.backgroundColor = [UIColor grayColor];
@@ -190,6 +185,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     lineviewiphone.alpha = 0.5;
     lineviewiphone.backgroundColor = [UIColor grayColor];
     [self.view1outlet addSubview:lineviewiphone];
+    
+    UIView *lineviewIndentityCardNum = [[UIView alloc] initWithFrame:CGRectMake(self.identityCardNumOutlet.frame.origin.x, self.identityCardNumOutlet.frame.origin.y+self.identityCardNumOutlet.frame.size.height+5,[UIScreen mainScreen].bounds.size.width - 125, 1)];
+    lineviewIndentityCardNum.alpha = 0.5;
+    lineviewIndentityCardNum.backgroundColor = [UIColor grayColor];
+    [self.view1outlet addSubview:lineviewIndentityCardNum];
     
     UIView *lineviewheight= [[UIView alloc] initWithFrame:CGRectMake(self.heightOutlet.frame.origin.x, self.heightOutlet.frame.origin.y+self.heightOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 125, 1)];
     lineviewheight.alpha = 0.5;
@@ -213,6 +213,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     self.nameoutlet.delegate = self;
     self.iphoneOutlet.delegate = self;
+    self.identityCardNumOutlet.delegate=self;
     self.heightOutlet.delegate = self;
     self.detailAddressTextfield.delegate=self;
     //text上移
@@ -221,6 +222,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.iphoneOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     //text上移
     [self.heightOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    
+    [self.identityCardNumOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    
     self.birthdayOutlet.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [self.detailAddressTextfield addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     typeArray = Nil;
@@ -334,6 +338,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         if ([self.usermodel getuserPhone] != Nil) {
             [self.iphoneOutlet setText:[self.usermodel getuserPhone]];
         }
+        //身份证号
+        if ([self.usermodel getuserIdentityCardNum]!=nil) {
+            [self.identityCardNumOutlet setText:[self.usermodel getuserIdentityCardNum]];
+        }
         
         //地区
         if ([self.usermodel getuserCity] != Nil) {
@@ -385,6 +393,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         if ([self.usermodel getuserExperience] != Nil) {
             [self.workexperienceOutlet setText:[self.usermodel getuserExperience]];
         }
+        
         //已有图片列表
         if ([self.usermodel getImageFileURL] != Nil) {
             for (NSString *url in [self.usermodel getImageFileURL]) {
@@ -422,30 +431,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.usermodel = [[userModel alloc]init];
     }
     
-    //生日选择picker
-    if (!birthDayActionView) {
-        birthDayActionView=[UIAlertController alertControllerWithTitle:@"请选择出生年月\n\n\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-        UIAlertAction *archiveAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            
-            NSString *birthdayTemp = [DateUtil birthdayStringFromDate:birthDatPicker.date];
-            
-            [self.birthdayOutlet setTitle:birthdayTemp forState:UIControlStateNormal];
-        }];
-        
-        [birthDayActionView addAction:cancelAction];
-        [birthDayActionView addAction:archiveAction];
+    //选择生日
+    if (!datePickerView) {
+        datePickerView=[[MLDatePickerView alloc]initWithStyle:UIDatePickerModeDate delegate:self];
     }
-    if (!birthDatPicker) {
-        birthDatPicker=[[UIDatePicker alloc]initWithFrame:CGRectMake(0,30,[[UIScreen mainScreen] bounds].size.width,100)];
-        [birthDatPicker setDatePickerMode:UIDatePickerModeDate];
-    }
-    if (self.usermodel.getuserBirthday) {
-        [birthDatPicker setDate:self.usermodel.getuserBirthday animated:YES];
-    }else
-        [birthDatPicker setDate:[NSDate date] animated:YES];
     
-    [birthDayActionView.view addSubview:birthDatPicker];
 }
 
 - (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
@@ -540,6 +530,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
     }
     
+    if (self.identityCardNumOutlet.text!=nil) {
+        [self.usermodel setuserIdentityCardNum:self.identityCardNumOutlet.text];
+    }
+    
     if (typeArray != Nil) {
         NSMutableArray *temp = [[NSMutableArray alloc]init];
         for (NSString *value in typeArray) {
@@ -583,8 +577,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [self.usermodel setuserExperience:@""];
     }
     
-    if (birthDatPicker.date) {
-        [self.usermodel setuserBirthday:birthDatPicker.date];
+    if (birthday) {
+        [self.usermodel setuserBirthday:birthday];
     }
     
     if (province) {
@@ -636,6 +630,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     if ([self.iphoneOutlet isFirstResponder]) {
         [self.iphoneOutlet resignFirstResponder];
+    }
+    if ([self.identityCardNumOutlet isFirstResponder]) {
+        [self.identityCardNumOutlet resignFirstResponder];
     }
     if ([self.detailAddressTextfield isFirstResponder]) {
         [self.detailAddressTextfield resignFirstResponder];
@@ -889,8 +886,23 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
 }
 
+- (void)timePickerDidChangeStatus:(UIDatePicker *)picker{
+    birthday=picker.date;
+    
+    NSString *birthdayTemp = [DateUtil birthdayStringFromDate:picker.date];
+    
+    [self.birthdayOutlet setTitle:birthdayTemp forState:UIControlStateNormal];
+}
+
+
 - (IBAction)birthdayAction:(UIButton *)sender {
-    [self presentViewController:birthDayActionView animated:YES completion:nil];
+
+    if (self.usermodel.getuserBirthday) {
+        [datePickerView setBirthday:self.usermodel.getuserBirthday];
+    }else
+        [datePickerView setBirthday:[NSDate date]];
+
+    [datePickerView showInView:self.view];
 }
 
 - (IBAction)selectCityAction:(id)sender {

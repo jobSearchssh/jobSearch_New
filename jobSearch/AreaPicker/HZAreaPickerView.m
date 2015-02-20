@@ -217,8 +217,6 @@
                 break;
         }
     }
-    
-   
 }
 
 
@@ -246,7 +244,6 @@
                          [self removeFromSuperview];
                          
                      }];
-    
 }
 
 @end

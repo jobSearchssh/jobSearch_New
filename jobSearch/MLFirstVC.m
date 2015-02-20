@@ -92,7 +92,7 @@ static  MLFirstVC *thisVC=nil;
     refreshAdded=NO;
     distance=20;
     jobTypeArray=[[NSMutableArray alloc]init];
-    searchType=@"nearest";
+    searchType=@"newest";
     
     cellNum=0;
     sectionNum=0;
@@ -604,7 +604,7 @@ static  MLFirstVC *thisVC=nil;
     [_tableView setDataSource:self];
     _tableView.scrollEnabled=YES;
     _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
-    
+    [self headRefreshData];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -814,12 +814,11 @@ static  MLFirstVC *thisVC=nil;
     
     //获得用户位置信息
     [[AJLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
+        
         locationCoord=locationCorrrdinate;
         
         [mySettingData setObject:NSStringFromCGPoint(CGPointMake(locationCorrrdinate.longitude, locationCorrrdinate.latitude)) forKey:@"currentCoordinate"];
         [mySettingData synchronize];
-        
-        [self headRefreshData];
         
     } error:^(NSError *error) {
         
@@ -831,7 +830,7 @@ static  MLFirstVC *thisVC=nil;
         }else{
             locationCoord=CLLocationCoordinate2DMake(38.92, 116.46);
         }
-        [self headRefreshData];
+
     }];
 }
 

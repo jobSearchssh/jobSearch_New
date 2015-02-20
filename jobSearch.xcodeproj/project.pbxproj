@@ -58,6 +58,8 @@
 		3B4AB4961A81CB2F0053236C /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4AB48E1A81CB2F0053236C /* UIView+Extension.m */; };
 		3B4AB49A1A81CE9A0053236C /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B4AB4991A81CE9A0053236C /* MJRefresh.bundle */; };
 		3B4AB49E1A81F1870053236C /* AJLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4AB49D1A81F1870053236C /* AJLocationManager.m */; };
+		3B5C265C1A95D8DE00E4AF7E /* MLDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5C265B1A95D8DE00E4AF7E /* MLDatePickerView.m */; };
+		3B5C265E1A95DA4D00E4AF7E /* MLDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5C265D1A95DA4D00E4AF7E /* MLDatePickerView.xib */; };
 		3B65240D1A6CBDDD005FD671 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B6524021A6CBDDD005FD671 /* NSMutableArray+SWUtilityButtons.m */; };
 		3B65240E1A6CBDDD005FD671 /* SWCellScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B6524041A6CBDDD005FD671 /* SWCellScrollView.m */; };
 		3B65240F1A6CBDDD005FD671 /* SWLongPressGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B6524061A6CBDDD005FD671 /* SWLongPressGestureRecognizer.m */; };
@@ -444,6 +446,9 @@
 		3B4AB4991A81CE9A0053236C /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		3B4AB49C1A81F1870053236C /* AJLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJLocationManager.h; sourceTree = "<group>"; };
 		3B4AB49D1A81F1870053236C /* AJLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJLocationManager.m; sourceTree = "<group>"; };
+		3B5C265A1A95D8DE00E4AF7E /* MLDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLDatePickerView.h; sourceTree = "<group>"; };
+		3B5C265B1A95D8DE00E4AF7E /* MLDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLDatePickerView.m; sourceTree = "<group>"; };
+		3B5C265D1A95DA4D00E4AF7E /* MLDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLDatePickerView.xib; sourceTree = "<group>"; };
 		3B6524011A6CBDDD005FD671 /* NSMutableArray+SWUtilityButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+SWUtilityButtons.h"; sourceTree = "<group>"; };
 		3B6524021A6CBDDD005FD671 /* NSMutableArray+SWUtilityButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+SWUtilityButtons.m"; sourceTree = "<group>"; };
 		3B6524031A6CBDDD005FD671 /* SWCellScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCellScrollView.h; sourceTree = "<group>"; };
@@ -1288,10 +1293,10 @@
 				3BC051D71A70E52B0099A2DF /* Login&register */,
 				3BCBBD0A1A6CCBDE00E581FD /* profileVC */,
 				3B176BB01A6BDC1F0012A350 /* jobDetailVC */,
+				3B3C09E71A68F31A00B8C343 /* firstVC */,
 				3B0785241A6A836E00ACD76C /* MapKit */,
 				3BC052071A714D600099A2DF /* messageVC */,
 				3B6524131A6CBDE1005FD671 /* swipeTable */,
-				3B3C09E71A68F31A00B8C343 /* firstVC */,
 				3B954A6D1A8DD135006BC4B2 /* JSBadgeView */,
 				3BA484601A89E91F00B6A200 /* ResideMenu */,
 				3BA484571A89E84E00B6A200 /* AppDelegate.h */,
@@ -1660,6 +1665,9 @@
 				B778FA381A923DB600BD669A /* CALayer+urlImage.h */,
 				B778FA391A923DB600BD669A /* CALayer+urlImage.m */,
 				3BD4DC1C1A77C4B900B061D0 /* radioButton */,
+				3B5C265A1A95D8DE00E4AF7E /* MLDatePickerView.h */,
+				3B5C265B1A95D8DE00E4AF7E /* MLDatePickerView.m */,
+				3B5C265D1A95DA4D00E4AF7E /* MLDatePickerView.xib */,
 			);
 			name = resumeVC;
 			sourceTree = "<group>";
@@ -1979,6 +1987,7 @@
 				3B6994091A89E9B000A53760 /* collection@3x.png in Resources */,
 				3B69940F1A89E9B000A53760 /* ignoreInvite.png in Resources */,
 				3B6994441A89E9B000A53760 /* trash@3x.png in Resources */,
+				3B5C265E1A95DA4D00E4AF7E /* MLDatePickerView.xib in Resources */,
 				3B4546F71A92D9DC00AA3C50 /* umeng_fb_audio_play_01@2x.png in Resources */,
 				3BD4DC721A77C50600B061D0 /* resume_pm2.png in Resources */,
 				3B6994271A89E9B000A53760 /* notice.png in Resources */,
@@ -2290,6 +2299,7 @@
 				3BA483E01A89E70800B6A200 /* jobListModel.m in Sources */,
 				3BA484221A89E7BE00B6A200 /* MLProfileVC.m in Sources */,
 				3B4AB4961A81CB2F0053236C /* UIView+Extension.m in Sources */,
+				3B5C265C1A95D8DE00E4AF7E /* MLDatePickerView.m in Sources */,
 				3BA483BF1A89E6B800B6A200 /* userReturnModel.m in Sources */,
 				3BA483C41A89E6BE00B6A200 /* messageModel.m in Sources */,
 				3B4AB4911A81CB2F0053236C /* MJRefreshConst.m in Sources */,
