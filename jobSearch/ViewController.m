@@ -19,6 +19,8 @@
 #import "MLFeedBackVC.h"
 #import "MLLegalVC.h"
 #import "MLLoginBusiness.h"
+#import "badgeNumber.h"
+
 
 @interface ViewController ()<UIAlertViewDelegate>
 {
@@ -34,6 +36,7 @@
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"mainItem"] style:UIBarButtonItemStyleBordered target:self action:@selector(showMenu)];
     self.navigationController.navigationBar.translucent = NO;
     currentnavigationController=self.navigationController;
+    
     
 }
 
@@ -193,7 +196,7 @@
     }
     
     //显示未读消息
-    [_sideMenu setBadgeView:3 badgeText:@"7"];
+    [self setBadge];
     
     [_sideMenu show];
 }
@@ -208,6 +211,16 @@
     [navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
 }
 
+- (void)setBadge{
+    
+    _sideMenu=[RESideMenu sharedInstance];
+    
+    badgeNumber *bn=[badgeNumber sharedInstance];
+    
+    if ([bn.applyCount intValue]>0) {
+        [_sideMenu setBadgeView:3 badgeText:[NSString stringWithFormat:@"%@",bn.applyCount]];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

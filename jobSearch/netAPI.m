@@ -28,6 +28,8 @@
 #define getUserDetail_FUNCTION @"user/getUserDetail"
 #define acceptedInvite_FUNCTION @"userService/acceptedInvite"
 #define refusedInvite_FUNCTION @"userService/refusedInvite"
+#define GETBADGENUM_FUNCTION @"user/userNumIsNotRead"
+#define SETREAD_FUNCTION @"user/userIsRead"
 
 @implementation netAPI
 +(void)test{
@@ -493,8 +495,37 @@
     }];
 }
 
+//获取未读消息数
++(void)getNotReadMessageNum:(NSString*)userId withBlock:(badgeBlock)badgeReturnBlock{
+    NSString *str = [[NSString alloc]initWithFormat:@"job_user_id=%@",userId];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:GETBADGENUM_FUNCTION block:^(URLReturnModel *returnModel) {
+        
+        if (returnModel != Nil && [returnModel getFlag]) {
+            badgeModel *a = [[badgeModel alloc]initWithData:[returnModel getData]];
+            badgeReturnBlock(a);
+        }else{
+            badgeModel *a =[[badgeModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            badgeReturnBlock(a);
+        }
+    }];
+}
 
-
+//标记未读消息为已读
++(void)setRecordAlreadyRead:(NSString*)userId applyOrInviteId:(NSString*)applyOrInviteId type:(NSString*)type withBlock:(oprationReturnBlock)oprationReturnBlock{
+    
+    NSString *str = [[NSString alloc]initWithFormat:@"job_user_id=%@&applyOrInviteId=%@&type=%@",userId,applyOrInviteId,type];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:SETREAD_FUNCTION block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
+            oprationReturnBlock(a);
+        }else{
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationReturnBlock(a);
+        }
+    }];
+}
 
 #pragma base API
 //Testget

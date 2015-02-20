@@ -10,6 +10,8 @@
 #import "DateUtil.h"
 
 @interface jobAppliedModel : baseJobModel{
+    NSString *_id;
+    
     NSString *jobId;
     //    NSDate *jobBirthdayMonthYear;
     NSDate *jobBeginTime;
@@ -45,14 +47,14 @@
     NSNumber *jobHasAccepted;
     NSNumber *jobHasRejected;
     NSString *jobGenderReq;
-
-    
+  
     NSString *applyStatus;
     NSString *apply_id;
 }
 
 -(jobAppliedModel *)initWithDictionary:(NSDictionary *)initDictionary;
 //-(NSDate *)getjobBirthdayMonthYear;
+- (NSString*)get_id;
 -(NSDate *)getjobBeginTime;
 -(NSDate *)getjobEndTime;
 -(NSDate *)getcreated_at;

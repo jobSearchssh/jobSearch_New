@@ -10,6 +10,7 @@
 #import "DateUtil.h"
 
 @interface messageModel : baseMessageModel{
+    NSString *_id;
     NSString *jobId;
     //    NSDate *jobBirthdayMonthYear;
     NSDate *jobBeginTime;
@@ -51,6 +52,7 @@
 
 -(messageModel *)initWithDictionary:(NSDictionary *)initDictionary;
 //-(NSDate *)getjobBirthdayMonthYear;
+-(NSString *)get_id;
 -(NSDate *)getjobBeginTime;
 -(NSDate *)getjobEndTime;
 -(NSDate *)getcreated_at;

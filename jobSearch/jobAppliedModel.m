@@ -19,6 +19,8 @@
         //        tempstring = [initDictionary objectForKey:jobModel_jobBirthdayMonthYear];
         //        jobBirthdayMonthYear = [DateUtil dateFromString:tempstring];
         
+        _id=[initDictionary objectForKey:@"_id"];
+        
         tempstring = [initDictionary objectForKey:jobModel_jobBeginTime];
         jobBeginTime = [DateUtil dateFromString:tempstring];
         
@@ -69,6 +71,9 @@
     return self;
 }
 
+- (NSString*)get_id{
+    return _id;
+}
 -(NSDate *)getjobBeginTime{
     return jobBeginTime;
 }

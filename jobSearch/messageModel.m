@@ -23,6 +23,7 @@
         tempstring = [initDictionary objectForKey:messageModel_jobEndTime];
         jobEndTime = [DateUtil dateFromString:tempstring];
         
+        _id=[initDictionary objectForKey:@"_id"];
         jobId = [initDictionary objectForKey:messageModel_jobID];
         jobWorkTime = [initDictionary objectForKey:messageModel_jobWorkTime];
         jobWorkPlaceGeoPoint = [initDictionary objectForKey:messageModel_jobWorkPlaceGeoPoint];
@@ -70,6 +71,10 @@
 //-(NSDate *)getjobBirthdayMonthYear{
 //    return jobBirthdayMonthYear;
 //}
+
+-(NSString*)get_id{
+    return _id;
+}
 -(NSDate *)getjobBeginTime{
     return jobBeginTime;
 }

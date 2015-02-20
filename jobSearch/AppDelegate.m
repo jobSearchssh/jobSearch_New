@@ -17,6 +17,8 @@
 #import <ShareSDK/ShareSDK.h>
 #import "WXApi.h"
 #import "WeiboSDK.h"
+#import "badgeNumber.h"
+
 
 @interface AppDelegate (){
     int currentConnectType;
@@ -80,6 +82,12 @@
     //开始监听，会启动一个run loop
     [self.internetReachability startNotifier];  
     
+    //刷新badge
+    [[badgeNumber sharedInstance] refreshCount];
+    
+//    [netAPI setRecordAlreadyRead:@"54d76bd496d9aece6f8b4568" applyOrInviteId:@"54e7407a96d9ae1e338b456e" type:@"1" withBlock:^(oprationResultModel *oprationResultModel) {
+//        NSLog(@"%@",oprationResultModel.getInfo);
+//    }];
     return YES;
 }
 

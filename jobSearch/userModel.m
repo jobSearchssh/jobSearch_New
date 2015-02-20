@@ -15,7 +15,6 @@
     if (self) {
         NSString *receiveStr = [[NSString alloc]initWithData:mainData encoding:NSUTF8StringEncoding];
         NSLog(@"%@",receiveStr);
-        NSLog(@"aaaa");
         NSError *error;
         NSData* aData = [receiveStr dataUsingEncoding: NSASCIIStringEncoding];
         NSDictionary *aDicMain = Nil;
@@ -152,8 +151,6 @@
 -(void)setuserHeight:(NSNumber *)value{
     userHeight = value;
 }
-
-
 
 -(NSString *)getjob_user_id{
     return job_user_id;

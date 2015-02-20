@@ -437,7 +437,7 @@ static  RESideMenu *thisMenu=nil;
         normalcell.item = item;
         [normalcell notifyDatasetChange];
         if ([item.badgeText length]>0) {
-            [normalcell setBadgeString:@"6"];
+            [normalcell setBadgeString:item.badgeText];
         }
         
         normalcell.selectionStyle = UITableViewCellSelectionStyleNone;

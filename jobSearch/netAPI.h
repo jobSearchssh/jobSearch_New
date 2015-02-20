@@ -20,6 +20,7 @@
 #import "messageListModel.h"
 #import "jobApplyModel.h"
 #import "jobAppliedListModel.h"
+#import "badgeModel.h"
 
 @interface netAPI : NSObject
 
@@ -33,7 +34,7 @@ typedef void (^userReturnBlock)(userReturnModel *userReturnModel);
 typedef void (^userBlock)(userModel *userModel);
 typedef void (^messageListReturnBlock)(messageListModel *messageListModel);
 typedef void (^jobAppliedListReturnBlock)(jobAppliedListModel *jobAppliedListModel);
-
+typedef void (^badgeBlock)(badgeModel *badgeModel);
 
 #define STATIS_OK 0
 #define STATIS_NO 1
@@ -119,6 +120,12 @@ typedef void (^jobAppliedListReturnBlock)(jobAppliedListModel *jobAppliedListMod
 
 //用户消息列表
 +(void)getMessageList:(NSString *)usrID start:(int)start length:(int)length withBlock:(messageListReturnBlock)messageListBlock;
+
+//获取未读消息数
++(void)getNotReadMessageNum:(NSString*)userId withBlock:(badgeBlock)badgeReturnBlock;
+
+//标记未读消息为已读
++(void)setRecordAlreadyRead:(NSString*)userId applyOrInviteId:(NSString*)applyOrInviteId type:(NSString*)type withBlock:(oprationReturnBlock)oprationReturnBlock;
 
 +(void)test;
 

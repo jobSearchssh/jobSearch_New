@@ -60,6 +60,8 @@
 		3B4AB49E1A81F1870053236C /* AJLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4AB49D1A81F1870053236C /* AJLocationManager.m */; };
 		3B5C265C1A95D8DE00E4AF7E /* MLDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5C265B1A95D8DE00E4AF7E /* MLDatePickerView.m */; };
 		3B5C265E1A95DA4D00E4AF7E /* MLDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5C265D1A95DA4D00E4AF7E /* MLDatePickerView.xib */; };
+		3B5C26621A97546C00E4AF7E /* badgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5C26611A97546C00E4AF7E /* badgeModel.m */; };
+		3B5C266A1A979ACE00E4AF7E /* badgeNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5C26691A979ACE00E4AF7E /* badgeNumber.m */; };
 		3B65240D1A6CBDDD005FD671 /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B6524021A6CBDDD005FD671 /* NSMutableArray+SWUtilityButtons.m */; };
 		3B65240E1A6CBDDD005FD671 /* SWCellScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B6524041A6CBDDD005FD671 /* SWCellScrollView.m */; };
 		3B65240F1A6CBDDD005FD671 /* SWLongPressGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B6524061A6CBDDD005FD671 /* SWLongPressGestureRecognizer.m */; };
@@ -449,6 +451,10 @@
 		3B5C265A1A95D8DE00E4AF7E /* MLDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLDatePickerView.h; sourceTree = "<group>"; };
 		3B5C265B1A95D8DE00E4AF7E /* MLDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLDatePickerView.m; sourceTree = "<group>"; };
 		3B5C265D1A95DA4D00E4AF7E /* MLDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLDatePickerView.xib; sourceTree = "<group>"; };
+		3B5C26601A97546C00E4AF7E /* badgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = badgeModel.h; sourceTree = "<group>"; };
+		3B5C26611A97546C00E4AF7E /* badgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = badgeModel.m; sourceTree = "<group>"; };
+		3B5C26681A979ACE00E4AF7E /* badgeNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = badgeNumber.h; sourceTree = "<group>"; };
+		3B5C26691A979ACE00E4AF7E /* badgeNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = badgeNumber.m; sourceTree = "<group>"; };
 		3B6524011A6CBDDD005FD671 /* NSMutableArray+SWUtilityButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+SWUtilityButtons.h"; sourceTree = "<group>"; };
 		3B6524021A6CBDDD005FD671 /* NSMutableArray+SWUtilityButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+SWUtilityButtons.m"; sourceTree = "<group>"; };
 		3B6524031A6CBDDD005FD671 /* SWCellScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCellScrollView.h; sourceTree = "<group>"; };
@@ -1109,6 +1115,24 @@
 			name = LocationManager;
 			sourceTree = "<group>";
 		};
+		3B5C265F1A97543900E4AF7E /* BadgeModel */ = {
+			isa = PBXGroup;
+			children = (
+				3B5C26601A97546C00E4AF7E /* badgeModel.h */,
+				3B5C26611A97546C00E4AF7E /* badgeModel.m */,
+			);
+			name = BadgeModel;
+			sourceTree = "<group>";
+		};
+		3B5C26671A979AAC00E4AF7E /* badgeNumber */ = {
+			isa = PBXGroup;
+			children = (
+				3B5C26681A979ACE00E4AF7E /* badgeNumber.h */,
+				3B5C26691A979ACE00E4AF7E /* badgeNumber.m */,
+			);
+			name = badgeNumber;
+			sourceTree = "<group>";
+		};
 		3B6524001A6CBDDD005FD671 /* PodFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -1273,6 +1297,7 @@
 		3B9236451A67FAFA00347D9C /* jobSearch */ = {
 			isa = PBXGroup;
 			children = (
+				3B5C26671A979AAC00E4AF7E /* badgeNumber */,
 				3BCACDA01A8C4FB000D22F62 /* ShareSDK */,
 				3BF625341A8B55450066816D /* AsyncImageView */,
 				3BCEA0CA1A83636C0005F080 /* Legal */,
@@ -1748,6 +1773,7 @@
 		B751EB901A7E127000A6361A /* model */ = {
 			isa = PBXGroup;
 			children = (
+				3B5C265F1A97543900E4AF7E /* BadgeModel */,
 				3BA483C91A89E6E200B6A200 /* operations */,
 				3BA483B91A89E6A200B6A200 /* user */,
 				B751EBB81A7E5A1600A6361A /* messageModel */,
@@ -2228,6 +2254,7 @@
 				B77578D81A7A9ED000660BB7 /* PBJStrobeView.m in Sources */,
 				3BA483D31A89E6F700B6A200 /* baseModel.m in Sources */,
 				3B6524111A6CBDDD005FD671 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
+				3B5C266A1A979ACE00E4AF7E /* badgeNumber.m in Sources */,
 				3BA483F91A89E76900B6A200 /* MLMyCollection.m in Sources */,
 				3B4AB4931A81CB2F0053236C /* MJRefreshHeaderView.m in Sources */,
 				B7E9F8D61A8A4836004BC570 /* fixedScrollView.m in Sources */,
@@ -2254,6 +2281,7 @@
 				3BA483ED1A89E72400B6A200 /* URLOperationWithBlock.m in Sources */,
 				3BA484271A89E7CF00B6A200 /* jobDetailVC.m in Sources */,
 				B7B8F7781A90EA41008F5BFE /* UIImage+RTTint.m in Sources */,
+				3B5C26621A97546C00E4AF7E /* badgeModel.m in Sources */,
 				3BA483EA1A89E72400B6A200 /* URLOperation.m in Sources */,
 				3B4547061A933D8000AA3C50 /* HZAreaPickerView.m in Sources */,
 				3BD4DC3A1A77C4D800B061D0 /* MCPagerView.m in Sources */,
