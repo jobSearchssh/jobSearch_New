@@ -17,6 +17,8 @@
 
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
+static NSString *userId = @"54d76bd496d9aece6f8b4568";
+
 @interface jobRecmendVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate>{
     NSMutableArray  *addedPicArray;
     NSArray  *selectfreetimepicArray;
@@ -55,6 +57,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self initData];
     [self timeCollectionViewInit];
 
+    [netAPI setRecordAlreadyRead:userId applyOrInviteId:self.jobModel.get_id type:@"0" withBlock:^(oprationResultModel *oprationResultModel) {
+        if ([[oprationResultModel getStatus] intValue]==0) {
+            NSLog(@"OK");
+        }
+    }];
 }
 
 - (void)timeCollectionViewInit{
@@ -137,7 +144,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }else{
             self.entepriseLogoView.image=[UIImage imageNamed:@"placeholder"];
         }
-
         
         self.jobTitleLabel.text=self.jobModel.getjobTitle;
         self.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@",self.jobModel.getjobWorkPlaceCity,self.jobModel.getjobWorkPlaceDistrict];
@@ -161,12 +167,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.jobDescribeLabel.text=[NSString stringWithFormat:@"工作描述：%@",self.jobModel.getjobIntroduction];
         
         NSString *gender;
-        if ([_jobModel.getjobGenderReq isEqualToString:@"0"]) {
-            gender=@"性别要求：不限";
-        }else if ([_jobModel.getjobGenderReq isEqualToString:@"1"]){
-            gender=@"性别要求：男";
-        }else if ([_jobModel.getjobGenderReq isEqualToString:@"2"]){
-            gender=@"性别要求：女";
+        NSString *genStr=[NSString stringWithFormat:@"%@",_jobModel.getjobGenderReq];
+        if ([genStr isEqualToString:@"0"]) {
+            gender=@"【性别要求】不限";
+        }else if ([genStr isEqualToString:@"1"]){
+            gender=@"【性别要求】男";
+        }else if ([genStr isEqualToString:@"2"]){
+            gender=@"【性别要求】女";
         }
         NSString *degree;
         if ([_jobModel.getjobDegreeReq intValue]==1){
@@ -203,7 +210,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         [self updateConstraints];
         
-        [mapView addAnnotation:self.jobModel.getjobWorkPlaceGeoPoint Title:self.jobModel.getjobTitle tag:0];
+        [mapView addAnnotation:self.jobModel.getjobWorkPlaceGeoPoint Title:self.jobModel.getjobTitle tag:0 SetToCenter:YES];
     }
 }
 

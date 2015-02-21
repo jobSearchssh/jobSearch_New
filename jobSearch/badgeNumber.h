@@ -15,5 +15,6 @@
 
 - (void)refreshCount;
 + (badgeNumber*)sharedInstance;
-
+- (void)minusApplyCount;
+- (void)minusMessageCount;
 @end

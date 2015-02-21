@@ -87,7 +87,6 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
         [_tableView addHeaderWithTarget:self action:@selector(headRefreshData)];
         [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
     }
-
     
     [self refreshData:jobListModel];
     [MBProgressHUD hideHUDForView:_tableView animated:YES];

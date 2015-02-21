@@ -22,9 +22,8 @@
         [self addSubview:_mapView];
         _mapView.userInteractionEnabled=YES;
         _mapView.delegate = self;
-        
         pointAnnoArray=[[NSMutableArray alloc]init];
-        
+        firstLoad=YES;
     }
     return self;
 }
@@ -33,7 +32,7 @@
     [MAMapServices sharedServices].apiKey =@"c38130d72c3068f07be6c23c7e791f47";
 }
 
-- (void)addAnnotation:(NSArray*)point Title:(NSString*)title tag:(int)tag{
+- (void)addAnnotation:(NSArray*)point Title:(NSString*)title tag:(int)tag SetToCenter:(BOOL)isCenter{
     MAPointAnnotation *sellerPoint = [[MAPointAnnotation alloc] init];
     nowTag=tag;
     [pointAnnoArray addObject:sellerPoint];
@@ -43,7 +42,11 @@
     
     [_mapView addAnnotation:sellerPoint];
     
-    _mapView.region = MACoordinateRegionMake(coord,MACoordinateSpanMake(0.005, 0.005));
+    if (isCenter) {
+        _mapView.region = MACoordinateRegionMake(coord,MACoordinateSpanMake(0.005, 0.005));
+    }else{
+        _mapView.showsUserLocation=YES;
+    }
 }
 
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
@@ -83,6 +86,19 @@
     [self.showDetailDelegate showDetail:button.tag];
     
 }
+
+-(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation
+{
+    if (firstLoad) {
+        _mapView.region = MACoordinateRegionMake([_mapView userLocation].coordinate,MACoordinateSpanMake(0.005, 0.005));
+        firstLoad=NO;
+    }
+}
+
+-(void)mapView:(MAMapView *)mapView didFailToLocateUserWithError:(NSError *)error{
+    NSLog(@"fail to update location");
+}
+
 
 - (void)removeAllAnnotations{
     [_mapView removeAnnotations:pointAnnoArray];

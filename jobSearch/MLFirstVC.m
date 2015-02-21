@@ -21,6 +21,7 @@
 #import <MAMapKit/MAMapKit.h>
 #import "AJLocationManager.h"
 #import <BmobSDK/Bmob.h>
+#import "badgeNumber.h"
 
 @interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate,finishFilterDelegate,UINavigationControllerDelegate,showDetailDelegate>
 {
@@ -56,6 +57,7 @@
 
 @property (weak, nonatomic) IBOutlet UITabBar *tabbar;
 @property (weak, nonatomic) IBOutlet UITabBarItem *mapItem;
+@property (weak, nonatomic) IBOutlet UITabBarItem *messageItem;
 
 @end
 
@@ -127,10 +129,17 @@ static  MLFirstVC *thisVC=nil;
     touchView.backgroundColor=[UIColor clearColor];
     UITapGestureRecognizer *Gesture1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideTouchView)];
     [touchView addGestureRecognizer:Gesture1];
+    
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    
+    badgeNumber*bn=[badgeNumber sharedInstance];
+    if ([bn.messageCount intValue]>0) {
+        [self.messageItem setBadgeValue:[NSString stringWithFormat:@"%@",bn.messageCount]];
+    }
 }
 
 
@@ -430,7 +439,7 @@ static  MLFirstVC *thisVC=nil;
 - (void)showMap{
     if (!mapDisplaying) {
         if (!mapView) {
-            mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-113)];
+            mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64-self.tabbar.bounds.size.height)];
             mapView.showDetailDelegate=self;
             mapView.alpha=0.0f;
             [self.view addSubview:mapView];
@@ -463,7 +472,7 @@ static  MLFirstVC *thisVC=nil;
             
             NSArray *arr=jm.getjobWorkPlaceGeoPoint;
             
-            [mapView addAnnotation:arr Title:jm.getjobTitle tag:i];
+            [mapView addAnnotation:arr Title:jm.getjobTitle tag:i SetToCenter:NO];
         }
     }
 }

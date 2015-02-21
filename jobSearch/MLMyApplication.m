@@ -65,6 +65,7 @@ static  MLMyApplication *thisVC=nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated{
+    
 }
 
 - (void)headRefreshData{
@@ -209,10 +210,13 @@ static  MLMyApplication *thisVC=nil;
     
     NSString *status;
     if ([jobObject.getjobApplyStatus intValue]==0) {
+        cell.jobNumberRemainLabel.tintColor=[UIColor darkGrayColor];
         status=@"未处理";
     }else if ([jobObject.getjobApplyStatus intValue]==1){
+        cell.jobNumberRemainLabel.tintColor=[UIColor blueColor];
         status=@"已拒绝";
     }else if ([jobObject.getjobApplyStatus intValue]==2){
+        cell.jobNumberRemainLabel.tintColor=[UIColor orangeColor];
         status=@"已接受";
     }
     if (status) {

@@ -20,11 +20,11 @@
 {
     NSMutableArray *pointAnnoArray;
     int nowTag;
-
+    BOOL firstLoad;
 }
 @property(nonatomic, retain) MAMapView *mapView;
 
-- (void)addAnnotation:(NSArray*)point Title:(NSString*)title tag:(int)tag;
+- (void)addAnnotation:(NSArray*)point Title:(NSString*)title tag:(int)tag SetToCenter:(BOOL)isCenter;
 - (void)removeAllAnnotations;
 
 @property(nonatomic,weak) id<showDetailDelegate> showDetailDelegate;
