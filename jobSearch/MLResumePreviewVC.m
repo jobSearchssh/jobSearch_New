@@ -66,7 +66,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     self.mainUserModel = Nil;
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    
+}
+
+-(void)viewDidAppear:(BOOL)animated{
     //获取简历 ok
     [netAPI getUserDetail:@"54d76bd496d9aece6f8b4568" withBlock:^(userModel *userModel) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -116,6 +118,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //添加coverflow
     coverFlowView *cfView = [coverFlowView coverFlowViewWithFrame:coverflowFrame andImages:sourceImages andURLs:sourceImagesURL sideImageCount:2 sideImageScale:0.55 middleImageScale:0.7];
     [cfView setDuration:0.3];
+    for (UIView *view in self.coverflowOutlet.subviews) {
+        [view removeFromSuperview];
+    }
     [self.coverflowOutlet addSubview:cfView];
     
     //第二项

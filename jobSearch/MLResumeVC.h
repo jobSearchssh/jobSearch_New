@@ -19,7 +19,7 @@
 #import "UIImage+RTTint.h"
 #import "MLSelectJobTypeVC.h"
 
-@interface MLResumeVC : UIViewController<UIScrollViewDelegate,QRadioButtonDelegate,MCPagerViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,getVideoURLDelegate,finishSelectDelegate>
+@interface MLResumeVC : UIViewController<UIScrollViewDelegate,QRadioButtonDelegate,MCPagerViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,getVideoURLDelegate,finishSelectDelegate,UIAlertViewDelegate>
 
 -(UIImage *)compressImage:(UIImage *)imgSrc size:(int)width;
 
@@ -27,4 +27,5 @@
 @property (weak, nonatomic) IBOutlet fixedScrollView *scrollviewOutlet;
 @property (strong, nonatomic) userModel *usermodel;
 
+-(void)returnResume;
 @end
