@@ -50,6 +50,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     AMapSearchAPI *search;
     MLDatePickerView *datePickerView;
+    
+    //选择点击图片按钮
+    imageButton *didSelectedBTN;
 }
 
 @property (nonatomic, strong) AKPickerView *pickerView;
@@ -63,6 +66,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 
 @property (nonatomic, strong) MCPagerView *pageIndicator;
+@property (weak, nonatomic) IBOutlet UIButton *continueOutlet;
 
 
 
@@ -151,7 +155,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     self.pageIndicator.delegate = self;
     [self.indicatorcontainview addSubview:self.pageIndicator];
-    
+    [self.continueOutlet setTitle:@"继续" forState:UIControlStateNormal];
+
     //下部分
     self.scrollviewOutlet.delegate=self;
     self.pages = 4;
@@ -437,6 +442,23 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     
 }
+
+-(void)returnResume{
+    UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"是否保存简历" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"返回",@"保存",nil];
+    alterTittle.tag = 0;
+    [alterTittle show];
+}
+
+#pragma marks -- UIAlertViewDelegate --
+//根据被点击按钮的索引处理点击事件
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    
+    if (alertView.tag == 0) {
+        NSLog(@"clickButtonAtIndex:%ld",(long)buttonIndex);
+    }
+}
+
 
 - (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
     // 创建一个bitmap的context
@@ -743,6 +765,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     CGPoint offset = CGPointMake(self.scrollviewOutlet.frame.size.width * item, self.scrollviewOutlet.contentOffset.y);
     [self.scrollviewOutlet setContentOffset:offset animated:YES];
     [pickerView reloadData];
+    if (item == self.pages-1) {
+        [self.continueOutlet setTitle:@"完成并保存" forState:UIControlStateNormal];
+    }else{
+        [self.continueOutlet setTitle:@"继续" forState:UIControlStateNormal];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -862,6 +889,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 - (IBAction)continueAction:(id)sender {
     NSInteger currentpage = [self.pickerView selectedItem];
     if (currentpage == self.pages-1) {
+        [self saveResume];
         return;
     }
     NSInteger nextpage = currentpage+1;
@@ -869,7 +897,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.scrollviewOutlet setContentOffset:offset animated:YES];
     self.pageIndicator.page = nextpage;
     [self.pickerView selectItem:nextpage animated:YES];
-    
+    if (nextpage == self.pages-1) {
+        [self.continueOutlet setTitle:@"完成并保存" forState:UIControlStateNormal];
+    }else{
+        [self.continueOutlet setTitle:@"继续" forState:UIControlStateNormal];
+    }
 }
 
 
@@ -962,14 +994,110 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             return;
         }
     }
-    else if (actionSheet.tag==1) {
+    
+    
+    if (actionSheet.tag==1) {
+        if (buttonIndex == 0) {
+            NSLog(@"选为头像");
+            NSLog(@"id = %d",[didSelectedBTN restorationIdentifier].intValue);
+            do{
+                if (didSelectedBTN == Nil) {
+                    break;
+                }
+                
+                NSInteger btnindex = [didSelectedBTN restorationIdentifier].integerValue;
+                
+                if (btnindex >= addedPicArray.count) {
+                    break;
+                }
+                imageButton *btn = [addedPicArray objectAtIndex:btnindex];
+                for (imageButton *tempbtn in addedPicArray) {
+                    if ([tempbtn restorationIdentifier].intValue > btnindex) {
+                        [tempbtn setRestorationIdentifier:[NSString stringWithFormat:@"%d",[tempbtn restorationIdentifier].intValue-1]];
+                        
+                        CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
+                        [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(tempbtn.center.x, tempbtn.center.y)]];
+                        [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(tempbtn.center.x+INSETS+PIC_WIDTH, tempbtn.center.y)]];
+                        [positionAnim setDelegate:self];
+                        [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+                        [positionAnim setDuration:0.25f];
+                        [tempbtn.layer addAnimation:positionAnim forKey:nil];
+                        [tempbtn setCenter:CGPointMake(tempbtn.center.x+INSETS+PIC_WIDTH, tempbtn.center.y)];
+                        continue;
+                    }
+                    if ([tempbtn restorationIdentifier].intValue == btnindex) {
+                        CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
+                        [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(tempbtn.center.x, tempbtn.center.y)]];
+                        [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(INSETS+PIC_WIDTH/2, tempbtn.center.y)]];
+                        [positionAnim setDelegate:self];
+                        [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+                        [positionAnim setDuration:0.25f];
+                        [tempbtn.layer addAnimation:positionAnim forKey:nil];
+                        [tempbtn setCenter:CGPointMake(INSETS+PIC_WIDTH/2,tempbtn.center.y)];
+                        continue;
+                    }
+                    
+                    if ([tempbtn restorationIdentifier].intValue < btnindex) {
+                        continue;
+                    }
+                }
+                
+                [addedPicArray removeObjectAtIndex:btnindex];
+                [btn setRestorationIdentifier:[NSString stringWithFormat:@"%lu",(unsigned long)addedPicArray.count]];
+                [addedPicArray addObject:btn];
+                [self refreshScrollView];
+            }while (false);
+        }
         
+        if (buttonIndex == 1) {
+            
+            do{
+                if (didSelectedBTN == Nil) {
+                    break;
+                }
+                
+                NSInteger btnindex = [didSelectedBTN restorationIdentifier].integerValue;
+                
+                if (btnindex >= addedPicArray.count) {
+                    break;
+                }
+                imageButton *btn = [addedPicArray objectAtIndex:btnindex];
+                [btn removeFromSuperview];
+                for (imageButton *tempbtn in addedPicArray) {
+                    if ([tempbtn restorationIdentifier].intValue > btnindex) {
+                        [tempbtn setRestorationIdentifier:[NSString stringWithFormat:@"%d",[tempbtn restorationIdentifier].intValue-1]];
+                        continue;
+                    }
+                    if ([tempbtn restorationIdentifier].intValue == btnindex) {
+                        continue;
+                    }
+                    if ([tempbtn restorationIdentifier].intValue < btnindex) {
+                        CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
+                        [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(tempbtn.center.x, tempbtn.center.y)]];
+                        [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(tempbtn.center.x-INSETS-PIC_WIDTH, tempbtn.center.y)]];
+                        [positionAnim setDelegate:self];
+                        [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+                        [positionAnim setDuration:0.25f];
+                        [tempbtn.layer addAnimation:positionAnim forKey:nil];
+                        [tempbtn setCenter:CGPointMake(tempbtn.center.x-INSETS-PIC_WIDTH, tempbtn.center.y)];
+                    }
+                }
+                [addedPicArray removeObjectAtIndex:btnindex];
+                [self refreshScrollView];
+
+                
+            }while (false);
+            
+        }
+        didSelectedBTN = Nil;
     }
 }
 
 //action响应事件
 - (void)actionSheetCancel:(UIActionSheet *)actionSheet{
-    
+    if (actionSheet.tag==1) {
+        didSelectedBTN = Nil;
+    }
 }
 -(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
     
@@ -1091,30 +1219,17 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 -(void)deletePicAction_uploadOKandfromNet:(imageButton *)sender{
-    NSInteger btnindex = [sender restorationIdentifier].integerValue;
-    imageButton *btn = [addedPicArray objectAtIndex:btnindex];
-    [btn removeFromSuperview];
-    for (imageButton *tempbtn in addedPicArray) {
-        if ([tempbtn restorationIdentifier].intValue > btnindex) {
-            [tempbtn setRestorationIdentifier:[NSString stringWithFormat:@"%d",[tempbtn restorationIdentifier].intValue-1]];
-            continue;
-        }
-        if ([tempbtn restorationIdentifier].intValue == btnindex) {
-            continue;
-        }
-        if ([tempbtn restorationIdentifier].intValue < btnindex) {
-            CABasicAnimation *positionAnim=[CABasicAnimation animationWithKeyPath:@"position"];
-            [positionAnim setFromValue:[NSValue valueWithCGPoint:CGPointMake(tempbtn.center.x, tempbtn.center.y)]];
-            [positionAnim setToValue:[NSValue valueWithCGPoint:CGPointMake(tempbtn.center.x-INSETS-PIC_WIDTH, tempbtn.center.y)]];
-            [positionAnim setDelegate:self];
-            [positionAnim setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-            [positionAnim setDuration:0.25f];
-            [tempbtn.layer addAnimation:positionAnim forKey:nil];
-            [tempbtn setCenter:CGPointMake(tempbtn.center.x-INSETS-PIC_WIDTH, tempbtn.center.y)];
-        }
-    }
-    [addedPicArray removeObjectAtIndex:btnindex];
-    [self refreshScrollView];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:Nil
+                                  delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:Nil
+                                  otherButtonTitles:@"选为头像",@"删除",nil];
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    actionSheet.tag = 1;
+    didSelectedBTN = sender;
+    [actionSheet showInView:self.view];
+    
 }
 
 -(void)deletePicAction_uplaoding{
@@ -1149,7 +1264,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     CGFloat width=(PIC_WIDTH+INSETS*2)+(addedPicArray.count-1)*(PIC_WIDTH+INSETS);
     CGSize contentSize=CGSizeMake(width, PIC_HEIGHT+INSETS*2);
     [self.picscrollview setContentSize:contentSize];
-    [self.picscrollview setContentOffset:CGPointMake(width<self.picscrollview.frame.size.width?0:width-self.picscrollview.frame.size.width, 0) animated:YES];
+//    [self.picscrollview setContentOffset:CGPointMake(width<self.picscrollview.frame.size.width?0:width-self.picscrollview.frame.size.width, 0) animated:YES];
+    [self.picscrollview setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 - (IBAction)callVideoAction:(UIButton *)sender {
     MLResumeVideoVC *vc = [[MLResumeVideoVC alloc]init];
