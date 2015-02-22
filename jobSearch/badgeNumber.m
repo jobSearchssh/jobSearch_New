@@ -32,13 +32,12 @@ static  badgeNumber *thisObject=nil;
     [netAPI getNotReadMessageNum:userId withBlock:^(badgeModel *badgeModel) {
         
         if ([badgeModel.getStatus intValue]==0) {
-            self.messageCount=badgeModel.getinviteNotRead;
-            self.applyCount=badgeModel.getapplyNotRead;         
+            self.messageCount=[NSString stringWithFormat:@"%@",badgeModel.getinviteNotRead];
+            self.applyCount=[NSString stringWithFormat:@"%@",badgeModel.getapplyNotRead];
             
             [mySettingData setObject:self.messageCount forKey:@"badgeInviteNum"];
             [mySettingData setObject:self.applyCount forKey:@"badgeApplyNum"];
             [mySettingData synchronize];
-
         }
     }];
 }

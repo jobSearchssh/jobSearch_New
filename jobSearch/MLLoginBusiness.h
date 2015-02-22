@@ -11,7 +11,7 @@
 
 @protocol loginResult <NSObject>
 @required
-- (void)loginResult:(BOOL)isSucceed Feedback:(NSString*)feedback;
+- (void)loginResult:(BOOL)isSucceed Feedback:(NSString*)feedback logoUrl:(NSString*)logoUrl;
 @end
 
 @protocol registerResult <NSObject>

@@ -37,7 +37,9 @@
     self.navigationController.navigationBar.translucent = NO;
     currentnavigationController=self.navigationController;
     
+    badgeNumber*bn=[badgeNumber sharedInstance];
     
+    [bn addObserver:self forKeyPath:@"applyCount" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
 }
 
 #pragma mark -
@@ -50,9 +52,8 @@
         [MLLoginBusiness logout];
         
         RESideMenu* _side=[RESideMenu sharedInstance];
-            
-        [_side setTableItem:0 Title:@"未登录" Subtitle:@"游客" Image:[UIImage imageNamed:@"tourists"]];
-
+        
+        [_side setTableItem:0 Title:@"未登录" Subtitle:@"游客" ImageUrl:nil];
     }
 }
 
@@ -64,7 +65,7 @@
        //登录逻辑
         NSString *title;
         NSString *subtitle;
-        UIImage *image=[UIImage imageNamed:@"tourists"];
+        NSString *url;
         
         NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
         NSString *currentUserObjectId=[mySettingData objectForKey:@"currentUserObjectId"];
@@ -72,11 +73,14 @@
        if ([currentUserObjectId length]>0)  {
             title=[mySettingData objectForKey:@"currentUserName"];
            subtitle=@"点击退出";
+           url=[mySettingData objectForKey:@"currentUserlogoUrl"];
        }else{
            title=@"未登录";
            subtitle=@"游客";
+           url=nil;
        }
-        RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:title setFlag:USRCELL setSubtitle:subtitle  image:image highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
+        
+        RESideMenuItem *usrItem = [[RESideMenuItem alloc] initWithTitle:title setFlag:USRCELL setSubtitle:subtitle image:nil imageUrl:url highlightedImage:[UIImage imageNamed:@"avatar_round_m"] action:^(RESideMenu *menu, RESideMenuItem *item){
             
             NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
             NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
@@ -90,7 +94,6 @@
 
                 [currentnavigationController pushViewController:viewController animated:YES];
             }
-            
         }];
         
         RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"搜索职位" setFlag:NORMALCELL image:[UIImage imageNamed:@"search"] highlightedImage:[UIImage imageNamed:@"search"] action:^(RESideMenu *menu, RESideMenuItem *item) {
@@ -221,6 +224,14 @@
         [_sideMenu setBadgeView:3 badgeText:[NSString stringWithFormat:@"%@",bn.applyCount]];
     }
 }
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    
+    if ([keyPath isEqual:@"applyCount"]) {
+        [self setBadge];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

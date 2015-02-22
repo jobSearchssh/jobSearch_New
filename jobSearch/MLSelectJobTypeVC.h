@@ -18,4 +18,6 @@
 @property (nonatomic,strong) NSMutableArray *selectedTypeArray;
 @property (nonatomic,strong) NSMutableArray *selectedTypeName;
 @property(nonatomic,weak) id<finishSelectDelegate> selectDelegate;
+
++(MLSelectJobTypeVC*)sharedInstance;
 @end

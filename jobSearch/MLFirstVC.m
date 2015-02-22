@@ -40,6 +40,8 @@
     
     BOOL refreshAdded;
     
+    BOOL mapSearching;
+    
     AMapSearchAPI *search;
     
     //页数
@@ -74,6 +76,16 @@ static  MLFirstVC *thisVC=nil;
     return thisVC;
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    
+    if ([keyPath isEqual:@"messageCount"]) {
+        badgeNumber*bn=[badgeNumber sharedInstance];
+        if ([bn.messageCount intValue]>0) {
+            [self.messageItem setBadgeValue:[NSString stringWithFormat:@"%@",bn.messageCount]];
+        }
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -84,11 +96,14 @@ static  MLFirstVC *thisVC=nil;
     [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
     
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
-
     
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:54.0/255.0 green:59.0/255.0 blue:81.0/255.0 alpha:1.0]];
     [self.tabbar setSelectedImageTintColor: [UIColor whiteColor]];
     
+    //添加观察者
+    badgeNumber*bn=[badgeNumber sharedInstance];
+
+    [bn addObserver:self forKeyPath:@"messageCount" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
     
     //初始化参数
     refreshAdded=NO;
@@ -102,6 +117,7 @@ static  MLFirstVC *thisVC=nil;
     firstLoad=YES;
     headerRefreshing=NO;
     footerRefreshing=NO;
+    mapSearching=NO;
     
     searchView = [[NiftySearchView alloc] initWithFrame:CGRectMake(0, -76, [[UIScreen mainScreen] bounds].size.width, 76)];
     searchView.delegate = self;
@@ -129,7 +145,6 @@ static  MLFirstVC *thisVC=nil;
     touchView.backgroundColor=[UIColor clearColor];
     UITapGestureRecognizer *Gesture1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideTouchView)];
     [touchView addGestureRecognizer:Gesture1];
-    
     
 }
 
@@ -351,6 +366,10 @@ static  MLFirstVC *thisVC=nil;
             
         }else{
             
+            if ([jobListModel.getJobArray count]<1) {
+                [MBProgressHUD showError:@"没有更多啦" toView:self.view];
+            }else{
+                
             for (id object in jobListModel.getJobArray) {
                 [recordArray addObject:object];
             }
@@ -367,6 +386,7 @@ static  MLFirstVC *thisVC=nil;
             cellNum=[recordArray count];
             [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
         }
+        }
     }
     
     else{
@@ -377,6 +397,11 @@ static  MLFirstVC *thisVC=nil;
 
         }else{
             
+            if ([jobListModel.getJobArray count]<1) {
+                [MBProgressHUD showError:@"没有找到匹配的职位哦" toView:self.view];
+                searchType=@"newest";
+            }else{
+            
             [recordArray removeAllObjects];
             
             for (id object in jobListModel.getJobArray) {
@@ -385,6 +410,25 @@ static  MLFirstVC *thisVC=nil;
             
             cellNum=[recordArray count];
             [self.tableView reloadData];
+            
+            if (mapSearching) {
+                if (!mapView) {
+                    mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64-self.tabbar.bounds.size.height)];
+                    mapView.showDetailDelegate=self;
+                    mapView.alpha=0.0f;
+                    [self.view addSubview:mapView];
+                }
+                mapDisplaying=YES;
+                [self addannotations];
+                [UIView animateWithDuration:0.4 animations:^{
+                    mapView.alpha=1.0f;
+                }];
+                [self.mapItem setTitle:@"列表"];
+                [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+                self.navigationItem.rightBarButtonItem.enabled=NO;
+                mapSearching=NO;
+            }
+        }
         }
     }
 }
@@ -432,26 +476,35 @@ static  MLFirstVC *thisVC=nil;
 
 - (void)showMatchInfo{
     MLMatchVC *matchVC=[[MLMatchVC alloc] init];
-    matchVC.title=@"精灵匹配";
+    matchVC.title=@"精灵管家";
     [self.navigationController pushViewController:matchVC animated:YES];
 }
 
 - (void)showMap{
     if (!mapDisplaying) {
-        if (!mapView) {
-            mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64-self.tabbar.bounds.size.height)];
-            mapView.showDetailDelegate=self;
-            mapView.alpha=0.0f;
-            [self.view addSubview:mapView];
+        
+        if (![searchType isEqualToString:@"nearest"]) {
+            mapSearching=YES;
+            searchType=@"nearest";
+            firstLoad=YES;
+            [self headRefreshData];
+        }else{
+            if (!mapView) {
+                mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64-self.tabbar.bounds.size.height)];
+                mapView.showDetailDelegate=self;
+                mapView.alpha=0.0f;
+                [self.view addSubview:mapView];
+            }
+            mapDisplaying=YES;
+            [self addannotations];
+            [UIView animateWithDuration:0.4 animations:^{
+                mapView.alpha=1.0f;
+            }];
+            [self.mapItem setTitle:@"列表"];
+            [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+            self.navigationItem.rightBarButtonItem.enabled=NO;
         }
-        mapDisplaying=YES;
-        [self addannotations];
-        [UIView animateWithDuration:0.4 animations:^{
-            mapView.alpha=1.0f;
-        }];
-        [self.mapItem setTitle:@"列表"];
-        [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-        self.navigationItem.rightBarButtonItem.enabled=NO;
+        
     }else {
         [UIView animateWithDuration:0.4 animations:^{
             mapView.alpha=0.0f;
@@ -485,7 +538,7 @@ static  MLFirstVC *thisVC=nil;
 }
 
 - (void)filter{
-    MLFilterVC *filterVC=[[MLFilterVC alloc]init];
+    MLFilterVC *filterVC=[MLFilterVC sharedInstance];
     filterVC.filterDelegate=self;
     [self.navigationController pushViewController:filterVC animated:YES];
 }

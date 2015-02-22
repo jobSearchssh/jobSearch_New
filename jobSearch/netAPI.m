@@ -30,6 +30,8 @@
 #define refusedInvite_FUNCTION @"userService/refusedInvite"
 #define GETBADGENUM_FUNCTION @"user/userNumIsNotRead"
 #define SETREAD_FUNCTION @"user/userIsRead"
+#define DELETEAPPLYJOB_FUCTION @"user/deleteOneApply"
+
 
 @implementation netAPI
 +(void)test{
@@ -179,18 +181,17 @@
 }
 
 //用户登录
-+(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(loginReturnBlock)loginBlock{
++(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(userBlock)loginBlock{
     NSString *str = [[NSString alloc]initWithFormat:@"userPhone=%@&userPassword=%@",name,password];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:LOGIN_FUNCTION block:^(URLReturnModel *returnModel) {
         if (returnModel != Nil && [returnModel getFlag]) {
-            loginModel *a = [[loginModel alloc]initWithData:[returnModel getData]];
+            userModel *a = [[userModel alloc]initWithData:[returnModel getData]];
             loginBlock(a);
         }else{
-            loginModel *a = [[loginModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription] usrID:[NSString stringWithFormat:@"-1"]];
+            userModel *a = [[userModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
             loginBlock(a);
         }
-        
     }];
 }
 
@@ -517,6 +518,22 @@
     NSString *str = [[NSString alloc]initWithFormat:@"job_user_id=%@&applyOrInviteId=%@&type=%@",userId,applyOrInviteId,type];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:SETREAD_FUNCTION block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
+            oprationReturnBlock(a);
+        }else{
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationReturnBlock(a);
+        }
+    }];
+}
+
+//删除我的申请
++(void)deleteMyAppliedJob:(NSString*)usrID applyId:(NSString*)applyId withBlock:(oprationReturnBlock)oprationReturnBlock{
+    
+    NSString *str = [[NSString alloc]initWithFormat:@"apply_id=%@&job_user_id=%@",applyId,usrID];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:DELETEAPPLYJOB_FUCTION block:^(URLReturnModel *returnModel) {
         if (returnModel != Nil && [returnModel getFlag]) {
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);

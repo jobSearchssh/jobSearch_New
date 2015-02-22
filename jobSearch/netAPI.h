@@ -53,7 +53,7 @@ typedef void (^badgeBlock)(badgeModel *badgeModel);
 
 //用户登录
 //用户名，密码，回调block
-+(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(loginReturnBlock)loginBlock;
++(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(userBlock)loginBlock;
 
 //用户注册
 //用户名，密码，回调block
@@ -126,6 +126,10 @@ typedef void (^badgeBlock)(badgeModel *badgeModel);
 
 //标记未读消息为已读
 +(void)setRecordAlreadyRead:(NSString*)userId applyOrInviteId:(NSString*)applyOrInviteId type:(NSString*)type withBlock:(oprationReturnBlock)oprationReturnBlock;
+
+//删除我的申请
++(void)deleteMyAppliedJob:(NSString*)usrID applyId:(NSString*)applyId withBlock:(oprationReturnBlock)oprationReturnBlock;
+
 
 +(void)test;
 

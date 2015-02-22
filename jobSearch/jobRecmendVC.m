@@ -211,6 +211,14 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
         [self updateConstraints];
         
         [mapView addAnnotation:self.jobModel.getjobWorkPlaceGeoPoint Title:self.jobModel.getjobTitle tag:0 SetToCenter:YES];
+        
+        //将消息设置为已读
+        [netAPI setRecordAlreadyRead:userId applyOrInviteId:self.jobModel.get_id type:@"0" withBlock:^(oprationResultModel *oprationResultModel) {
+            if ([[oprationResultModel getStatus] intValue]==0) {
+                NSLog(@"标记成功");
+            }
+            
+        }];
     }
 }
 
@@ -235,7 +243,6 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
             }
         }];
     }
-    
 }
 
 - (IBAction)refuser:(id)sender {

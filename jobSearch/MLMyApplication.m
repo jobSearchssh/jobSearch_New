@@ -201,6 +201,7 @@ static  MLMyApplication *thisVC=nil;
     
     MLCell1 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
     
+    
     jobAppliedModel *jobObject=[recordArray objectAtIndex:[indexPath row]];
     
     cell.jobTitleLabel.text=jobObject.getjobTitle;
@@ -212,12 +213,16 @@ static  MLMyApplication *thisVC=nil;
     if ([jobObject.getjobApplyStatus intValue]==0) {
         cell.jobNumberRemainLabel.tintColor=[UIColor darkGrayColor];
         status=@"未处理";
+        [cell setRightUtilityButtons:[self rightButtons:NO] WithButtonWidth:0.0f];
     }else if ([jobObject.getjobApplyStatus intValue]==1){
         cell.jobNumberRemainLabel.tintColor=[UIColor blueColor];
         status=@"已拒绝";
+        [cell setRightUtilityButtons:[self rightButtons:YES] WithButtonWidth:58.0f];
+        cell.delegate = self;
     }else if ([jobObject.getjobApplyStatus intValue]==2){
         cell.jobNumberRemainLabel.tintColor=[UIColor orangeColor];
         status=@"已接受";
+        [cell setRightUtilityButtons:[self rightButtons:NO] WithButtonWidth:0.0f];
     }
     if (status) {
         cell.jobNumberRemainLabel.text=status;
@@ -257,12 +262,15 @@ static  MLMyApplication *thisVC=nil;
     return cell;
 }
 
-- (NSArray *)rightButtons
+- (NSArray *)rightButtons:(BOOL)show
 {
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]
-                                                 icon:[UIImage imageNamed:@"trash"]];
+    if (show) {
+        [rightUtilityButtons sw_addUtilityButtonWithColor:
+         [UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]
+                                                     icon:[UIImage imageNamed:@"trash"]];
+    }
+    
     return rightUtilityButtons;
 }
 
@@ -308,6 +316,14 @@ static  MLMyApplication *thisVC=nil;
     self.navigationItem.backBarButtonItem = backItem;
     
     [self.navigationController pushViewController:detailVC animated:YES];
+    
+    //将消息设置为已读
+    [netAPI setRecordAlreadyRead:userId applyOrInviteId:appliedModel.get_id type:@"1" withBlock:^(oprationResultModel *oprationResultModel) {
+        if ([[oprationResultModel getStatus] intValue]==0) {
+            NSLog(@"标记成功");
+        }
+    }];
+
     
     [self performSelector:@selector(deselect) withObject:nil afterDelay:0.5f];
 }
@@ -359,11 +375,30 @@ static  MLMyApplication *thisVC=nil;
     switch (index) {
         case 0:
         {
-            NSIndexPath *cellIndexPath = [_tableView indexPathForCell:cell];
+            [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
             
-            [recordArray removeObjectAtIndex:[cellIndexPath row]];
-            cellNum=[recordArray count];
-            [_tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            NSIndexPath *cellIndexPath = [_tableView indexPathForCell:cell];
+            NSInteger row=[cellIndexPath row];
+            
+            jobAppliedModel *jm=[recordArray objectAtIndex:row];
+            
+            [netAPI deleteMyAppliedJob:userId applyId:jm.getjobApply_id withBlock:^(oprationResultModel *oprationResultModel) {
+                [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
+                
+                if ([oprationResultModel.getStatus intValue]==0) {
+                    
+                    [recordArray removeObjectAtIndex:row];
+                    cellNum=[recordArray count];
+                    [_tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                    
+                }else{
+                    
+                    NSString *err=oprationResultModel.getInfo;
+                    [MBProgressHUD showError:err toView:self.view];
+                    
+                }
+
+            }];
             
             break;
         }

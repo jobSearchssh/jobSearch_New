@@ -19,7 +19,7 @@
         
         if ([registerModel.getStatus intValue]==0) {
             
-            [self saveUserInfoLocallyWithUserName:username userObjectId:registerModel.getUsrID];
+            [self saveUserInfoLocallyWithUserName:username userObjectId:registerModel.getUsrID logoUrl:nil];
             
             [self registerIsSucceed:YES feedback:@"注册成功"];
             
@@ -45,38 +45,34 @@
 
 -(void)loginInBackground:(NSString*) username Password:(NSString*)pwd{
     
-    [netAPI usrLogin:username usrPassword:pwd withBlock:^(loginModel *loginModel) {
+    [netAPI usrLogin:username usrPassword:pwd withBlock:^(userModel *loginModel) {
         if ([loginModel.getStatus intValue]==0) {
             
-            [self saveUserInfoLocallyWithUserName:username userObjectId:loginModel.getUsrID];
-            [self loginIsSucceed:YES feedback:@"登录成功"];
+            [self saveUserInfoLocallyWithUserName:username userObjectId:loginModel.getjob_user_id logoUrl:[loginModel.getImageFileURL objectAtIndex:0]];
+            [self loginIsSucceed:YES feedback:@"登录成功" logoUrl:[loginModel.getImageFileURL objectAtIndex:0]];
             
         }else{
             
              NSString *error=loginModel.getInfo;
-//            if ([loginModel.getInfo isEqualToString:@"QUERY_ERROR"])
-//                error=@"登录名或密码有误";
-//            else if ([loginModel.getInfo isEqualToString:@"INVALID_INPUT"])
-//                error=@"您的输入有误";
             
-            [self loginIsSucceed:NO feedback:error];
+            [self loginIsSucceed:NO feedback:error logoUrl:nil];
         }
     }];
 }
 
--(void)loginIsSucceed:(BOOL)result feedback:(NSString*)feedback
+-(void)loginIsSucceed:(BOOL)result feedback:(NSString*)feedback logoUrl:(NSString*)logoUrl
 {
 
-    [self.loginResultDelegate loginResult:result Feedback:feedback];
+    [self.loginResultDelegate loginResult:result Feedback:feedback logoUrl:logoUrl];
 
 }
 
-- (void)saveUserInfoLocallyWithUserName:(NSString*)userName userObjectId:(NSString*)userObjectId{
+- (void)saveUserInfoLocallyWithUserName:(NSString*)userName userObjectId:(NSString*)userObjectId logoUrl:(NSString*)logoUrl{
 
-    
     NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
     [mySettingData setObject:userName forKey:@"currentUserName"];
     [mySettingData setObject:userObjectId forKey:@"currentUserObjectId"];
+    [mySettingData setObject:logoUrl forKey:@"currentUserlogoUrl"];
     [mySettingData synchronize];
 
 }
@@ -86,6 +82,7 @@
     if ([mySettingData objectForKey:@"currentUserObjectId"]) {
         [mySettingData setObject:nil forKey:@"currentUserName"];
         [mySettingData setObject:nil forKey:@"currentUserObjectId"];
+        [mySettingData setObject:nil forKey:@"currentUserlogoUrl"];
         [mySettingData synchronize];
     }
 }

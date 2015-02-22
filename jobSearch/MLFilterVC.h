@@ -18,4 +18,6 @@
 
 @property(nonatomic,weak) id<finishFilterDelegate> filterDelegate;
 
++ (MLFilterVC*)sharedInstance;
+
 @end

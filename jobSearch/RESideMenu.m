@@ -100,17 +100,17 @@ static  RESideMenu *thisMenu=nil;
     return thisMenu;
 }
 
-- (void)setTableItem:(NSInteger)row Title:(NSString*)title Subtitle:(NSString*)subtitle Image:(UIImage*)image{
+- (void)setTableItem:(NSInteger)row Title:(NSString*)title Subtitle:(NSString*)subtitle ImageUrl:(NSString*)imageurl{
  
     if (row==0) {
         if ([_items count]>0) {
             RESideMenuItem*usrItem=[_items objectAtIndex:0];
             
-            [usrItem setTitle:title Subtitle:subtitle Image:image];
+            [usrItem setTitle:title Subtitle:subtitle Url:imageurl];
             
             NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
             usrTableViewCell *usrcell=(usrTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
-            [usrcell setUsrAvatar:image];
+            [usrcell setUsrAvatarWithURL:imageurl];
             [usrcell setusrName:title];
             [usrcell setusrAction:subtitle];
         }
@@ -418,7 +418,12 @@ static  RESideMenu *thisMenu=nil;
             usrcell.usrNameOutlet.font = self.font;
             usrcell.usrNameOutlet.textColor = self.textColor;
         }
-        [usrcell setUsrAvatar:item.image];
+        if (item.imageUrl) {
+            [usrcell setUsrAvatarWithURL:item.imageUrl];
+        }else{
+            [usrcell setUsrAvatar:[UIImage imageNamed:@"tourists"]];
+        }
+        
         [usrcell setusrName:item.title];
         [usrcell setusrAction:item.subtitle];
         usrcell.selectionStyle = UITableViewCellSelectionStyleNone;

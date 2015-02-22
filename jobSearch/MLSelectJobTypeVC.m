@@ -17,12 +17,20 @@
 
 @implementation MLSelectJobTypeVC
 
+static  MLSelectJobTypeVC *thisVC=nil;
+
++ (MLSelectJobTypeVC*)sharedInstance{
+    if (thisVC==nil) {
+        thisVC=[[MLSelectJobTypeVC alloc]init];
+    }
+    return thisVC;
+}
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    typeArray=[[NSArray alloc]initWithObjects:@"模特/礼仪",@"促销/导购",@"销售",@"传单派发",@"安保",@"钟点工",@"法律事务",@"服务员",@"婚庆",@"配送/快递",@"化妆",@"护工/保姆",@"演出",@"问卷调查",@"志愿者",@"网络营销",@"导游",@"游戏代练",@"家教",@"软件/网站开发",@"会计",@"平面设计/制作",@"翻译",@"装修",@"影视制作",@"搬家",@"其他", nil];
+    typeArray=[[NSArray alloc]initWithObjects:@"全部",@"模特/礼仪",@"促销/导购",@"销售",@"传单派发",@"安保",@"钟点工",@"法律事务",@"服务员",@"婚庆",@"配送/快递",@"化妆",@"护工/保姆",@"演出",@"问卷调查",@"志愿者",@"网络营销",@"导游",@"游戏代练",@"家教",@"软件/网站开发",@"会计",@"平面设计/制作",@"翻译",@"装修",@"影视制作",@"搬家",@"其他", nil];
     
 //    typeArray=[[NSArray alloc] initWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"模特/礼仪",@"typeName",@"0",@"num", nil],
 //               [NSDictionary dictionaryWithObjectsAndKeys:@"模特/礼仪",@"typeName",@"0",@"num", nil],
@@ -113,8 +121,19 @@
     
     if (cell.selecting) {
         
-        cell.selecting=NO;
-        cell.selectedImageView.hidden=YES;
+        if ([indexPath row]==0) {
+
+            for (NSIndexPath* idpth in [tableView indexPathsForVisibleRows]){
+               MLCell4 *tempcell=(MLCell4 *)[tableView cellForRowAtIndexPath:idpth];
+                tempcell.selectedImageView.hidden=YES;
+                tempcell.selecting=NO;
+            }
+            [self.selectedTypeArray removeAllObjects];
+            [self.selectedTypeName removeAllObjects];
+        }
+        else{
+            cell.selecting=NO;
+            cell.selectedImageView.hidden=YES;
         for (NSString* str in self.selectedTypeArray){
             if ([str isEqualToString:[NSString stringWithFormat:@"%ld",(long)[indexPath row]]]) {
                 
@@ -123,16 +142,34 @@
                 [self.selectedTypeArray removeObject:str];
                 
                 [self.selectedTypeName removeObjectAtIndex:n];
-
                 
                 break;
             }
         }
+        }
     }else{
-        cell.selecting=YES;
-        cell.selectedImageView.hidden=NO;
-        [self.selectedTypeArray addObject:[NSString stringWithFormat:@"%ld",(long)[indexPath row]]];
-        [self.selectedTypeName addObject:[typeArray objectAtIndex:[indexPath row]]];
+        if ([indexPath row]==0) {
+            
+            for (NSIndexPath* idpth in [tableView indexPathsForVisibleRows]){
+                MLCell4 *tempcell=(MLCell4 *)[tableView cellForRowAtIndexPath:idpth];
+                tempcell.selectedImageView.hidden=NO;
+                tempcell.selecting=YES;
+            }
+            
+            [self.selectedTypeArray removeAllObjects];
+            [self.selectedTypeName removeAllObjects];
+            
+            for (NSInteger i=0; i<[typeArray count]; i++) {
+                [self.selectedTypeArray addObject:[NSString stringWithFormat:@"%ld",(long)i]];
+                [self.selectedTypeName addObject:[typeArray objectAtIndex:i]];
+            }
+        }
+        else{
+            cell.selecting=YES;
+            cell.selectedImageView.hidden=NO;
+            [self.selectedTypeArray addObject:[NSString stringWithFormat:@"%ld",(long)[indexPath row]]];
+            [self.selectedTypeName addObject:[typeArray objectAtIndex:[indexPath row]]];
+        }
     }
     [self deselect];
 }

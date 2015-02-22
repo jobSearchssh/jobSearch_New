@@ -20,6 +20,15 @@
 
 @implementation MLFilterVC
 
+static  MLFilterVC *thisVC=nil;
+
++ (MLFilterVC*)sharedInstance{
+    if (thisVC==nil) {
+        thisVC=[[MLFilterVC alloc]init];
+    }
+    return thisVC;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -53,7 +62,7 @@
 }
 
 - (IBAction)setApplicationType:(id)sender {
-    MLSelectJobTypeVC *selectVC=[[MLSelectJobTypeVC alloc]init];
+    MLSelectJobTypeVC *selectVC=[MLSelectJobTypeVC sharedInstance];
     selectVC.selectDelegate=self;
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"";

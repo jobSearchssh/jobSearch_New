@@ -26,7 +26,7 @@ static NSString *scrollindentify = @"scrollviewdown";
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 
-@interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate,HZAreaPickerDelegate,AMapSearchDelegate,MLDatePickerDelegate>{
+@interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate,HZAreaPickerDelegate,AMapSearchDelegate,MLDatePickerDelegate,UITextViewDelegate>{
     NSMutableArray *addedPicArray;
     NSArray *selectfreetimetitleArray;
     NSArray *selectfreetimepicArray;
@@ -103,8 +103,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UITextField *intentionOutlet;
 
 //page5
-@property (weak, nonatomic) IBOutlet UITextField *introductionmeOutlet;
-@property (weak, nonatomic) IBOutlet UITextField *workexperienceOutlet;
+@property (weak, nonatomic) IBOutlet UITextView *introductionmeOutlet;
+@property (weak, nonatomic) IBOutlet UITextView *workexperienceOutlet;
 @property (weak, nonatomic) IBOutlet UITextField *schollNewOutlet;
 
 @property (strong, nonatomic) HZAreaPickerView *locatePicker;
@@ -289,15 +289,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     
     //page5
-    UIView *lineviewwork= [[UIView alloc] initWithFrame:CGRectMake(self.workexperienceOutlet.frame.origin.x, self.workexperienceOutlet.frame.origin.y+self.workexperienceOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
-    lineviewwork.alpha = 0.5;
-    lineviewwork.backgroundColor = [UIColor grayColor];
-    [self.view5outlet addSubview:lineviewwork];
+//    UIView *lineviewwork= [[UIView alloc] initWithFrame:CGRectMake(self.workexperienceOutlet.frame.origin.x, self.workexperienceOutlet.frame.origin.y+self.workexperienceOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
+//    lineviewwork.alpha = 0.5;
+//    lineviewwork.backgroundColor = [UIColor grayColor];
+//    [self.view5outlet addSubview:lineviewwork];
     
-    UIView *lineviewintroduction= [[UIView alloc] initWithFrame:CGRectMake(self.introductionmeOutlet.frame.origin.x, self.introductionmeOutlet.frame.origin.y+self.introductionmeOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
-    lineviewintroduction.alpha = 0.5;
-    lineviewintroduction.backgroundColor = [UIColor grayColor];
-    [self.view5outlet addSubview:lineviewintroduction];
+//    UIView *lineviewintroduction= [[UIView alloc] initWithFrame:CGRectMake(self.introductionmeOutlet.frame.origin.x, self.introductionmeOutlet.frame.origin.y+self.introductionmeOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
+//    lineviewintroduction.alpha = 0.5;
+//    lineviewintroduction.backgroundColor = [UIColor grayColor];
+//    [self.view5outlet addSubview:lineviewintroduction];
     
     UIView *lineviewschoolnew= [[UIView alloc] initWithFrame:CGRectMake(self.schollNewOutlet.frame.origin.x, self.schollNewOutlet.frame.origin.y+self.schollNewOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
     lineviewschoolnew.alpha = 0.5;
@@ -308,8 +308,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     self.workexperienceOutlet.delegate = self;
     self.schollNewOutlet.delegate = self;
     
-    [self.introductionmeOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
-    [self.workexperienceOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     [self.schollNewOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     
     [self.scrollviewOutlet setTarget:self selector:@selector(tapRegisnFirstRespond)];
@@ -700,6 +698,18 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.intentionOutlet.text=@"全部";
         [typeArray removeAllObjects];
     }
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+    
+
+    CGFloat yDiff = textView.frame.origin.y-textView.frame.size.height+10;
+    if (yDiff<10) {
+        return;
+    }
+    CGPoint offset = CGPointMake([self.pickerView selectedItem]*[UIScreen mainScreen].bounds.size.width,yDiff);
+    [self.scrollviewOutlet setContentOffset:offset animated:YES];
+
 }
 
 //编辑上移

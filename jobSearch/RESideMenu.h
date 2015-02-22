@@ -51,7 +51,7 @@
 - (void)hide;
 - (void)setRootViewController:(UIViewController *)viewController;
 
-- (void)setTableItem:(NSInteger)row Title:(NSString*)title Subtitle:(NSString*)subtitle Image:(UIImage*)image;
+- (void)setTableItem:(NSInteger)row Title:(NSString*)title Subtitle:(NSString*)subtitle ImageUrl:(NSString*)imageurl;
 
 -(void)setBadgeView:(NSInteger)index badgeText:(NSString*)badgeText;
 

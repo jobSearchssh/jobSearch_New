@@ -52,6 +52,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UILabel *jobRequireLabel;
 
 @property (strong, nonatomic) NSString *buttonTitle;
+@property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 
 @end
 
@@ -63,9 +65,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     if ([self.origin isEqualToString:@"1"]) {
         self.applyButton.hidden=YES;
+        self.phoneLabel.hidden=YES;
         self.scrollViewBottomConstraint.constant=-44;
     }else if ([self.origin isEqualToString:@"2"]){
         self.buttonTitle=@"联系企业";
+        self.phoneLabel.hidden=NO;
         [self.applyButton setTitle:self.buttonTitle forState:UIControlStateNormal];
     }
     
@@ -78,6 +82,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 200)];
     [self.containerView addSubview:mapView];
     
+    self.emailLabel.hidden=YES;
     
     [self initData];
     [self timeCollectionViewInit];
@@ -188,12 +193,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     CGRect rect2 =[self.jobRequireLabel.text boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width-16, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]}  context:nil];
     self.jobRequireLabelHeightConstraint.constant=rect2.size.height;
 
-    self.containerViewHeightConstraint.constant=370+rect1.size.height+rect2.size.height;
+    self.containerViewHeightConstraint.constant=430+rect1.size.height+rect2.size.height;
 }
 
 - (void)initData{
     if (self.jobModel) {
-
+        
         
         NSString *imageUrl;
         
@@ -285,6 +290,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             textString=[textString stringByAppendingString:[NSString stringWithFormat:@"%@\n",gender]];
         }
         self.jobRequireLabel.text=textString;
+        
+        if (self.contactPhoneNumber&&[self.origin isEqualToString:@"2"]) {
+            self.phoneLabel.text=[NSString stringWithFormat:@"【联系电话】%@",self.contactPhoneNumber];
+        }else{
+            self.phoneLabel.hidden=YES;
+        }
         
         [self updateConstraints];
         

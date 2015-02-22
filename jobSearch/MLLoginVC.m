@@ -157,6 +157,28 @@ static  MLLoginVC *thisVC=nil;
     [self.scrollView setContentOffset:offset animated:YES];
 }
 
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+    int page;
+    if ([self.scrollView contentOffset].x >0) {
+        page = 1;
+    }else{
+        page = 0;
+    }
+    CGPoint offset;
+    switch (page) {
+        case 0:
+            offset = CGPointMake(0,textView.frame.origin.y-self.userAccount.frame.origin.y);
+            break;
+        case 1:
+            offset = CGPointMake([UIScreen mainScreen].bounds.size.width,textView.frame.origin.y-self.phoneNumber.frame.origin.y);
+            break;
+        default:
+            offset = CGPointMake(0,0);
+            break;
+    }
+    [self.scrollView setContentOffset:offset animated:YES];
+}
+
 //编辑上移
 -(void)textFieldOutletWork:(UITextField *)sender{
     int page;
@@ -242,7 +264,7 @@ static  MLLoginVC *thisVC=nil;
     }
 }
 
-- (void)loginResult:(BOOL)isSucceed Feedback:(NSString*)feedback{
+- (void)loginResult:(BOOL)isSucceed Feedback:(NSString*)feedback logoUrl:(NSString *)logoUrl{
     
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     self.loginButton.enabled=YES;
@@ -255,7 +277,7 @@ static  MLLoginVC *thisVC=nil;
             NSString *currentUsrName=[mySettingData objectForKey:@"currentUserName"];
             RESideMenu* _sideMenu=[RESideMenu sharedInstance];
             
-            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:@"点击退出" Image:[UIImage imageNamed:@"tourists"]];
+            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:@"点击退出" ImageUrl:logoUrl];
         }
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"登录成功" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -279,7 +301,7 @@ static  MLLoginVC *thisVC=nil;
             NSString *currentUsrName=[mySettingData objectForKey:@"currentUserName"];
             RESideMenu* _sideMenu=[RESideMenu sharedInstance];
             
-            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:@"点击退出" Image:[UIImage imageNamed:@"tourists"]];
+            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:@"点击退出" ImageUrl:nil];
         }
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
