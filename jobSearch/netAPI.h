@@ -53,7 +53,7 @@ typedef void (^badgeBlock)(badgeModel *badgeModel);
 
 //用户登录
 //用户名，密码，回调block
-+(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(userBlock)loginBlock;
++(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(loginReturnBlock)loginBlock;
 
 //用户注册
 //用户名，密码，回调block

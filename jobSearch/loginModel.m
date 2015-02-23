@@ -44,10 +44,47 @@
                 flag = false;
             }
         }
+        
+        if (flag && status.intValue == STATIS_OK) {
+            do{
+                NSDictionary *dictionary = nil;
+                @try {
+                    dictionary = [a objectForKey:@"userdata"];
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"datas 解析不成功");
+                    dictionary = Nil;
+                    flag = false;
+                }
+                if (dictionary == Nil) {
+                    NSLog(@"datas 为空");
+                    flag = false;
+                    break;
+                }
+                
+                @try {
+                    NSArray *arr=[dictionary objectForKey:@"ImageFileURL"];
+                    if ([arr count]>0) {
+                        usrLogoUrl=[arr objectAtIndex:0];
+                    }else
+                        usrLogoUrl=nil;
+                    
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"datas 解析错误");
+                    flag = false;
+                    break;
+                }
+                
+            }while (FALSE);
+            
+        }
+        
         if (!flag) {
             status = [NSNumber numberWithInt:STATIS_NO];
             info = @"解析错误,请重新尝试";
             usrID = @"-1";
+            usrLogoUrl=nil;
         }
     }
     return self;
@@ -61,5 +98,7 @@
 -(NSString *)getUsrID{
     return usrID;
 }
-
+-(NSString *)getusrLogoUrl{
+    return usrLogoUrl;
+}
 @end

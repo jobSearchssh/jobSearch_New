@@ -577,13 +577,20 @@ NSString *const AsyncImageErrorKey = @"error";
 
 - (void)setImageURL:(NSURL *)imageURL
 {
-	[[AsyncImageLoader sharedLoader] loadImageWithURL:imageURL target:self action:@selector(setImage:)];
+    [[AsyncImageLoader sharedLoader] loadImageWithURL:imageURL target:self action:@selector(handleImage: url:)];
 }
 
 - (NSURL *)imageURL
 {
 	return [[AsyncImageLoader sharedLoader] URLForTarget:self action:@selector(setImage:)];
 }
+
+- (void)handleImage:(UIImage *)image url:(NSURL*)url{
+    
+    [self setImage:image];
+
+}
+
 
 @end
 
@@ -601,7 +608,7 @@ NSString *const AsyncImageErrorKey = @"error";
 {
 	self.showActivityIndicator = (self.image == nil);
 	self.activityIndicatorStyle = UIActivityIndicatorViewStyleGray;
-	self.crossfadeDuration = 0.0;
+	self.crossfadeDuration = 0.0f;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -624,6 +631,7 @@ NSString *const AsyncImageErrorKey = @"error";
 
 - (void)setImageURL:(NSURL *)imageURL
 {
+    
     UIImage *image = [[AsyncImageLoader sharedLoader].cache objectForKey:imageURL];
     if (image)
     {
@@ -631,6 +639,7 @@ NSString *const AsyncImageErrorKey = @"error";
         return;
     }
     super.imageURL = imageURL;
+
     if (self.showActivityIndicator && !self.image && imageURL)
     {
         if (self.activityView == nil)
@@ -644,6 +653,7 @@ NSString *const AsyncImageErrorKey = @"error";
         [self.activityView startAnimating];
     }
 }
+
 
 - (void)setActivityIndicatorStyle:(UIActivityIndicatorViewStyle)style
 {
@@ -665,6 +675,7 @@ NSString *const AsyncImageErrorKey = @"error";
     super.image = image;
     [self.activityView stopAnimating];
 }
+
 
 - (void)dealloc
 {

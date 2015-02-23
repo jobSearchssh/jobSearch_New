@@ -34,6 +34,7 @@
     }
 }
 
+
 -(void)setusrAction:(NSString *)string{
     self.usrActionOutlet.text = string;
 }

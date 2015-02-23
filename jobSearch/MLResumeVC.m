@@ -1409,7 +1409,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         NSString *addr=[NSString stringWithFormat:@"%@%@%@",province,city,district];
         [self.selectCityOutlet setTitle:addr forState:UIControlStateNormal];
     }
-    
 }
 
 @end

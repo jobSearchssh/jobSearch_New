@@ -248,6 +248,7 @@
 		3BA4845E1A89E84E00B6A200 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4845A1A89E84E00B6A200 /* ViewController.m */; };
 		3BA4845F1A89E84E00B6A200 /* MLNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4845C1A89E84E00B6A200 /* MLNavigation.m */; };
 		3BC051F41A7145CB0099A2DF /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC051F21A7145CB0099A2DF /* libMobClickLibrary.a */; };
+		3BC6B6081A9AD1A60055D2C8 /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC6B6071A9AD1A60055D2C8 /* AsyncImageView.m */; };
 		3BC8AE211A73769500417741 /* QCheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8AE1C1A73769500417741 /* QCheckBox.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3BC8AE311A738D4B00417741 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8AE301A738D4B00417741 /* Reachability.m */; };
 		3BC8AE5B1A7630F800417741 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC8AE571A762EDB00417741 /* MobileCoreServices.framework */; };
@@ -338,7 +339,6 @@
 		3BF625311A8B3E4E0066816D /* arrow_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF6252E1A8B3E4E0066816D /* arrow_right.png */; };
 		3BF625321A8B3E4E0066816D /* arrow_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF6252F1A8B3E4E0066816D /* arrow_right@2x.png */; };
 		3BF625331A8B3E4E0066816D /* arrow_right@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF625301A8B3E4E0066816D /* arrow_right@3x.png */; };
-		3BF625371A8B55450066816D /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BF625361A8B55450066816D /* AsyncImageView.m */; };
 		3BF6253B1A8B57AA0066816D /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF625381A8B57AA0066816D /* placeholder@2x.png */; };
 		3BF6253C1A8B57AA0066816D /* placeholder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF625391A8B57AA0066816D /* placeholder@3x.png */; };
 		3BF6253D1A8B57AA0066816D /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BF6253A1A8B57AA0066816D /* placeholder.png */; };
@@ -710,6 +710,8 @@
 		3BA4845C1A89E84E00B6A200 /* MLNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLNavigation.m; sourceTree = "<group>"; };
 		3BC051F21A7145CB0099A2DF /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		3BC051F31A7145CB0099A2DF /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		3BC6B6061A9AD1A60055D2C8 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
+		3BC6B6071A9AD1A60055D2C8 /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
 		3BC8AE1B1A73769500417741 /* QCheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCheckBox.h; sourceTree = "<group>"; };
 		3BC8AE1C1A73769500417741 /* QCheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCheckBox.m; sourceTree = "<group>"; };
 		3BC8AE2F1A738D4B00417741 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -824,8 +826,6 @@
 		3BF6252E1A8B3E4E0066816D /* arrow_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_right.png; sourceTree = "<group>"; };
 		3BF6252F1A8B3E4E0066816D /* arrow_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_right@2x.png"; sourceTree = "<group>"; };
 		3BF625301A8B3E4E0066816D /* arrow_right@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow_right@3x.png"; sourceTree = "<group>"; };
-		3BF625351A8B55450066816D /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
-		3BF625361A8B55450066816D /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
 		3BF625381A8B57AA0066816D /* placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder@2x.png"; sourceTree = "<group>"; };
 		3BF625391A8B57AA0066816D /* placeholder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder@3x.png"; sourceTree = "<group>"; };
 		3BF6253A1A8B57AA0066816D /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
@@ -1297,9 +1297,9 @@
 		3B9236451A67FAFA00347D9C /* jobSearch */ = {
 			isa = PBXGroup;
 			children = (
+				3BC6B6051A9AD1A60055D2C8 /* AsyncImageView */,
 				3B5C26671A979AAC00E4AF7E /* badgeNumber */,
 				3BCACDA01A8C4FB000D22F62 /* ShareSDK */,
-				3BF625341A8B55450066816D /* AsyncImageView */,
 				3BCEA0CA1A83636C0005F080 /* Legal */,
 				3BCEA0C41A8363250005F080 /* FeedBack */,
 				3B4AB49B1A81F1700053236C /* LocationManager */,
@@ -1470,6 +1470,15 @@
 				3BC051F51A7149D60099A2DF /* jobRecomendVC */,
 			);
 			name = messageVC;
+			sourceTree = "<group>";
+		};
+		3BC6B6051A9AD1A60055D2C8 /* AsyncImageView */ = {
+			isa = PBXGroup;
+			children = (
+				3BC6B6061A9AD1A60055D2C8 /* AsyncImageView.h */,
+				3BC6B6071A9AD1A60055D2C8 /* AsyncImageView.m */,
+			);
+			path = AsyncImageView;
 			sourceTree = "<group>";
 		};
 		3BC8AE161A73769500417741 /* QCheckbox */ = {
@@ -1759,15 +1768,6 @@
 				3BD4DC651A77C50600B061D0 /* resume_icon1.png */,
 			);
 			path = resumeIIcon;
-			sourceTree = "<group>";
-		};
-		3BF625341A8B55450066816D /* AsyncImageView */ = {
-			isa = PBXGroup;
-			children = (
-				3BF625351A8B55450066816D /* AsyncImageView.h */,
-				3BF625361A8B55450066816D /* AsyncImageView.m */,
-			);
-			path = AsyncImageView;
 			sourceTree = "<group>";
 		};
 		B751EB901A7E127000A6361A /* model */ = {
@@ -2249,6 +2249,7 @@
 				3BA4844C1A89E83B00B6A200 /* MLFirstVC.m in Sources */,
 				3B69938F1A89E98E00A53760 /* RESideMenu.m in Sources */,
 				3BC8AE311A738D4B00417741 /* Reachability.m in Sources */,
+				3BC6B6081A9AD1A60055D2C8 /* AsyncImageView.m in Sources */,
 				3B9236491A67FAFA00347D9C /* main.m in Sources */,
 				3BA484531A89E83B00B6A200 /* MLSelectJobTypeVC.m in Sources */,
 				B77578D81A7A9ED000660BB7 /* PBJStrobeView.m in Sources */,
@@ -2289,7 +2290,6 @@
 				3B69944E1A89E9F900A53760 /* CustomAnnotationView.m in Sources */,
 				3B4547081A933D8000AA3C50 /* HZLocation.m in Sources */,
 				3B69938B1A89E98E00A53760 /* Evaluate.m in Sources */,
-				3BF625371A8B55450066816D /* AsyncImageView.m in Sources */,
 				3BA483D51A89E6F700B6A200 /* baseMessageModel.m in Sources */,
 				3B4AB4901A81CB2F0053236C /* MJRefreshBaseView.m in Sources */,
 				B77578CC1A7A94B900660BB7 /* PBJVisionUtilities.m in Sources */,

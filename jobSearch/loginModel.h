@@ -14,6 +14,7 @@
     NSNumber *status;
     NSString *info;
     NSString *usrID;
+    NSString *usrLogoUrl;
 }
 
 -(loginModel *)initWithData:(NSData *)mainData;
@@ -21,4 +22,5 @@
 -(NSNumber *)getStatus;
 -(NSString *)getInfo;
 -(NSString *)getUsrID;
+-(NSString *)getusrLogoUrl;
 @end

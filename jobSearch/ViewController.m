@@ -90,6 +90,7 @@
                 [logoutAlert show];
             }else{
                 [menu hide];
+                
                 MLLoginVC *viewController = [[MLLoginVC alloc] init];
 
                 [currentnavigationController pushViewController:viewController animated:YES];

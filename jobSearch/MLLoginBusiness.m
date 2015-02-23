@@ -45,19 +45,20 @@
 
 -(void)loginInBackground:(NSString*) username Password:(NSString*)pwd{
     
-    [netAPI usrLogin:username usrPassword:pwd withBlock:^(userModel *loginModel) {
+    [netAPI usrLogin:username usrPassword:pwd withBlock:^(loginModel *loginModel) {
         if ([loginModel.getStatus intValue]==0) {
             
-            [self saveUserInfoLocallyWithUserName:username userObjectId:loginModel.getjob_user_id logoUrl:[loginModel.getImageFileURL objectAtIndex:0]];
-            [self loginIsSucceed:YES feedback:@"登录成功" logoUrl:[loginModel.getImageFileURL objectAtIndex:0]];
+            [self saveUserInfoLocallyWithUserName:username userObjectId:loginModel.getUsrID logoUrl:loginModel.getusrLogoUrl];
+            [self loginIsSucceed:YES feedback:@"登录成功" logoUrl:loginModel.getusrLogoUrl];
             
         }else{
             
-             NSString *error=loginModel.getInfo;
+            NSString *error=loginModel.getInfo;
             
             [self loginIsSucceed:NO feedback:error logoUrl:nil];
         }
     }];
+    
 }
 
 -(void)loginIsSucceed:(BOOL)result feedback:(NSString*)feedback logoUrl:(NSString*)logoUrl

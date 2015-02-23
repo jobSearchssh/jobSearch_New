@@ -181,15 +181,15 @@
 }
 
 //用户登录
-+(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(userBlock)loginBlock{
++(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(loginReturnBlock)loginBlock{
     NSString *str = [[NSString alloc]initWithFormat:@"userPhone=%@&userPassword=%@",name,password];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     [self testAPIPostTestWithBlock:data getFunction:LOGIN_FUNCTION block:^(URLReturnModel *returnModel) {
         if (returnModel != Nil && [returnModel getFlag]) {
-            userModel *a = [[userModel alloc]initWithData:[returnModel getData]];
+            loginModel *a = [[loginModel alloc]initWithData:[returnModel getData]];
             loginBlock(a);
         }else{
-            userModel *a = [[userModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            loginModel *a=[[loginModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription] usrID:nil];
             loginBlock(a);
         }
     }];
