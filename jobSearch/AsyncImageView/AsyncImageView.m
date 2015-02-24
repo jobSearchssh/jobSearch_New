@@ -34,7 +34,8 @@
 #import "AsyncImageView.h"
 #import <objc/message.h>
 #import <QuartzCore/QuartzCore.h>
-
+#import "imageSaveAndReadUtil.h"
+#import "stringUtil.h"
 
 #import <Availability.h>
 #if !__has_feature(objc_arc)
@@ -142,6 +143,7 @@ NSString *const AsyncImageErrorKey = @"error";
             if (storeInCache)
             {
                 [self.cache setObject:image forKey:self.URL];
+                [imageSaveAndReadUtil writeImageToDoc:image getDocName:[stringUtil formatMyString:[self.URL absoluteString]]];
             }
         }
         
@@ -280,7 +282,9 @@ NSString *const AsyncImageErrorKey = @"error";
 @end
 
 
-@interface AsyncImageLoader ()
+@interface AsyncImageLoader (){
+    dispatch_queue_t imagesSingleQueue;
+}
 
 @property (nonatomic, strong) NSMutableArray *connections;
 
@@ -288,6 +292,16 @@ NSString *const AsyncImageErrorKey = @"error";
 
 
 @implementation AsyncImageLoader
+
+-(dispatch_queue_t)getDispatchQueue{
+    if (imagesSingleQueue == nil) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            imagesSingleQueue = dispatch_queue_create("imagesSingleQueue", DISPATCH_QUEUE_SERIAL);
+        });
+    }
+    return imagesSingleQueue;
+}
 
 + (AsyncImageLoader *)sharedLoader
 {
@@ -437,29 +451,51 @@ NSString *const AsyncImageErrorKey = @"error";
         return;
     }
     
-    //create new connection
-    AsyncImageConnection *connection = [[AsyncImageConnection alloc] initWithURL:URL
-                                                                           cache:self.cache
-                                                                          target:target
-                                                                         success:success
-                                                                         failure:failure];
-    BOOL added = NO;
-    for (NSUInteger i = 0; i < [self.connections count]; i++)
-    {
-        AsyncImageConnection *existingConnection = self.connections[i];
-        if (!existingConnection.loading)
-        {
-            [self.connections insertObject:connection atIndex:i];
-            added = YES;
-            break;
+    dispatch_async([self getDispatchQueue], ^{
+        UIImage *imageTemp = Nil;
+        if ([imageSaveAndReadUtil isExists:[stringUtil formatMyString:[URL absoluteString]]]) {
+            NSLog(@"image fromFile");
+            imageTemp = [imageSaveAndReadUtil getImagePath:[stringUtil formatMyString:[URL absoluteString]]];
+            if (imageTemp) {
+                [self.cache setObject:imageTemp forKey:URL];
+                [self cancelLoadingImagesForTarget:self action:success];
+                if (success)
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^(void) {
+                        
+                        ((void (*)(id, SEL, id, id))objc_msgSend)(target, success, imageTemp, URL);
+                    });
+                }
+                return;
+            }
         }
-    }
-    if (!added)
-    {
-        [self.connections addObject:connection];
-    }
-    
-    [self updateQueue];
+        
+        
+        
+        //create new connection
+        AsyncImageConnection *connection = [[AsyncImageConnection alloc] initWithURL:URL
+                                                                               cache:self.cache
+                                                                              target:target
+                                                                             success:success
+                                                                             failure:failure];
+        BOOL added = NO;
+        for (NSUInteger i = 0; i < [self.connections count]; i++)
+        {
+            AsyncImageConnection *existingConnection = self.connections[i];
+            if (!existingConnection.loading)
+            {
+                [self.connections insertObject:connection atIndex:i];
+                added = YES;
+                break;
+            }
+        }
+        if (!added)
+        {
+            [self.connections addObject:connection];
+        }
+        
+        [self updateQueue];
+    });
 }
 
 - (void)loadImageWithURL:(NSURL *)URL target:(id)target action:(SEL)action

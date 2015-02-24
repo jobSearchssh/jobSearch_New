@@ -74,11 +74,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if ([userModel getStatus].intValue == STATIS_OK) {
             [self initfromNet:userModel];
-            NSMutableArray *array = [userModel getImageFileURL];
-            for (NSString *url in array) {
-                NSLog(@"urlurlurlurl");
-                NSLog(@"url = %@",url);
-            }
         }else{
             UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"数据获取错误" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
             [alterTittle show];

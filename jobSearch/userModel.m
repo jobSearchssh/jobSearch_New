@@ -14,7 +14,7 @@
     self = [super init];
     if (self) {
         NSString *receiveStr = [[NSString alloc]initWithData:mainData encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",receiveStr);
+//        NSLog(@"%@",receiveStr);
         NSError *error;
         NSData* aData = [receiveStr dataUsingEncoding: NSASCIIStringEncoding];
         NSDictionary *aDicMain = Nil;
@@ -107,6 +107,11 @@
                     NSArray *tempImageFileURL = [dictionary objectForKey:@"ImageFileURL"];
                     if (tempImageFileURL != Nil) {
                         ImageFileURL = [[NSMutableArray alloc]initWithArray:tempImageFileURL];
+                        for (NSString *url in ImageFileURL) {
+                            if ([url length] < 10) {
+                                [ImageFileURL removeObject:url];
+                            }
+                        }
                     }else{
                         ImageFileURL = [[NSMutableArray alloc]init];
                     }

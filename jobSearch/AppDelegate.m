@@ -85,6 +85,9 @@
     //刷新badge
     [[badgeNumber sharedInstance] refreshCount];
     
+    //新建图片文件夹
+    [fileUtil createPicFolder];
+    
     return YES;
 }
 
