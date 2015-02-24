@@ -77,7 +77,6 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     [netAPI getMessageList:userId start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(messageListModel *messageListModel) {
         [self footHandler:messageListModel];
     }];
-
 }
 
 - (void)headHandler:(messageListModel *)jobListModel{
@@ -112,16 +111,15 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     if (footerRefreshing) {
         if (![jobListModel.getStatus intValue]==0) {
             
-            
             [MBProgressHUD showError:jobListModel.getInfo toView:self.view];
             
         }else{
             
             for (messageModel *object in jobListModel.getMessageArray) {
                 
-                if ([object.getinviteStatus intValue]==0) {
+                //if ([object.getinviteStatus intValue]==0) {
                     [recordArray addObject:object];
-                }
+                //}
             }
             
             NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
@@ -149,9 +147,9 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
             
             for (messageModel *object in jobListModel.getMessageArray) {
                 
-                if ([object.getinviteStatus intValue]==0) {
+                //if ([object.getinviteStatus intValue]==0) {
                     [recordArray addObject:object];
-                }
+                //}
             }
             
             cellNum=[recordArray count];
@@ -223,7 +221,6 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
         }else{
             cell.portraitView.image=[UIImage imageNamed:@"placeholder"];
         }
-
     }
     
     return cell;

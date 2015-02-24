@@ -14,6 +14,8 @@
 #import "MBProgressHUD.h"
 #import "MBProgressHUD+Add.h"
 #import "AsyncImageView.h"
+#import "badgeNumber.h"
+
 
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
@@ -217,7 +219,8 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
             if ([[oprationResultModel getStatus] intValue]==0) {
                 NSLog(@"标记成功");
             }
-            
+            badgeNumber *bn=[badgeNumber sharedInstance];
+            [bn minusMessageCount];
         }];
     }
 }
@@ -312,7 +315,7 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     if (cell == nil) {
         cell = [[freeselectViewCell alloc]init];
     }
-    //[[cell imageView]setFrame:CGRectMake(0, 0, freecellwidth, freecellwidth)];
+    
     if (indexPath.row>=0 && indexPath.row<7) {
         cell.imageView.image = [selectfreetimetitleArray objectAtIndex:indexPath.row];
     }
