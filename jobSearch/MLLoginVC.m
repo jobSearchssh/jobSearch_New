@@ -317,6 +317,7 @@ static  MLLoginVC *thisVC=nil;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     [self.navigationController popViewControllerAnimated:YES];
+    [self.loginDelegate finishLogin];
 }
 
 - (IBAction)phoneEditingChanged:(id)sender {

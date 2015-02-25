@@ -12,10 +12,10 @@
 #import "MBProgressHUD.h"
 #import "MBProgressHUD+Add.h"
 #import "MJRefresh.h"
+#import "MLLoginVC.h"
 
-static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
-@interface MLMyApplication ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate>
+@interface MLMyApplication ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,finishLoginDelegate>
 {
     NSInteger cellNum;
     NSDateFormatter *dateFormatter;
@@ -64,11 +64,31 @@ static  MLMyApplication *thisVC=nil;
     [self tableViewInit];
 }
 
+- (void)finishLogin{
+    firstLoad=YES;
+    [self headRefreshData];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
+
+    if (buttonIndex==1) {
+        MLLoginVC *loginVC=[[MLLoginVC alloc]init];
+        loginVC.loginDelegate=self;
+        [self.navigationController pushViewController:loginVC animated:YES];
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated{
     
 }
 
 - (void)headRefreshData{
+    
+    NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+    NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+    if ([currentUserObjectId length]>0) {
     
     headerRefreshing=YES;
     skipTimes=0;
@@ -77,17 +97,38 @@ static  MLMyApplication *thisVC=nil;
         [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
         firstLoad=NO;
     }
-    [netAPI getApplyJobs:userId start:1 length:BASE_SPAN withBlock:^(jobAppliedListModel *jobListModel) {
+    [netAPI getApplyJobs:currentUserObjectId start:1 length:BASE_SPAN withBlock:^(jobAppliedListModel *jobListModel) {
         [self headHandler:jobListModel];
     }];
+    }
+    else{
+        if (!refreshAdded) {
+            refreshAdded=YES;
+            [_tableView addHeaderWithTarget:self action:@selector(headRefreshData)];
+            [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
+        }
+        
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        [loginAlert show];
+    }
 }
 
 - (void)footRefreshData{
+    
+    NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+    NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+    if ([currentUserObjectId length]>0) {
+    
     footerRefreshing=YES;
     
-    [netAPI getApplyJobs:userId start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobAppliedListModel *jobListModel) {
+    [netAPI getApplyJobs:currentUserObjectId start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobAppliedListModel *jobListModel) {
         [self footHandler:jobListModel];
     }];
+    }
+    else{
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        [loginAlert show];
+    }
 }
 
 - (void)headHandler:(jobAppliedListModel *)jobListModel{
@@ -164,15 +205,15 @@ static  MLMyApplication *thisVC=nil;
     }
 }
 
-- (void)refreshInBackground{
-    if (self.inBackground) {
-        headerRefreshing=YES;
-        skipTimes=0;
-        [netAPI getApplyJobs:userId start:1 length:BASE_SPAN withBlock:^(jobAppliedListModel *jobListModel) {
-            [self headHandler:jobListModel];
-        }];
-    }
-}
+//- (void)refreshInBackground{
+//    if (self.inBackground) {
+//        headerRefreshing=YES;
+//        skipTimes=0;
+//        [netAPI getApplyJobs:userId start:1 length:BASE_SPAN withBlock:^(jobAppliedListModel *jobListModel) {
+//            [self headHandler:jobListModel];
+//        }];
+//    }
+//}
 
 //*********************tableView********************//
 - (void)tableViewInit{
@@ -318,12 +359,17 @@ static  MLMyApplication *thisVC=nil;
     [self.navigationController pushViewController:detailVC animated:YES];
     
     //将消息设置为已读
-    [netAPI setRecordAlreadyRead:userId applyOrInviteId:appliedModel.get_id type:@"1" withBlock:^(oprationResultModel *oprationResultModel) {
-        if ([[oprationResultModel getStatus] intValue]==0) {
+    NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+    NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+    
+    if ([currentUserObjectId length]>0) {
+    
+        [netAPI setRecordAlreadyRead:currentUserObjectId applyOrInviteId:appliedModel.get_id type:@"1" withBlock:^(oprationResultModel *oprationResultModel) {
+            if ([[oprationResultModel getStatus] intValue]==0) {
             NSLog(@"标记成功");
-        }
-    }];
-
+            }
+        }];
+    }
     
     [self performSelector:@selector(deselect) withObject:nil afterDelay:0.5f];
 }
@@ -382,7 +428,11 @@ static  MLMyApplication *thisVC=nil;
             
             jobAppliedModel *jm=[recordArray objectAtIndex:row];
             
-            [netAPI deleteMyAppliedJob:userId applyId:jm.getjobApply_id withBlock:^(oprationResultModel *oprationResultModel) {
+            NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+            NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+            
+            if ([currentUserObjectId length]>0) {
+            [netAPI deleteMyAppliedJob:currentUserObjectId applyId:jm.getjobApply_id withBlock:^(oprationResultModel *oprationResultModel) {
                 [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
                 
                 if ([oprationResultModel.getStatus intValue]==0) {
@@ -398,7 +448,7 @@ static  MLMyApplication *thisVC=nil;
                     
                 }
             }];
-            
+            }
             break;
         }
         case 1:

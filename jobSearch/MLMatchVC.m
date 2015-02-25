@@ -11,8 +11,9 @@
 #import "PiPeiView.h"
 #import "MBProgressHUD.h"
 #import "netAPI.h"
+#import "MLLoginVC.h"
 
-static NSString *userId = @"54d76bd496d9aece6f8b4568";
+//static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 @interface RSView : UIView
 
@@ -34,7 +35,7 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 @end
 
 
-@interface MLMatchVC ()<UIScrollViewDelegate,childViewDelegate>
+@interface MLMatchVC ()<UIScrollViewDelegate,childViewDelegate,finishLoginDelegate>
 {
     int kScrollViewHeight;
     int kScrollViewContentHeight;
@@ -53,7 +54,7 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 @implementation MLMatchVC
 
 
-
+static int pageNumber=5;
 static  MLMatchVC *thisVC=nil;
 
 + (MLMatchVC*)sharedInstance{
@@ -98,7 +99,7 @@ static  MLMatchVC *thisVC=nil;
     [self.view addSubview:self.scrollView];
     self.clipView.scrollView = self.scrollView;
     
-    self.pageControl = [[RSCircaPageControl alloc] initWithNumberOfPages:5];
+    self.pageControl = [[RSCircaPageControl alloc] initWithNumberOfPages:pageNumber];
     CGRect frame = self.pageControl.frame;
     frame.origin.x = self.view.bounds.size.width - frame.size.width - 10;
     frame.origin.y = roundf((self.view.bounds.size.height - frame.size.height) / 2.);
@@ -111,6 +112,10 @@ static  MLMatchVC *thisVC=nil;
 }
 
 - (void)refreshScrollView{
+    
+    for (id view in [self.scrollView subviews]) {
+        [view removeFromSuperview];
+    }
     
     CGFloat currentY = 0;
     
@@ -145,8 +150,12 @@ static  MLMatchVC *thisVC=nil;
 
 - (void)initData{
     
+    NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+    NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+    if ([currentUserObjectId length]>0) {
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [netAPI queryJingLingMatch:userId start:1 length:5 withBlock:^(jobListModel *jobListModel) {
+    [netAPI queryJingLingMatch:currentUserObjectId start:1 length:pageNumber withBlock:^(jobListModel *jobListModel) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if ([jobListModel.getStatus intValue]!=0) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"信息加载失败" message:jobListModel.getInfo delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -165,10 +174,28 @@ static  MLMatchVC *thisVC=nil;
                 
                 [self refreshScrollView];
             }
-            
         }
         
     }];
+    }
+    else{
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        [loginAlert show];
+    }
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex==1) {
+        MLLoginVC *loginVC=[[MLLoginVC alloc]init];
+        loginVC.loginDelegate=self;
+        [self.navigationController pushViewController:loginVC animated:YES];
+    }
+}
+
+- (void)finishLogin{
+    [self initData];
 }
 
 - (void)deleteJob:(int)index{

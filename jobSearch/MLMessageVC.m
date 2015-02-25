@@ -14,10 +14,12 @@
 #import "MJRefresh.h"
 #import "netAPI.h"
 #import "jobModel.h"
+#import "MLLoginVC.h"
+
 
 static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
-@interface MLMessageVC ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,finishHandle>
+@interface MLMessageVC ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,finishHandle,UIAlertViewDelegate,finishLoginDelegate>
 {
     NSInteger cellNum;
     NSDateFormatter *dateFormatter;
@@ -57,26 +59,64 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     [self.tableView reloadData];
 }
 
+- (void)finishLogin{
+    firstLoad=YES;
+    [self headRefreshData];
+}
+
 - (void)headRefreshData{
     
-    headerRefreshing=YES;
-    skipTimes=0;
+    NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+    NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+    if ([currentUserObjectId length]>0) {
+        
+        headerRefreshing=YES;
+        skipTimes=0;
     
-    if (firstLoad){
-        [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
-        firstLoad=NO;
+        if (firstLoad){
+            [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
+            firstLoad=NO;
+        }
+    
+        [netAPI getMessageList:currentUserObjectId start:1 length:BASE_SPAN withBlock:^(messageListModel *messageListModel) {
+            [self headHandler:messageListModel];
+        }];
+        
+    }else{
+        
+        if (!refreshAdded) {
+            refreshAdded=YES;
+            [_tableView addHeaderWithTarget:self action:@selector(headRefreshData)];
+            [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
+        }
+
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        [loginAlert show];
     }
-    [netAPI getMessageList:userId start:1 length:BASE_SPAN withBlock:^(messageListModel *messageListModel) {
-        [self headHandler:messageListModel];
-    }];
-    
 }
 
 - (void)footRefreshData{
-    footerRefreshing=YES;
-    [netAPI getMessageList:userId start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(messageListModel *messageListModel) {
+    NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+    NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+    
+    if ([currentUserObjectId length]>0) {
+        [netAPI getMessageList:userId start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(messageListModel *messageListModel) {
         [self footHandler:messageListModel];
     }];
+    }else{
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        [loginAlert show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
+    if (buttonIndex==1) {
+        MLLoginVC *loginVC=[[MLLoginVC alloc]init];
+        loginVC.loginDelegate=self;
+        [self.navigationController pushViewController:loginVC animated:YES];
+    }
 }
 
 - (void)headHandler:(messageListModel *)jobListModel{
@@ -161,14 +201,17 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 //*********************tableView********************//
 - (void)tableViewInit{
-    recordArray=[[NSMutableArray alloc]init];
+    if (!recordArray) {
+        recordArray=[[NSMutableArray alloc]init];
+    }
     
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     _tableView.scrollEnabled=YES;
     _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
     
-    [self headRefreshData];}
+    [self headRefreshData];
+}
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
