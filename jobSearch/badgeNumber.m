@@ -9,7 +9,6 @@
 #import "badgeNumber.h"
 #import "netAPI.h"
 
-static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 @implementation badgeNumber
 
@@ -24,22 +23,27 @@ static  badgeNumber *thisObject=nil;
 
 - (void)refreshCount{
     
-    NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+    NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
     
-    self.messageCount=[mySettingData objectForKey:@"badgeInviteNum"];
-    self.applyCount=[mySettingData objectForKey:@"badgeApplyNum"];
+    if ([currentUserObjectId length]>0) {
     
-    [netAPI getNotReadMessageNum:userId withBlock:^(badgeModel *badgeModel) {
+    self.messageCount=[myData objectForKey:@"badgeInviteNum"];
+    self.applyCount=[myData objectForKey:@"badgeApplyNum"];
+    
+    [netAPI getNotReadMessageNum:currentUserObjectId withBlock:^(badgeModel *badgeModel) {
         
         if ([badgeModel.getStatus intValue]==0) {
             self.messageCount=[NSString stringWithFormat:@"%@",badgeModel.getinviteNotRead];
             self.applyCount=[NSString stringWithFormat:@"%@",badgeModel.getapplyNotRead];
             
-            [mySettingData setObject:self.messageCount forKey:@"badgeInviteNum"];
-            [mySettingData setObject:self.applyCount forKey:@"badgeApplyNum"];
-            [mySettingData synchronize];
+            [myData setObject:self.messageCount forKey:@"badgeInviteNum"];
+            [myData setObject:self.applyCount forKey:@"badgeApplyNum"];
+            [myData synchronize];
         }
     }];
+    }
+    
 }
 
 - (void)minusMessageCount{

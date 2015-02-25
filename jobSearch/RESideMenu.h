@@ -52,7 +52,7 @@
 - (void)setRootViewController:(UIViewController *)viewController;
 
 - (void)setTableItem:(NSInteger)row Title:(NSString*)title Subtitle:(NSString*)subtitle ImageUrl:(NSString*)imageurl;
-
+- (void)setUserImageUrl:(NSString*)imageurl;
 -(void)setBadgeView:(NSInteger)index badgeText:(NSString*)badgeText;
 
 + (RESideMenu*)initInstanceWithItems:(NSArray *)items;

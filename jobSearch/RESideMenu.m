@@ -117,11 +117,25 @@ static  RESideMenu *thisMenu=nil;
     }
 }
 
+- (void)setUserImageUrl:(NSString*)imageurl{
+
+    if ([_items count]>0) {
+            
+        RESideMenuItem*usrItem=[_items objectAtIndex:0];
+        usrItem.imageUrl=imageurl;
+    }
+
+}
+
 -(void)setBadgeView:(NSInteger)index badgeText:(NSString*)badgeText{
     
     RESideMenuItem*usrItem=[_items objectAtIndex:index];
     
     usrItem.badgeText=badgeText;
+    
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:index inSection:0];
+    sideNormalTableViewCell *cell=(sideNormalTableViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+    [cell setBadgeString:badgeText];
     
 }
 
@@ -441,9 +455,9 @@ static  RESideMenu *thisMenu=nil;
         [normalcell setAction:item.title];
         normalcell.item = item;
         [normalcell notifyDatasetChange];
-        if ([item.badgeText length]>0) {
-            [normalcell setBadgeString:item.badgeText];
-        }
+        //if ([item.badgeText intValue]>0) {
+        [normalcell setBadgeString:item.badgeText];
+        //}
         
         normalcell.selectionStyle = UITableViewCellSelectionStyleNone;
         return normalcell;

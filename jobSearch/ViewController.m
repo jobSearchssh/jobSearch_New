@@ -54,6 +54,8 @@
         RESideMenu* _side=[RESideMenu sharedInstance];
         
         [_side setTableItem:0 Title:@"未登录" Subtitle:@"游客" ImageUrl:nil];
+        
+        [self setBadge];
     }
 }
 
@@ -221,9 +223,11 @@
     
     badgeNumber *bn=[badgeNumber sharedInstance];
     
-    if ([bn.applyCount intValue]>0) {
+    if ([bn.applyCount intValue]>0)
         [_sideMenu setBadgeView:3 badgeText:[NSString stringWithFormat:@"%@",bn.applyCount]];
-    }
+    else
+        [_sideMenu setBadgeView:3 badgeText:@"0"];
+    
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{

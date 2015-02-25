@@ -10,6 +10,7 @@
 #import "netAPI.h"
 #import "registerModel.h"
 #import "loginModel.h"
+#import "badgeNumber.h"
 
 @implementation MLLoginBusiness
 
@@ -45,6 +46,9 @@
             [self saveUserInfoLocallyWithUserName:username userObjectId:loginModel.getUsrID logoUrl:loginModel.getusrLogoUrl];
             [self loginIsSucceed:YES feedback:@"登录成功" logoUrl:loginModel.getusrLogoUrl];
             
+            //刷新消息条目
+            [[badgeNumber sharedInstance] refreshCount];
+            
         }else{
             
             NSString *error=loginModel.getInfo;
@@ -52,7 +56,6 @@
             [self loginIsSucceed:NO feedback:error logoUrl:nil];
         }
     }];
-    
 }
 
 -(void)loginIsSucceed:(BOOL)result feedback:(NSString*)feedback logoUrl:(NSString*)logoUrl
@@ -75,10 +78,17 @@
 + (void)logout{
     NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
     if ([mySettingData objectForKey:@"currentUserObjectId"]) {
+        
         [mySettingData setObject:nil forKey:@"currentUserName"];
         [mySettingData setObject:nil forKey:@"currentUserObjectId"];
         [mySettingData setObject:nil forKey:@"currentUserlogoUrl"];
+        [mySettingData setObject:nil forKey:@"badgeInviteNum"];
+        [mySettingData setObject:nil forKey:@"badgeApplyNum"];
         [mySettingData synchronize];
+        
+        badgeNumber *bn=[badgeNumber sharedInstance];
+        bn.messageCount=@"0";
+        bn.applyCount=@"0";
     }
 }
 

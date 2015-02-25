@@ -80,9 +80,10 @@ static  MLFirstVC *thisVC=nil;
     
     if ([keyPath isEqual:@"messageCount"]) {
         badgeNumber*bn=[badgeNumber sharedInstance];
-        if ([bn.messageCount intValue]>0) {
+        if ([bn.messageCount intValue]>0)
             [self.messageItem setBadgeValue:[NSString stringWithFormat:@"%@",bn.messageCount]];
-        }
+        else
+            self.messageItem.badgeValue=nil;
     }
 }
 

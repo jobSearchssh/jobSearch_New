@@ -84,7 +84,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }else{
             UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:userModel.getInfo delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
             [alterTittle show];
-            
         }
     }];
     }else{

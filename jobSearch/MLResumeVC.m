@@ -15,7 +15,7 @@
 #import "MBProgressHUD.h"
 #import "MBProgressHUD+Add.h"
 #import "MLDatePickerView.h"
-
+#import "RESideMenu.h"
 
 #define  PIC_WIDTH 60
 #define  PIC_HEIGHT 60
@@ -645,6 +645,18 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         if ([userReturnModel getStatus].intValue == STATIS_OK) {
             [MBProgressHUD showSuccess:@"简历更新成功" toView:self.view];
+            
+            if ([[self.usermodel getImageFileURL] count]>0) {
+                RESideMenu *sideMenu=[RESideMenu sharedInstance];
+                NSString *logoUrl=[[self.usermodel getImageFileURL] objectAtIndex:0];
+                [sideMenu setUserImageUrl:logoUrl];
+                
+                NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+                [mySettingData setObject:logoUrl forKey:@"currentUserlogoUrl"];
+                [mySettingData synchronize];
+            }
+            
+            
         }else{
             [MBProgressHUD showError:[userReturnModel getInfo] toView:self.view];
         }
