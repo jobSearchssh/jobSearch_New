@@ -23,4 +23,6 @@
 -(NSString *)getInfo;
 -(NSString *)getUsrID;
 -(NSString *)getusrLogoUrl;
+
+
 @end

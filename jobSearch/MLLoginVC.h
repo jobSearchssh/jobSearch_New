@@ -22,6 +22,8 @@
     NSString *inputSecurityCode;
     NSString *inputUserPassword1;
     NSString *inputUserPassword2;
+    
+    NSString *verifiedPhoneNumber;
 }
 + (MLLoginVC*)sharedInstance;
 

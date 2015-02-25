@@ -40,6 +40,7 @@
                 status = [a objectForKey:@"status"];
                 info = [a objectForKey:@"info"];
                 usrID = [a objectForKey:@"datas"];
+                
             }@catch (NSException *exception) {
                 flag = false;
             }
@@ -68,11 +69,12 @@
                         usrLogoUrl=[arr objectAtIndex:0];
                     }else
                         usrLogoUrl=nil;
-                    
                 }
                 @catch (NSException *exception) {
-                    NSLog(@"datas 解析错误");
-                    flag = false;
+                    //NSLog(@"datas 解析错误");
+                    //flag = false;
+                    NSLog(@"无图片信息");
+                    usrLogoUrl=nil;
                     break;
                 }
                 

@@ -316,6 +316,7 @@ static  MLLoginVC *thisVC=nil;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
+    //自动跳转fanhui
     [self.navigationController popViewControllerAnimated:YES];
     [self.loginDelegate finishLogin];
 }
@@ -371,6 +372,8 @@ static  MLLoginVC *thisVC=nil;
             [NSThread detachNewThreadSelector:@selector(initTimer) toTarget:self withObject:nil];
             
             [MBProgressHUD showSuccess:@"验证码已发送" toView:self.view];
+            
+            verifiedPhoneNumber=inputUserPhoneNumber;
         }
         else if(0==state)
         {
@@ -440,13 +443,13 @@ static  MLLoginVC *thisVC=nil;
 }
 - (void)checkFinishedInput{
 
-    if ([inputUserPhoneNumber length]==11&&[inputSecurityCode length]>0&&[inputUserPassword1 isEqualToString:inputUserPassword2]&&agree) {
+    if ([inputUserPhoneNumber length]==11&&[inputSecurityCode length]>0&&[inputUserPassword1 isEqualToString:inputUserPassword2]&&agree&&[inputUserPhoneNumber isEqualToString:inputUserPhoneNumber]) {
         [self startRegisting];
     }else{
         NSString*alertString;
 
         if (!agree){
-            alertString=@"您没有同意用户使用协议";
+            alertString=@"您未同意用户使用协议";
 
         }
         if (![inputUserPassword1 isEqualToString:inputUserPassword2]) {
@@ -458,6 +461,10 @@ static  MLLoginVC *thisVC=nil;
 
         }
         if (inputUserPhoneNumber.length!=11) {
+            alertString=@"手机号码不正确";
+        }
+        
+        if (![inputUserPhoneNumber isEqualToString:inputUserPhoneNumber]) {
             alertString=@"手机号码不正确";
         }
         

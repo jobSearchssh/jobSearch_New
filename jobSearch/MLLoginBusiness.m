@@ -26,12 +26,6 @@
         }else{
             NSString *error=registerModel.getInfo;
             
-//            if ([registerModel.getInfo isEqualToString:@"CREATE_ERROR"])
-//                error=@"数据创建失败";
-//            else if ([registerModel.getInfo isEqualToString:@"USER_EXISTED"])
-//                error=@"该手机号已经被注册";
-//            else if ([registerModel.getInfo isEqualToString:@"INVALID_INPUT"])
-//                error=@"该手机号已经被注册";
             [self registerIsSucceed:NO feedback:error];
         }
     }];

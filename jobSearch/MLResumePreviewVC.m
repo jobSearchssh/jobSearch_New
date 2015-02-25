@@ -8,6 +8,8 @@
 
 #import "MLResumePreviewVC.h"
 #import "MLResumeVC.h"
+#import "MLLoginVC.h"
+
 
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
@@ -70,7 +72,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 -(void)viewDidAppear:(BOOL)animated{
     //获取简历 ok
-    [netAPI getUserDetail:@"54d76bd496d9aece6f8b4568" withBlock:^(userModel *userModel) {
+    NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+    NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+    if ([currentUserObjectId length]>0) {
+        
+    [netAPI getUserDetail:currentUserObjectId withBlock:^(userModel *userModel) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if ([userModel getStatus].intValue == STATIS_OK) {
             [self initfromNet:userModel];
@@ -79,7 +85,20 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             [alterTittle show];
         }
     }];
+    }else{
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        [loginAlert show];
+    }
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==1) {
+        MLLoginVC *loginVC=[[MLLoginVC alloc]init];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    }
+}
+
 
 - (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
     // 创建一个bitmap的context
