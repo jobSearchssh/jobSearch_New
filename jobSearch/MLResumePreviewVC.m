@@ -46,6 +46,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UILabel *userIntroductionOutlet;
 @property (strong, nonatomic) userModel *mainUserModel;
 
+@property (weak, nonatomic) IBOutlet AsyncImageView *userLogoView;
 
 
 @end
@@ -81,8 +82,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         if ([userModel getStatus].intValue == STATIS_OK) {
             [self initfromNet:userModel];
         }else{
-            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"数据获取错误" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:userModel.getInfo delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
             [alterTittle show];
+            
         }
     }];
     }else{
@@ -158,6 +160,21 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                         self.sexOutlet.frame.origin.y,
                                         self.sexOutlet.frame.size.width,
                                         self.sexOutlet.frame.size.height)];
+    //头像
+    if ([[userModel getImageFileURL] count]>0) {
+        
+        NSString *tempUrl=[[userModel getImageFileURL] objectAtIndex:0];
+        
+        if ([tempUrl length]>4) {
+            self.userLogoView.contentMode = UIViewContentModeScaleAspectFill;
+            self.userLogoView.clipsToBounds = YES;
+            [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:self.userLogoView];
+            self.userLogoView.imageURL=[NSURL URLWithString:tempUrl];
+        }else{
+            self.userLogoView.image=[UIImage imageNamed:@"placeholder"];
+        }
+    }
+    
     //性别
     if ([userModel getuserGender].intValue == 0) {
         self.sexOutlet.image = [UIImage imageNamed:@"resume_male"];
@@ -291,9 +308,19 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 - (void)editResume{
-    MLResumeVC *resumeVC=[[MLResumeVC alloc]init];
-    resumeVC.usermodel = self.mainUserModel;
-    [self.navigationController pushViewController:resumeVC animated:YES];
+    
+    NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+    NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+    if ([currentUserObjectId length]>0) {
+
+        MLResumeVC *resumeVC=[[MLResumeVC alloc]init];
+        resumeVC.usermodel = self.mainUserModel;
+        [self.navigationController pushViewController:resumeVC animated:YES];
+    }
+    else{
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        [loginAlert show];
+    }
 }
 
 -(UIImage *)compressImage:(UIImage *)imgSrc size:(int)width

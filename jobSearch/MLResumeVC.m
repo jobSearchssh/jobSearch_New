@@ -631,6 +631,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [self.usermodel setImageFileURL:tempArray];
     }
     
+    if (!self.usermodel.getjob_user_id) {
+        NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+        NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+       [self.usermodel setjob_user_id:currentUserObjectId];
+    }
+    
     [netAPI editUserDetail:self.usermodel withBlock:^(userReturnModel *userReturnModel) {
         
         [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
