@@ -628,7 +628,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                 }
             }
         }
-        [self.usermodel setImageFileURL:tempArray];
+        NSArray *reverceTemp = [[tempArray reverseObjectEnumerator] allObjects];
+        NSMutableArray *reverceTempMutable = [[NSMutableArray alloc]initWithArray:reverceTemp];
+        [self.usermodel setImageFileURL:reverceTempMutable];
     }
     
     if (!self.usermodel.getjob_user_id) {
