@@ -367,6 +367,7 @@ static  MLLoginVC *thisVC=nil;
 - (IBAction)sendMassage:(id)sender {
     
     [SMS_SDK getVerifyCodeByPhoneNumber:inputUserPhoneNumber AndZone:@"86" result:^(enum SMS_GetVerifyCodeResponseState state) {
+        NSLog(@"发送短信回调");
         if (1==state) {
             
             [NSThread detachNewThreadSelector:@selector(initTimer) toTarget:self withObject:nil];

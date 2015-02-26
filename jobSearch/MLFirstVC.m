@@ -427,6 +427,7 @@ static  MLFirstVC *thisVC=nil;
                 [self.mapItem setTitle:@"列表"];
                 [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
                 self.navigationItem.rightBarButtonItem.enabled=NO;
+                self.navigationItem.rightBarButtonItem.tintColor=[UIColor clearColor];
                 mapSearching=NO;
             }
         }
@@ -504,6 +505,7 @@ static  MLFirstVC *thisVC=nil;
             [self.mapItem setTitle:@"列表"];
             [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
             self.navigationItem.rightBarButtonItem.enabled=NO;
+            self.navigationItem.rightBarButtonItem.tintColor=[UIColor clearColor];
         }
         
     }else {
@@ -515,6 +517,7 @@ static  MLFirstVC *thisVC=nil;
         [self.mapItem setTitle:@"地图"];
         [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         self.navigationItem.rightBarButtonItem.enabled=YES;
+        self.navigationItem.rightBarButtonItem.tintColor=[UIColor whiteColor];
     }
 }
 
