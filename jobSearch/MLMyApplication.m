@@ -81,7 +81,7 @@ static  MLMyApplication *thisVC=nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    
+    NSLog(@"appear");
 }
 
 - (void)headRefreshData{

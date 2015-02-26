@@ -50,11 +50,7 @@
         
     }else if (buttonIndex==1) {
         [MLLoginBusiness logout];
-        
-        RESideMenu* _side=[RESideMenu sharedInstance];
-        
-        [_side setTableItem:0 Title:@"未登录" Subtitle:@"游客" ImageUrl:nil];
-        
+        [_sideMenu setTableItem:0 Title:@"未登录" Subtitle:@"游客" ImageUrl:nil];
         [self setBadge];
     }
 }

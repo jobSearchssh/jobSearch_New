@@ -15,8 +15,7 @@
 #import "netAPI.h"
 #import "AsyncImageView.h"
 #import <ShareSDK/ShareSDK.h>
-
-static NSString *userId = @"54d76bd496d9aece6f8b4568";
+#import "MLLoginVC.h"
 
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
@@ -119,8 +118,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
     }else{
     
+        NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+        NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+        if ([currentUserObjectId length]>0) {
+
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [netAPI applyTheJob:userId jobID:self.jobModel.getjobID withBlock:^(jobApplyModel *oprationResultModel) {
+        [netAPI applyTheJob:currentUserObjectId jobID:self.jobModel.getjobID withBlock:^(jobApplyModel *oprationResultModel) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if (![oprationResultModel.getStatus intValue]==0) {
                 NSString *err=oprationResultModel.getInfo;
@@ -132,8 +135,21 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                 
             }
         }];
+        }else{
+            UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+            [loginAlert show];
+        }
     }
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex==1) {
+        MLLoginVC *loginVC=[[MLLoginVC alloc]init];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    }
+}
+
 
 - (void)viewDidAppear:(BOOL)animated{
     
@@ -372,8 +388,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (void)saveJob{
     
+    NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+    NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+    if ([currentUserObjectId length]>0) {
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [netAPI saveTheJob:userId jobID:self.jobModel.getjobID withBlock:^(oprationResultModel *oprationResultModel) {
+    [netAPI saveTheJob:currentUserObjectId jobID:self.jobModel.getjobID withBlock:^(oprationResultModel *oprationResultModel) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (![oprationResultModel.getStatus intValue]==0) {
             NSString *err=oprationResultModel.getInfo;
@@ -384,6 +404,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             [MBProgressHUD showSuccess:@"收藏成功" toView:self.view];
         }
     }];
+    }else{
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        [loginAlert show];
+    }
 }
 
 - (IBAction)showWorkTime:(id)sender {

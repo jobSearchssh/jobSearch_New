@@ -43,7 +43,7 @@ static  MLFeedBackVC *thisVC=nil;
     self.starRateView1.allowIncompleteStar = NO;
     self.starRateView1.hasAnimation = YES;
     self.starRateView1.delegate=self;
-    [self.view addSubview:self.starRateView1];
+    [self.view insertSubview:self.starRateView1 belowSubview:self.containerView];
     value=5.0f;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -55,10 +55,16 @@ static  MLFeedBackVC *thisVC=nil;
 }
 
 - (IBAction)sendFeedBack:(id)sender {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    NSString *feedBackString=[NSString stringWithFormat:@"评分：%.1f  评价：%@",value,self.textView.text];
-    NSDictionary *postContent = @{@"content":feedBackString};
-    [self.feedback post:postContent];
+    
+    if ([self.textView.text length]==0) {
+        [MBProgressHUD showError:@"请您先填写反馈意见哦" toView:self.view];
+    }
+    else{
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        NSString *feedBackString=[NSString stringWithFormat:@"评分：%.1f  评价：%@",value,self.textView.text];
+        NSDictionary *postContent = @{@"content":feedBackString};
+        [self.feedback post:postContent];
+    }
 }
 
 - (void)postFinishedWithError:(NSError *)error {
