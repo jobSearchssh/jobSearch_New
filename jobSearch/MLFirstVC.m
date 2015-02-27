@@ -90,7 +90,7 @@ static  MLFirstVC *thisVC=nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title=@"搜索职位";
+    self.title=@"附近的职位";
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
@@ -587,25 +587,34 @@ static  MLFirstVC *thisVC=nil;
 
 //*********************searchView********************//
 - (void)search{
-    [UIView animateWithDuration:0.4 animations:^{
-        searchView.alpha=1.0f;
-    }];
-    if ([searchView.startTextField.text isEqualToString:NSLocalizedString(@"Current Location", nil)]) {
-        searchView.startTextField.textColor = [UIColor blueColor];
-    } else {
-        searchView.startTextField.textColor = [UIColor blackColor];
-    }
+    
+    if (searchView.frame.origin.y==-76) {
+        [_tableView setContentOffset:CGPointMake(0, 0) animated:YES];
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            searchView.alpha=1.0f;
+        }];
+        if ([searchView.startTextField.text isEqualToString:NSLocalizedString(@"Current Location", nil)]) {
+            searchView.startTextField.textColor = [UIColor blueColor];
+        } else {
+            searchView.startTextField.textColor = [UIColor blackColor];
+        }
+        
+        CGRect searchBarFrame = searchView.frame;
+        searchBarFrame.origin.y = 0;
+        [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             searchView.frame = searchBarFrame;
+                             [self.view addSubview:touchView];
+                         }
+                         completion:^(BOOL completion) {
+                             [searchView.finishTextField becomeFirstResponder];
+                         }];
 
-    CGRect searchBarFrame = searchView.frame;
-    searchBarFrame.origin.y = 0;
-    [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         searchView.frame = searchBarFrame;
-                         [self.view addSubview:touchView];
-                     }
-                     completion:^(BOOL completion) {
-                         [searchView.finishTextField becomeFirstResponder];
-                     }];
+    }else{
+        [self hideTouchView];
+    }
+    
 }
 
 - (void)hideTouchView{

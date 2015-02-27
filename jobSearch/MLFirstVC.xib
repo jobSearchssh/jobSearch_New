@@ -26,7 +26,7 @@
                     </constraints>
                     <items>
                         <tabBarItem title="地图" image="location.png" selectedImage="location.png" id="i4c-Uu-9PM"/>
-                        <tabBarItem tag="1" title="分类" image="catagory.png" selectedImage="catagory.png" id="qDR-4l-c4X"/>
+                        <tabBarItem tag="1" title="排序" image="catagory.png" selectedImage="catagory.png" id="qDR-4l-c4X"/>
                         <tabBarItem tag="2" title="消息" image="letter.png" selectedImage="letter.png" id="IDM-zW-qqE"/>
                         <tabBarItem tag="3" title="筛选" image="target.png" selectedImage="target.png" id="yGw-lO-0HX"/>
                         <tabBarItem tag="4" title="精灵管家" image="calendar.png" selectedImage="calendar.png" id="750-FT-GBd"/>

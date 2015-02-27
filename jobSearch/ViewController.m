@@ -95,14 +95,14 @@
             }
         }];
         
-        RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"搜索职位" setFlag:NORMALCELL image:[UIImage imageNamed:@"search"] highlightedImage:[UIImage imageNamed:@"search"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+        RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"附近的职位" setFlag:NORMALCELL image:[UIImage imageNamed:@"search"] highlightedImage:[UIImage imageNamed:@"search"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             MLFirstVC *viewController = [MLFirstVC sharedInstance];
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
             [self setNavigationBar:navigationController];
-            viewController.title=@"搜索职位";
+            viewController.title=@"附近的职位";
             currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
