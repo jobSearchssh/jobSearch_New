@@ -135,9 +135,13 @@
 }
 
 - (IBAction)sendMessage:(id)sender {
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [SMS_SDK getVerifyCodeByPhoneNumber:inputUserPhoneNumber AndZone:@"86" result:^(enum SMS_GetVerifyCodeResponseState state) {
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        
         if (1==state) {
-            
             [NSThread detachNewThreadSelector:@selector(initTimer) toTarget:self withObject:nil];
             
             [MBProgressHUD showSuccess:@"验证码已发送" toView:self.view];
