@@ -15,16 +15,11 @@
 #import <BmobSDK/Bmob.h>
 #import "AppDelegate.h"
 #import "Reachability.h"
+#import "previewVedioVC.h"
+#import "geturlProtocol.h"
 
-@protocol getVideoURLDelegate <NSObject>
-
-//设置新的url
-- (void) getVideoURLDelegate:(NSObject *)videoURL;
-
-@end
-
-@interface MLResumeVideoVC : UIViewController<UIGestureRecognizerDelegate,PBJVisionDelegate,UIAlertViewDelegate>
--(void)puloadVedio;
+@interface MLResumeVideoVC : UIViewController<UIGestureRecognizerDelegate,PBJVisionDelegate,UIAlertViewDelegate,getVideoURLDelegate>
+//-(void)puloadVedio;
 
 //回调协议
 @property (assign, nonatomic) NSObject<getVideoURLDelegate> *setVideoURLDelegate;

@@ -44,7 +44,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (strong, nonatomic) IBOutlet UIView *usrinfo3Outet;
 @property (weak, nonatomic) IBOutlet UILabel *workexperienceOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *userIntroductionOutlet;
-@property (strong, nonatomic) userModel *mainUserModel;
 
 @property (weak, nonatomic) IBOutlet AsyncImageView *userLogoView;
 
@@ -61,36 +60,93 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     self.mainScrollviewOutlet.delegate=self;
     
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(editResume)];
-    [self.navigationItem.rightBarButtonItem setTitle:@"编辑"];
-    
     [self.coverflowOutlet setFrame:CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.width*0.6)];
     [self.mainScrollviewOutlet addSubview:self.coverflowOutlet];
     
-    self.mainUserModel = Nil;
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    if (self.type.intValue == type_preview) {
+        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(editResume)];
+        [self.navigationItem.rightBarButtonItem setTitle:@"编辑"];
+    }
+    if (self.type.intValue == type_preview_edit) {
+        self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(returnResume)];
+        [self.navigationItem.leftBarButtonItem setTitle:@"返回"];
+        
+        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(saveResume)];
+        [self.navigationItem.rightBarButtonItem setTitle:@"保存"];
+    }
 }
 
--(void)viewDidAppear:(BOOL)animated{
+-(void)returnResume{
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+-(void)saveResume{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [netAPI editUserDetail:self.mainUserModel withBlock:^(userReturnModel *userReturnModel) {
+        
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+        
+        if ([userReturnModel getStatus].intValue == STATIS_OK) {
+            [MBProgressHUD showSuccess:@"简历更新成功" toView:self.view];
+            
+            if ([[self.mainUserModel getImageFileURL] count]>0) {
+                RESideMenu *sideMenu=[RESideMenu sharedInstance];
+                NSString *logoUrl=[[self.mainUserModel getImageFileURL] objectAtIndex:0];
+                [sideMenu setUserImageUrl:logoUrl];
+                
+                NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+                [mySettingData setObject:logoUrl forKey:@"currentUserlogoUrl"];
+                [mySettingData synchronize];
+            }
+        }else{
+            [MBProgressHUD showError:[userReturnModel getInfo] toView:self.view];
+        }
+    }];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    switch (self.type.intValue) {
+        case type_preview:
+            [self callPreView];
+            break;
+        case type_preview_edit:
+            [self callPreViewEdit];
+            break;
+        default:
+            break;
+    }
+}
+
+-(void)callPreView{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     //获取简历 ok
     NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
     NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
     if ([currentUserObjectId length]>0) {
         
-    [netAPI getUserDetail:currentUserObjectId withBlock:^(userModel *userModel) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if ([userModel getStatus].intValue == STATIS_OK) {
-            [self initfromNet:userModel];
-        }else{
-            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:userModel.getInfo delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-            [alterTittle show];
-        }
-    }];
+        [netAPI getUserDetail:currentUserObjectId withBlock:^(userModel *userModel) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            if ([userModel getStatus].intValue == STATIS_OK) {
+                [self initfromNet:userModel];
+            }else{
+                UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:userModel.getInfo delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                [alterTittle show];
+            }
+        }];
     }else{
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
         [loginAlert show];
     }
+}
+
+-(void)callPreViewEdit{
+    NSLog(@"callPreViewEdit");
+    NSLog(@"aaa = %@",self.mainUserModel);
+    [self initfromNet:self.mainUserModel];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -117,7 +173,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 -(void)initfromNet:(userModel *)userModel{
     
-    self.mainUserModel = userModel;
+    if (self.type.intValue == type_preview) {
+        self.mainUserModel = userModel;
+    }
+    
     //第一项
     NSMutableArray *sourceImages = [[NSMutableArray alloc]init];
     NSMutableArray *sourceImagesURL = [userModel getImageFileURL];
@@ -315,6 +374,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         MLResumeVC *resumeVC=[[MLResumeVC alloc]init];
         resumeVC.usermodel = self.mainUserModel;
         [self.navigationController pushViewController:resumeVC animated:YES];
+        
     }
     else{
         UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
