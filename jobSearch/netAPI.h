@@ -47,6 +47,7 @@ typedef void (^badgeBlock)(badgeModel *badgeModel);
 
 //http://182.92.177.56:3000/getTest
 +(void)testAPIGetTestWithBlock:(NSData *)getInfo getFunction:(NSString *)function block:(returnBlock)block;
+
 //http://182.92.177.56:3000/postTest
 +(void)testAPIPostTestWithBlock:(NSData *)postInfo getFunction:(NSString *)function block:(returnBlock)block;
 
@@ -54,6 +55,9 @@ typedef void (^badgeBlock)(badgeModel *badgeModel);
 //用户登录
 //用户名，密码，回调block
 +(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(loginReturnBlock)loginBlock;
+
+//重置用户密码
++(void)usrResetPassword:(NSString *)name usrPassword:(NSString *)password withBlock:(oprationReturnBlock)oprationReturnBlock;
 
 //用户注册
 //用户名，密码，回调block

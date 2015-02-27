@@ -166,22 +166,29 @@ static  MLMyApplication *thisVC=nil;
             
         }else{
             
-            for (id object in jobListModel.getjobAppliedArray) {
-                [recordArray addObject:object];
+            if ([jobListModel.getjobAppliedArray count]==0) {
+                [MBProgressHUD showError:@"没有更多数据啦" toView:self.view];
+            }else{
+                for (id object in jobListModel.getjobAppliedArray) {
+                    [recordArray addObject:object];
+                }
+                
+                NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
+                
+                NSInteger n=[recordArray count];
+                NSInteger m=[jobListModel.getjobAppliedArray count];
+                
+                for (NSInteger k=n-m; k<[recordArray count];k++) {
+                    NSIndexPath *newPath = [NSIndexPath indexPathForRow:k inSection:0];
+                    [insertIndexPaths addObject:newPath];
+                }
+                cellNum=[recordArray count];
+                [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
+
             }
             
-            NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
             
-            NSInteger n=[recordArray count];
-            NSInteger m=[jobListModel.getjobAppliedArray count];
-            
-            for (NSInteger k=n-m; k<[recordArray count];k++) {
-                NSIndexPath *newPath = [NSIndexPath indexPathForRow:k inSection:0];
-                [insertIndexPaths addObject:newPath];
             }
-            cellNum=[recordArray count];
-            [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
-        }
     }
     
     else{

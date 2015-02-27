@@ -320,9 +320,7 @@ static  MLFirstVC *thisVC=nil;
                         [netAPI getJobByTypeAndDistance:@"distanceAndType" start:1 length:BASE_SPAN longtitude:locationCoord.longitude latitude:locationCoord.latitude distance:distance jobType:jobTypeArray withBlock:^(jobListModel *jobListModel) {
                             [self headHandler:jobListModel];
                         }];
-
                     }
-
                 }
             }
         }

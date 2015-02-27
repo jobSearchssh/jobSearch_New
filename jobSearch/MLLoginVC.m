@@ -15,7 +15,7 @@
 #import "loginModel.h"
 #import "MBProgressHUD.h"
 #import "RESideMenu.h"
-
+#import "forgetPasswordVC.h"
 
 static NSString *usrAccountText = @"usrAccountText";
 static NSString *usrPhoneText = @"usrPhoneText";
@@ -240,7 +240,6 @@ static  MLLoginVC *thisVC=nil;
     [self scollToBase];
 }
 
-
 - (IBAction)accountEditingChanged:(id)sender {
     inputUserAccount=_userAccount.text;
 }
@@ -316,7 +315,7 @@ static  MLLoginVC *thisVC=nil;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    //自动跳转fanhui
+    //自动跳转返回
     [self.navigationController popViewControllerAnimated:YES];
     [self.loginDelegate finishLogin];
 }
@@ -472,6 +471,13 @@ static  MLLoginVC *thisVC=nil;
         [MBProgressHUD showError:alertString toView:self.view];
     }
     
+}
+
+//密码重置
+
+- (IBAction)forgetPassword:(id)sender {
+    forgetPasswordVC *vc=[[forgetPasswordVC alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 /*

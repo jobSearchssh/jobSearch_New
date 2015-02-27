@@ -289,15 +289,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     
     //page5
-//    UIView *lineviewwork= [[UIView alloc] initWithFrame:CGRectMake(self.workexperienceOutlet.frame.origin.x, self.workexperienceOutlet.frame.origin.y+self.workexperienceOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
-//    lineviewwork.alpha = 0.5;
-//    lineviewwork.backgroundColor = [UIColor grayColor];
-//    [self.view5outlet addSubview:lineviewwork];
-    
-//    UIView *lineviewintroduction= [[UIView alloc] initWithFrame:CGRectMake(self.introductionmeOutlet.frame.origin.x, self.introductionmeOutlet.frame.origin.y+self.introductionmeOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
-//    lineviewintroduction.alpha = 0.5;
-//    lineviewintroduction.backgroundColor = [UIColor grayColor];
-//    [self.view5outlet addSubview:lineviewintroduction];
     
     UIView *lineviewschoolnew= [[UIView alloc] initWithFrame:CGRectMake(self.schollNewOutlet.frame.origin.x, self.schollNewOutlet.frame.origin.y+self.schollNewOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
     lineviewschoolnew.alpha = 0.5;
@@ -307,6 +298,16 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     self.introductionmeOutlet.delegate = self;
     self.workexperienceOutlet.delegate = self;
     self.schollNewOutlet.delegate = self;
+    
+    //键盘上方的按钮
+    UIToolbar * topView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    [topView setBarStyle:UIBarStyleDefault];
+    UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem * doneButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyboard)];
+    NSArray * buttonsArray = [NSArray arrayWithObjects:btnSpace, doneButton, nil];
+    [topView setItems:buttonsArray];
+    [self.introductionmeOutlet setInputAccessoryView:topView];
+    [self.workexperienceOutlet setInputAccessoryView:topView];
     
     [self.schollNewOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     
@@ -702,6 +703,17 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     return YES;
 }
 
+- (void)dismissKeyboard{
+    if ([self.introductionmeOutlet isFirstResponder]) {
+        [self.introductionmeOutlet resignFirstResponder];
+    }
+    if ([self.workexperienceOutlet isFirstResponder]) {
+        [self.workexperienceOutlet resignFirstResponder];
+    }
+    CGPoint offset = CGPointMake([self.pickerView selectedItem]*[UIScreen mainScreen].bounds.size.width,0);
+    [self.scrollviewOutlet setContentOffset:offset animated:YES];
+}
+
 - (void)finishSelect:(NSMutableArray *)type SelectName:(NSMutableArray *)nameArray{
     if ([self.intentionOutlet isFirstResponder]) {
         [self.intentionOutlet resignFirstResponder];
@@ -723,7 +735,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 - (void)textViewDidBeginEditing:(UITextView *)textView{
     
 
-    CGFloat yDiff = textView.frame.origin.y-textView.frame.size.height+10;
+    CGFloat yDiff = textView.frame.origin.y-textView.frame.size.height+30;
     if (yDiff<10) {
         return;
     }

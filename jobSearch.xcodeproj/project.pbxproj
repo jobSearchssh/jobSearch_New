@@ -246,6 +246,8 @@
 		3BA4845D1A89E84E00B6A200 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA484581A89E84E00B6A200 /* AppDelegate.m */; };
 		3BA4845E1A89E84E00B6A200 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4845A1A89E84E00B6A200 /* ViewController.m */; };
 		3BA4845F1A89E84E00B6A200 /* MLNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4845C1A89E84E00B6A200 /* MLNavigation.m */; };
+		3BBC3CF31AA0245F00E9B417 /* forgetPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBC3CF11AA0245F00E9B417 /* forgetPasswordVC.m */; };
+		3BBC3CF41AA0245F00E9B417 /* forgetPasswordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BBC3CF21AA0245F00E9B417 /* forgetPasswordVC.xib */; };
 		3BC051F41A7145CB0099A2DF /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC051F21A7145CB0099A2DF /* libMobClickLibrary.a */; };
 		3BC6B6081A9AD1A60055D2C8 /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC6B6071A9AD1A60055D2C8 /* AsyncImageView.m */; };
 		3BC8AE211A73769500417741 /* QCheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8AE1C1A73769500417741 /* QCheckBox.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -708,6 +710,9 @@
 		3BA4845A1A89E84E00B6A200 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		3BA4845B1A89E84E00B6A200 /* MLNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLNavigation.h; sourceTree = "<group>"; };
 		3BA4845C1A89E84E00B6A200 /* MLNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLNavigation.m; sourceTree = "<group>"; };
+		3BBC3CF01AA0245F00E9B417 /* forgetPasswordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forgetPasswordVC.h; sourceTree = "<group>"; };
+		3BBC3CF11AA0245F00E9B417 /* forgetPasswordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = forgetPasswordVC.m; sourceTree = "<group>"; };
+		3BBC3CF21AA0245F00E9B417 /* forgetPasswordVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = forgetPasswordVC.xib; sourceTree = "<group>"; };
 		3BC051F21A7145CB0099A2DF /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		3BC051F31A7145CB0099A2DF /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		3BC6B6061A9AD1A60055D2C8 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
@@ -1440,6 +1445,9 @@
 				3BA484171A89E79B00B6A200 /* MLLoginBusiness.h */,
 				3BA484181A89E79C00B6A200 /* MLLoginBusiness.m */,
 				3BC8AE161A73769500417741 /* QCheckbox */,
+				3BBC3CF01AA0245F00E9B417 /* forgetPasswordVC.h */,
+				3BBC3CF11AA0245F00E9B417 /* forgetPasswordVC.m */,
+				3BBC3CF21AA0245F00E9B417 /* forgetPasswordVC.xib */,
 			);
 			name = "Login&register";
 			sourceTree = "<group>";
@@ -2127,6 +2135,7 @@
 				3B6994461A89E9B000A53760 /* userAccount@2x.png in Resources */,
 				3BD4DC891A77C50600B061D0 /* resume_icon1.png in Resources */,
 				3B6993931A89E98E00A53760 /* sideNormalTableViewCell.xib in Resources */,
+				3BBC3CF41AA0245F00E9B417 /* forgetPasswordVC.xib in Resources */,
 				3BF6253C1A8B57AA0066816D /* placeholder@3x.png in Resources */,
 				B77578C31A7A939100660BB7 /* resume_change.png in Resources */,
 				3B6994161A89E9B000A53760 /* letter@2x.png in Resources */,
@@ -2267,6 +2276,7 @@
 				B73AFA6B1A9CA750007CDF51 /* imageSaveAndReadUtil.m in Sources */,
 				3B6524111A6CBDDD005FD671 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				3B5C266A1A979ACE00E4AF7E /* badgeNumber.m in Sources */,
+				3BBC3CF31AA0245F00E9B417 /* forgetPasswordVC.m in Sources */,
 				3BA483F91A89E76900B6A200 /* MLMyCollection.m in Sources */,
 				3B4AB4931A81CB2F0053236C /* MJRefreshHeaderView.m in Sources */,
 				B7E9F8D61A8A4836004BC570 /* fixedScrollView.m in Sources */,

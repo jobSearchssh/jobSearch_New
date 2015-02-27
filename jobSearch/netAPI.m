@@ -34,151 +34,6 @@
 
 
 @implementation netAPI
-+(void)test{
-    //20150208test
-//    //ok
-//    [netAPI usrRegister:@"18610782215" usrPassword:@"123456" withBlock:^(registerModel *registerModel) {
-//        NSLog(@"register info= %@",[registerModel getInfo]);
-//        NSLog(@"register id= %@",[registerModel getUsrID]);
-//    }];
-//    //login ok
-//    [netAPI usrLogin:@"18610782216" usrPassword:@"123456" withBlock:^(loginModel *loginModel) {
-//        NSLog(@"usrLogin info= %@",[loginModel getInfo]);
-//        NSLog(@"usrLogin id = %@",[loginModel getUsrID]);
-//    }];
-    
-//    [netAPI getSaveJobList:@"54d76bd496d9aece6f8b4569" start:1 length:2 withBlock:^(jobListModel *jobListModel) {
-//        NSLog(@"getSaveJobList info = %@",[jobListModel getInfo]);
-//        NSArray *array = [jobListModel getJobArray];
-//        for (jobModel *job in array) {
-//            NSLog(@"getSaveJobList id = %@",[job getjobID]);
-//        }
-//    }];
-    
-//    [netAPI getNewestJobs:@"54d76bd496d9aece6f8b4569" start:1 length:10 withBlock:^(jobListModel *jobListModel) {
-//        NSMutableArray *a = [jobListModel getJobArray];
-//        for (jobModel *job in a) {
-//            NSLog(@"getNewestJobs title = %@",[job getjobTitle]);
-//        }
-//    }];
-    
-    
-    
-//    //ok
-//    [netAPI getNearByJobs:@"54d76bd496d9aece6f8b4569" longtitude:123.45 latitude:45.67 start:1 length:2 withBlock:^(jobListModel *jobListModel) {
-//        NSLog(@"getNearByJobs info = %@",[jobListModel getInfo]);
-//        NSMutableArray *a = [jobListModel getJobArray];
-//        for (jobModel *job in a) {
-//            NSLog(@"getNearByJobs jobid = %@",[job getjobID]);
-//        }
-//    }];
-    
-    
-//    //ok
-//    [netAPI getJobByDistance:@"54d76bd496d9aece6f8b4569" longtitude:116.46 latitude:49.92 start:1 length:2 distance:2 withBlock:^(jobListModel *jobListModel) {
-//        NSMutableArray *a = [jobListModel getJobArray];
-//        for (jobModel *job in a) {
-//            NSLog(@"getNearByJobs jobid = %@",[job getjobBeginTime]);
-//        }
-//    }];
-    
-    
-    
-//    NSMutableArray *type1Array = [NSMutableArray arrayWithObjects:[NSNumber numberWithInt:1],[NSNumber numberWithInt:2], nil];
-//    [netAPI getJobByJobType:@"54d76bd496d9aece6f8b4569" start:1 length:2 jobType:type1Array withBlock:^(jobListModel *jobListModel) {
-//        NSMutableArray *a = [jobListModel getJobArray];
-//        for (jobModel *job in a) {
-//            NSLog(@"getJobByJobType jobid = %@",[job getjobID]);
-//        }
-//    }];
-    
-    //
-//    NSMutableArray *type2Array = [NSMutableArray arrayWithObjects:[NSNumber numberWithInt:1], nil];
-//    [netAPI getJobByTypeAndDistance:@"54d76bd496d9aece6f8b4569" start:1 length:2 longtitude:116.46 latitude:49.92 distance:2 jobType:type2Array withBlock:^(jobListModel *jobListModel) {
-//        NSLog(@"getJobByTypeAndDistance info = %@",[jobListModel getInfo]);
-//        NSMutableArray *a = [jobListModel getJobArray];
-//        for (jobModel *job in a) {
-//            NSLog(@"getJobByTypeAndDistance jobid = %@",[job getjobID]);
-//        }
-//    }];
-    
-
-//    [netAPI getApplyJobs:@"54d76bd496d9aece6f8b4569" start:1 length:2 withBlock:^(jobListModel *jobListModel) {
-//        NSLog(@"getApplyJobs info = %@",[jobListModel getInfo]);
-//        NSMutableArray *a = [jobListModel getJobArray];
-//        for (jobModel *job in a) {
-//            NSLog(@"getApplyJobs title = %@",[job getjobTitle]);
-//        }
-//    }];
-
-
-//    [netAPI saveTheJob:@"54d76bd496d9aece6f8b4569" jobID:@"54d76bd496d9aece6f8b4570" withBlock:^(oprationResultModel *oprationResultModel) {
-//        NSLog(@"saveTheJob info= %@",[oprationResultModel getInfo]);
-//        NSLog(@"saveTheJob id= %@",[oprationResultModel getOprationID]);
-//    }];
-    
-    //修改创建简历 ok
-    userModel *usermodel = [[userModel alloc]init];
-    [usermodel setjob_user_id:@"54d76bd496d9aece6f8b4569"];
-    [usermodel setuserName:@"田原"];
-    [usermodel setuserBirthday:[NSDate date]];
-    [usermodel setuserProvince:@"重庆"];
-    [usermodel setuserCity:@"重庆"];
-    [usermodel setuserDistrict:@"沙坪坝"];
-    [usermodel setuserAddressDetail:@"三峡广场"];
-    [usermodel setuserSchool:@"北邮"];
-    [usermodel setuserDegree:[NSNumber numberWithInt:5]];
-    [usermodel setuserHopeJobType:[NSArray arrayWithObjects:[NSNumber numberWithInt:1], nil]];
-    [usermodel setuserFreeTime:[NSArray arrayWithObjects:[NSNumber numberWithInt:4],[NSNumber numberWithInt:5],[NSNumber numberWithInt:6], nil]];
-    [usermodel setuserHopeSettlement:[NSArray arrayWithObjects:[NSNumber numberWithInt:7],[NSNumber numberWithInt:8],[NSNumber numberWithInt:9], nil]];
-    [usermodel setuserIntroduction:@"哈哈哈"];
-    [usermodel setuserExperience:@"hehehe"];
-    [usermodel setuserPhone:@"18610782215"];
-    [usermodel setuserEmail:@"12@123.com"];
-    [usermodel setuserVideoURL:@"www.www.ww"];
-    [usermodel setImageFileURL:@"www.aaa.aa"];
-    [usermodel setuserLocationGeo:[[geoModel alloc]initWith:111.11 lat:22.22]];
-    NSLog(@"%@",[usermodel getBaseString]);
-    [netAPI editUserDetail:usermodel withBlock:^(userReturnModel *userReturnModel) {
-        NSLog(@"editUserDetail info = %@",[userReturnModel getInfo]);
-    }];
-    
-//    //获取简历 ok
-//    [netAPI getUserDetail:@"54d76bd496d9aece6f8b4569" withBlock:^(userModel *userModel) {
-//        NSLog(@"usergeo lon = %f lat = %f",[[userModel getuserLocationGeo]getLon],[[userModel getuserLocationGeo] getLat]);
-//    }];
-    
-//    //精灵 ok
-//    [netAPI queryJingLingMatch:@"54d76bd496d9aece6f8b4569" start:1 length:2 withBlock:^(jobListModel *jobListModel) {
-//        NSLog(@"getApplyJobs info = %@",[jobListModel getInfo]);
-//        NSMutableArray *a = [jobListModel getJobArray];
-//        for (jobModel *job in a) {
-//            NSLog(@"getApplyJobs title = %@",[job getjobTitle]);
-//        }
-//    }];
-    
-//    //接受邀请 ok
-//    [netAPI acceptedInvite:@"54d76bd596d9aece6f8b4583" withBlock:^(oprationResultModel *oprationResultModel) {
-//        NSLog(@"acceptedInvite info= %@",[oprationResultModel getInfo]);
-//        NSLog(@"acceptedInvite id= %@",[oprationResultModel getOprationID]);
-//    }];
-    
-//    //拒绝邀请
-//    [netAPI refusedInvite:@"54d76bd596d9aece6f8b4583" withBlock:^(oprationResultModel *oprationResultModel) {
-//        NSLog(@"refusedInvite info= %@",[oprationResultModel getInfo]);
-//        NSLog(@"refusedInvite id= %@",[oprationResultModel getOprationID]);
-//    }];
-    
-//    //消息
-//    [netAPI getMessageList:@"54d76bd496d9aece6f8b4568" start:1 length:2 withBlock:^(messageListModel *messageListModel) {
-//        NSLog(@"getMessageList info = %@",[messageListModel getInfo]);
-//        NSMutableArray *a = [messageListModel getMessageArray];
-//        for (messageModel *job in a) {
-//            NSLog(@"getMessageList title = %@",[job getjobTitle]);
-//            NSLog(@"getMessageList invite_id = %@",[job getinvite_id]);
-//        }
-//    }];
-}
 
 //用户登录
 +(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(loginReturnBlock)loginBlock{
@@ -191,6 +46,21 @@
         }else{
             loginModel *a=[[loginModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription] usrID:nil];
             loginBlock(a);
+        }
+    }];
+}
+
+//重置用户密码
++(void)usrResetPassword:(NSString *)name usrPassword:(NSString *)password withBlock:(oprationReturnBlock)oprationReturnBlock{
+    NSString *str = [[NSString alloc]initWithFormat:@"userPhone=%@&userPassword=%@&type=%@",name,password,@"1"];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:LOGIN_FUNCTION block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
+            oprationReturnBlock(a);
+        }else{
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationReturnBlock(a);
         }
     }];
 }

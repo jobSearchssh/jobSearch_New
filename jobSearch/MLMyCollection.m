@@ -166,21 +166,26 @@ static  MLMyCollection *thisVC=nil;
             
         }else{
             
-            for (id object in jobListModel.getJobArray) {
-                [recordArray addObject:object];
+            if ([jobListModel.getJobArray count]) {
+                [MBProgressHUD showError:@"没有更多数据啦" toView:self.view];
+            }else{
+                for (id object in jobListModel.getJobArray) {
+                    [recordArray addObject:object];
+                }
+                
+                NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
+                
+                NSInteger n=[recordArray count];
+                NSInteger m=[jobListModel.getJobArray count];
+                
+                for (NSInteger k=n-m; k<[recordArray count];k++) {
+                    NSIndexPath *newPath = [NSIndexPath indexPathForRow:k inSection:0];
+                    [insertIndexPaths addObject:newPath];
+                }
+                cellNum=[recordArray count];
+                [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
             }
             
-            NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
-            
-            NSInteger n=[recordArray count];
-            NSInteger m=[jobListModel.getJobArray count];
-            
-            for (NSInteger k=n-m; k<[recordArray count];k++) {
-                NSIndexPath *newPath = [NSIndexPath indexPathForRow:k inSection:0];
-                [insertIndexPaths addObject:newPath];
-            }
-            cellNum=[recordArray count];
-            [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
         }
     }
     

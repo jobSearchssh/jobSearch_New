@@ -12,7 +12,7 @@
 #import "MBProgressHUD.h"
 #import "MBProgressHUD+Add.h"
 
-@interface MLFeedBackVC ()<CWStarRateViewDelegate,UMFeedbackDataDelegate>
+@interface MLFeedBackVC ()<CWStarRateViewDelegate,UMFeedbackDataDelegate,UITextViewDelegate>
 {
     float value;
     CGRect rect1;
@@ -52,6 +52,18 @@ static  MLFeedBackVC *thisVC=nil;
     
     self.feedback = [UMFeedback sharedInstance];
     self.feedback.delegate = self;
+    
+    //键盘上方的按钮
+    UIToolbar * topView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    [topView setBarStyle:UIBarStyleDefault];
+    
+    UIBarButtonItem * btnSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem * doneButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyBoard)];
+    NSArray * buttonsArray = [NSArray arrayWithObjects:btnSpace, doneButton, nil];
+    
+    [topView setItems:buttonsArray];
+    [self.textView setInputAccessoryView:topView];
+
 }
 
 - (IBAction)sendFeedBack:(id)sender {
@@ -100,6 +112,9 @@ static  MLFeedBackVC *thisVC=nil;
     }];
 }
 
+- (void)dismissKeyBoard{
+    [self.textView resignFirstResponder];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -16,9 +16,6 @@
 #import "jobModel.h"
 #import "MLLoginVC.h"
 
-
-static NSString *userId = @"54d76bd496d9aece6f8b4568";
-
 @interface MLMessageVC ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,finishHandle,UIAlertViewDelegate,finishLoginDelegate>
 {
     NSInteger cellNum;
@@ -100,7 +97,10 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
     
     if ([currentUserObjectId length]>0) {
-        [netAPI getMessageList:userId start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(messageListModel *messageListModel) {
+        
+        footerRefreshing=YES;
+        
+        [netAPI getMessageList:currentUserObjectId start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(messageListModel *messageListModel) {
         [self footHandler:messageListModel];
     }];
     }else{
@@ -154,26 +154,29 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
             [MBProgressHUD showError:jobListModel.getInfo toView:self.view];
             
         }else{
-            
-            for (messageModel *object in jobListModel.getMessageArray) {
-                
-                //if ([object.getinviteStatus intValue]==0) {
+            if ([jobListModel.getMessageArray count]==0){
+                [MBProgressHUD showError:@"没有更多数据啦" toView:self.view];
+            }else{
+                for (messageModel *object in jobListModel.getMessageArray) {
+                    
                     [recordArray addObject:object];
-                //}
+                }
+                
+                NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
+                
+                NSInteger n=[recordArray count];
+                NSInteger m=[jobListModel.getMessageArray count];
+                
+                for (NSInteger k=n-m; k<[recordArray count];k++) {
+                    NSIndexPath *newPath = [NSIndexPath indexPathForRow:k inSection:0];
+                    [insertIndexPaths addObject:newPath];
+                }
+                cellNum=[recordArray count];
+                [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
+
             }
-            
-            NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
-            
-            NSInteger n=[recordArray count];
-            NSInteger m=[jobListModel.getMessageArray count];
-            
-            for (NSInteger k=n-m; k<[recordArray count];k++) {
-                NSIndexPath *newPath = [NSIndexPath indexPathForRow:k inSection:0];
-                [insertIndexPaths addObject:newPath];
+                
             }
-            cellNum=[recordArray count];
-            [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
-        }
     }
     
     else{
@@ -187,9 +190,7 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
             
             for (messageModel *object in jobListModel.getMessageArray) {
                 
-                //if ([object.getinviteStatus intValue]==0) {
-                    [recordArray addObject:object];
-                //}
+                [recordArray addObject:object];
             }
             
             cellNum=[recordArray count];

@@ -58,6 +58,18 @@
     }];
 }
 
+- (void)resetPasswordInBackground:(NSString*)username Password:(NSString*)pwd{
+    
+    [netAPI usrResetPassword:username usrPassword:pwd withBlock:^(oprationResultModel *oprationResultModel) {
+        if ([oprationResultModel.getStatus intValue]==0) {
+            [self.resetResultDelegate resetPassword:YES Feedback:@"修改成功"];
+        }else{
+            [self.resetResultDelegate resetPassword:NO Feedback:oprationResultModel.getInfo];
+        }
+    }];
+    
+}
+
 -(void)loginIsSucceed:(BOOL)result feedback:(NSString*)feedback logoUrl:(NSString*)logoUrl
 {
 
@@ -91,5 +103,8 @@
         bn.applyCount=@"0";
     }
 }
+
+//重置密码
+
 
 @end

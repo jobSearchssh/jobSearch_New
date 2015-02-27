@@ -71,8 +71,6 @@
                         usrLogoUrl=nil;
                 }
                 @catch (NSException *exception) {
-                    //NSLog(@"datas 解析错误");
-                    //flag = false;
                     NSLog(@"无图片信息");
                     usrLogoUrl=nil;
                     break;
