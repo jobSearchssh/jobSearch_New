@@ -26,7 +26,12 @@
     [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
 
+    
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

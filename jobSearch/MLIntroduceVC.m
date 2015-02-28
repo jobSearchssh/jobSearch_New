@@ -62,7 +62,16 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             
             UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-            window.rootViewController = [[MLNavigation alloc] initWithRootViewController:[MLFirstVC sharedInstance]];
+            
+            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:[MLFirstVC sharedInstance]];
+            navigationController.navigationBar.translucent = NO;
+            navigationController.tabBarController.tabBar.translucent = NO;
+            navigationController.toolbar.translucent = NO;
+            NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
+            [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+            [navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
+            
+            window.rootViewController = navigationController;
         }];
     }
 }
