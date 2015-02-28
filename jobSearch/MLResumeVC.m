@@ -122,8 +122,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     [self.navigationItem setTitle:@"新建简历"];
     
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(saveResume)];
-    [self.navigationItem.rightBarButtonItem setTitle:@"保存"];
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(previewResume)];
+    [self.navigationItem.rightBarButtonItem setTitle:@"预览"];
     
     //上部分
     self.pickerView = [[AKPickerView alloc] initWithFrame:self.containTopView.bounds];
@@ -400,7 +400,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         //已有图片列表
         if ([self.usermodel getImageFileURL] != Nil) {
-            for (NSString *url in [self.usermodel getImageFileURL]) {
+            NSArray *reverceTemp = [[[self.usermodel getImageFileURL] reverseObjectEnumerator] allObjects];
+            NSMutableArray *reverceTempMutable = [[NSMutableArray alloc]initWithArray:reverceTemp];
+            for (NSString *url in reverceTempMutable) {
                 //添加图片
                 imageButton *btnPic=[[imageButton alloc]initWithFrame:CGRectMake(-PIC_WIDTH, INSETS, PIC_WIDTH, PIC_HEIGHT)];
                 btnPic.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -442,11 +444,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
 }
 
--(void)returnResume{
-    UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"是否保存简历" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"返回",@"保存",nil];
-    alterTittle.tag = 0;
-    [alterTittle show];
-}
+//-(void)returnResume{
+//    UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"是否保存简历" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"返回",@"保存",nil];
+//    alterTittle.tag = 0;
+//    [alterTittle show];
+//}
 
 #pragma marks -- UIAlertViewDelegate --
 //根据被点击按钮的索引处理点击事件
@@ -520,9 +522,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 
--(void)saveResume{
+-(void)previewResume{
     
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     if (self.nameoutlet.text != Nil) {
         [self.usermodel setuserName:self.nameoutlet.text];
@@ -639,28 +641,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
        [self.usermodel setjob_user_id:currentUserObjectId];
     }
-    
-    [netAPI editUserDetail:self.usermodel withBlock:^(userReturnModel *userReturnModel) {
+
+    MLResumePreviewVC *_dailyMatcPreviewVC=[[MLResumePreviewVC alloc] init];
+    _dailyMatcPreviewVC.type = [NSNumber numberWithInt:type_preview_edit];
+    _dailyMatcPreviewVC.mainUserModel = self.usermodel;
+    MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:_dailyMatcPreviewVC];
+    [self.navigationController presentViewController:navigationController animated:YES completion:^{
         
-        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-        
-        if ([userReturnModel getStatus].intValue == STATIS_OK) {
-            [MBProgressHUD showSuccess:@"简历更新成功" toView:self.view];
-            
-            if ([[self.usermodel getImageFileURL] count]>0) {
-                RESideMenu *sideMenu=[RESideMenu sharedInstance];
-                NSString *logoUrl=[[self.usermodel getImageFileURL] objectAtIndex:0];
-                [sideMenu setUserImageUrl:logoUrl];
-                
-                NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
-                [mySettingData setObject:logoUrl forKey:@"currentUserlogoUrl"];
-                [mySettingData synchronize];
-            }
-            
-            
-        }else{
-            [MBProgressHUD showError:[userReturnModel getInfo] toView:self.view];
-        }
     }];
 }
 
@@ -931,7 +918,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 - (IBAction)continueAction:(id)sender {
     NSInteger currentpage = [self.pickerView selectedItem];
     if (currentpage == self.pages-1) {
-        [self saveResume];
+        [self previewResume];
         return;
     }
     NSInteger nextpage = currentpage+1;
@@ -987,10 +974,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 //page3
 //设置新的url
-- (void) getVideoURLDelegate:(NSObject *)videoURL{
-    NSString *URLTemp = (NSString *)videoURL;
-    if (URLTemp != Nil) {
-        [self.usermodel setuserVideoURL:URLTemp];
+- (void) getVideoURLDelegate:(NSString *)getVideoURL{
+    NSLog(@"aaaaa");
+    if (getVideoURL != Nil) {
+        [self.usermodel setuserVideoURL:getVideoURL];
     }
     NSLog(@"获得videourl = %@",[self.usermodel getuserVideoURL]);
 }
@@ -1132,6 +1119,25 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             
         }
         didSelectedBTN = Nil;
+    }
+    
+    
+    
+    if (actionSheet.tag == 2) {
+        if (buttonIndex == 0) {
+            MLResumeVideoVC *vc = [[MLResumeVideoVC alloc]init];
+            vc.setVideoURLDelegate = self;
+            [self.navigationController pushViewController:vc animated:YES];
+            return;
+        }
+        if (buttonIndex == 1) {
+            previewVedioVC *vc = [[previewVedioVC alloc]init];
+            vc.vedioPath = [self.usermodel getuserVideoURL];
+            vc.type = [NSNumber numberWithInt:preview];
+            vc.title = @"我的视频介绍";
+            [self.navigationController pushViewController:vc animated:YES];
+            return;
+        }
     }
 }
 
@@ -1310,8 +1316,22 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.picscrollview setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 - (IBAction)callVideoAction:(UIButton *)sender {
-    MLResumeVideoVC *vc = [[MLResumeVideoVC alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
+    
+    if ([self.usermodel getuserVideoURL].length > 10) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:Nil
+                                      delegate:self
+                                      cancelButtonTitle:@"取消"
+                                      destructiveButtonTitle:Nil
+                                      otherButtonTitles:@"新建介绍",@"查看介绍",nil];
+        actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+        actionSheet.tag = 2;
+        [actionSheet showInView:self.view];
+    }else{
+        MLResumeVideoVC *vc = [[MLResumeVideoVC alloc]init];
+        vc.setVideoURLDelegate = self;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 //page4

@@ -13,7 +13,11 @@
 #import "netAPI.h"
 #import "MBProgressHUD.h"
 #import "DateUtil.h"
+#define type_preview_edit 0
+#define type_preview 1
 
 @interface MLResumePreviewVC : ViewController<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
+@property (strong, nonatomic) NSNumber *type;
+@property (strong, nonatomic) userModel *mainUserModel;
 
 @end

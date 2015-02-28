@@ -20,7 +20,7 @@
     __block NSDictionary *_currentVideo;
     BOOL isSave;
     
-    MDRadialProgressView *radialView;
+//    MDRadialProgressView *radialView;
     BOOL startUpload;
     NSString *vedioURL;
 }
@@ -36,8 +36,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithImage:Nil style:UIBarButtonItemStyleBordered target:self action:@selector(videoUpload)];
-    [self.navigationItem.rightBarButtonItem setTitle:@"提交"];
+    [self.navigationItem.rightBarButtonItem setTitle:@"预览"];
     [self.navigationItem setTitle:@"录制视频"];
     
     //指示点
@@ -59,28 +60,28 @@
     _longPressGestureRecognizer.minimumPressDuration = 0.05f;
     _longPressGestureRecognizer.allowableMovement = 10.0f;
     [_longPressGestureRecognizer addTarget:self action:@selector(_handleLongPressGestureRecognizer:)];
+    
     [self.paiOutlet addGestureRecognizer:_longPressGestureRecognizer];
     [self.videoPreViewOutlet bringSubviewToFront:self.paiOutlet];
     [self.videoPreViewOutlet bringSubviewToFront:self.changeOutlet];
     [self.videoPreViewOutlet bringSubviewToFront:_strobeView];
     
-    //初始化上传图标
-    CGRect frame = CGRectMake(0,0, 100, 100);
-    radialView = [[MDRadialProgressView alloc] initWithFrame:frame];
-    radialView.center = CGPointMake(self.view.center.x, self.view.center.y - 150);
-    radialView.theme.completedColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:0.5];
-    radialView.theme.incompletedColor = [UIColor colorWithRed:174/255.0 green:197/255.0 blue:80/255.0 alpha:0.5];
-    radialView.progressTotal = 100;
-    radialView.progressCounter = 0;
-    radialView.theme.sliceDividerHidden = YES;
-    radialView.theme.centerColor = radialView.theme.completedColor;
-    startUpload = false;
+//    //初始化上传图标
+//    CGRect frame = CGRectMake(0,0, 100, 100);
+//    radialView = [[MDRadialProgressView alloc] initWithFrame:frame];
+//    radialView.center = CGPointMake(self.view.center.x, self.view.center.y - 150);
+//    radialView.theme.completedColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:0.5];
+//    radialView.theme.incompletedColor = [UIColor colorWithRed:174/255.0 green:197/255.0 blue:80/255.0 alpha:0.5];
+//    radialView.progressTotal = 100;
+//    radialView.progressCounter = 0;
+//    radialView.theme.sliceDividerHidden = YES;
+//    radialView.theme.centerColor = radialView.theme.completedColor;
+//    startUpload = false;
 }
 
 #pragma mark - UIGestureRecognizer
 
-- (void)_handleLongPressGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-{
+- (void)_handleLongPressGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer{
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
         {
@@ -256,102 +257,108 @@
     }
     
     if (isSave) {
-        if (error) {
-            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"%@",error] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-            [alterTittle show];
-            return;
-        }
-        
-        if ([(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentConnectType] == NotReachable) {
-            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前无网络" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-            [alterTittle show];
-            return;
-        }
-        
-        if ([(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentConnectType] == ReachableViaWWAN) {
-            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前使用手机网络，是否上传" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-            [alterTittle show];
-            return;
-        }
-        
-        if ([(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentConnectType] == ReachableViaWiFi) {
-            [self puloadVedio];
-        }
+        NSString *videoPath = [_currentVideo  objectForKey:PBJVisionVideoPathKey];
+        previewVedioVC *vc = [[previewVedioVC alloc]init];
+        vc.vedioPath = videoPath;
+        vc.type = [NSNumber numberWithInt:upload];
+        vc.setVideoURLDelegate = self;
+        vc.title = @"我的视频介绍";
+        [self.navigationController pushViewController:vc animated:YES];
+//        if (error) {
+//            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"%@",error] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+//            [alterTittle show];
+//            return;
+//        }
+//        
+//        if ([(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentConnectType] == NotReachable) {
+//            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前无网络" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+//            [alterTittle show];
+//            return;
+//        }
+//        
+//        if ([(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentConnectType] == ReachableViaWWAN) {
+//            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前使用手机网络，是否上传" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//            [alterTittle show];
+//            return;
+//        }
+//        
+//        if ([(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentConnectType] == ReachableViaWiFi) {
+//            [self puloadVedio];
+//        }
     }else{
         NSString *videoPath = [_currentVideo  objectForKey:PBJVisionVideoPathKey];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSError *error;
         if (![fileManager fileExistsAtPath:videoPath]) {
-            if (![fileManager createDirectoryAtPath:videoPath withIntermediateDirectories:YES attributes:Nil error:&error]) {
+            if (![fileManager removeItemAtPath:videoPath error:&error]) {
                 NSLog(@"%@",error);
             }else{
                 NSLog(@"删除临时文件成功");
             }
         }
     }
-    
 }
 
--(void)puloadVedio{
-    startUpload = TRUE;
-    NSString *videoPath = [_currentVideo  objectForKey:PBJVisionVideoPathKey];
-    NSLog(@"videoPath = %@",videoPath);
-    @try {
-        [radialView removeFromSuperview];
-    }
-    @catch (NSException *exception) {
-        
-    }
-    [self.view addSubview:radialView];
-    [BmobFile filesUploadBatchWithPaths:@[videoPath]
-                          progressBlock:^(int index, float progress) {
-                              //index 上传数组的下标，progress当前文件的进度
-                              NSLog(@"index %d progress %f",index,progress);
-                              dispatch_async(dispatch_get_main_queue(), ^{
-                                  [radialView setProgressCounter:progress*100];
-                              });
-                          } resultBlock:^(NSArray *array, BOOL isSuccessful, NSError *error) {
-
-                              [radialView removeFromSuperview];
-                              
-                              if (isSuccessful) {
-                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                      [MBProgressHUD showError:@"上传成功" toView:self.view];
-                                      startUpload = false;
-                                  });
-                                  
-                                  //array 文件数组，isSuccessful 成功或者失败,error 错误信息
-                                  BmobObject *obj = [[BmobObject alloc] initWithClassName:@"moveScoreFile"];
-                                  for (int i = 0 ; i < array.count ;i ++) {
-                                      BmobFile *file = array [i];
-                                      NSString *key = [NSString stringWithFormat:@"userFile%d",i];
-                                      vedioURL = [file url];
-                                      [obj setObject:file  forKey:key];
-                                  }
-//                                  [obj saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-//                                      
-//                                  }];
-                                  //s删除临时文件
-                                  NSString *videoPath = [_currentVideo  objectForKey:PBJVisionVideoPathKey];
-                                  NSFileManager *fileManager = [NSFileManager defaultManager];
-                                  NSError *error;
-                                  if ([fileManager fileExistsAtPath:videoPath]) {
-                                      if (![fileManager removeItemAtPath:videoPath error:&error]) {
-                                          NSLog(@"%@",error);
-                                      }else{
-                                          NSLog(@"删除临时文件成功");
-                                      }
-                                  }
-                                  //回调
-                                  if (self.setVideoURLDelegate != Nil && vedioURL != Nil) {
-                                      [self.setVideoURLDelegate getVideoURLDelegate:vedioURL];
-                                  }
-                                  isSave = false;
-                              }else{
-                                  [MBProgressHUD showError:@"上传失败" toView:self.view];
-                              }
-                          }];
-}
+//-(void)puloadVedio{
+//    startUpload = TRUE;
+//    NSString *videoPath = [_currentVideo  objectForKey:PBJVisionVideoPathKey];
+//    NSLog(@"videoPath = %@",videoPath);
+//    @try {
+//        [radialView removeFromSuperview];
+//    }
+//    @catch (NSException *exception) {
+//        
+//    }
+//    [self.view addSubview:radialView];
+//    [BmobFile filesUploadBatchWithPaths:@[videoPath]
+//                          progressBlock:^(int index, float progress) {
+//                              //index 上传数组的下标，progress当前文件的进度
+//                              NSLog(@"index %d progress %f",index,progress);
+//                              dispatch_async(dispatch_get_main_queue(), ^{
+//                                  [radialView setProgressCounter:progress*100];
+//                              });
+//                          } resultBlock:^(NSArray *array, BOOL isSuccessful, NSError *error) {
+//
+//                              [radialView removeFromSuperview];
+//                              
+//                              if (isSuccessful) {
+//                                  dispatch_async(dispatch_get_main_queue(), ^{
+//                                      [MBProgressHUD showError:@"上传成功" toView:self.view];
+//                                      startUpload = false;
+//                                  });
+//                                  
+//                                  //array 文件数组，isSuccessful 成功或者失败,error 错误信息
+//                                  BmobObject *obj = [[BmobObject alloc] initWithClassName:@"moveScoreFile"];
+//                                  for (int i = 0 ; i < array.count ;i ++) {
+//                                      BmobFile *file = array [i];
+//                                      NSString *key = [NSString stringWithFormat:@"userFile%d",i];
+//                                      vedioURL = [file url];
+//                                      [obj setObject:file  forKey:key];
+//                                  }
+////                                  [obj saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+////                                      
+////                                  }];
+//                                  //s删除临时文件
+//                                  NSString *videoPath = [_currentVideo  objectForKey:PBJVisionVideoPathKey];
+//                                  NSFileManager *fileManager = [NSFileManager defaultManager];
+//                                  NSError *error;
+//                                  if ([fileManager fileExistsAtPath:videoPath]) {
+//                                      if (![fileManager removeItemAtPath:videoPath error:&error]) {
+//                                          NSLog(@"%@",error);
+//                                      }else{
+//                                          NSLog(@"删除临时文件成功");
+//                                      }
+//                                  }
+//                                  //回调
+//                                  if (self.setVideoURLDelegate != Nil && vedioURL != Nil) {
+//                                      [self.setVideoURLDelegate getVideoURLDelegate:vedioURL];
+//                                  }
+//                                  isSave = false;
+//                              }else{
+//                                  [MBProgressHUD showError:@"上传失败" toView:self.view];
+//                              }
+//                          }];
+//}
 
 #pragma mark - UIAlertViewDelegate
 
@@ -362,7 +369,14 @@
     }
     
     if (buttonIndex == 1) {
-        [self puloadVedio];
+//        [self puloadVedio];
+    }
+}
+
+- (void) getVideoURLDelegate:(NSString *)getVideoURL{
+    NSLog(@"vvvvvv");
+    if (self.setVideoURLDelegate != Nil && getVideoURL != Nil) {
+        [self.setVideoURLDelegate getVideoURLDelegate:getVideoURL];
     }
 }
 

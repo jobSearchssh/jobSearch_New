@@ -138,7 +138,7 @@
         RESideMenuItem *dailymatchItem = [[RESideMenuItem alloc] initWithTitle:@"我的简历" setFlag:NORMALCELL image:[UIImage imageNamed:@"calendar"] highlightedImage:[UIImage imageNamed:@"calendar"] action:^(RESideMenu *menu, RESideMenuItem *item)  {
 
             MLResumePreviewVC *_dailyMatchVC=[[MLResumePreviewVC alloc] init];
-
+            _dailyMatchVC.type = [NSNumber numberWithInt:type_preview];
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:_dailyMatchVC];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
