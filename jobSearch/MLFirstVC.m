@@ -22,6 +22,7 @@
 #import "AJLocationManager.h"
 #import <BmobSDK/Bmob.h>
 #import "badgeNumber.h"
+#import "MLNavigation.h"
 
 @interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate,finishFilterDelegate,UINavigationControllerDelegate,showDetailDelegate>
 {
@@ -60,6 +61,7 @@
 @property (weak, nonatomic) IBOutlet UITabBar *tabbar;
 @property (weak, nonatomic) IBOutlet UITabBarItem *mapItem;
 @property (weak, nonatomic) IBOutlet UITabBarItem *messageItem;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 
 @end
 
@@ -89,6 +91,8 @@ static  MLFirstVC *thisVC=nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.topConstraint.constant=0;
     
     self.title=@"附近的职位";
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
@@ -129,7 +133,6 @@ static  MLFirstVC *thisVC=nil;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"] style:UIBarButtonItemStylePlain target:self action:@selector(search)];
     self.navigationItem.rightBarButtonItem.tintColor=[UIColor whiteColor];
     self.navigationItem.leftBarButtonItem.tintColor=[UIColor whiteColor];
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM月dd日"];

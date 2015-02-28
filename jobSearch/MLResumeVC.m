@@ -26,7 +26,7 @@ static NSString *scrollindentify = @"scrollviewdown";
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 
-@interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate,HZAreaPickerDelegate,AMapSearchDelegate,MLDatePickerDelegate,UITextViewDelegate>{
+@interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate,HZAreaPickerDelegate,AMapSearchDelegate,MLDatePickerDelegate,UITextViewDelegate,finishSaveDelegate>{
     NSMutableArray *addedPicArray;
     NSArray *selectfreetimetitleArray;
     NSArray *selectfreetimepicArray;
@@ -645,10 +645,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     MLResumePreviewVC *_dailyMatcPreviewVC=[[MLResumePreviewVC alloc] init];
     _dailyMatcPreviewVC.type = [NSNumber numberWithInt:type_preview_edit];
     _dailyMatcPreviewVC.mainUserModel = self.usermodel;
+    _dailyMatcPreviewVC.saveDelegate=self;
     MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:_dailyMatcPreviewVC];
     [self.navigationController presentViewController:navigationController animated:YES completion:^{
         
     }];
+}
+
+-(void)finishSave{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //点击空白取消textfield响应

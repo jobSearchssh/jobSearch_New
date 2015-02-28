@@ -20,6 +20,7 @@
 #define TYPEANDDISJOBLIST_FUNCTION @"userService/queryJobsByDistanceAndJobType"
 #define KEYWORDJOBLIST_FUNCTION @"userService/queryJobsByCondition"
 #define messageList_FUNCTION @"userService/messageList"
+#define JINGLINGMATCH_FUNCTION @"userService/queryJingLingMatch"
 //opration
 #define SAVEJOB_FUNCTION @"user/createSaveList"
 #define DELETEJOB_FUNCTION @"user/createDeleteList"
@@ -131,7 +132,7 @@
 +(void)queryJingLingMatch:(NSString *)usrID start:(int)start length:(int)length withBlock:(jobListReturnBlock)newestJobListBlock{
     NSString *str = [[NSString alloc]initWithFormat:@"_id=%@&start=%d&length=%d",usrID,start,length];
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-    [self testAPIPostTestWithBlock:data getFunction:NEWESTJOBLIST_FUNCTION block:^(URLReturnModel *returnModel) {
+    [self testAPIPostTestWithBlock:data getFunction:JINGLINGMATCH_FUNCTION block:^(URLReturnModel *returnModel) {
         if (returnModel != Nil && [returnModel getFlag]) {
             jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             newestJobListBlock(a);

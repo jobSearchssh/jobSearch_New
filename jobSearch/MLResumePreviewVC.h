@@ -16,8 +16,15 @@
 #define type_preview_edit 0
 #define type_preview 1
 
+@protocol finishSaveDelegate <NSObject>
+@required
+- (void)finishSave;
+@end
+
 @interface MLResumePreviewVC : ViewController<UIScrollViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 @property (strong, nonatomic) NSNumber *type;
 @property (strong, nonatomic) userModel *mainUserModel;
+
+@property(nonatomic,weak) id<finishSaveDelegate> saveDelegate;
 
 @end

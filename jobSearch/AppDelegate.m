@@ -18,7 +18,7 @@
 #import "WXApi.h"
 #import "WeiboSDK.h"
 #import "badgeNumber.h"
-
+#import "MLIntroduceVC.h"
 
 @interface AppDelegate (){
     int currentConnectType;
@@ -45,8 +45,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[MLFirstVC alloc] init]];
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    if((![[NSUserDefaults standardUserDefaults] objectForKey:@"launchFirstTime"])||![[[NSUserDefaults standardUserDefaults] objectForKey:@"launchFirstTime"] isEqualToString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]){
+        
+        
+        self.window.rootViewController = [[MLIntroduceVC alloc] init];
+    }
+    else{
+        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MLFirstVC sharedInstance]];
+    }
+
     [self.window makeKeyAndVisible];
     
     //友盟

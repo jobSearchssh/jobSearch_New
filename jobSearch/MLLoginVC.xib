@@ -294,29 +294,29 @@
                     <exclude reference="hp2-uW-via"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="HH9-Yh-9rL"/>
-                    <exclude reference="nZV-P5-dBi"/>
-                    <exclude reference="vS1-ff-f85"/>
+                    <exclude reference="VTa-yt-W4S"/>
+                    <exclude reference="mMb-6U-NTu"/>
+                    <exclude reference="hsV-xO-fez"/>
+                    <exclude reference="uOx-Js-pgZ"/>
                     <exclude reference="AdP-B6-b26"/>
                     <exclude reference="nBV-bo-UT3"/>
+                    <exclude reference="YuO-Zy-JEH"/>
+                    <exclude reference="Z9j-cQ-scO"/>
                     <exclude reference="9LP-Rp-vJt"/>
                     <exclude reference="cha-Ec-uAX"/>
                     <exclude reference="mu9-Th-Drr"/>
+                    <exclude reference="HH9-Yh-9rL"/>
+                    <exclude reference="nZV-P5-dBi"/>
+                    <exclude reference="vS1-ff-f85"/>
                     <exclude reference="DCy-FH-bCn"/>
                     <exclude reference="HbI-0T-Iux"/>
                     <exclude reference="umC-fx-SkR"/>
-                    <exclude reference="hsV-xO-fez"/>
-                    <exclude reference="uOx-Js-pgZ"/>
                     <exclude reference="31F-KS-Sz9"/>
                     <exclude reference="f4c-ak-xNH"/>
                     <exclude reference="fft-iV-TsR"/>
-                    <exclude reference="YuO-Zy-JEH"/>
-                    <exclude reference="Z9j-cQ-scO"/>
                     <exclude reference="5ss-At-fZB"/>
                     <exclude reference="aY9-b8-Pvx"/>
                     <exclude reference="f3T-QM-YHr"/>
-                    <exclude reference="VTa-yt-W4S"/>
-                    <exclude reference="mMb-6U-NTu"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -332,29 +332,29 @@
                     <include reference="hp2-uW-via"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="HH9-Yh-9rL"/>
-                    <include reference="nZV-P5-dBi"/>
-                    <include reference="vS1-ff-f85"/>
+                    <include reference="VTa-yt-W4S"/>
+                    <include reference="mMb-6U-NTu"/>
+                    <include reference="hsV-xO-fez"/>
+                    <include reference="uOx-Js-pgZ"/>
                     <include reference="AdP-B6-b26"/>
                     <include reference="nBV-bo-UT3"/>
+                    <include reference="YuO-Zy-JEH"/>
+                    <include reference="Z9j-cQ-scO"/>
                     <include reference="9LP-Rp-vJt"/>
                     <include reference="cha-Ec-uAX"/>
                     <include reference="mu9-Th-Drr"/>
+                    <include reference="HH9-Yh-9rL"/>
+                    <include reference="nZV-P5-dBi"/>
+                    <include reference="vS1-ff-f85"/>
                     <include reference="DCy-FH-bCn"/>
                     <include reference="HbI-0T-Iux"/>
                     <include reference="umC-fx-SkR"/>
-                    <include reference="hsV-xO-fez"/>
-                    <include reference="uOx-Js-pgZ"/>
                     <include reference="31F-KS-Sz9"/>
                     <include reference="f4c-ak-xNH"/>
                     <include reference="fft-iV-TsR"/>
-                    <include reference="YuO-Zy-JEH"/>
-                    <include reference="Z9j-cQ-scO"/>
                     <include reference="5ss-At-fZB"/>
                     <include reference="aY9-b8-Pvx"/>
                     <include reference="f3T-QM-YHr"/>
-                    <include reference="VTa-yt-W4S"/>
-                    <include reference="mMb-6U-NTu"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="719" y="135"/>

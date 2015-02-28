@@ -82,6 +82,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }];
 }
 
+-(void)returnAndSave{
+    [self returnResume];
+    [self.saveDelegate finishSave];
+}
+
 -(void)saveResume{
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [netAPI editUserDetail:self.mainUserModel withBlock:^(userReturnModel *userReturnModel) {
@@ -100,6 +105,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                 [mySettingData setObject:logoUrl forKey:@"currentUserlogoUrl"];
                 [mySettingData synchronize];
             }
+            
+            [self performSelector:@selector(returnAndSave) withObject:nil afterDelay:1.0f];
+            
         }else{
             [MBProgressHUD showError:[userReturnModel getInfo] toView:self.view];
         }

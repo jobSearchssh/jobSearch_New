@@ -176,6 +176,10 @@
 		3B6994531A89EC3800A53760 /* icon_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B6994501A89EC3800A53760 /* icon_location@2x.png */; };
 		3B6994541A89EC3800A53760 /* icon_location@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B6994511A89EC3800A53760 /* icon_location@3x.png */; };
 		3B6994561A89ED5600A53760 /* BmobSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B6994551A89ED5600A53760 /* BmobSDK.framework */; };
+		3B7D03601AA19B9B000ABD96 /* intro_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B7D035C1AA19B9B000ABD96 /* intro_1.png */; };
+		3B7D03611AA19B9B000ABD96 /* intro_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B7D035D1AA19B9B000ABD96 /* intro_2.png */; };
+		3B7D03621AA19B9B000ABD96 /* intro_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B7D035E1AA19B9B000ABD96 /* intro_3.png */; };
+		3B7D03631AA19B9B000ABD96 /* intro_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B7D035F1AA19B9B000ABD96 /* intro_4.png */; };
 		3B85D8021A8A32FC0087ABEE /* MLMatchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B85D7F91A8A32FC0087ABEE /* MLMatchVC.m */; };
 		3B85D8031A8A32FC0087ABEE /* MLMatchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B85D7FA1A8A32FC0087ABEE /* MLMatchVC.xib */; };
 		3B85D8041A8A32FC0087ABEE /* PiPeiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B85D7FC1A8A32FC0087ABEE /* PiPeiView.m */; };
@@ -187,6 +191,9 @@
 		3B85D80D1A8A34AB0087ABEE /* annotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B85D80A1A8A34AB0087ABEE /* annotation.png */; };
 		3B85D8111A8A3AF90087ABEE /* freeselectViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B85D80F1A8A3AF90087ABEE /* freeselectViewCell.m */; };
 		3B85D8121A8A3AF90087ABEE /* freeselectViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B85D8101A8A3AF90087ABEE /* freeselectViewCell.xib */; };
+		3B8FBB7D1AA17524007C465E /* MLIntroduceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8FBB7B1AA17524007C465E /* MLIntroduceVC.m */; };
+		3B8FBB7E1AA17524007C465E /* MLIntroduceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B8FBB7C1AA17524007C465E /* MLIntroduceVC.xib */; };
+		3B8FBB871AA198C2007C465E /* KVNMaskedPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8FBB861AA198C2007C465E /* KVNMaskedPageControl.m */; };
 		3B9236491A67FAFA00347D9C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9236481A67FAFA00347D9C /* main.m */; };
 		3B9236521A67FAFA00347D9C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B9236501A67FAFA00347D9C /* Main.storyboard */; };
 		3B9236541A67FAFA00347D9C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B9236531A67FAFA00347D9C /* Images.xcassets */; };
@@ -220,7 +227,6 @@
 		3BA484191A89E79C00B6A200 /* MLLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA484151A89E79B00B6A200 /* MLLoginVC.m */; };
 		3BA4841A1A89E79C00B6A200 /* MLLoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BA484161A89E79B00B6A200 /* MLLoginVC.xib */; };
 		3BA4841B1A89E79C00B6A200 /* MLLoginBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA484181A89E79C00B6A200 /* MLLoginBusiness.m */; };
-		3BA484211A89E7BE00B6A200 /* KVNMaskedPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4841D1A89E7BE00B6A200 /* KVNMaskedPageControl.m */; };
 		3BA484221A89E7BE00B6A200 /* MLProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4841F1A89E7BE00B6A200 /* MLProfileVC.m */; };
 		3BA484231A89E7BE00B6A200 /* MLProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BA484201A89E7BE00B6A200 /* MLProfileVC.xib */; };
 		3BA484271A89E7CF00B6A200 /* jobDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA484251A89E7CF00B6A200 /* jobDetailVC.m */; };
@@ -612,6 +618,10 @@
 		3B6994501A89EC3800A53760 /* icon_location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_location@2x.png"; sourceTree = "<group>"; };
 		3B6994511A89EC3800A53760 /* icon_location@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_location@3x.png"; sourceTree = "<group>"; };
 		3B6994551A89ED5600A53760 /* BmobSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BmobSDK.framework; sourceTree = "<group>"; };
+		3B7D035C1AA19B9B000ABD96 /* intro_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_1.png; sourceTree = "<group>"; };
+		3B7D035D1AA19B9B000ABD96 /* intro_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_2.png; sourceTree = "<group>"; };
+		3B7D035E1AA19B9B000ABD96 /* intro_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_3.png; sourceTree = "<group>"; };
+		3B7D035F1AA19B9B000ABD96 /* intro_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intro_4.png; sourceTree = "<group>"; };
 		3B85D7F81A8A32FC0087ABEE /* MLMatchVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLMatchVC.h; sourceTree = "<group>"; };
 		3B85D7F91A8A32FC0087ABEE /* MLMatchVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLMatchVC.m; sourceTree = "<group>"; };
 		3B85D7FA1A8A32FC0087ABEE /* MLMatchVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLMatchVC.xib; sourceTree = "<group>"; };
@@ -628,6 +638,11 @@
 		3B85D80E1A8A3AF90087ABEE /* freeselectViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = freeselectViewCell.h; sourceTree = "<group>"; };
 		3B85D80F1A8A3AF90087ABEE /* freeselectViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = freeselectViewCell.m; sourceTree = "<group>"; };
 		3B85D8101A8A3AF90087ABEE /* freeselectViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = freeselectViewCell.xib; sourceTree = "<group>"; };
+		3B8FBB7A1AA17524007C465E /* MLIntroduceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLIntroduceVC.h; sourceTree = "<group>"; };
+		3B8FBB7B1AA17524007C465E /* MLIntroduceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLIntroduceVC.m; sourceTree = "<group>"; };
+		3B8FBB7C1AA17524007C465E /* MLIntroduceVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLIntroduceVC.xib; sourceTree = "<group>"; };
+		3B8FBB851AA198C2007C465E /* KVNMaskedPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVNMaskedPageControl.h; sourceTree = "<group>"; };
+		3B8FBB861AA198C2007C465E /* KVNMaskedPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVNMaskedPageControl.m; sourceTree = "<group>"; };
 		3B9236431A67FAFA00347D9C /* jobSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jobSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B9236471A67FAFA00347D9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B9236481A67FAFA00347D9C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -690,8 +705,6 @@
 		3BA484161A89E79B00B6A200 /* MLLoginVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLLoginVC.xib; sourceTree = "<group>"; };
 		3BA484171A89E79B00B6A200 /* MLLoginBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLLoginBusiness.h; sourceTree = "<group>"; };
 		3BA484181A89E79C00B6A200 /* MLLoginBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLLoginBusiness.m; sourceTree = "<group>"; };
-		3BA4841C1A89E7BE00B6A200 /* KVNMaskedPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVNMaskedPageControl.h; sourceTree = "<group>"; };
-		3BA4841D1A89E7BE00B6A200 /* KVNMaskedPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVNMaskedPageControl.m; sourceTree = "<group>"; };
 		3BA4841E1A89E7BE00B6A200 /* MLProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLProfileVC.h; sourceTree = "<group>"; };
 		3BA4841F1A89E7BE00B6A200 /* MLProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLProfileVC.m; sourceTree = "<group>"; };
 		3BA484201A89E7BE00B6A200 /* MLProfileVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLProfileVC.xib; sourceTree = "<group>"; };
@@ -1224,6 +1237,10 @@
 		3B6993971A89E9B000A53760 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				3B7D035C1AA19B9B000ABD96 /* intro_1.png */,
+				3B7D035D1AA19B9B000ABD96 /* intro_2.png */,
+				3B7D035E1AA19B9B000ABD96 /* intro_3.png */,
+				3B7D035F1AA19B9B000ABD96 /* intro_4.png */,
 				3B4547101A93781B00AA3C50 /* logo180.png */,
 				3B4547111A93781B00AA3C50 /* logo120.png */,
 				3B4547121A93781B00AA3C50 /* logo80.png */,
@@ -1336,6 +1353,16 @@
 			path = image;
 			sourceTree = "<group>";
 		};
+		3B8FBB791AA174F8007C465E /* MLIntroVC */ = {
+			isa = PBXGroup;
+			children = (
+				3B8FBB7A1AA17524007C465E /* MLIntroduceVC.h */,
+				3B8FBB7B1AA17524007C465E /* MLIntroduceVC.m */,
+				3B8FBB7C1AA17524007C465E /* MLIntroduceVC.xib */,
+			);
+			name = MLIntroVC;
+			sourceTree = "<group>";
+		};
 		3B92363A1A67FAFA00347D9C = {
 			isa = PBXGroup;
 			children = (
@@ -1358,6 +1385,7 @@
 		3B9236451A67FAFA00347D9C /* jobSearch */ = {
 			isa = PBXGroup;
 			children = (
+				3B8FBB791AA174F8007C465E /* MLIntroVC */,
 				3BC6B6051A9AD1A60055D2C8 /* AsyncImageView */,
 				3B5C26671A979AAC00E4AF7E /* badgeNumber */,
 				3BCACDA01A8C4FB000D22F62 /* ShareSDK */,
@@ -1673,8 +1701,8 @@
 		3BCBBD0A1A6CCBDE00E581FD /* profileVC */ = {
 			isa = PBXGroup;
 			children = (
-				3BA4841C1A89E7BE00B6A200 /* KVNMaskedPageControl.h */,
-				3BA4841D1A89E7BE00B6A200 /* KVNMaskedPageControl.m */,
+				3B8FBB851AA198C2007C465E /* KVNMaskedPageControl.h */,
+				3B8FBB861AA198C2007C465E /* KVNMaskedPageControl.m */,
 				3BA4841E1A89E7BE00B6A200 /* MLProfileVC.h */,
 				3BA4841F1A89E7BE00B6A200 /* MLProfileVC.m */,
 				3BA484201A89E7BE00B6A200 /* MLProfileVC.xib */,
@@ -2105,6 +2133,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B7D03621AA19B9B000ABD96 /* intro_3.png in Resources */,
 				3BD4DC661A77C50600B061D0 /* resume_choose.png in Resources */,
 				3B6994431A89E9B000A53760 /* trash@2x.png in Resources */,
 				3B0785271A6A838100ACD76C /* AMap.bundle in Resources */,
@@ -2166,6 +2195,7 @@
 				3BD4DC781A77C50600B061D0 /* resume_6.png in Resources */,
 				3BA484231A89E7BE00B6A200 /* MLProfileVC.xib in Resources */,
 				B75CE4011A7B512B00974815 /* resume_female.png in Resources */,
+				3B8FBB7E1AA17524007C465E /* MLIntroduceVC.xib in Resources */,
 				3BD4DC241A77C4CD00B061D0 /* radio_checked@2x.png in Resources */,
 				3B6994191A89E9B000A53760 /* list@2x.png in Resources */,
 				3B6993FD1A89E9B000A53760 /* calendar@3x.png in Resources */,
@@ -2258,6 +2288,7 @@
 				B73640DA1AA0D37900CEB5F4 /* moviePause@2x.png in Resources */,
 				3B6994021A89E9B000A53760 /* cellBackground1.png in Resources */,
 				3B4546F91A92D9DC00AA3C50 /* umeng_fb_audio_play_03@2x.png in Resources */,
+				3B7D03631AA19B9B000ABD96 /* intro_4.png in Resources */,
 				3B4546FA1A92D9DC00AA3C50 /* umeng_fb_audio_play_default@2x.png in Resources */,
 				3B69941D1A89E9B000A53760 /* location@3x.png in Resources */,
 				3B4547151A93781B00AA3C50 /* logo180.png in Resources */,
@@ -2271,6 +2302,7 @@
 				3B69943E1A89E9B000A53760 /* textfieldBackground.png in Resources */,
 				3BCACDBD1A8C4FB000D22F62 /* Resource.bundle in Resources */,
 				3B6993961A89E98E00A53760 /* usrTableViewCell.xib in Resources */,
+				3B7D03611AA19B9B000ABD96 /* intro_2.png in Resources */,
 				3BD4DC7D1A77C50600B061D0 /* resume_not_focus.png in Resources */,
 				3BD4DC841A77C50600B061D0 /* mark2.png in Resources */,
 				3B6994141A89E9B000A53760 /* just@3x.png in Resources */,
@@ -2322,6 +2354,7 @@
 				3B6994101A89E9B000A53760 /* ignoreInvite@2x.png in Resources */,
 				3B6994181A89E9B000A53760 /* list.png in Resources */,
 				3B69944A1A89E9B000A53760 /* userPassword@3x.png in Resources */,
+				3B7D03601AA19B9B000ABD96 /* intro_1.png in Resources */,
 				3B6994421A89E9B000A53760 /* trash.png in Resources */,
 				3B6994331A89E9B000A53760 /* search@3x.png in Resources */,
 				3B85D8051A8A32FC0087ABEE /* PiPeiView.xib in Resources */,
@@ -2359,6 +2392,7 @@
 				B7EF76E31A8CFFA100B230F9 /* MDRadialProgressView.m in Sources */,
 				3BA484511A89E83B00B6A200 /* MLCell1.m in Sources */,
 				3BA484551A89E83B00B6A200 /* MLCell4.m in Sources */,
+				3B8FBB871AA198C2007C465E /* KVNMaskedPageControl.m in Sources */,
 				B7EF76E11A8CFFA100B230F9 /* MDRadialProgressLabel.m in Sources */,
 				3BA483D41A89E6F700B6A200 /* baseJobModel.m in Sources */,
 				3BC8AE211A73769500417741 /* QCheckBox.m in Sources */,
@@ -2366,7 +2400,6 @@
 				3BCACDCC1A8C7D8D00D22F62 /* jobAppliedListModel.m in Sources */,
 				B7B8F7751A90DE69008F5BFE /* imageButton.m in Sources */,
 				3B6993751A89E98600A53760 /* AccelerationAnimation.m in Sources */,
-				3BA484211A89E7BE00B6A200 /* KVNMaskedPageControl.m in Sources */,
 				B73640E31AA0D6AC00CEB5F4 /* previewVedioVC.m in Sources */,
 				3BD4DC271A77C4CD00B061D0 /* QRadioButton.m in Sources */,
 				3B4AB49E1A81F1870053236C /* AJLocationManager.m in Sources */,
@@ -2436,6 +2469,7 @@
 				3B4AB4921A81CB2F0053236C /* MJRefreshFooterView.m in Sources */,
 				3B6993921A89E98E00A53760 /* sideNormalTableViewCell.m in Sources */,
 				3BD4DC3F1A77C4D800B061D0 /* coverFlowView.m in Sources */,
+				3B8FBB7D1AA17524007C465E /* MLIntroduceVC.m in Sources */,
 				3BD4DC3D1A77C4D800B061D0 /* MLResumePreviewVC.m in Sources */,
 				B7E9F8D31A8A466A004BC570 /* jobApplyModel.m in Sources */,
 				3BCEA0C81A8363640005F080 /* MLLegalVC.m in Sources */,

@@ -11,6 +11,7 @@
                 <outlet property="messageItem" destination="IDM-zW-qqE" id="MA4-QK-gfi"/>
                 <outlet property="tabbar" destination="hq5-HG-YjK" id="5Tz-gx-d5c"/>
                 <outlet property="tableView" destination="4Zw-aG-ERW" id="0Bl-e8-1Jh"/>
+                <outlet property="topConstraint" destination="CAZ-p0-XRm" id="z1G-x4-g02"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
