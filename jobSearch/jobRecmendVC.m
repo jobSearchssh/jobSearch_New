@@ -19,7 +19,7 @@
 
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
-static NSString *userId = @"54d76bd496d9aece6f8b4568";
+//static NSString *userId = @"54d76bd496d9aece6f8b4568";
 
 @interface jobRecmendVC ()<UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate>{
     NSMutableArray  *addedPicArray;
@@ -59,11 +59,19 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
     [self initData];
     [self timeCollectionViewInit];
 
-    [netAPI setRecordAlreadyRead:userId applyOrInviteId:self.jobModel.get_id type:@"0" withBlock:^(oprationResultModel *oprationResultModel) {
-        if ([[oprationResultModel getStatus] intValue]==0) {
-            NSLog(@"OK");
-        }
-    }];
+    NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+    NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+    if ([currentUserObjectId length]>0) {
+    
+        
+        [netAPI setRecordAlreadyRead:currentUserObjectId applyOrInviteId:self.jobModel.getinvite_id type:@"0" withBlock:^(oprationResultModel *oprationResultModel) {
+            if ([[oprationResultModel getStatus] intValue]==0) {
+                NSLog(@"OK");
+                badgeNumber*bn=[badgeNumber sharedInstance];
+                [bn minusMessageCount];
+            }
+        }];
+    }
 }
 
 - (void)timeCollectionViewInit{
@@ -214,14 +222,6 @@ static NSString *userId = @"54d76bd496d9aece6f8b4568";
         
         [mapView addAnnotation:self.jobModel.getjobWorkPlaceGeoPoint Title:self.jobModel.getjobTitle tag:0 SetToCenter:YES];
         
-        //将消息设置为已读
-        [netAPI setRecordAlreadyRead:userId applyOrInviteId:self.jobModel.get_id type:@"0" withBlock:^(oprationResultModel *oprationResultModel) {
-            if ([[oprationResultModel getStatus] intValue]==0) {
-                NSLog(@"标记成功");
-            }
-            badgeNumber *bn=[badgeNumber sharedInstance];
-            [bn minusMessageCount];
-        }];
     }
 }
 

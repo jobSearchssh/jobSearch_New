@@ -13,7 +13,7 @@
 #import "MBProgressHUD+Add.h"
 #import "MJRefresh.h"
 #import "MLLoginVC.h"
-
+#import "badgeNumber.h"
 
 @interface MLMyApplication ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,finishLoginDelegate>
 {
@@ -212,16 +212,6 @@ static  MLMyApplication *thisVC=nil;
     }
 }
 
-//- (void)refreshInBackground{
-//    if (self.inBackground) {
-//        headerRefreshing=YES;
-//        skipTimes=0;
-//        [netAPI getApplyJobs:userId start:1 length:BASE_SPAN withBlock:^(jobAppliedListModel *jobListModel) {
-//            [self headHandler:jobListModel];
-//        }];
-//    }
-//}
-
 //*********************tableView********************//
 - (void)tableViewInit{
     
@@ -371,9 +361,11 @@ static  MLMyApplication *thisVC=nil;
     
     if ([currentUserObjectId length]>0) {
     
-        [netAPI setRecordAlreadyRead:currentUserObjectId applyOrInviteId:appliedModel.get_id type:@"1" withBlock:^(oprationResultModel *oprationResultModel) {
+        [netAPI setRecordAlreadyRead:currentUserObjectId applyOrInviteId:appliedModel.getjobApply_id type:@"1" withBlock:^(oprationResultModel *oprationResultModel) {
             if ([[oprationResultModel getStatus] intValue]==0) {
-            NSLog(@"标记成功");
+                NSLog(@"标记成功");
+                badgeNumber*bn=[badgeNumber sharedInstance];
+                [bn minusApplyCount];
             }
         }];
     }

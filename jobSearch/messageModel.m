@@ -63,8 +63,7 @@
         
         invite_id = [initDictionary objectForKey:messageModel_invite_id];
         inviteStatus = [initDictionary objectForKey:messageModel_inviteStatus];
-        
-        
+        job_user_id=[initDictionary objectForKey:@"job_user_id"];
     }
     return self;
 }
@@ -184,5 +183,9 @@
 }
 -(NSNumber *)getinviteStatus{
     return inviteStatus;
+}
+
+- (NSString*)getjob_user_id{
+    return job_user_id;
 }
 @end

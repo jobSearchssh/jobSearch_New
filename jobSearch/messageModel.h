@@ -48,6 +48,7 @@
     NSString *invite_id;
     NSNumber *inviteStatus;
     NSString *jobGenderReq;
+    NSString *job_user_id;
 }
 
 -(messageModel *)initWithDictionary:(NSDictionary *)initDictionary;
@@ -87,6 +88,7 @@
 -(NSNumber*)getjobHasAccepted;
 -(NSNumber*)getjobHasRejected;
 - (NSString*)getjobGenderReq;
+- (NSString*)getjob_user_id;
 
 -(NSString *)getinvite_id;
 -(NSNumber *)getinviteStatus;
