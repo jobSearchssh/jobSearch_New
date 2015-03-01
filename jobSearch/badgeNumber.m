@@ -43,7 +43,6 @@ static  badgeNumber *thisObject=nil;
         }
     }];
     }
-    
 }
 
 - (void)minusMessageCount{

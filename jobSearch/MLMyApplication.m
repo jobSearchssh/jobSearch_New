@@ -200,14 +200,20 @@ static  MLMyApplication *thisVC=nil;
             
         }else{
 
-            [recordArray removeAllObjects];
+            if ([jobListModel.getjobAppliedArray count]==0){
+                [MBProgressHUD showError:@"您没有申请记录哦" toView:self.view];
+            }else{
             
-            for (id object in jobListModel.getjobAppliedArray) {
-                [recordArray addObject:object];
+                [recordArray removeAllObjects];
+                
+                for (id object in jobListModel.getjobAppliedArray) {
+                    [recordArray addObject:object];
+                }
+                
+                cellNum=[recordArray count];
+                [self.tableView reloadData];
             }
-            
-            cellNum=[recordArray count];
-            [self.tableView reloadData];
+
         }
     }
 }

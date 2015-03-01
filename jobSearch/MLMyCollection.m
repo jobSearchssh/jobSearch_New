@@ -166,7 +166,7 @@ static  MLMyCollection *thisVC=nil;
             
         }else{
             
-            if ([jobListModel.getJobArray count]) {
+            if ([jobListModel.getJobArray count]==0) {
                 [MBProgressHUD showError:@"没有更多数据啦" toView:self.view];
             }else{
                 for (id object in jobListModel.getJobArray) {
@@ -196,14 +196,19 @@ static  MLMyCollection *thisVC=nil;
             [MBProgressHUD showError:err toView:self.view];
         }else{
             
-            [recordArray removeAllObjects];
-            
-            for (id object in jobListModel.getJobArray) {
-                [recordArray addObject:object];
+            if ([jobListModel.getJobArray count]==0) {
+                [MBProgressHUD showError:@"您没有收藏记录哦" toView:self.view];
+            }else{
+                [recordArray removeAllObjects];
+                
+                for (id object in jobListModel.getJobArray) {
+                    [recordArray addObject:object];
+                }
+                
+                cellNum=[recordArray count];
+                [self.tableView reloadData];
+
             }
-            
-            cellNum=[recordArray count];
-            [self.tableView reloadData];
         }
     }
 }

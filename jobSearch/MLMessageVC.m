@@ -176,7 +176,7 @@
 
             }
                 
-            }
+        }
     }
     
     else{
@@ -186,15 +186,21 @@
             [MBProgressHUD showError:err toView:self.view];
         }else{
             
-            [recordArray removeAllObjects];
-            
-            for (messageModel *object in jobListModel.getMessageArray) {
+            if ([jobListModel.getMessageArray count]==0){
+                [MBProgressHUD showError:@"您没有新消息哦" toView:self.view];
+            }else{
+                [recordArray removeAllObjects];
                 
-                [recordArray addObject:object];
+                for (messageModel *object in jobListModel.getMessageArray) {
+                    
+                    [recordArray addObject:object];
+                }
+                
+                cellNum=[recordArray count];
+                [self.tableView reloadData];
+
             }
             
-            cellNum=[recordArray count];
-            [self.tableView reloadData];
         }
     }
 }
