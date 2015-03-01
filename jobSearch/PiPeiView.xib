@@ -335,7 +335,7 @@
                 </label>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHQ-nG-Zf9">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                     <string key="text">1.根据现有编制及业务发展需求，协调、统计各部门的招聘需求，编制年度人员招聘计划； 2.开发、维护、评估、分析各招聘渠道； 3.建立和完善公司的招聘流程和招聘体系； 4.利用各种招聘渠道发布招聘广告，寻求招聘机构； 5.执行招聘、甄选、面试、选择、安置工作； 6.建立后备人才选拔方案和人才储备机制。</string>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>

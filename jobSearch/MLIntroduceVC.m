@@ -10,7 +10,7 @@
 #import "MLFirstVC.h"
 #import "MLNavigation.h"
 
-#define DEVICE_IS_IPHONE5 ([[UIScreen mainScreen] bounds].size.height == 568)
+#define DEVICE_IS_IPHONE4 ([[UIScreen mainScreen] bounds].size.height == 480)
 
 @interface MLIntroduceVC ()
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -27,16 +27,16 @@
 
     
     self.scrollView.delegate=self;
-    self.scrollView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    self.scrollView.frame=CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
     self.pages = 4;
     
     KVNMaskedPageControl *pageControl = [[KVNMaskedPageControl alloc] init];
     [pageControl setNumberOfPages:self.pages];
     
-    if (DEVICE_IS_IPHONE5) {
+    if (!DEVICE_IS_IPHONE4) {
         [pageControl setCenter:CGPointMake(CGRectGetMidX([[UIScreen mainScreen] bounds]), CGRectGetHeight([[UIScreen mainScreen] bounds]) - CGRectGetMidY(pageControl.bounds) - 10)];
     }else{
-        [pageControl setCenter:CGPointMake(CGRectGetMidX(self.view.bounds), 470)];
+        [pageControl setCenter:CGPointMake(CGRectGetMidX([[UIScreen mainScreen] bounds]), 470)];
     }
     [pageControl setDataSource:self];
     [pageControl setHidesForSinglePage:YES];
@@ -83,34 +83,34 @@
         UIImageView *imgView;
         
         UIImage *img;
-        if (DEVICE_IS_IPHONE5) {
-            imgView=[[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.scrollView.bounds) * i, 0, CGRectGetWidth(self.scrollView.bounds), CGRectGetHeight(self.scrollView.bounds))];
+        if (!DEVICE_IS_IPHONE4) {
+            imgView=[[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetWidth([[UIScreen mainScreen] bounds]) * i, 0, CGRectGetWidth([[UIScreen mainScreen] bounds]), CGRectGetHeight([[UIScreen mainScreen] bounds]))];
             img=[UIImage imageNamed:[NSString stringWithFormat:@"intro_%d.png",i+1]];
         }else{
-            imgView=[[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.scrollView.bounds) * i, 0, CGRectGetWidth(self.scrollView.bounds), 480)];
+            imgView=[[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.scrollView.bounds) * i, 0, CGRectGetWidth([[UIScreen mainScreen] bounds]), 480)];
             img=[UIImage imageNamed:[NSString stringWithFormat:@"intro_%d.png",i+1]];
         }
         imgView.image=img;
         [self.scrollView addSubview:imgView];
         
-        if (i==3) {
-            UIButton *btn=[[UIButton alloc]init];
-            if (DEVICE_IS_IPHONE5) {
-                btn.frame= CGRectMake(100, 430, 120, 40);
-            }else{
-                btn.frame= CGRectMake(100, 382, 120, 40);
-            }
-            btn.titleLabel.text=@"btnnto";
-            btn.backgroundColor=[UIColor clearColor];
-            [btn addTarget:self action:@selector(touchStart) forControlEvents:UIControlEventTouchUpInside];
-            [imgView addSubview:btn];
-            imgView.userInteractionEnabled=YES;
-        }
+//        if (i==3) {
+//            UIButton *btn=[[UIButton alloc]init];
+//            if (DEVICE_IS_IPHONE5) {
+//                btn.frame= CGRectMake(100, 430, 120, 40);
+//            }else{
+//                btn.frame= CGRectMake(100, 382, 120, 40);
+//            }
+//            btn.titleLabel.text=@"btnnto";
+//            btn.backgroundColor=[UIColor clearColor];
+//            [btn addTarget:self action:@selector(touchStart) forControlEvents:UIControlEventTouchUpInside];
+//            [imgView addSubview:btn];
+//            imgView.userInteractionEnabled=YES;
+//        }
     }
-    if (DEVICE_IS_IPHONE5) {
-        [self.scrollView setContentSize:CGSizeMake(CGRectGetWidth(self.scrollView.bounds) * pages, CGRectGetHeight(self.scrollView.bounds))];
+    if (!DEVICE_IS_IPHONE4) {
+        [self.scrollView setContentSize:CGSizeMake(CGRectGetWidth([[UIScreen mainScreen] bounds]) * pages, CGRectGetHeight([[UIScreen mainScreen] bounds]))];
     }
-    else{[self.scrollView setContentSize:CGSizeMake(CGRectGetWidth(self.scrollView.bounds) * pages, 480)];
+    else{[self.scrollView setContentSize:CGSizeMake(CGRectGetWidth([[UIScreen mainScreen] bounds]) * pages, 480)];
     }
 }
 
@@ -118,20 +118,20 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self.pageControl maskEventWithOffset:scrollView.contentOffset.x frame:scrollView.frame];
     
-    CGFloat pageWidth = self.scrollView.frame.size.width;
+    CGFloat pageWidth = [[UIScreen mainScreen] bounds].size.width;
     if (self.scrollView.contentOffset.x>(self.pages-1)*pageWidth+pageWidth/4) {
         [self touchStart];
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    CGFloat pageWidth = self.scrollView.frame.size.width;
+    CGFloat pageWidth = [[UIScreen mainScreen] bounds].size.width;
     NSInteger page =  floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     [self.pageControl setCurrentPage:page];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    CGFloat pageWidth = self.scrollView.frame.size.width;
+    CGFloat pageWidth = [[UIScreen mainScreen] bounds].size.width;
     NSInteger page =  floor((self.scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     
     [self.pageControl setCurrentPage:page];
@@ -141,7 +141,7 @@
 - (void)changePage:(KVNMaskedPageControl *)sender {
     self.pageControl.currentPage = sender.currentPage;
     
-    CGRect frame = self.scrollView.frame;
+    CGRect frame = [[UIScreen mainScreen] bounds];
     frame.origin.x = frame.size.width * self.pageControl.currentPage;
     frame.origin.y = 0;
     [self.scrollView scrollRectToVisible:frame animated:YES];
