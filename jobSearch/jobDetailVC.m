@@ -132,7 +132,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             else
             {
                 [MBProgressHUD showSuccess:@"申请成功" toView:self.view];
-                
             }
         }];
         }else{

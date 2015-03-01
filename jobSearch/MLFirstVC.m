@@ -631,11 +631,11 @@ static  MLFirstVC *thisVC=nil;
 
 - (void)startBookmarkButtonClicked:(UITextField *)textField
 {
-    NSLog(@"startBookmarkButtonClicked");
+    //NSLog(@"startBookmarkButtonClicked");
 }
 - (void)finishBookmarkButtonClicked:(UITextField *)textField
 {
-    NSLog(@"finishBookmarkButtonClicked");
+    //NSLog(@"finishBookmarkButtonClicked");
 }
 
 - (void)niftySearchViewResigend
@@ -652,6 +652,7 @@ static  MLFirstVC *thisVC=nil;
     firstLoad=YES;
     searchType=@"keyword";
     keyWord=finishTextField.text;
+    [touchView removeFromSuperview];
     [self headRefreshData];
 }
 
