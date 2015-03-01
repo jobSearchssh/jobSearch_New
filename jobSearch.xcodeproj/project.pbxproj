@@ -252,6 +252,7 @@
 		3BA4845D1A89E84E00B6A200 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA484581A89E84E00B6A200 /* AppDelegate.m */; };
 		3BA4845E1A89E84E00B6A200 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4845A1A89E84E00B6A200 /* ViewController.m */; };
 		3BA4845F1A89E84E00B6A200 /* MLNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4845C1A89E84E00B6A200 /* MLNavigation.m */; };
+		3BAAC3521AA2D4BF00F3F880 /* MLNavigation1.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BAAC3511AA2D4BF00F3F880 /* MLNavigation1.m */; };
 		3BBC3CF31AA0245F00E9B417 /* forgetPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BBC3CF11AA0245F00E9B417 /* forgetPasswordVC.m */; };
 		3BBC3CF41AA0245F00E9B417 /* forgetPasswordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BBC3CF21AA0245F00E9B417 /* forgetPasswordVC.xib */; };
 		3BC051F41A7145CB0099A2DF /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BC051F21A7145CB0099A2DF /* libMobClickLibrary.a */; };
@@ -745,6 +746,8 @@
 		3BA4845A1A89E84E00B6A200 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		3BA4845B1A89E84E00B6A200 /* MLNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLNavigation.h; sourceTree = "<group>"; };
 		3BA4845C1A89E84E00B6A200 /* MLNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLNavigation.m; sourceTree = "<group>"; };
+		3BAAC3501AA2D4BF00F3F880 /* MLNavigation1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLNavigation1.h; sourceTree = "<group>"; };
+		3BAAC3511AA2D4BF00F3F880 /* MLNavigation1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLNavigation1.m; sourceTree = "<group>"; };
 		3BBC3CF01AA0245F00E9B417 /* forgetPasswordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forgetPasswordVC.h; sourceTree = "<group>"; };
 		3BBC3CF11AA0245F00E9B417 /* forgetPasswordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = forgetPasswordVC.m; sourceTree = "<group>"; };
 		3BBC3CF21AA0245F00E9B417 /* forgetPasswordVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = forgetPasswordVC.xib; sourceTree = "<group>"; };
@@ -1419,6 +1422,8 @@
 				3BA4845A1A89E84E00B6A200 /* ViewController.m */,
 				3BA4845B1A89E84E00B6A200 /* MLNavigation.h */,
 				3BA4845C1A89E84E00B6A200 /* MLNavigation.m */,
+				3BAAC3501AA2D4BF00F3F880 /* MLNavigation1.h */,
+				3BAAC3511AA2D4BF00F3F880 /* MLNavigation1.m */,
 				3B9236501A67FAFA00347D9C /* Main.storyboard */,
 				3B9236531A67FAFA00347D9C /* Images.xcassets */,
 				3B9236551A67FAFA00347D9C /* LaunchScreen.xib */,
@@ -2433,6 +2438,7 @@
 				3B954A701A8DD135006BC4B2 /* JSBadgeView.m in Sources */,
 				3BD13E971A80A5D4005BCCA8 /* MBProgressHUD+Add.m in Sources */,
 				3BA4845F1A89E84E00B6A200 /* MLNavigation.m in Sources */,
+				3BAAC3521AA2D4BF00F3F880 /* MLNavigation1.m in Sources */,
 				3B6993941A89E98E00A53760 /* UIWindow+RESideMenuExtensions.m in Sources */,
 				3BA484191A89E79C00B6A200 /* MLLoginVC.m in Sources */,
 				3B45470C1A936EE600AA3C50 /* MLResumeVC.m in Sources */,

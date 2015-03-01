@@ -20,7 +20,7 @@
 #import "MLLegalVC.h"
 #import "MLLoginBusiness.h"
 #import "badgeNumber.h"
-
+#import "MLNavigation1.h"
 
 @interface ViewController ()<UIAlertViewDelegate>
 {
@@ -41,6 +41,7 @@
     
     [bn addObserver:self forKeyPath:@"applyCount" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
 }
+
 
 #pragma mark -
 #pragma mark Button actions
@@ -90,8 +91,18 @@
                 [menu hide];
                 
                 MLLoginVC *viewController = [[MLLoginVC alloc] init];
-
-                [currentnavigationController pushViewController:viewController animated:YES];
+                
+                if ([currentnavigationController isKindOfClass:[MLNavigation1 class]]) {
+                    
+                    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+                    backItem.title = @"";
+                    self.navigationItem.backBarButtonItem = backItem;
+                    self.navigationItem.backBarButtonItem.tintColor=[UIColor whiteColor];
+                    
+                    [self.navigationController pushViewController:viewController animated:YES];
+                }else{
+                    [currentnavigationController pushViewController:viewController animated:YES];
+                }
             }
         }];
         

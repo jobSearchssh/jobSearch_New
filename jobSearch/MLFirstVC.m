@@ -151,13 +151,6 @@ static  MLFirstVC *thisVC=nil;
     
 }
 
-- (void)viewWillLayoutSubviews{
-//    self.title=@"附近的职位";
-//    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
-//    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
-//    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
-}
-
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     

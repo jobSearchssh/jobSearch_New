@@ -8,7 +8,7 @@
 
 #import "MLIntroduceVC.h"
 #import "MLFirstVC.h"
-#import "MLNavigation.h"
+#import "MLNavigation1.h"
 
 #define DEVICE_IS_IPHONE4 ([[UIScreen mainScreen] bounds].size.height == 480)
 
@@ -63,7 +63,7 @@
             
             UIWindow *window = [[UIApplication sharedApplication] keyWindow];
             
-            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:[MLFirstVC sharedInstance]];
+            MLNavigation1 *navigationController = [[MLNavigation1 alloc] initWithRootViewController:[MLFirstVC sharedInstance]];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;

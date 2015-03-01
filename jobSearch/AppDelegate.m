@@ -49,7 +49,10 @@
     
     if((![[NSUserDefaults standardUserDefaults] objectForKey:@"launchFirstTime"])||![[[NSUserDefaults standardUserDefaults] objectForKey:@"launchFirstTime"] isEqualToString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]){
         
-        
+        //self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MLFirstVC sharedInstance]];
+        //MLIntroduceVC *introVC=[[MLIntroduceVC alloc] init];
+        //[self.window addSubview:introVC.view];
+        //[self.window bringSubviewToFront:introVC.view];
         self.window.rootViewController = [[MLIntroduceVC alloc] init];
     }
     else{

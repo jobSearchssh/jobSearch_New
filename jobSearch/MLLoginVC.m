@@ -60,7 +60,7 @@ static  MLLoginVC *thisVC=nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     chooseLoginBtn=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width/2, 44)];
     chooseLoginBtn.backgroundColor=[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
     [chooseLoginBtn setTitle:@"登录" forState:UIControlStateNormal];

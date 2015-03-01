@@ -1,20 +1,21 @@
 //
-//  MLNavigation.m
+//  MLNavigation1.m
 //  jobSearch
 //
-//  Created by RAY on 15/1/23.
+//  Created by RAY on 15/3/1.
 //  Copyright (c) 2015年 麻辣工作室. All rights reserved.
 //
 
-#import "MLNavigation.h"
+#import "MLNavigation1.h"
 
-@interface MLNavigation ()
+@interface MLNavigation1 ()
 {
     BOOL firstLoad;
+
 }
 @end
 
-@implementation MLNavigation
+@implementation MLNavigation1
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,11 +26,22 @@
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
     [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
-
+    
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    backItem.title = @"";
+    self.navigationItem.backBarButtonItem = backItem;
+    self.navigationItem.backBarButtonItem.tintColor=[UIColor whiteColor];
 }
 
+- (void)viewWillLayoutSubviews{
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    backItem.title = @"";
+    self.navigationItem.backBarButtonItem = backItem;
+    self.navigationItem.backBarButtonItem.tintColor=[UIColor whiteColor];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
