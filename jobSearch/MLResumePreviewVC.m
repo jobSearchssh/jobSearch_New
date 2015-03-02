@@ -141,7 +141,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             if ([userModel getStatus].intValue == STATIS_OK) {
                 [self initfromNet:userModel];
             }else{
-                UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:userModel.getInfo delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:userModel.getInfo delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"立刻填写",nil];
+                alterTittle.tag=101;
                 [alterTittle show];
             }
         }];
@@ -159,12 +160,17 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex==1) {
-        MLLoginVC *loginVC=[[MLLoginVC alloc]init];
-        [self.navigationController pushViewController:loginVC animated:YES];
+    if (alertView.tag==101) {
+        if (buttonIndex==1)
+            [self editResume];
+    }else{
+        if (buttonIndex==1) {
+            MLLoginVC *loginVC=[[MLLoginVC alloc]init];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        }
+
     }
 }
-
 
 - (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
     // 创建一个bitmap的context
@@ -283,10 +289,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSMutableArray *usrintentionTempArray = [userModel getuserHopeJobType];
     for (NSNumber *index in usrintentionTempArray ) {
         if (index.intValue>=0 && index.intValue<jobHopeTypeArray.count) {
-            [usrintentionTemp appendFormat:@"%@,",[jobHopeTypeArray objectAtIndex:index.intValue]];
+            [usrintentionTemp appendFormat:@"%@,",[jobHopeTypeArray objectAtIndex:(index.intValue+1)]];
         }
     }
-    
     
     NSString *usrintention = usrintentionTemp;
     [self.intentionOutlet setNumberOfLines:0];

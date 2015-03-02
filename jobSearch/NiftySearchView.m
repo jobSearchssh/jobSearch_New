@@ -18,40 +18,40 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        startTextField = [[UITextField  alloc] initWithFrame:CGRectMake(0,7, frame.size.width, 25)];
-		startTextField.borderStyle = UITextBorderStyleRoundedRect;
-        startTextField.bounds = CGRectMake(0, 0, frame.size.width - 20, 31);
-        startTextField.returnKeyType = UIReturnKeyNext;
-        startTextField.layer.cornerRadius = 10.0;
-        startTextField.layer.borderColor = [UIColor darkGrayColor].CGColor;
-        startTextField.layer.borderWidth = 1.0;
-        startTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        startTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        startTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-        startTextField.text = NSLocalizedString(@"Current Location", nil);
-        startTextField.delegate = (id)self;
-
-
-        UIButton *bookmark = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 29)];
-        [bookmark setImage:[UIImage imageNamed:@"UISearchBarBookmarks"] forState:UIControlStateNormal];
-        [bookmark setImage:[UIImage imageNamed:@"UISearchBarBookmarksPressed"] forState:UIControlStateHighlighted];
-        [bookmark addTarget:self action:@selector(startBookmarkButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
-        startTextField.rightViewMode = UITextFieldViewModeUnlessEditing;
-        startTextField.rightView = bookmark;
-        startTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        
-        UILabel *preText = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 35, 29)];
-        preText.text = NSLocalizedString(@"  地点:", nil);
-        preText.backgroundColor = [UIColor clearColor];
-        preText.textColor = [UIColor grayColor];
-        preText.font = [UIFont systemFontOfSize:12];
-        startTextField.leftViewMode = UITextFieldViewModeAlways;
-        startTextField.leftView = preText;
-        
-        [self addSubview:startTextField];
-        
-        finishTextField = [[UITextField  alloc] initWithFrame:CGRectMake(0, 42, frame.size.width, 25)];
+//        startTextField = [[UITextField  alloc] initWithFrame:CGRectMake(0,7, frame.size.width, 25)];
+//		startTextField.borderStyle = UITextBorderStyleRoundedRect;
+//        startTextField.bounds = CGRectMake(0, 0, frame.size.width - 20, 31);
+//        startTextField.returnKeyType = UIReturnKeyNext;
+//        startTextField.layer.cornerRadius = 10.0;
+//        startTextField.layer.borderColor = [UIColor darkGrayColor].CGColor;
+//        startTextField.layer.borderWidth = 1.0;
+//        startTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+//        startTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+//        startTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+//        startTextField.text = NSLocalizedString(@"Current Location", nil);
+//        startTextField.delegate = (id)self;
+//
+//
+//        UIButton *bookmark = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 29)];
+//        [bookmark setImage:[UIImage imageNamed:@"UISearchBarBookmarks"] forState:UIControlStateNormal];
+//        [bookmark setImage:[UIImage imageNamed:@"UISearchBarBookmarksPressed"] forState:UIControlStateHighlighted];
+//        [bookmark addTarget:self action:@selector(startBookmarkButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//        
+//        startTextField.rightViewMode = UITextFieldViewModeUnlessEditing;
+//        startTextField.rightView = bookmark;
+//        startTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+//        
+//        UILabel *preText = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 35, 29)];
+//        preText.text = NSLocalizedString(@"  地点:", nil);
+//        preText.backgroundColor = [UIColor clearColor];
+//        preText.textColor = [UIColor grayColor];
+//        preText.font = [UIFont systemFontOfSize:12];
+//        startTextField.leftViewMode = UITextFieldViewModeAlways;
+//        startTextField.leftView = preText;
+//        
+//        [self addSubview:startTextField];
+//        
+        finishTextField = [[UITextField  alloc] initWithFrame:CGRectMake(0, 7, frame.size.width, 25)];
 		finishTextField.borderStyle = UITextBorderStyleRoundedRect;
         finishTextField.bounds = CGRectMake(0, 0, frame.size.width - 20, 31);
         finishTextField.returnKeyType = UIReturnKeySearch;
@@ -72,8 +72,8 @@
         finishTextField.rightView = bookmarkTarget;
         finishTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         
-        UILabel *preTextFinish = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 35, 29)];
-        preTextFinish.text = NSLocalizedString(@"  职位:", nil);
+        UILabel *preTextFinish = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 29)];
+        preTextFinish.text = NSLocalizedString(@"  关键字:", nil);
         preTextFinish.backgroundColor = [UIColor clearColor];
         preTextFinish.textColor = [UIColor grayColor];
         preTextFinish.font = [UIFont systemFontOfSize:12];

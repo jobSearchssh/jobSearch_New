@@ -27,6 +27,8 @@
     BOOL refreshAdded;
     //页数
     int skipTimes;
+    
+    BOOL NotFirstRefresh;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -45,7 +47,7 @@ static  MLMyCollection *thisVC=nil;
 }
 
 - (void)viewWillLayoutSubviews{
-    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -59,9 +61,7 @@ static  MLMyCollection *thisVC=nil;
     footerRefreshing=NO;
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM月dd日"];
-    
     [self tableViewInit];
-
 }
 
 - (void)finishLogin{
@@ -256,9 +256,12 @@ static  MLMyCollection *thisVC=nil;
     if ([str isEqualToString:@"0"])
         settlement=@"日";
     else if ([str isEqualToString:@"1"])
-        settlement=@"月";
+        settlement=@"周";
     else if ([str isEqualToString:@"2"])
+        settlement=@"月";
+    else if ([str isEqualToString:@"3"])
         settlement=@"项目";
+
     
     cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/%@",jobObject.getjobSalaryRange,settlement];
 

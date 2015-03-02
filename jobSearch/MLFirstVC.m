@@ -123,7 +123,7 @@ static  MLFirstVC *thisVC=nil;
     footerRefreshing=NO;
     mapSearching=NO;
     
-    searchView = [[NiftySearchView alloc] initWithFrame:CGRectMake(0, -76, [[UIScreen mainScreen] bounds].size.width, 76)];
+    searchView = [[NiftySearchView alloc] initWithFrame:CGRectMake(0, -38, [[UIScreen mainScreen] bounds].size.width, 38)];
     searchView.delegate = self;
 
     [_tableView addSubview:searchView];
@@ -589,7 +589,7 @@ static  MLFirstVC *thisVC=nil;
 //*********************searchView********************//
 - (void)search{
     
-    if (searchView.frame.origin.y==-76) {
+    if (searchView.frame.origin.y==-38) {
         [_tableView setContentOffset:CGPointMake(0, 0) animated:YES];
         
         [UIView animateWithDuration:0.4 animations:^{
@@ -661,7 +661,7 @@ static  MLFirstVC *thisVC=nil;
     [searchView.startTextField resignFirstResponder];
     [searchView.finishTextField resignFirstResponder];
     CGRect searchBarFrame = searchView.frame;
-    searchBarFrame.origin.y = -76;
+    searchBarFrame.origin.y = -38;
     [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
                          searchView.frame = searchBarFrame;
@@ -712,8 +712,10 @@ static  MLFirstVC *thisVC=nil;
     if ([str isEqualToString:@"0"])
         settlement=@"日";
     else if ([str isEqualToString:@"1"])
-        settlement=@"月";
+        settlement=@"周";
     else if ([str isEqualToString:@"2"])
+        settlement=@"月";
+    else if ([str isEqualToString:@"3"])
         settlement=@"项目";
     
     cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/%@",jobObject.getjobSalaryRange,settlement];

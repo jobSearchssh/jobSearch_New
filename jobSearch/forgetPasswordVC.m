@@ -36,6 +36,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *sendMsgButton;
 @property (strong, nonatomic) IBOutlet UIButton *registerButton;
 @property (strong, nonatomic) IBOutlet UILabel *errorAlertLabel;
+@property (strong, nonatomic) IBOutlet UILabel *timeCountLabel;
 
 @end
 
@@ -75,6 +76,7 @@
     
     self.errorAlertLabel.hidden=YES;
     self.sendMsgButton.enabled=NO;
+    self.timeCountLabel.hidden=YES;
     [self.sendMsgButton setBackgroundColor:[UIColor lightGrayColor]];
     
         
@@ -136,27 +138,39 @@
 
 - (IBAction)sendMessage:(id)sender {
     
+    self.sendMsgButton.enabled=NO;
+    [self.sendMsgButton setBackgroundColor:[UIColor lightGrayColor]];
+    
+    [self tapRegisnFirstRespond];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     [SMS_SDK getVerifyCodeByPhoneNumber:inputUserPhoneNumber AndZone:@"86" result:^(enum SMS_GetVerifyCodeResponseState state) {
-        
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         
         if (1==state) {
+            
             [NSThread detachNewThreadSelector:@selector(initTimer) toTarget:self withObject:nil];
             
             [MBProgressHUD showSuccess:@"验证码已发送" toView:self.view];
+            
         }
         else if(0==state)
         {
             [MBProgressHUD showError:@"验证码获取失败" toView:self.view];
+            self.sendMsgButton.enabled=YES;
+            [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]];
         }
         else if (SMS_ResponseStateMaxVerifyCode==state)
         {
             [MBProgressHUD showError:@"验证码申请次数超限" toView:self.view];
+            self.sendMsgButton.enabled=YES;
+            [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]];
         }
         else if(SMS_ResponseStateGetVerifyCodeTooOften==state)
         {
             [MBProgressHUD showError:@"对不起，你的操作太频繁啦" toView:self.view];
+            self.sendMsgButton.enabled=YES;
+            [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]];
         }
     }];
 
@@ -164,9 +178,9 @@
 
 -(void)initTimer
 {
-    [self.sendMsgButton setTitle:[NSString stringWithFormat:@"%d秒",60] forState:UIControlStateNormal];
-    self.sendMsgButton.enabled=NO;
-    [self.sendMsgButton setBackgroundColor:[UIColor lightGrayColor]];
+    self.timeCountLabel.hidden=NO;
+    self.timeCountLabel.text=[NSString stringWithFormat:@"%d秒",60];
+    self.sendMsgButton.hidden=YES;
     NSTimeInterval timeInterval =1.0 ;
     //定时器
     timer = [NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(handleMaxShowTimer:) userInfo:nil repeats:YES];
@@ -179,21 +193,21 @@
 {
     seconds--;
     
-    [self performSelectorOnMainThread:@selector(showTimer) withObject:nil waitUntilDone:YES];
-    
+    [self performSelectorOnMainThread:@selector(showTimer) withObject:nil waitUntilDone:NO];
 }
 
 - (void)showTimer{
-    [self.sendMsgButton setTitle:[NSString stringWithFormat:@"%d秒",seconds] forState:UIControlStateNormal];
+    self.timeCountLabel.text=[NSString stringWithFormat:@"%d秒",seconds];
+    
     if (seconds==0) {
         [timer invalidate];
-        [self.sendMsgButton setTitle:@"发送短信验证码" forState:UIControlStateNormal];
+        self.sendMsgButton.hidden=NO;
         self.sendMsgButton.enabled=YES;
+        self.timeCountLabel.hidden=YES;
         [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]];
         seconds=60;
     }
 }
-
 
 - (IBAction)touchOK:(id)sender {
     

@@ -26,7 +26,7 @@ static NSString *scrollindentify = @"scrollviewdown";
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 
-@interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate,HZAreaPickerDelegate,AMapSearchDelegate,MLDatePickerDelegate,UITextViewDelegate,finishSaveDelegate>{
+@interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate,HZAreaPickerDelegate,AMapSearchDelegate,MLDatePickerDelegate,UITextViewDelegate,finishSaveDelegate,UIGestureRecognizerDelegate>{
     NSMutableArray *addedPicArray;
     NSArray *selectfreetimetitleArray;
     NSArray *selectfreetimepicArray;
@@ -100,7 +100,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 //page4
 @property (weak, nonatomic) IBOutlet UICollectionView *selectfreetimeOutlet;
-@property (weak, nonatomic) IBOutlet UITextField *intentionOutlet;
+
+@property (strong, nonatomic) IBOutlet UILabel *intentionOutlet;
 
 //page5
 @property (weak, nonatomic) IBOutlet UITextView *introductionmeOutlet;
@@ -280,13 +281,16 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     self.selectfreetimeOutlet.dataSource = self;
     UINib *niblogin = [UINib nibWithNibName:selectFreecellIdentifier bundle:nil];
     [self.selectfreetimeOutlet registerNib:niblogin forCellWithReuseIdentifier:selectFreecellIdentifier];
-    [self.intentionOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
-    self.intentionOutlet.delegate = self;
+
+    UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseType)];
+    tapgesture.delegate=self;
+    self.intentionOutlet.userInteractionEnabled=YES;
+    [self.intentionOutlet addGestureRecognizer:tapgesture];
+    
     UIView *lineviewIntention= [[UIView alloc] initWithFrame:CGRectMake(self.intentionOutlet.frame.origin.x, self.intentionOutlet.frame.origin.y+self.intentionOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
     lineviewIntention.alpha = 0.5;
     lineviewIntention.backgroundColor = [UIColor grayColor];
     [self.view4outlet addSubview:lineviewIntention];
-    
     
     //page5
     
@@ -314,6 +318,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.scrollviewOutlet setTarget:self selector:@selector(tapRegisnFirstRespond)];
     
     //初始化信息
+     NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+    //用户名与用户手机号一致
+    NSString *currentUserPhone=[mySettingData objectForKey:@"currentUserName"];
+    if ([currentUserPhone length]>0) {
+        [self.iphoneOutlet setText:currentUserPhone];
+    }
+    
     if (self.usermodel != Nil) {
         //name
         if ([self.usermodel getuserName] != Nil) {
@@ -369,8 +380,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             NSMutableString *usrintentionTemp = [[NSMutableString alloc]init];
             NSMutableArray *usrintentionTempArray = [self.usermodel getuserHopeJobType];
             for (NSNumber *index in usrintentionTempArray ) {
-                if (index.intValue>=0 && index.intValue<jobHopeTypeArray.count) {
-                    [usrintentionTemp appendFormat:@"%@,",[jobHopeTypeArray objectAtIndex:index.intValue]];
+                if (index.intValue>=0 && index.intValue<jobHopeTypeArray.count-1) {
+                    [usrintentionTemp appendFormat:@"%@,",[jobHopeTypeArray objectAtIndex:(index.intValue+1)]];
                 }
             }
             [self.intentionOutlet setText:usrintentionTemp];
@@ -676,9 +687,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if ([self.schollNewOutlet isFirstResponder]) {
         [self.schollNewOutlet resignFirstResponder];
     }
-    if ([self.intentionOutlet isFirstResponder]) {
-        [self.intentionOutlet resignFirstResponder];
-    }
     if ([self.introductionmeOutlet isFirstResponder]) {
         [self.introductionmeOutlet resignFirstResponder];
     }
@@ -707,9 +715,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 - (void)finishSelect:(NSMutableArray *)type SelectName:(NSMutableArray *)nameArray{
-    if ([self.intentionOutlet isFirstResponder]) {
-        [self.intentionOutlet resignFirstResponder];
-    }
+
     if([type count]>0){
         typeArray=type;
         
@@ -738,19 +744,18 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 //编辑上移
 -(void)textFieldOutletWork:(UITextField *)sender{
-    if ([[sender restorationIdentifier] isEqualToString:@"userintention"]) {
-        [sender resignFirstResponder];
-        MLSelectJobTypeVC *selectVC=[[MLSelectJobTypeVC alloc]init];
-        selectVC.selectDelegate=self;
-        [self.navigationController pushViewController:selectVC animated:YES];
-    }else{
         CGFloat yDiff = sender.frame.origin.y-sender.frame.size.height-10;
         if (yDiff<10) {
             return;
         }
         CGPoint offset = CGPointMake([self.pickerView selectedItem]*[UIScreen mainScreen].bounds.size.width,yDiff);
         [self.scrollviewOutlet setContentOffset:offset animated:YES];
-    }
+}
+
+- (void)chooseType{
+    MLSelectJobTypeVC *selectVC=[[MLSelectJobTypeVC alloc]init];
+    selectVC.selectDelegate=self;
+    [self.navigationController pushViewController:selectVC animated:YES];
 }
 
 -(UIImage *)compressImage:(UIImage *)imgSrc size:(int)width

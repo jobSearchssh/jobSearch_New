@@ -254,8 +254,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         if ([str isEqualToString:@"0"])
             settlement=@"日";
         else if ([str isEqualToString:@"1"])
-            settlement=@"月";
+            settlement=@"周";
         else if ([str isEqualToString:@"2"])
+            settlement=@"月";
+        else if ([str isEqualToString:@"3"])
             settlement=@"项目";
         
         self.jobSalaryLabel.text=[NSString stringWithFormat:@"%@元/%@",self.jobModel.getjobSalaryRange,settlement];
@@ -273,8 +275,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
         
         NSString *degree;
-        
-        if ([_jobModel.getjobDegreeReq intValue]==1){
+        if ([_jobModel.getjobDegreeReq intValue]==0){
+            degree=@"【学历要求】不限";
+        }else if ([_jobModel.getjobDegreeReq intValue]==1){
             degree=@"【学历要求】初中";
         }else if ([_jobModel.getjobDegreeReq intValue]==2){
             degree=@"【学历要求】高中";
@@ -321,11 +324,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 - (void)shareJob{
     
     //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:@"我在兼职精灵找到工作啦！你要不要来尝试？猛戳链接http://www.baidu.com"
+    id<ISSContent> publishContent = [ShareSDK content:@"我在兼职精灵找到工作啦！你要不要来尝试？猛戳链接http://www.elvenjobs.com"
                                        defaultContent:nil
                                                 image:[ShareSDK jpegImageWithImage:[self imageFromView:self.containerView] quality:1.0f]
                                                 title:@"兼职精灵"
-                                                  url:@"http://www.baidu.com"
+                                                  url:@"http://www.elvenjobs.com"
                                           description:@"兼职精灵，您的兼职助手"
                                             mediaType:SSPublishContentMediaTypeNews];
     //创建弹出菜单容器
@@ -411,7 +414,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (IBAction)showWorkTime:(id)sender {
     [self.view1 setFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width-40,[[UIScreen mainScreen] bounds].size.width/2)];
-    [PopoverView showPopoverAtPoint:CGPointMake(0, 135) inView:self.view withTitle:@"工作时间" withContentView:self.view1 delegate:nil];
+    [PopoverView showPopoverAtPoint:CGPointMake(0, ([[UIScreen mainScreen] bounds].size.height-340)/2) inView:self.view withTitle:@"工作时间" withContentView:self.view1 delegate:nil];
 }
 
 #pragma mark - Collection View Data Source

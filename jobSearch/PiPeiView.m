@@ -208,7 +208,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         NSString *degree;
         
-        if ([_jobModel.getjobDegreeReq intValue]==1){
+        if ([_jobModel.getjobDegreeReq intValue]==0){
+            degree=@"【学历要求】不限";
+        }else if ([_jobModel.getjobDegreeReq intValue]==1){
             degree=@"【学历要求】初中";
         }else if ([_jobModel.getjobDegreeReq intValue]==2){
             degree=@"【学历要求】高中";
@@ -221,7 +223,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }else if ([_jobModel.getjobDegreeReq intValue]==6){
             degree=@"【学历要求】博士及以上";
         }
-        
         NSString *age;
         if (_jobModel.getjobAgeStartReq) {
             age=[NSString stringWithFormat:@"年龄要求：%@—%@岁",_jobModel.getjobAgeStartReq,_jobModel.getjobAgeEndReq];

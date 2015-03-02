@@ -80,10 +80,6 @@ static  MLMyApplication *thisVC=nil;
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    NSLog(@"appear");
-}
-
 - (void)headRefreshData{
     
     NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
@@ -278,9 +274,12 @@ static  MLMyApplication *thisVC=nil;
     if ([str isEqualToString:@"0"])
         settlement=@"日";
     else if ([str isEqualToString:@"1"])
-        settlement=@"月";
+        settlement=@"周";
     else if ([str isEqualToString:@"2"])
+        settlement=@"月";
+    else if ([str isEqualToString:@"3"])
         settlement=@"项目";
+
     
     cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/%@",jobObject.getjobSalaryRange,settlement];
     

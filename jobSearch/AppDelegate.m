@@ -48,11 +48,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     
     if((![[NSUserDefaults standardUserDefaults] objectForKey:@"launchFirstTime"])||![[[NSUserDefaults standardUserDefaults] objectForKey:@"launchFirstTime"] isEqualToString:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]){
-        
-        //self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MLFirstVC sharedInstance]];
-        //MLIntroduceVC *introVC=[[MLIntroduceVC alloc] init];
-        //[self.window addSubview:introVC.view];
-        //[self.window bringSubviewToFront:introVC.view];
         self.window.rootViewController = [[MLIntroduceVC alloc] init];
     }
     else{
@@ -65,7 +60,6 @@
     [MobClick startWithAppkey:@"54c10ddbfd98c5b7c2000836" reportPolicy:BATCH  channelId:nil];
     [MobClick checkUpdate:@"兼职精灵有新版本啦" cancelButtonTitle:@"无情的忽略" otherButtonTitles:@"欣然前往下载"];
     [UMFeedback setAppkey:@"54c10ddbfd98c5b7c2000836"];
-    
     
     //Bmob后台服务
     [Bmob registerWithAppKey:@"feda8b57c5da4a0364a3406906f77e2d"];
