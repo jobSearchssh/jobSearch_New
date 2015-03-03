@@ -320,7 +320,7 @@ static  RESideMenu *thisMenu=nil;
 - (void)restoreView
 {
     __typeof (&*self) __weak weakSelf = self;
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.0 animations:^{
         weakSelf.screenshotView.alpha = 0;
     } completion:^(BOOL finished) {
         [weakSelf.screenshotView removeFromSuperview];
@@ -525,4 +525,5 @@ static  RESideMenu *thisMenu=nil;
     if (item.action)
         item.action(self, item);
 }
+
 @end

@@ -56,6 +56,18 @@
     }
 }
 
+- (void)back{
+                MLFirstVC *viewController = [MLFirstVC sharedInstance];
+                MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
+                navigationController.navigationBar.translucent = NO;
+                navigationController.tabBarController.tabBar.translucent = NO;
+                navigationController.toolbar.translucent = NO;
+                [self setNavigationBar:navigationController];
+                viewController.title=@"附近的职位";
+                currentnavigationController=navigationController;
+                [_sideMenu setRootViewController:navigationController];
+}
+
 - (void)showMenu
 {
     _sideMenu=[RESideMenu sharedInstance];
@@ -85,8 +97,20 @@
             NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
             
             if ([currentUserObjectId length]>0) {
+                
+                MLFirstVC *viewController = [MLFirstVC sharedInstance];
+                MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
+                navigationController.navigationBar.translucent = NO;
+                navigationController.tabBarController.tabBar.translucent = NO;
+                navigationController.toolbar.translucent = NO;
+                [self setNavigationBar:navigationController];
+                viewController.title=@"附近的职位";
+                currentnavigationController=navigationController;
+                [menu setRootViewController:navigationController];
+                
                 UIAlertView *logoutAlert=[[UIAlertView alloc] initWithTitle:@"确定要退出该账号？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
                 [logoutAlert show];
+                
             }else{
                 [menu hide];
                 
@@ -107,6 +131,7 @@
         }];
         
         RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"附近的职位" setFlag:NORMALCELL image:[UIImage imageNamed:@"search"] highlightedImage:[UIImage imageNamed:@"search"] action:^(RESideMenu *menu, RESideMenuItem *item) {
+    
             MLFirstVC *viewController = [MLFirstVC sharedInstance];
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
             navigationController.navigationBar.translucent = NO;

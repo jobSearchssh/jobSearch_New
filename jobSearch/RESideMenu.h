@@ -59,4 +59,5 @@
 
 + (RESideMenu*)sharedInstance;
 
+
 @end
