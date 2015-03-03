@@ -286,20 +286,22 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //电话
     self.phoneOutlet.text = [userModel getuserPhone];
     //位置
-    NSString *usrLoaction = [NSString stringWithFormat:@"%@%@%@",[userModel getuserProvince],[userModel getuserCity],[userModel getuserDistrict]];
+    NSString *usrLoaction = Nil;
+    if ([userModel getuserProvince]== Nil && [userModel getuserCity] == Nil && [userModel getuserDistrict] == Nil) {
+        usrLoaction = @"未填写地区";
+    }else{
+        usrLoaction = [NSString stringWithFormat:@"%@%@%@",[userModel getuserProvince],[userModel getuserCity],[userModel getuserDistrict]];
+    }
+    
+
     [self.locationOutlet setNumberOfLines:0];
     [self.locationOutlet setLineBreakMode:NSLineBreakByWordWrapping];
-    CGSize locationOutletlabelsize = [usrLoaction sizeWithFont:[self.locationOutlet font] constrainedToSize:CGSizeMake(self.locationOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize locationOutletlabelsize = [usrLoaction sizeWithFont:[self.locationOutlet font] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 143,2000) lineBreakMode:NSLineBreakByWordWrapping];
     [self.locationOutlet setFrame:CGRectMake(self.locationOutlet.frame.origin.x,
-                                             self.locationOutlet.frame.origin.y, locationOutletlabelsize.width, locationOutletlabelsize.height)];
+                                             self.locationOutlet.frame.origin.y,
+                                             self.locationOutlet.frame.size.width,
+                                             locationOutletlabelsize.height)];
     [self.locationOutlet setText:usrLoaction];
-    
-    
-    if ([userModel getuserSchool] != nil) {
-        [self.usrschoolOutlet setText:[userModel getuserSchool]];
-    }else{
-        [self.usrschoolOutlet setText:@""];
-    }
     
     NSMutableString *usrintentionTemp = [[NSMutableString alloc]init];
     NSMutableArray *usrintentionTempArray = [userModel getuserHopeJobType];
@@ -313,14 +315,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.intentionOutlet setNumberOfLines:0];
     [self.intentionOutlet setLineBreakMode:NSLineBreakByWordWrapping];
     CGSize intentionOutletlabelsize = [usrintention sizeWithFont:[self.intentionOutlet font] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 112,2000) lineBreakMode:NSLineBreakByWordWrapping];
-//    NSLog(@"aaa = %f   =%f",intentionOutletlabelsize.height,intentionOutletlabelsize.width);
+    NSLog(@"aaa = %f   =%f",intentionOutletlabelsize.height,intentionOutletlabelsize.width);
+    NSLog(@"cccc = %f dddd = %f",self.intentionOutlet.frame.origin.x,self.intentionOutlet.frame.origin.y);
     [self.intentionOutlet setFrame:CGRectMake(self.intentionOutlet.frame.origin.x,
                                               self.intentionOutlet.frame.origin.y,
                                               self.intentionOutlet.frame.size.width,
                                               intentionOutletlabelsize.height)];
     [self.intentionOutlet setText:usrintention];
     
-    [self.usrinfo2Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.origin.y+self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,self.intentionOutlet.frame.origin.y+self.intentionOutlet.frame.size.height+10)];
+    [self.usrinfo2Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.origin.y+self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,self.intentionOutlet.frame.origin.y+self.intentionOutlet.frame.size.height)];
     [self.mainScrollviewOutlet addSubview:self.usrinfo2Outlet];
     
     //第四项
@@ -361,6 +364,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.selectfreeCollectionOutlet reloadData];
     
     //第五项
+    
+    if ([userModel getuserSchool] != nil) {
+        [self.usrschoolOutlet setText:[userModel getuserSchool]];
+    }else{
+        [self.usrschoolOutlet setText:@""];
+    }
     
     NSString *intro = [userModel getuserIntroduction];
     NSString  *testintroFormat = [intro stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
