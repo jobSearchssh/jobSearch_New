@@ -302,6 +302,12 @@ static  MLMyApplication *thisVC=nil;
         cell.portraitView.image=[UIImage imageNamed:@"placeholder"];
     }
     
+    if ([jobObject.getuserApplyIsRead isEqualToString:@"1"]) {
+        cell.notReadImageView.hidden=YES;
+    }else{
+        cell.notReadImageView.hidden=NO;
+    }
+    //NSLog(@"%@",jobObject.getuserApplyIsRead);
     return cell;
 }
 

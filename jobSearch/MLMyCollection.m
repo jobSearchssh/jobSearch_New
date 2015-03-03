@@ -285,6 +285,7 @@ static  MLMyCollection *thisVC=nil;
         cell.portraitView.image=[UIImage imageNamed:@"placeholder"];
     }
 
+    cell.notReadImageView.hidden=YES;
     
     return cell;
 }

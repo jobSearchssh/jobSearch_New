@@ -64,13 +64,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if ([currentUserObjectId length]>0) {
     
         
-        [netAPI setRecordAlreadyRead:currentUserObjectId applyOrInviteId:self.jobModel.getinvite_id type:@"0" withBlock:^(oprationResultModel *oprationResultModel) {
-            if ([[oprationResultModel getStatus] intValue]==0) {
-                NSLog(@"OK");
-                badgeNumber*bn=[badgeNumber sharedInstance];
-                [bn minusMessageCount];
-            }
-        }];
+//        [netAPI setRecordAlreadyRead:currentUserObjectId applyOrInviteId:self.jobModel.getinvite_id type:@"0" withBlock:^(oprationResultModel *oprationResultModel) {
+//            if ([[oprationResultModel getStatus] intValue]==0) {
+//                NSLog(@"OK");
+//                badgeNumber*bn=[badgeNumber sharedInstance];
+//                [bn minusMessageCount];
+//            }
+//        }];
     }
 }
 
@@ -241,12 +241,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                 
             }else
             {
+                
                 UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"成功接受职位" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 alertView.delegate=self;
                 
                 [alertView show];
-                
-                [self.handleDelegate finishHandle];
             }
         }];
     }
@@ -259,21 +258,26 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if ([oprationResultModel.getStatus intValue]!=0) {
                 [MBProgressHUD showError:oprationResultModel.getInfo toView:self.view];
-
+                
             }else
             {
                 UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"成功拒绝职位" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-
                 [alertView show];
-                
-                [self.handleDelegate finishHandle];
+ 
             }
         }];
     }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    //减少message列表的未处理数字
+    badgeNumber*bn=[badgeNumber sharedInstance];
+    [bn minusMessageCount];
+
+    [self.handleDelegate finishHandle];
+    
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (IBAction)showWorkTime:(id)sender {

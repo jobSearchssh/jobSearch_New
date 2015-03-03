@@ -18,5 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *jobDistance;
 @property (weak, nonatomic) IBOutlet UILabel *jobNumberRemainLabel;
 @property (weak, nonatomic) IBOutlet UILabel *jobPriceLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *notReadImageView;
 
 @end

@@ -67,6 +67,7 @@
         
         applyStatus=[initDictionary objectForKey:jobModel_jobApplyStatus];
         apply_id=[initDictionary objectForKey:jobModel_jobApplyId];
+        userApplyIsRead=[NSString stringWithFormat:@"%@",[initDictionary objectForKey:jobModel_jobApplyIsRead]];
     }
     return self;
 }
@@ -184,6 +185,10 @@
 
 -(NSString*)getjobApply_id{
     return apply_id;
+}
+
+-(NSString*)getuserApplyIsRead{
+    return userApplyIsRead;
 }
 
 + (float)getDistance:(NSArray*)p1{

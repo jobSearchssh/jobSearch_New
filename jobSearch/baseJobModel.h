@@ -45,7 +45,7 @@
 #define jobModel_jobGenderReq @"jobGenderReq"
 #define jobModel_jobApplyStatus @"applyStatus"
 #define jobModel_jobApplyId @"apply_id"
-
+#define jobModel_jobApplyIsRead @"userApplyIsRead"
 
 @interface baseJobModel : NSObject
 

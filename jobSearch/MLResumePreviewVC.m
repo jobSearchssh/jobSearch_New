@@ -154,8 +154,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 -(void)callPreViewEdit{
-    NSLog(@"callPreViewEdit");
-    NSLog(@"aaa = %@",self.mainUserModel);
+    //NSLog(@"callPreViewEdit");
+    //NSLog(@"aaa = %@",self.mainUserModel);
     [self initfromNet:self.mainUserModel];
 }
 
@@ -168,7 +168,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             MLLoginVC *loginVC=[[MLLoginVC alloc]init];
             [self.navigationController pushViewController:loginVC animated:YES];
         }
-
     }
 }
 

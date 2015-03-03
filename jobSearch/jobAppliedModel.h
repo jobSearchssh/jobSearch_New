@@ -50,6 +50,7 @@
   
     NSString *applyStatus;
     NSString *apply_id;
+    NSString *userApplyIsRead;
 }
 
 -(jobAppliedModel *)initWithDictionary:(NSDictionary *)initDictionary;
@@ -93,5 +94,5 @@
 
 -(NSString*)getjobApplyStatus;
 -(NSString*)getjobApply_id;
-
+-(NSString*)getuserApplyIsRead;
 @end
