@@ -32,7 +32,7 @@
 #define GETBADGENUM_FUNCTION @"user/userNumIsNotRead"
 #define SETREAD_FUNCTION @"user/userIsRead"
 #define DELETEAPPLYJOB_FUCTION @"user/deleteOneApply"
-
+#define DELETEMATCHJOB_FUNCTION @"user/addToDeleteList"
 
 @implementation netAPI
 
@@ -413,6 +413,23 @@
             oprationReturnBlock(a);
         }
     }];
+}
+
+//删除匹配职位
++(void)deleteMatchJob:(NSString*)jobId userId:(NSString*)userId withBlock:(oprationReturnBlock)oprationReturnBlock{
+    
+    NSString *str = [[NSString alloc]initWithFormat:@"job_id=%@&job_user_id=%@",jobId,userId];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    [self testAPIPostTestWithBlock:data getFunction:DELETEMATCHJOB_FUNCTION block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
+            oprationReturnBlock(a);
+        }else{
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationReturnBlock(a);
+        }
+    }];
+
 }
 
 #pragma base API

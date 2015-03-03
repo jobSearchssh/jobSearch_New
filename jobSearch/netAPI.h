@@ -134,7 +134,9 @@ typedef void (^badgeBlock)(badgeModel *badgeModel);
 //删除我的申请
 +(void)deleteMyAppliedJob:(NSString*)usrID applyId:(NSString*)applyId withBlock:(oprationReturnBlock)oprationReturnBlock;
 
+//删除匹配职位
++(void)deleteMatchJob:(NSString*)jobId userId:(NSString*)userId withBlock:(oprationReturnBlock)oprationReturnBlock;
 
-+(void)test;
+//+(void)test;
 
 @end

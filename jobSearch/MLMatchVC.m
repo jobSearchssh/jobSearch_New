@@ -175,7 +175,6 @@ static  MLMatchVC *thisVC=nil;
                 [self refreshScrollView];
             }
         }
-        
     }];
     }
     else{
@@ -212,6 +211,20 @@ static  MLMatchVC *thisVC=nil;
             }];
         }
         self.scrollView.contentSize = CGSizeMake(self.scrollView.contentSize.width, self.scrollView.contentSize.height-kScrollViewHeight);
+        
+        //删除匹配的职位
+        NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+        NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+
+        jobModel *_jobModel=[recordArray objectAtIndex:index];
+        
+        if (_jobModel.getjobID&&[currentUserObjectId length]>0) {
+            [netAPI deleteMatchJob:_jobModel.getjobID userId:currentUserObjectId withBlock:^(oprationResultModel *oprationResultModel) {
+                if ([oprationResultModel.getStatus intValue]==0) {
+                    NSLog(@"删除成功");
+                }
+            }];
+        }
     }
 }
 
@@ -229,7 +242,6 @@ static  MLMatchVC *thisVC=nil;
     if (scrollView == self.scrollView) {
         int index = (int)(scrollView.contentOffset.y / kScrollViewHeight);
         
-        //UIView *sv=(UIView*)[self.scrollView viewWithTag:kScrollViewTagBase + index];
         [self.pageControl setCurrentPage:index usingScroller:NO];
         
     }
