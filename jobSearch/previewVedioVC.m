@@ -77,11 +77,9 @@
         }];
     });
     
-    
     //初始化上传图标
-    CGRect frame = CGRectMake(0,0, 100, 100);
+    CGRect frame = CGRectMake([UIScreen mainScreen].bounds.size.width/2-50,[UIScreen mainScreen].bounds.size.height/2-120, 100, 100);
     radialView = [[MDRadialProgressView alloc] initWithFrame:frame];
-    radialView.center = CGPointMake(self.view.center.x, self.view.center.y - 150);
     radialView.theme.completedColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:0.5];
     radialView.theme.incompletedColor = [UIColor colorWithRed:174/255.0 green:197/255.0 blue:80/255.0 alpha:0.5];
     radialView.progressTotal = 100;
@@ -89,6 +87,7 @@
     radialView.theme.sliceDividerHidden = YES;
     radialView.theme.centerColor = radialView.theme.completedColor;
 }
+
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.moviePlayer.controls playPausePressedAction];

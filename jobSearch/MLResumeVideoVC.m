@@ -23,7 +23,11 @@
 //    MDRadialProgressView *radialView;
     BOOL startUpload;
     NSString *vedioURL;
+    
+    BOOL vedioIsWork;
+    BOOL vedioCheck;
 }
+
 @property (weak, nonatomic) IBOutlet UIView *videoPreViewOutlet;
 - (IBAction)changeAction:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UIButton *paiOutlet;
@@ -66,6 +70,9 @@
     [self.videoPreViewOutlet bringSubviewToFront:self.changeOutlet];
     [self.videoPreViewOutlet bringSubviewToFront:_strobeView];
     
+    vedioIsWork = TRUE;
+    vedioCheck = FALSE;
+    
 //    //初始化上传图标
 //    CGRect frame = CGRectMake(0,0, 100, 100);
 //    radialView = [[MDRadialProgressView alloc] initWithFrame:frame];
@@ -82,6 +89,24 @@
 #pragma mark - UIGestureRecognizer
 
 - (void)_handleLongPressGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer{
+    if (!vedioIsWork) {
+        return;
+    }
+    if (!vedioCheck) {
+        NSString *mediaType = AVMediaTypeVideo;
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+        if(authStatus == ALAuthorizationStatusRestricted || authStatus == ALAuthorizationStatusDenied){
+            vedioIsWork = FALSE;
+            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请开启相机功能" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            alterTittle.tag = 0;
+            [alterTittle show];
+            [self.paiOutlet removeGestureRecognizer:_longPressGestureRecognizer];
+            return;
+        }else{
+            vedioCheck = TRUE;
+        }
+    }
+    
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
         {
@@ -100,6 +125,12 @@
         }
         default:
             break;
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -250,11 +281,11 @@
     _recording = NO;
     
     _currentVideo = videoDict;
-    if (startUpload) {
-        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"正在上传，请稍后" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-        [alterTittle show];
-        return;
-    }
+//    if (startUpload) {
+//        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"正在上传，请稍后" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+//        [alterTittle show];
+//        return;
+//    }
     
     if (isSave) {
         NSString *videoPath = [_currentVideo  objectForKey:PBJVisionVideoPathKey];
@@ -362,16 +393,16 @@
 
 #pragma mark - UIAlertViewDelegate
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0) {
-        
-    }
-    
-    if (buttonIndex == 1) {
-//        [self puloadVedio];
-    }
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if (buttonIndex == 0) {
+//        
+//    }
+//    
+//    if (buttonIndex == 1) {
+////        [self puloadVedio];
+//    }
+//}
 
 - (void) getVideoURLDelegate:(NSString *)getVideoURL{
     NSLog(@"vvvvvv");
