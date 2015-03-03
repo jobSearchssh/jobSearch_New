@@ -307,7 +307,7 @@ static  MLMyApplication *thisVC=nil;
     }else{
         cell.notReadImageView.hidden=NO;
     }
-    //NSLog(@"%@",jobObject.getuserApplyIsRead);
+
     return cell;
 }
 
@@ -367,18 +367,26 @@ static  MLMyApplication *thisVC=nil;
     [self.navigationController pushViewController:detailVC animated:YES];
     
     //将消息设置为已读
-    NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
-    NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
-    
-    if ([currentUserObjectId length]>0) {
-    
-        [netAPI setRecordAlreadyRead:currentUserObjectId applyOrInviteId:appliedModel.getjobApply_id type:@"1" withBlock:^(oprationResultModel *oprationResultModel) {
-            if ([[oprationResultModel getStatus] intValue]==0) {
-                NSLog(@"标记成功");
-                badgeNumber*bn=[badgeNumber sharedInstance];
-                [bn minusApplyCount];
-            }
-        }];
+    if ([appliedModel.getuserApplyIsRead isEqualToString:@"0"]) {
+        
+        MLCell1 *cell=(MLCell1 *)[tableView cellForRowAtIndexPath:indexPath];
+        cell.notReadImageView.hidden=YES;
+        
+        [appliedModel setuserApplyIsRead:@"1"];
+        
+        NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
+        NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
+        
+        if ([currentUserObjectId length]>0) {
+            
+            [netAPI setRecordAlreadyRead:currentUserObjectId applyOrInviteId:appliedModel.getjobApply_id type:@"1" withBlock:^(oprationResultModel *oprationResultModel) {
+                if ([[oprationResultModel getStatus] intValue]==0) {
+                    NSLog(@"标记成功");
+                    badgeNumber*bn=[badgeNumber sharedInstance];
+                    [bn minusApplyCount];
+                }
+            }];
+        }
     }
     
     [self performSelector:@selector(deselect) withObject:nil afterDelay:0.5f];

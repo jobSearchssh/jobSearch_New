@@ -191,6 +191,10 @@
     return userApplyIsRead;
 }
 
+-(void)setuserApplyIsRead:(NSString*)isRead{
+    userApplyIsRead=isRead;
+}
+
 + (float)getDistance:(NSArray*)p1{
     
     float _distance=0.0f;

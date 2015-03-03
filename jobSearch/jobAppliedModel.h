@@ -95,4 +95,7 @@
 -(NSString*)getjobApplyStatus;
 -(NSString*)getjobApply_id;
 -(NSString*)getuserApplyIsRead;
+
+-(void)setuserApplyIsRead:(NSString*)isRead;
+
 @end
