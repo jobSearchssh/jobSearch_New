@@ -315,8 +315,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.intentionOutlet setNumberOfLines:0];
     [self.intentionOutlet setLineBreakMode:NSLineBreakByWordWrapping];
     CGSize intentionOutletlabelsize = [usrintention sizeWithFont:[self.intentionOutlet font] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 112,2000) lineBreakMode:NSLineBreakByWordWrapping];
-    NSLog(@"aaa = %f   =%f",intentionOutletlabelsize.height,intentionOutletlabelsize.width);
-    NSLog(@"cccc = %f dddd = %f",self.intentionOutlet.frame.origin.x,self.intentionOutlet.frame.origin.y);
     [self.intentionOutlet setFrame:CGRectMake(self.intentionOutlet.frame.origin.x,
                                               self.intentionOutlet.frame.origin.y,
                                               self.intentionOutlet.frame.size.width,
