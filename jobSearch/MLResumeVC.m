@@ -453,6 +453,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         datePickerView=[[MLDatePickerView alloc]initWithStyle:UIDatePickerModeDate delegate:self];
     }
     
+    //保存用户当前位置信息
+    if ([mySettingData objectForKey:@"currentCoordinate"]) {
+        
+        CGPoint p=CGPointFromString([mySettingData objectForKey:@"currentCoordinate"]);
+        
+        geoModel *userGeo=[[geoModel alloc]initWith:p.x lat:p.y];
+        [self.usermodel setuserLocationGeo:userGeo];
+    }
+    
 }
 
 //-(void)returnResume{
@@ -1437,6 +1446,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 {
     //获得用户位置信息
     [[AJLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
+        
+         NSUserDefaults *mySettingData = [NSUserDefaults standardUserDefaults];
+        //保存用户当前位置信息
+        [mySettingData setObject:NSStringFromCGPoint(CGPointMake(locationCorrrdinate.longitude, locationCorrrdinate.latitude)) forKey:@"currentCoordinate"];
+        [mySettingData synchronize];
+
+         geoModel *userGeo=[[geoModel alloc]initWith:locationCorrrdinate.longitude lat:locationCorrrdinate.latitude];
+        [self.usermodel setuserLocationGeo:userGeo];
+
         
         [MAMapServices sharedServices].apiKey =@"c38130d72c3068f07be6c23c7e791f47";
         
