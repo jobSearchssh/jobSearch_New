@@ -44,6 +44,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (strong, nonatomic) IBOutlet UIView *usrinfo3Outet;
 @property (weak, nonatomic) IBOutlet UILabel *workexperienceOutlet;
 @property (weak, nonatomic) IBOutlet UILabel *userIntroductionOutlet;
+@property (weak, nonatomic) IBOutlet UILabel *usrschoolOutlet;
 
 @property (weak, nonatomic) IBOutlet AsyncImageView *userLogoView;
 
@@ -61,6 +62,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     self.mainScrollviewOutlet.delegate=self;
     
     [self.coverflowOutlet setFrame:CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.width*0.6)];
+    [self.coverflowOutlet setRestorationIdentifier:@"coverflowOutlet"];
     [self.mainScrollviewOutlet addSubview:self.coverflowOutlet];
     
     if (self.type.intValue == type_preview) {
@@ -191,11 +193,19 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.mainUserModel = userModel;
     }
     
+    for (UIView *view in self.mainScrollviewOutlet.subviews) {
+        if ([view.restorationIdentifier isEqualToString:@"coverflowOutlet"]) {
+            continue;
+        }
+        [view removeFromSuperview];
+    }
+    
     //第一项
     NSMutableArray *sourceImages = [[NSMutableArray alloc]init];
     NSMutableArray *sourceImagesURL = [userModel getImageFileURL];
     CGSize size = CGSizeMake(225, 225);
     UIImage *temp = [self scaleToSize:[UIImage imageNamed:@"placeholder"] size:size];
+    
     
     for (NSString *url in sourceImagesURL) {
         [sourceImages addObject:temp];
@@ -284,6 +294,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                              self.locationOutlet.frame.origin.y, locationOutletlabelsize.width, locationOutletlabelsize.height)];
     [self.locationOutlet setText:usrLoaction];
     
+    
+    if ([userModel getuserSchool] != nil) {
+        [self.usrschoolOutlet setText:[userModel getuserSchool]];
+    }else{
+        [self.usrschoolOutlet setText:@""];
+    }
+    
     NSMutableString *usrintentionTemp = [[NSMutableString alloc]init];
     NSMutableArray *usrintentionTempArray = [userModel getuserHopeJobType];
     for (NSNumber *index in usrintentionTempArray ) {
@@ -295,14 +312,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSString *usrintention = usrintentionTemp;
     [self.intentionOutlet setNumberOfLines:0];
     [self.intentionOutlet setLineBreakMode:NSLineBreakByWordWrapping];
-    CGSize intentionOutletlabelsize = [usrLoaction sizeWithFont:[self.intentionOutlet font] constrainedToSize:CGSizeMake(self.intentionOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize intentionOutletlabelsize = [usrintention sizeWithFont:[self.intentionOutlet font] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 112,2000) lineBreakMode:NSLineBreakByWordWrapping];
+//    NSLog(@"aaa = %f   =%f",intentionOutletlabelsize.height,intentionOutletlabelsize.width);
     [self.intentionOutlet setFrame:CGRectMake(self.intentionOutlet.frame.origin.x,
                                               self.intentionOutlet.frame.origin.y,
-                                              intentionOutletlabelsize.width,
+                                              self.intentionOutlet.frame.size.width,
                                               intentionOutletlabelsize.height)];
     [self.intentionOutlet setText:usrintention];
     
-    [self.usrinfo2Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.origin.y+self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,self.intentionOutlet.frame.origin.y+self.intentionOutlet.frame.size.height+20)];
+    [self.usrinfo2Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.origin.y+self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,self.intentionOutlet.frame.origin.y+self.intentionOutlet.frame.size.height+10)];
     [self.mainScrollviewOutlet addSubview:self.usrinfo2Outlet];
     
     //第四项
@@ -345,11 +363,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     //第五项
     
     NSString *intro = [userModel getuserIntroduction];
-    
     NSString  *testintroFormat = [intro stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
     [self.userIntroductionOutlet setNumberOfLines:0];
     [self.userIntroductionOutlet setLineBreakMode:NSLineBreakByWordWrapping];
-    CGSize testintrolabelsize = [testintroFormat sizeWithFont:[self.userIntroductionOutlet font] constrainedToSize:CGSizeMake(self.userIntroductionOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize testintrolabelsize = [testintroFormat sizeWithFont:[self.userIntroductionOutlet font] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 120,2000) lineBreakMode:NSLineBreakByWordWrapping];
     [self.userIntroductionOutlet setFrame:CGRectMake(self.userIntroductionOutlet.frame.origin.x,
                                                      self.userIntroductionOutlet.frame.origin.y, testintrolabelsize.width,
                                                        testintrolabelsize.height)];
@@ -360,7 +377,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSString  *workexperienceFormat = [workexperience stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
     [self.workexperienceOutlet setNumberOfLines:0];
     [self.workexperienceOutlet setLineBreakMode:NSLineBreakByWordWrapping];
-    CGSize testworkexperiencelabelsize = [workexperienceFormat sizeWithFont:[self.workexperienceOutlet font] constrainedToSize:CGSizeMake(self.workexperienceOutlet.frame.size.width,2000) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize testworkexperiencelabelsize = [workexperienceFormat sizeWithFont:[self.workexperienceOutlet font] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 120,2000) lineBreakMode:NSLineBreakByWordWrapping];
     [self.workexperienceOutlet setFrame:CGRectMake(self.workexperienceOutlet.frame.origin.x,
                                                    self.workexperienceOutlet.frame.origin.y, testworkexperiencelabelsize.width, testworkexperiencelabelsize.height)];
     [self.workexperienceOutlet setText:workexperienceFormat];
