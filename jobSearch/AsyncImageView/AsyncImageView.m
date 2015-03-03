@@ -454,7 +454,7 @@ NSString *const AsyncImageErrorKey = @"error";
     dispatch_async([self getDispatchQueue], ^{
         UIImage *imageTemp = Nil;
         if ([imageSaveAndReadUtil isExists:[stringUtil formatMyString:[URL absoluteString]]]) {
-            NSLog(@"image fromFile");
+//            NSLog(@"image fromFile");
             imageTemp = [imageSaveAndReadUtil getImagePath:[stringUtil formatMyString:[URL absoluteString]]];
             if (imageTemp) {
                 [self.cache setObject:imageTemp forKey:URL];

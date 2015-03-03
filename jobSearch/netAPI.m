@@ -33,6 +33,7 @@
 #define SETREAD_FUNCTION @"user/userIsRead"
 #define DELETEAPPLYJOB_FUCTION @"user/deleteOneApply"
 #define DELETEMATCHJOB_FUNCTION @"user/addToDeleteList"
+#define networkError @"请查看网络连接是否正常"
 
 @implementation netAPI
 
@@ -45,7 +46,7 @@
             loginModel *a = [[loginModel alloc]initWithData:[returnModel getData]];
             loginBlock(a);
         }else{
-            loginModel *a=[[loginModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription] usrID:nil];
+            loginModel *a=[[loginModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError usrID:nil];
             loginBlock(a);
         }
     }];
@@ -60,7 +61,7 @@
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);
         }else{
-            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             oprationReturnBlock(a);
         }
     }];
@@ -75,7 +76,7 @@
             registerModel *a = [[registerModel alloc]initWithData:[returnModel getData]];
             registerBlock(a);
         }else{
-            registerModel *a = [[registerModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription] usrID:[NSString stringWithFormat:@"-1"]];
+            registerModel *a = [[registerModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError usrID:[NSString stringWithFormat:@"-1"]];
             registerBlock(a);
         }
     }];
@@ -90,7 +91,7 @@
             jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             saveJobListBlock(a);
         }else{
-            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             saveJobListBlock(a);
         }
     }];
@@ -106,7 +107,7 @@
             jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             nearByBlock(a);
         }else{
-            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             nearByBlock(a);
         }
     }];
@@ -121,7 +122,7 @@
             jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             newestJobListBlock(a);
         }else{
-            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             newestJobListBlock(a);
         }
     }];
@@ -137,7 +138,7 @@
             jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             newestJobListBlock(a);
         }else{
-            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             newestJobListBlock(a);
         }
     }];
@@ -152,7 +153,7 @@
             jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             bykeyBlock(a);
         }else{
-            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             bykeyBlock(a);
         }
     }];
@@ -167,7 +168,7 @@
             jobAppliedListModel *a = [[jobAppliedListModel alloc]initWithData:[returnModel getData]];
             applyJobListBlock(a);
         }else{
-            jobAppliedListModel *a = [[jobAppliedListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobAppliedListModel *a = [[jobAppliedListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             applyJobListBlock(a);
         }
     }];
@@ -182,7 +183,7 @@
             messageListModel *a = [[messageListModel alloc]initWithData:[returnModel getData]];
             messageListBlock(a);
         }else{
-            messageListModel *a = [[messageListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            messageListModel *a = [[messageListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             messageListBlock(a);
         }
     }];
@@ -198,7 +199,7 @@
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);
         }else{
-            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             oprationReturnBlock(a);
         }
     }];
@@ -215,7 +216,7 @@
             jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             distanceBlock(a);
         }else{
-            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             distanceBlock(a);
         }
     }];
@@ -243,7 +244,7 @@
             jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             byTypeBlock(a);
         }else{
-            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             byTypeBlock(a);
         }
     }];
@@ -270,7 +271,7 @@
             jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
             byTypeAndDisBlock(a);
         }else{
-            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             byTypeAndDisBlock(a);
         }
     }];
@@ -284,7 +285,7 @@
             userReturnModel *a = [[userReturnModel alloc]initWithData:[returnModel getData]];
             userReturnBlock(a);
         }else{
-            userReturnModel *a = [[userReturnModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription] usrID:[NSString stringWithFormat:@"-1"]];
+            userReturnModel *a = [[userReturnModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError usrID:[NSString stringWithFormat:@"-1"]];
             userReturnBlock(a);
         }
     }];
@@ -299,7 +300,7 @@
             userModel *a = [[userModel alloc]initWithData:[returnModel getData]];
             userBlock(a);
         }else{
-            userModel *a = [[userModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            userModel *a = [[userModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             userBlock(a);
         }
     }];
@@ -315,7 +316,7 @@
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);
         }else{
-            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             oprationReturnBlock(a);
         }
     }];
@@ -331,7 +332,7 @@
             jobApplyModel *a = [[jobApplyModel alloc]initWithData:[returnModel getData]];
             applyReturnBlock(a);
         }else{
-            jobApplyModel *a = [[jobApplyModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            jobApplyModel *a = [[jobApplyModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             applyReturnBlock(a);
         }
     }];
@@ -346,7 +347,7 @@
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);
         }else{
-            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             oprationReturnBlock(a);
         }
     }];
@@ -361,7 +362,7 @@
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);
         }else{
-            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             oprationReturnBlock(a);
         }
     }];
@@ -377,7 +378,7 @@
             badgeModel *a = [[badgeModel alloc]initWithData:[returnModel getData]];
             badgeReturnBlock(a);
         }else{
-            badgeModel *a =[[badgeModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            badgeModel *a =[[badgeModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             badgeReturnBlock(a);
         }
     }];
@@ -393,7 +394,7 @@
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);
         }else{
-            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             oprationReturnBlock(a);
         }
     }];
@@ -409,7 +410,7 @@
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);
         }else{
-            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             oprationReturnBlock(a);
         }
     }];
@@ -425,7 +426,7 @@
             oprationResultModel *a = [[oprationResultModel alloc]initWithData:[returnModel getData]];
             oprationReturnBlock(a);
         }else{
-            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:[[returnModel getError] localizedDescription]];
+            oprationResultModel *a = [[oprationResultModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
             oprationReturnBlock(a);
         }
     }];
