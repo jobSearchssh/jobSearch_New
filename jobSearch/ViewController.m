@@ -53,20 +53,10 @@
         [MLLoginBusiness logout];
         [_sideMenu setTableItem:0 Title:@"未登录" Subtitle:@"游客" ImageUrl:nil];
         [self setBadge];
+        [_sideMenu hide];
     }
 }
 
-- (void)back{
-                MLFirstVC *viewController = [MLFirstVC sharedInstance];
-                MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
-                navigationController.navigationBar.translucent = NO;
-                navigationController.tabBarController.tabBar.translucent = NO;
-                navigationController.toolbar.translucent = NO;
-                [self setNavigationBar:navigationController];
-                viewController.title=@"附近的职位";
-                currentnavigationController=navigationController;
-                [_sideMenu setRootViewController:navigationController];
-}
 
 - (void)showMenu
 {
@@ -97,7 +87,7 @@
             NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
             
             if ([currentUserObjectId length]>0) {
-                
+ 
                 MLFirstVC *viewController = [MLFirstVC sharedInstance];
                 MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
                 navigationController.navigationBar.translucent = NO;
@@ -106,7 +96,7 @@
                 [self setNavigationBar:navigationController];
                 viewController.title=@"附近的职位";
                 currentnavigationController=navigationController;
-                [menu setRootViewController:navigationController];
+                [menu setRootViewControllerNotHide:navigationController];
                 
                 UIAlertView *logoutAlert=[[UIAlertView alloc] initWithTitle:@"确定要退出该账号？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
                 [logoutAlert show];

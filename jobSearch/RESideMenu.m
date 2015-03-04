@@ -201,6 +201,16 @@ static  RESideMenu *thisMenu=nil;
     [window bringSubviewToFront:_screenshotView];
 }
 
+- (void)setRootViewControllerNotHide:(UIViewController *)viewController{
+
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    window.rootViewController = viewController;
+    _screenshotView.image = [window re_snapshotWithStatusBar:!self.hideStatusBarArea];
+    [window bringSubviewToFront:_backgroundView];
+    [window bringSubviewToFront:_tableView];
+    [window bringSubviewToFront:_screenshotView];
+}
+
 - (void)addAnimation:(NSString *)path view:(UIView *)view startValue:(double)startValue endValue:(double)endValue
 {
     AccelerationAnimation *animation = [AccelerationAnimation animationWithKeyPath:path

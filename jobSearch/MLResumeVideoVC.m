@@ -97,7 +97,7 @@
         AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
         if(authStatus == ALAuthorizationStatusRestricted || authStatus == ALAuthorizationStatusDenied){
             vedioIsWork = FALSE;
-            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请开启相机功能" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"您没有允许本应用使用相机" message:@"请在设置中开启相机功能" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
             alterTittle.tag = 0;
             [alterTittle show];
             [self.paiOutlet removeGestureRecognizer:_longPressGestureRecognizer];

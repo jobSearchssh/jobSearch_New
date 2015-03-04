@@ -59,5 +59,5 @@
 
 + (RESideMenu*)sharedInstance;
 
-
+- (void)setRootViewControllerNotHide:(UIViewController *)viewController;
 @end
