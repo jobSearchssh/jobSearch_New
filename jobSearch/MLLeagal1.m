@@ -1,34 +1,33 @@
 //
-//  MLLegalVC.m
+//  MLLeagal1.m
 //  jobSearch
 //
-//  Created by RAY on 15/2/5.
+//  Created by RAY on 15/3/4.
 //  Copyright (c) 2015年 麻辣工作室. All rights reserved.
 //
 
-#import "MLLegalVC.h"
+#import "MLLeagal1.h"
 
-@interface MLLegalVC ()
+@interface MLLeagal1 ()
 
 @end
 
-@implementation MLLegalVC
-
-static  MLLegalVC *thisVC=nil;
-+ (MLLegalVC*)sharedInstance{
-    if (thisVC==nil) {
-        thisVC=[[MLLegalVC alloc]init];
-    }
-    return thisVC;
-}
+@implementation MLLeagal1
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   }
+    self.title=@"兼职精灵用户使用协议";
+    
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(touchBack)];
+    self.navigationItem.leftBarButtonItem = backItem;
 
+}
 
-- (void)back{
+- (void)touchBack{
+    
     [self.navigationController popViewControllerAnimated:YES];
+    
+    [self.delegate legalBack];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -16,12 +16,13 @@
 #import "MBProgressHUD.h"
 #import "RESideMenu.h"
 #import "forgetPasswordVC.h"
+#import "MLLeagal1.h"
 
 static NSString *usrAccountText = @"usrAccountText";
 static NSString *usrPhoneText = @"usrPhoneText";
 typedef void (^loginReturnBlock)(loginModel *loginModel);
 
-@interface MLLoginVC ()<QCheckBoxDelegate,loginResult,registerResult,UIGestureRecognizerDelegate,UIAlertViewDelegate>{
+@interface MLLoginVC ()<QCheckBoxDelegate,loginResult,registerResult,UIGestureRecognizerDelegate,UIAlertViewDelegate,legalDelegate>{
     
     UIButton *chooseLoginBtn;
     UIButton *chooseRegisterBtn;
@@ -485,7 +486,6 @@ static  MLLoginVC *thisVC=nil;
         
         [MBProgressHUD showError:alertString toView:self.view];
     }
-    
 }
 
 //密码重置
@@ -495,6 +495,15 @@ static  MLLoginVC *thisVC=nil;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (IBAction)pushLegalVC:(id)sender {
+    MLLeagal1 *legalVC=[[MLLeagal1 alloc] init];
+    legalVC.delegate=self;
+    [self.navigationController pushViewController:legalVC animated:YES];
+}
+
+- (void)legalBack{
+    [self.scrollView setContentOffset:CGPointMake([[UIScreen mainScreen] bounds].size.width, 0) animated:NO];
+}
 /*
 #pragma mark - Navigation
 

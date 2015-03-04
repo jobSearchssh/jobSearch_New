@@ -196,7 +196,7 @@
             navigationController.tabBarController.tabBar.translucent = NO;
             navigationController.toolbar.translucent = NO;
             [self setNavigationBar:navigationController];
-            legalVC.title=@"声明";
+            legalVC.title=@"兼职精灵用户使用协议";
             currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
