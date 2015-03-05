@@ -15,6 +15,8 @@
 #import "netAPI.h"
 #import "jobModel.h"
 #import "MLLoginVC.h"
+#import "badgeNumber.h"
+
 
 @interface MLMessageVC ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,finishHandle,UIAlertViewDelegate,finishLoginDelegate>
 {
@@ -76,6 +78,11 @@
         }
     
         [netAPI getMessageList:currentUserObjectId start:1 length:BASE_SPAN withBlock:^(messageListModel *messageListModel) {
+            
+            badgeNumber *bn=[badgeNumber sharedInstance];
+            if ([messageListModel.getCount intValue]>[bn.messageCount intValue]) {
+                bn.messageCount=[NSString stringWithFormat:@"%@",messageListModel.getCount];
+            }
             [self headHandler:messageListModel];
         }];
         
@@ -376,9 +383,20 @@
         {
             NSIndexPath *cellIndexPath = [_tableView indexPathForCell:cell];
             
+            
+            messageModel *object=[recordArray objectAtIndex:[cellIndexPath row]];
+            
+            if (object.getinvite_id) {
+                [netAPI refusedInvite:object.getinvite_id withBlock:^(oprationResultModel *oprationResultModel) {
+                }];
+            }
+            
             [recordArray removeObjectAtIndex:[cellIndexPath row]];
             cellNum=[recordArray count];
             [_tableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            
+            badgeNumber *bn=[badgeNumber sharedInstance];
+            [bn minusMessageCount];
             
             break;
         }
