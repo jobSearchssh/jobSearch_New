@@ -77,19 +77,18 @@ static  MLLoginVC *thisVC=nil;
     [chooseRegisterBtn addTarget:self action:@selector(chooseRegister) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:chooseRegisterBtn];
     
-    
     self.loginView.frame=CGRectMake(0, 44, [[UIScreen mainScreen] bounds].size.width, 220);
     self.registerView.frame=CGRectMake([[UIScreen mainScreen] bounds].size.width, 44, [[UIScreen mainScreen] bounds].size.width, 330);
     
     //for check box
-    QCheckBox *_check1 = [[QCheckBox alloc] initWithDelegate:self];
-    _check1.tag=1;
-    _check1.frame = CGRectMake(25, 120, 25, 25);
-    [_check1 setTitle:nil forState:UIControlStateNormal];
-    [_check1 setTitleColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [_check1.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
-    [self.loginView addSubview:_check1];
-    [_check1 setChecked:YES];
+//    QCheckBox *_check1 = [[QCheckBox alloc] initWithDelegate:self];
+//    _check1.tag=1;
+//    _check1.frame = CGRectMake(25, 120, 25, 25);
+//    [_check1 setTitle:nil forState:UIControlStateNormal];
+//    [_check1 setTitleColor:[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:150.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+//    [_check1.titleLabel setFont:[UIFont boldSystemFontOfSize:13.0f]];
+//    [self.loginView addSubview:_check1];
+//    [_check1 setChecked:YES];
     
     QCheckBox *_check2 = [[QCheckBox alloc] initWithDelegate:self];
     _check2.tag=2;

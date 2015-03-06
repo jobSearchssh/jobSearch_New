@@ -45,7 +45,8 @@ static  MLMyApplication *thisVC=nil;
     return thisVC;
 }
 
-- (void)viewWillLayoutSubviews{
+- (void)viewDidAppear:(BOOL)animated{
+    [[badgeNumber sharedInstance] refreshCount];
 }
 
 - (void)viewDidLoad {
