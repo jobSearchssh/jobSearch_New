@@ -58,6 +58,10 @@
     [self.tableView reloadData];
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [[badgeNumber sharedInstance] refreshCount];
+}
+
 - (void)finishLogin{
     firstLoad=YES;
     [self headRefreshData];
@@ -207,11 +211,9 @@
                 [self.tableView reloadData];
 
             }
-            
         }
     }
 }
-
 
 //*********************tableView********************//
 - (void)tableViewInit{

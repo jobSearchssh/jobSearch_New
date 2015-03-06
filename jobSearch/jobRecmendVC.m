@@ -161,7 +161,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         self.jobPublishTimeLabel.text=[dateFormatter stringFromDate:self.jobModel.getcreated_at];
         self.jobWorkPeriodLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:self.jobModel.getjobBeginTime],[dateFormatter stringFromDate:self.jobModel.getjobEndTime]];
-        self.jobRecuitNumLabel.text=[NSString stringWithFormat:@"还剩%@人",self.jobModel.getjobRecruitNum];
+        self.jobRecuitNumLabel.text=[NSString stringWithFormat:@"招募%@人",self.jobModel.getjobRecruitNum];
         NSString *settlement;
         NSString *str=[NSString stringWithFormat:@"%@",self.jobModel.getjobSettlementWay];
         

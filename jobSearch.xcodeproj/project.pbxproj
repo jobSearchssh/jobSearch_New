@@ -197,6 +197,7 @@
 		3B9236571A67FAFA00347D9C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B9236551A67FAFA00347D9C /* LaunchScreen.xib */; };
 		3B9236631A67FAFA00347D9C /* jobSearchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9236621A67FAFA00347D9C /* jobSearchTests.m */; };
 		3B954A701A8DD135006BC4B2 /* JSBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B954A6F1A8DD135006BC4B2 /* JSBadgeView.m */; };
+		3BA0A8991AA995820083A795 /* currentUserLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA0A8981AA995820083A795 /* currentUserLocation.m */; };
 		3BA483BE1A89E6B800B6A200 /* userModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA483BB1A89E6B800B6A200 /* userModel.m */; };
 		3BA483BF1A89E6B800B6A200 /* userReturnModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA483BD1A89E6B800B6A200 /* userReturnModel.m */; };
 		3BA483C41A89E6BE00B6A200 /* messageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA483C11A89E6BE00B6A200 /* messageModel.m */; };
@@ -656,6 +657,8 @@
 		3B9236621A67FAFA00347D9C /* jobSearchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jobSearchTests.m; sourceTree = "<group>"; };
 		3B954A6E1A8DD135006BC4B2 /* JSBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSBadgeView.h; sourceTree = "<group>"; };
 		3B954A6F1A8DD135006BC4B2 /* JSBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSBadgeView.m; sourceTree = "<group>"; };
+		3BA0A8971AA995820083A795 /* currentUserLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = currentUserLocation.h; sourceTree = "<group>"; };
+		3BA0A8981AA995820083A795 /* currentUserLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = currentUserLocation.m; sourceTree = "<group>"; };
 		3BA483BA1A89E6B800B6A200 /* userModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userModel.h; sourceTree = "<group>"; };
 		3BA483BB1A89E6B800B6A200 /* userModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = userModel.m; sourceTree = "<group>"; };
 		3BA483BC1A89E6B800B6A200 /* userReturnModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userReturnModel.h; sourceTree = "<group>"; };
@@ -1979,6 +1982,8 @@
 				3BA483CF1A89E6F700B6A200 /* baseJobModel.m */,
 				3BA483D01A89E6F700B6A200 /* baseMessageModel.h */,
 				3BA483D11A89E6F700B6A200 /* baseMessageModel.m */,
+				3BA0A8971AA995820083A795 /* currentUserLocation.h */,
+				3BA0A8981AA995820083A795 /* currentUserLocation.m */,
 			);
 			name = base;
 			sourceTree = "<group>";
@@ -2510,6 +2515,7 @@
 				3B6993911A89E98E00A53760 /* RESideMenuItem.m in Sources */,
 				3BA483BE1A89E6B800B6A200 /* userModel.m in Sources */,
 				3B6524121A6CBDDD005FD671 /* SWUtilityButtonView.m in Sources */,
+				3BA0A8991AA995820083A795 /* currentUserLocation.m in Sources */,
 				3BA483DA1A89E6FE00B6A200 /* registerModel.m in Sources */,
 				3BA484021A89E77A00B6A200 /* DateUtil.m in Sources */,
 				3B6524101A6CBDDD005FD671 /* SWTableViewCell.m in Sources */,

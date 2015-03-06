@@ -1150,11 +1150,16 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             return;
         }
         if (buttonIndex == 1) {
-            previewVedioVC *vc = [[previewVedioVC alloc]init];
-            vc.vedioPath = [self.usermodel getuserVideoURL];
-            vc.type = [NSNumber numberWithInt:preview];
-            vc.title = @"我的视频介绍";
-            [self.navigationController pushViewController:vc animated:YES];
+            if ([[self.usermodel getuserVideoURL] length]>4) {
+                previewVedioVC *vc = [[previewVedioVC alloc]init];
+                vc.vedioPath = [self.usermodel getuserVideoURL];
+                vc.type = [NSNumber numberWithInt:preview];
+                vc.title = @"我的视频介绍";
+                [self.navigationController pushViewController:vc animated:YES];
+            }else{
+                [MBProgressHUD showSuccess:@"您还没有录制视频介绍哦" toView:self.view];
+            }
+            
             return;
         }
     }
