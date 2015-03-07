@@ -777,7 +777,7 @@
                     <include reference="tMr-rc-Drx"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="-554" y="246"/>
+            <point key="canvasLocation" x="-808" y="249"/>
         </view>
     </objects>
     <resources>

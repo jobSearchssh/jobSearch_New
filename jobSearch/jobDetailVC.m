@@ -53,6 +53,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (strong, nonatomic) NSString *buttonTitle;
 @property (weak, nonatomic) IBOutlet UILabel *phoneLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
+@property (strong, nonatomic) IBOutlet UILabel *settlementLabel;
 
 @end
 
@@ -182,12 +183,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
    
     for (NSNumber *t in self.jobModel.getjobWorkTime) {
-        if ([t intValue]>0) {
+        if ([t intValue]>=0) {
             int n=[t intValue];
             if (n<21&&n>=0) {
                 selectFreeData[n]=TRUE;
             }
-            
         }
     }
 
@@ -214,7 +214,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 - (void)initData{
     if (self.jobModel) {
         
-        
         NSString *imageUrl;
         
         if ([self.jobModel.getjobEnterpriseImageURL length]>4) {
@@ -239,7 +238,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [dateFormatter setDateFormat:@"MM月dd日"];
 
         self.jobTitleLabel.text=self.jobModel.getjobTitle;
-        self.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@%@",self.jobModel.getjobWorkPlaceCity,self.jobModel.getjobWorkPlaceDistrict,self.jobModel.getjobWorkAddressDetail];
+        self.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@%@%@",self.jobModel.getjobWorkPlaceProvince,self.jobModel.getjobWorkPlaceCity,self.jobModel.getjobWorkPlaceDistrict,self.jobModel.getjobWorkAddressDetail];
         
         self.jobDistanceLabel.text=[NSString stringWithFormat:@"%.1f千米",[jobModel getDistance:self.jobModel.getjobWorkPlaceGeoPoint]];
         
@@ -261,7 +260,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             settlement=@"项目";
         
         self.jobSalaryLabel.text=[NSString stringWithFormat:@"%@元/%@",self.jobModel.getjobSalaryRange,settlement];
-
+        self.settlementLabel.text=[NSString stringWithFormat:@"%@结",settlement];
+        
         self.jobDescribeLabel.text=[NSString stringWithFormat:@"【工作描述】%@",self.jobModel.getjobIntroduction];
         
         NSString *gender;

@@ -575,12 +575,12 @@ static  MLFirstVC *thisVC=nil;
 //*********************ActionSheet********************//
 - (void)sort{
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:@"请选择排序类型"
+                                  initWithTitle:@"排序类型"
                                   delegate:self
                                   cancelButtonTitle:@"取消"
                                   destructiveButtonTitle:nil
                                   otherButtonTitles: @"距离最近", @"最新发布",nil];
-
+    
     [actionSheet showInView:self.view];
 }
 
@@ -649,13 +649,18 @@ static  MLFirstVC *thisVC=nil;
     //NSLog(@"finishBookmarkButtonClicked");
 }
 
-- (void)niftySearchViewResigend
+- (void)niftySearchViewResigend:(BOOL)isEmpty
 {
-    [self hideSearchBar:self];
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        searchView.alpha=0.0f;
-    }];
+    if (!isEmpty) {
+        [self hideSearchBar:self];
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            searchView.alpha=0.0f;
+        }];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入关键字" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 - (void)routeButtonClicked:(UITextField *)startTextField finishTextField:(UITextField *)finishTextField
