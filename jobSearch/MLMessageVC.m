@@ -59,6 +59,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     [[badgeNumber sharedInstance] refreshCount];
 }
 

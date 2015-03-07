@@ -151,10 +151,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 
-- (void)viewDidAppear:(BOOL)animated{
-    
-}
-
 - (void)timeCollectionViewInit{
     selectfreetimepicArray = [[NSMutableArray alloc]init];
     selectfreetimetitleArray = [[NSMutableArray alloc]init];
