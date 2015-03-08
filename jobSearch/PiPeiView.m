@@ -186,7 +186,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.jobRecuitNumLabel.text=[NSString stringWithFormat:@"剩余名额：%d人",num];
     
         NSString *settlement;
-        NSString *str=[NSString stringWithFormat:@"%@",_jobModel.getjobSettlementWay];
+        NSString *str=[NSString stringWithFormat:@"结算方式：%@",_jobModel.getjobSettlementWay];
     
         if ([str isEqualToString:@"0"])
             settlement=@"日结";
@@ -195,7 +195,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         else if ([str isEqualToString:@"2"])
             settlement=@"项目结";
     
-        self.jobSalaryLabel.text=[NSString stringWithFormat:@"%@元",_jobModel.getjobSalaryRange];
+        self.jobSalaryLabel.text=[NSString stringWithFormat:@"薪酬待遇：%@元",_jobModel.getjobSalaryRange];
         self.jobSettlementWay.text=settlement;
     
         self.jobDescribleLabel.text=[NSString stringWithFormat:@"【工作描述】%@",_jobModel.getjobIntroduction];
