@@ -479,6 +479,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if (alertView.tag==1001) {
         if (buttonIndex==0) {
             [self.iphoneOutlet resignFirstResponder];
+            CGPoint offset = CGPointMake(self.scrollviewOutlet.contentOffset.x,0);
+            [self.scrollviewOutlet setContentOffset:offset animated:YES];
         }
     }
 }
