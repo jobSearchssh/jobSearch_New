@@ -463,7 +463,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         geoModel *userGeo=[[geoModel alloc]initWith:p.x lat:p.y];
         [self.usermodel setuserLocationGeo:userGeo];
     }
-    
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{

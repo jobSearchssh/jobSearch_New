@@ -31,7 +31,7 @@
 -(void)setImage:(UIImage *)image;
 -(void)setAction:(NSString *)string;
 -(void)notifyDatasetChange;
--(void)setBadgeViewHiden:(BOOL)hiden;
+//-(void)setBadgeViewHiden:(BOOL)hiden;
 - (void)setBadgeString:(NSString *)_badgeString;
 
 @end

@@ -207,7 +207,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     UIImage *temp = [self scaleToSize:[UIImage imageNamed:@"placeholder"] size:size];
     
     
-    for (NSString *url in sourceImagesURL) {
+//    for (NSString *url in sourceImagesURL) {
+//        [sourceImages addObject:temp];
+//    }
+    
+    for (int i=0; i<[sourceImagesURL count]; i++) {
         [sourceImages addObject:temp];
     }
     

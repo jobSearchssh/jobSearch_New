@@ -184,6 +184,13 @@
 		3B85D80D1A8A34AB0087ABEE /* annotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B85D80A1A8A34AB0087ABEE /* annotation.png */; };
 		3B85D8111A8A3AF90087ABEE /* freeselectViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B85D80F1A8A3AF90087ABEE /* freeselectViewCell.m */; };
 		3B85D8121A8A3AF90087ABEE /* freeselectViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B85D8101A8A3AF90087ABEE /* freeselectViewCell.xib */; };
+		3B878F2A1AABF03A00FA3DBA /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B878F291AABF03A00FA3DBA /* icon.png */; };
+		3B878F2C1AABF08500FA3DBA /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B878F2B1AABF08500FA3DBA /* icon@2x.png */; };
+		3B878F2E1AABF32C00FA3DBA /* icon29.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B878F2D1AABF32C00FA3DBA /* icon29.png */; };
+		3B878F301AABF39400FA3DBA /* icon40.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B878F2F1AABF39400FA3DBA /* icon40.png */; };
+		3B878F321AABF3C300FA3DBA /* icon60.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B878F311AABF3C300FA3DBA /* icon60.png */; };
+		3B878F351AABF45300FA3DBA /* icon100.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B878F331AABF45300FA3DBA /* icon100.png */; };
+		3B878F361AABF45300FA3DBA /* icon50.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B878F341AABF45300FA3DBA /* icon50.png */; };
 		3B8FBB7D1AA17524007C465E /* MLIntroduceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8FBB7B1AA17524007C465E /* MLIntroduceVC.m */; };
 		3B8FBB7E1AA17524007C465E /* MLIntroduceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B8FBB7C1AA17524007C465E /* MLIntroduceVC.xib */; };
 		3B8FBB871AA198C2007C465E /* KVNMaskedPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B8FBB861AA198C2007C465E /* KVNMaskedPageControl.m */; };
@@ -637,6 +644,13 @@
 		3B85D80E1A8A3AF90087ABEE /* freeselectViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = freeselectViewCell.h; sourceTree = "<group>"; };
 		3B85D80F1A8A3AF90087ABEE /* freeselectViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = freeselectViewCell.m; sourceTree = "<group>"; };
 		3B85D8101A8A3AF90087ABEE /* freeselectViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = freeselectViewCell.xib; sourceTree = "<group>"; };
+		3B878F291AABF03A00FA3DBA /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		3B878F2B1AABF08500FA3DBA /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		3B878F2D1AABF32C00FA3DBA /* icon29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon29.png; sourceTree = "<group>"; };
+		3B878F2F1AABF39400FA3DBA /* icon40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon40.png; sourceTree = "<group>"; };
+		3B878F311AABF3C300FA3DBA /* icon60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon60.png; sourceTree = "<group>"; };
+		3B878F331AABF45300FA3DBA /* icon100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon100.png; sourceTree = "<group>"; };
+		3B878F341AABF45300FA3DBA /* icon50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon50.png; sourceTree = "<group>"; };
 		3B8FBB7A1AA17524007C465E /* MLIntroduceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLIntroduceVC.h; sourceTree = "<group>"; };
 		3B8FBB7B1AA17524007C465E /* MLIntroduceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLIntroduceVC.m; sourceTree = "<group>"; };
 		3B8FBB7C1AA17524007C465E /* MLIntroduceVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLIntroduceVC.xib; sourceTree = "<group>"; };
@@ -1012,13 +1026,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3B0785071A6A69B400ACD76C /* icon */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = icon;
-			sourceTree = "<group>";
-		};
 		3B0785241A6A836E00ACD76C /* MapKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -1256,10 +1263,17 @@
 				3BA0A89D1AA9D9230083A795 /* intro_3.png */,
 				3BF5BA841AA557D400399FF1 /* me_shuliang.png */,
 				3BBEF4481AA4C523004102BA /* logo120.png */,
+				3B878F311AABF3C300FA3DBA /* icon60.png */,
 				3BBEF4491AA4C523004102BA /* logo58.png */,
 				3BBEF44A1AA4C523004102BA /* logo80.png */,
+				3B878F2F1AABF39400FA3DBA /* icon40.png */,
 				3BBEF44B1AA4C523004102BA /* logo87.png */,
 				3BBEF44C1AA4C523004102BA /* logo180.png */,
+				3B878F2D1AABF32C00FA3DBA /* icon29.png */,
+				3B878F291AABF03A00FA3DBA /* icon.png */,
+				3B878F2B1AABF08500FA3DBA /* icon@2x.png */,
+				3B878F331AABF45300FA3DBA /* icon100.png */,
+				3B878F341AABF45300FA3DBA /* icon50.png */,
 				3BD82C511A8E15E2000B4462 /* launchImage.png */,
 				3BF625381A8B57AA0066816D /* placeholder@2x.png */,
 				3BF625391A8B57AA0066816D /* placeholder@3x.png */,
@@ -1439,7 +1453,6 @@
 				3B9236531A67FAFA00347D9C /* Images.xcassets */,
 				3B9236551A67FAFA00347D9C /* LaunchScreen.xib */,
 				3B6993971A89E9B000A53760 /* image */,
-				3B0785071A6A69B400ACD76C /* icon */,
 				3B9236461A67FAFA00347D9C /* Supporting Files */,
 			);
 			path = jobSearch;
@@ -2231,6 +2244,7 @@
 				3BD4DC701A77C50600B061D0 /* resume_night2.png in Resources */,
 				3B6994061A89E9B000A53760 /* cellBackground@3x.png in Resources */,
 				3BD82C521A8E15E2000B4462 /* launchImage.png in Resources */,
+				3B878F2E1AABF32C00FA3DBA /* icon29.png in Resources */,
 				3BF625311A8B3E4E0066816D /* arrow_right.png in Resources */,
 				3B69940D1A89E9B000A53760 /* export@2x.png in Resources */,
 				3B6994321A89E9B000A53760 /* search@2x.png in Resources */,
@@ -2252,6 +2266,7 @@
 				3B69943C1A89E9B000A53760 /* target@2x.png in Resources */,
 				3BA4843A1A89E82300B6A200 /* jobRecmendVC.xib in Resources */,
 				3B6994241A89E9B000A53760 /* mapDetail.png in Resources */,
+				3B878F361AABF45300FA3DBA /* icon50.png in Resources */,
 				3B69943D1A89E9B000A53760 /* target@3x.png in Resources */,
 				3B4546F41A92D9DC00AA3C50 /* ToolViewInputVoiceHL@2x.png in Resources */,
 				3BD4DC251A77C4CD00B061D0 /* radio_unchecked.png in Resources */,
@@ -2292,6 +2307,7 @@
 				3BD4DC891A77C50600B061D0 /* resume_icon1.png in Resources */,
 				3B6993931A89E98E00A53760 /* sideNormalTableViewCell.xib in Resources */,
 				3BBC3CF41AA0245F00E9B417 /* forgetPasswordVC.xib in Resources */,
+				3B878F2A1AABF03A00FA3DBA /* icon.png in Resources */,
 				3BF6253C1A8B57AA0066816D /* placeholder@3x.png in Resources */,
 				B73640D61AA0D37900CEB5F4 /* movieForwardSelected@2x.png in Resources */,
 				B77578C31A7A939100660BB7 /* resume_change.png in Resources */,
@@ -2341,6 +2357,7 @@
 				3BD4DC6E1A77C50600B061D0 /* resume_am2.png in Resources */,
 				3B69942D1A89E9B000A53760 /* refuse.png in Resources */,
 				B77578DE1A7A9EF000660BB7 /* capture_rec_off@2x.png in Resources */,
+				3B878F2C1AABF08500FA3DBA /* icon@2x.png in Resources */,
 				3B6994311A89E9B000A53760 /* search.png in Resources */,
 				3B4547071A933D8000AA3C50 /* HZAreaPickerView.xib in Resources */,
 				3B4546F01A92D9DC00AA3C50 /* save@2x.png in Resources */,
@@ -2349,6 +2366,7 @@
 				3B4546F51A92D9DC00AA3C50 /* umeng_fb_audio_dialog_cancel@2x.png in Resources */,
 				3B6994301A89E9B000A53760 /* right.png in Resources */,
 				B77578C51A7A943B00660BB7 /* resume_pai.png in Resources */,
+				3B878F321AABF3C300FA3DBA /* icon60.png in Resources */,
 				3BA484501A89E83B00B6A200 /* MLFilterVC.xib in Resources */,
 				3B9236521A67FAFA00347D9C /* Main.storyboard in Resources */,
 				3BD4DC731A77C50600B061D0 /* resume_1.png in Resources */,
@@ -2360,6 +2378,7 @@
 				3BD4DC871A77C50600B061D0 /* resume_icon3.png in Resources */,
 				3BBEF44E1AA4C523004102BA /* logo58.png in Resources */,
 				3B6994011A89E9B000A53760 /* cellBackground.png in Resources */,
+				3B878F301AABF39400FA3DBA /* icon40.png in Resources */,
 				3B6994361A89E9B000A53760 /* send@3x.png in Resources */,
 				3B6994531A89EC3800A53760 /* icon_location@2x.png in Resources */,
 				3BA4841A1A89E79C00B6A200 /* MLLoginVC.xib in Resources */,
@@ -2371,6 +2390,7 @@
 				3B6993F91A89E9B000A53760 /* apply@2x.png in Resources */,
 				3B69943B1A89E9B000A53760 /* target.png in Resources */,
 				3B69942F1A89E9B000A53760 /* refuse@3x.png in Resources */,
+				3B878F351AABF45300FA3DBA /* icon100.png in Resources */,
 				3B4546F81A92D9DC00AA3C50 /* umeng_fb_audio_play_02@2x.png in Resources */,
 				3B9236541A67FAFA00347D9C /* Images.xcassets in Resources */,
 				3BD4DC691A77C50600B061D0 /* 1.jpg in Resources */,

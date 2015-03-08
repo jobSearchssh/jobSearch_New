@@ -22,17 +22,18 @@
 //setup images
 -(void)setupImages;
 //remove sublayers (after a certain delay)
--(void)removeLayersAfterSeconds:(id)layerToBeRemoved;
+//-(void)removeLayersAfterSeconds:(id)layerToBeRemoved;
 //remove all sublayers
--(void)removeSublayers;
+//-(void)removeSublayers;
 //empty imagelayers
--(void)cleanImageLayers;
+//-(void)cleanImageLayers;
 //add reflections
 - (void)showImageAndReflection:(CALayer*)layer withURL:(NSString *)url;
 //adjust the bounds
 -(void)scaleBounds: (CALayer *) layer x:(CGFloat)scaleWidth y:(CGFloat)scaleHeight;
 //add uipagecontrol
 -(void)addPageControl;
+
 
 @end
 

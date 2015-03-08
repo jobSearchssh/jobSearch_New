@@ -80,7 +80,7 @@
 #define kTextColor [UIColor colorWithRed:0.329 green:0.341 blue:0.353 alpha:1]
 
 //normal text alignment
-#define kTextAlignment UITextAlignmentCenter
+#define kTextAlignment NSTextAlignmentCenter
 
 //title font
 #define kTitleFont [UIFont fontWithName:@"HelveticaNeue" size:22.f]
@@ -201,7 +201,7 @@
 - (void)showAtPoint:(CGPoint)point inView:(UIView *)view withText:(NSString *)text {
     UIFont *font = kTextFont;
     
-    CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - kHorizontalMargin*4.f, 1000.f) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - kHorizontalMargin*4.f, 1000.f) lineBreakMode:NSLineBreakByWordWrapping];
     
     UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, textSize.width, textSize.height)];
     textView.backgroundColor = [UIColor clearColor];
@@ -217,7 +217,7 @@
 
 - (void)showAtPoint:(CGPoint)point inView:(UIView *)view withTitle:(NSString *)title withText:(NSString *)text {
     UIFont *font = kTextFont;
-    CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - kHorizontalMargin*4.f, 1000.f) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - kHorizontalMargin*4.f, 1000.f) lineBreakMode:NSLineBreakByWordWrapping];
     
     UILabel *textView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, textSize.width, textSize.height)];
     textView.backgroundColor = [UIColor clearColor];
@@ -303,7 +303,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 0.f, titleSize.width, titleSize.height)];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.font = kTitleFont;
-    titleLabel.textAlignment = UITextAlignmentCenter;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.textColor = kTitleColor;
     titleLabel.text = title;
     
@@ -523,7 +523,7 @@
     //animate into full size
     //First stage animates to 1.05x normal size, then second stage animates back down to 1x size.
     //This two-stage animation creates a little "pop" on open.
-    [UIView animateWithDuration:0.2f delay:0.f options:UIViewAnimationCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.2f delay:0.f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.alpha = 1.f;
         self.transform = CGAffineTransformMakeScale(1.05f, 1.05f);
     } completion:^(BOOL finished) {
@@ -611,7 +611,7 @@
         }
     }
     
-    [UIView animateWithDuration:0.2f delay:0.2f options:UIViewAnimationCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.2f delay:0.2f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         imageView.alpha = 1.f;
         imageView.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished) {
@@ -640,7 +640,7 @@
         }
     }
     
-    [UIView animateWithDuration:0.1f delay:0.1f options:UIViewAnimationCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.1f delay:0.1f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         imageView.alpha = 1.f;
         imageView.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished) {
@@ -670,7 +670,7 @@
         }
     }
     
-    [UIView animateWithDuration:0.1f delay:0.1f options:UIViewAnimationCurveEaseOut animations:^{
+    [UIView animateWithDuration:0.1f delay:0.1f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         imageView.alpha = 1.f;
         imageView.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished) {
