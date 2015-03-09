@@ -370,7 +370,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     
     NSString *intro = [userModel getuserIntroduction];
-    NSString  *testintroFormat = [intro stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
+    NSString  *testintroFormat = [intro stringByReplacingOccurrencesOfString:@"\n" withString:@"\r\n" ];
     [self.userIntroductionOutlet setNumberOfLines:0];
     [self.userIntroductionOutlet setLineBreakMode:NSLineBreakByWordWrapping];
     CGSize testintrolabelsize = [testintroFormat sizeWithFont:[self.userIntroductionOutlet font] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 120,2000) lineBreakMode:NSLineBreakByWordWrapping];
@@ -381,7 +381,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     
     NSString *workexperience = [userModel getuserExperience];
-    NSString  *workexperienceFormat = [workexperience stringByReplacingOccurrencesOfString:@"\\n" withString:@" \r\n" ];
+    NSString  *workexperienceFormat = [workexperience stringByReplacingOccurrencesOfString:@"\n" withString:@"\r\n" ];
     [self.workexperienceOutlet setNumberOfLines:0];
     [self.workexperienceOutlet setLineBreakMode:NSLineBreakByWordWrapping];
     CGSize testworkexperiencelabelsize = [workexperienceFormat sizeWithFont:[self.workexperienceOutlet font] constrainedToSize:CGSizeMake([UIScreen mainScreen].bounds.size.width - 120,2000) lineBreakMode:NSLineBreakByWordWrapping];
