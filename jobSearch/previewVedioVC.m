@@ -27,6 +27,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
+    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
+    
     NSLog(@"previewVedioVC path = %@",self.vedioPath);
     // Do any additional setup after loading the view from its nib.
     if (self.type.intValue == upload) {

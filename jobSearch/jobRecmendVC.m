@@ -103,7 +103,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     
     for (NSNumber *t in self.jobModel.getjobWorkTime) {
-        if ([t intValue]>0) {
+        if ([t intValue]>=0) {
             int n=[t intValue];
             if (n<21&&n>=0) {
                 selectFreeData[n]=TRUE;
@@ -124,7 +124,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     self.jobDescribleLabelHeightConstraint.constant=rect1.size.height;
     
     //任职要求label
-    CGRect rect2 =[self.jobDescribeLabel.text boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width-16, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]}  context:nil];
+    CGRect rect2 =[self.jobRequireLabel.text boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width-16, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]}  context:nil];
+    
     self.jobRequireLabelHeightConstraint.constant=rect2.size.height;
     
     self.containerViewHeightConstraint.constant=457+rect1.size.height+rect2.size.height;
@@ -161,7 +162,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         self.jobPublishTimeLabel.text=[dateFormatter stringFromDate:self.jobModel.getcreated_at];
         self.jobWorkPeriodLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:self.jobModel.getjobBeginTime],[dateFormatter stringFromDate:self.jobModel.getjobEndTime]];
-        self.jobRecuitNumLabel.text=[NSString stringWithFormat:@"还剩%@人",self.jobModel.getjobRecruitNum];
+        self.jobRecuitNumLabel.text=[NSString stringWithFormat:@"招募%@人",self.jobModel.getjobRecruitNum];
         NSString *settlement;
         NSString *str=[NSString stringWithFormat:@"%@",self.jobModel.getjobSettlementWay];
         
@@ -177,7 +178,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         self.jobSalaryLabel.text=[NSString stringWithFormat:@"%@元/%@",self.jobModel.getjobSalaryRange,settlement];
 
-        self.jobDescribeLabel.text=[NSString stringWithFormat:@"工作描述：%@",self.jobModel.getjobIntroduction];
+        self.jobDescribeLabel.text=[NSString stringWithFormat:@"【工作描述】%@",self.jobModel.getjobIntroduction];
         
         NSString *gender;
         NSString *genStr=[NSString stringWithFormat:@"%@",_jobModel.getjobGenderReq];
@@ -204,8 +205,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }else if ([_jobModel.getjobDegreeReq intValue]==6){
             degree=@"【学历要求】博士及以上";
         }
-        NSString *age=[NSString stringWithFormat:@"年龄要求：%@——%@",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
-        NSString *height=[NSString stringWithFormat:@"身高要求：%@——%@",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
+        NSString *age=[NSString stringWithFormat:@"【年龄要求】%@—%@",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
+        NSString *height=[NSString stringWithFormat:@"【身高要求】%@——%@",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
         
         NSString *textString=[[NSString alloc]init];
         if (age) {

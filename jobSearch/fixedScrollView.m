@@ -20,7 +20,7 @@
         [[self nextResponder] touchesBegan:touches withEvent:event];
     }
     if ([target respondsToSelector:action]) {
-            [target performSelector:action];
+        [target performSelector:@selector(action)];
     }
 }
 /*

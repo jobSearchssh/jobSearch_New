@@ -22,5 +22,5 @@
 - (void)startBookmarkButtonClicked:(UITextField *)textField;
 - (void)finishBookmarkButtonClicked:(UITextField *)textField;
 - (void)routeButtonClicked:(UITextField *)startTextField finishTextField:(UITextField *)finishTextField;
-- (void)niftySearchViewResigend;
+- (void)niftySearchViewResigend:(BOOL)isEmpty;
 @end

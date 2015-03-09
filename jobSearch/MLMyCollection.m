@@ -248,6 +248,9 @@ static  MLMyCollection *thisVC=nil;
     cell.jobTimeLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:jobObject.getjobBeginTime],[dateFormatter stringFromDate:jobObject.getjobEndTime]];
     cell.jobDistance.text=[NSString stringWithFormat:@"%.1fKM",[jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint]];
     int num=[jobObject.getjobRecruitNum intValue]-[jobObject.getjobHasAccepted intValue];
+    if (num<0) {
+        num=0;
+    }
     cell.jobNumberRemainLabel.text=[NSString stringWithFormat:@"还剩%d人",num];
     
     NSString *settlement;

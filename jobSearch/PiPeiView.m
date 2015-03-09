@@ -125,7 +125,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if ([self.jobModel.getjobWorkTime count]>0) {
         
         for (NSNumber *t in self.jobModel.getjobWorkTime) {
-            if ([t intValue]>0) {
+            if ([t intValue]>=0) {
                 int n=[t intValue];
                 if (n<21&&n>=0) {
                     selectFreeData[n]=TRUE;
@@ -165,7 +165,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }else{
             self.entepriseLogoView.image=[UIImage imageNamed:@"placeholder"];
         }
-
         
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -179,7 +178,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.jobPublishTimeLabel.text=[dateFormatter stringFromDate:_jobModel.getcreated_at];
         self.jobWorkPeriodLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:_jobModel.getjobBeginTime],[dateFormatter stringFromDate:_jobModel.getjobEndTime]];
     
-        self.jobRecuitNumLabel.text=[NSString stringWithFormat:@"招募数量：%d/%d人",[_jobModel.getjobHasAccepted intValue],[_jobModel.getjobRecruitNum intValue]];
+        int num=[_jobModel.getjobRecruitNum intValue]-[_jobModel.getjobHasAccepted intValue];
+        if (num<0) {
+            num=0;
+        }
+        
+        self.jobRecuitNumLabel.text=[NSString stringWithFormat:@"剩余名额：%d人",num];
     
         NSString *settlement;
         NSString *str=[NSString stringWithFormat:@"%@",_jobModel.getjobSettlementWay];
@@ -194,7 +198,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.jobSalaryLabel.text=[NSString stringWithFormat:@"%@元",_jobModel.getjobSalaryRange];
         self.jobSettlementWay.text=settlement;
     
-        self.jobDescribleLabel.text=[NSString stringWithFormat:@"工作描述：%@",_jobModel.getjobIntroduction];
+        self.jobDescribleLabel.text=[NSString stringWithFormat:@"【工作描述】%@",_jobModel.getjobIntroduction];
     
         NSString *gender;
         NSString *genStr=[NSString stringWithFormat:@"%@",_jobModel.getjobGenderReq];
@@ -225,11 +229,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
         NSString *age;
         if (_jobModel.getjobAgeStartReq) {
-            age=[NSString stringWithFormat:@"年龄要求：%@—%@岁",_jobModel.getjobAgeStartReq,_jobModel.getjobAgeEndReq];
+            age=[NSString stringWithFormat:@"【年龄要求】%@—%@岁",_jobModel.getjobAgeStartReq,_jobModel.getjobAgeEndReq];
         }
         NSString *height;
         if (_jobModel.getjobHeightStartReq||_jobModel.getjobHeightEndReq) {
-            height=[NSString stringWithFormat:@"身高要求：%@—%@cm",_jobModel.getjobHeightStartReq,_jobModel.getjobHeightEndReq];
+            height=[NSString stringWithFormat:@"【身高要求】%@—%@cm",_jobModel.getjobHeightStartReq,_jobModel.getjobHeightEndReq];
         }
         
         NSString *textString=[[NSString alloc]init];

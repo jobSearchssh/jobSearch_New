@@ -23,6 +23,8 @@
 #import <BmobSDK/Bmob.h>
 #import "badgeNumber.h"
 #import "MLNavigation.h"
+#import "currentUserLocation.h"
+
 
 @interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate,finishFilterDelegate,UINavigationControllerDelegate,showDetailDelegate>
 {
@@ -86,6 +88,9 @@ static  MLFirstVC *thisVC=nil;
             [self.messageItem setBadgeValue:[NSString stringWithFormat:@"%@",bn.messageCount]];
         else
             self.messageItem.badgeValue=nil;
+    }else if ([keyPath isEqual:@"currentUserLocation"]){
+        currentUserLocation *cul=[currentUserLocation sharedInstance];
+        NSLog(@"%f  %f",cul.currentUserLocation.longitude,cul.currentUserLocation.latitude);
     }
 }
 
@@ -108,6 +113,10 @@ static  MLFirstVC *thisVC=nil;
     badgeNumber*bn=[badgeNumber sharedInstance];
 
     [bn addObserver:self forKeyPath:@"messageCount" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
+    
+    currentUserLocation *cul=[currentUserLocation sharedInstance];
+    [cul addObserver:self forKeyPath:@"currentUserLocation" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
+
     
     //初始化参数
     refreshAdded=NO;
@@ -419,6 +428,7 @@ static  MLFirstVC *thisVC=nil;
                     [self.view addSubview:mapView];
                 }
                 mapDisplaying=YES;
+                [mapView removeAllAnnotations];
                 [self addannotations];
                 [UIView animateWithDuration:0.4 animations:^{
                     mapView.alpha=1.0f;
@@ -497,6 +507,7 @@ static  MLFirstVC *thisVC=nil;
                 [self.view addSubview:mapView];
             }
             mapDisplaying=YES;
+            [mapView removeAllAnnotations];
             [self addannotations];
             [UIView animateWithDuration:0.4 animations:^{
                 mapView.alpha=1.0f;
@@ -564,12 +575,12 @@ static  MLFirstVC *thisVC=nil;
 //*********************ActionSheet********************//
 - (void)sort{
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:@"请选择排序类型"
+                                  initWithTitle:@"排序类型"
                                   delegate:self
                                   cancelButtonTitle:@"取消"
                                   destructiveButtonTitle:nil
                                   otherButtonTitles: @"距离最近", @"最新发布",nil];
-
+    
     [actionSheet showInView:self.view];
 }
 
@@ -638,13 +649,18 @@ static  MLFirstVC *thisVC=nil;
     //NSLog(@"finishBookmarkButtonClicked");
 }
 
-- (void)niftySearchViewResigend
+- (void)niftySearchViewResigend:(BOOL)isEmpty
 {
-    [self hideSearchBar:self];
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        searchView.alpha=0.0f;
-    }];
+    if (!isEmpty) {
+        [self hideSearchBar:self];
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            searchView.alpha=0.0f;
+        }];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入关键字" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 - (void)routeButtonClicked:(UITextField *)startTextField finishTextField:(UITextField *)finishTextField
@@ -705,6 +721,9 @@ static  MLFirstVC *thisVC=nil;
     cell.jobDistance.text=[NSString stringWithFormat:@"%.1fKM",[jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint]];
     
     int num=[jobObject.getjobRecruitNum intValue]-[jobObject.getjobHasAccepted intValue];
+    if (num<0) {
+        num=0;
+    }
     
     NSString *settlement;
     NSString *str=[NSString stringWithFormat:@"%@",jobObject.getjobSettlementWay];
@@ -894,7 +913,7 @@ static  MLFirstVC *thisVC=nil;
     [[AJLocationManager shareLocation] getLocationCoordinate:^(CLLocationCoordinate2D locationCorrrdinate) {
         
         locationCoord=locationCorrrdinate;
-        
+        NSLog(@"%f  %f",locationCoord.longitude,locationCoord.latitude);
         [mySettingData setObject:NSStringFromCGPoint(CGPointMake(locationCorrrdinate.longitude, locationCorrrdinate.latitude)) forKey:@"currentCoordinate"];
         [mySettingData synchronize];
         
@@ -908,9 +927,9 @@ static  MLFirstVC *thisVC=nil;
         }else{
             locationCoord=CLLocationCoordinate2DMake(38.92, 116.46);
         }
-
     }];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

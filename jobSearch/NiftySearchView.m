@@ -117,12 +117,20 @@
         return FALSE;
     } else if (textField == finishTextField) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(routeButtonClicked:finishTextField:)]) {
-            [self.startTextField resignFirstResponder];
-            [self.finishTextField resignFirstResponder];
-            if (self.delegate && [self.delegate respondsToSelector:@selector(niftySearchViewResigend)]) {
-                [self.delegate niftySearchViewResigend];
+            if ([textField.text length]!=0) {
+                [self.startTextField resignFirstResponder];
+                [self.finishTextField resignFirstResponder];
+                if (self.delegate && [self.delegate respondsToSelector:@selector(niftySearchViewResigend:)]) {
+                    [self.delegate niftySearchViewResigend:NO];
+                }
+                [self.delegate routeButtonClicked:startTextField finishTextField:finishTextField];
             }
-            [self.delegate routeButtonClicked:startTextField finishTextField:finishTextField];
+            else{
+                if (self.delegate && [self.delegate respondsToSelector:@selector(niftySearchViewResigend:)]) {
+                    [self.delegate niftySearchViewResigend:YES];
+                }
+            }
+            
         }
     }
     return TRUE;

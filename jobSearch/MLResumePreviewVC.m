@@ -207,7 +207,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     UIImage *temp = [self scaleToSize:[UIImage imageNamed:@"placeholder"] size:size];
     
     
-    for (NSString *url in sourceImagesURL) {
+//    for (NSString *url in sourceImagesURL) {
+//        [sourceImages addObject:temp];
+//    }
+    
+    for (int i=0; i<[sourceImagesURL count]; i++) {
         [sourceImages addObject:temp];
     }
     
@@ -496,6 +500,19 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     return cell;
 };
+
+- (IBAction)previewVedio:(id)sender {
+    if ([[self.mainUserModel getuserVideoURL] length]>4) {
+        previewVedioVC *vc = [[previewVedioVC alloc]init];
+        vc.vedioPath = [self.mainUserModel getuserVideoURL];
+        vc.type = [NSNumber numberWithInt:preview];
+        vc.title = @"我的视频介绍";
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        [MBProgressHUD showSuccess:@"您还没有录制个人视频哦" toView:self.view];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

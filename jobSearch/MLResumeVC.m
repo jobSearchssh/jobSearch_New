@@ -219,6 +219,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     self.nameoutlet.delegate = self;
     self.iphoneOutlet.delegate = self;
+    self.iphoneOutlet.tag=1001;
     self.identityCardNumOutlet.delegate=self;
     self.heightOutlet.delegate = self;
     self.detailAddressTextfield.delegate=self;
@@ -226,6 +227,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.nameoutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     //text上移
     [self.iphoneOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    
     //text上移
     [self.heightOutlet addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
     
@@ -461,9 +463,26 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         geoModel *userGeo=[[geoModel alloc]initWith:p.x lat:p.y];
         [self.usermodel setuserLocationGeo:userGeo];
     }
-    
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    if (textField.tag==1001) {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"修改手机号后登录账户名也会改变，是否要修改？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alert.tag=1001;
+        [alert show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag==1001) {
+        if (buttonIndex==0) {
+            [self.iphoneOutlet resignFirstResponder];
+            CGPoint offset = CGPointMake(self.scrollviewOutlet.contentOffset.x,0);
+            [self.scrollviewOutlet setContentOffset:offset animated:YES];
+        }
+    }
+}
 //-(void)returnResume{
 //    UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"是否保存简历" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"返回",@"保存",nil];
 //    alterTittle.tag = 0;
@@ -472,13 +491,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 #pragma marks -- UIAlertViewDelegate --
 //根据被点击按钮的索引处理点击事件
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    
-    if (alertView.tag == 0) {
-        NSLog(@"clickButtonAtIndex:%ld",(long)buttonIndex);
-    }
-}
+//-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+//    
+//    if (alertView.tag == 0) {
+//        NSLog(@"clickButtonAtIndex:%ld",(long)buttonIndex);
+//    }
+//}
 
 
 - (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
@@ -1150,11 +1168,15 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             return;
         }
         if (buttonIndex == 1) {
-            previewVedioVC *vc = [[previewVedioVC alloc]init];
-            vc.vedioPath = [self.usermodel getuserVideoURL];
-            vc.type = [NSNumber numberWithInt:preview];
-            vc.title = @"我的视频介绍";
-            [self.navigationController pushViewController:vc animated:YES];
+            if ([[self.usermodel getuserVideoURL] length]>4) {
+                previewVedioVC *vc = [[previewVedioVC alloc]init];
+                vc.vedioPath = [self.usermodel getuserVideoURL];
+                vc.type = [NSNumber numberWithInt:preview];
+                vc.title = @"我的视频介绍";
+                [self.navigationController pushViewController:vc animated:YES];
+            }else{
+                [MBProgressHUD showSuccess:@"您还没有录制视频介绍哦" toView:self.view];
+            }
             return;
         }
     }

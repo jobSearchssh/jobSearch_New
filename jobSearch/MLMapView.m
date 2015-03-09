@@ -8,6 +8,7 @@
 
 #import "MLMapView.h"
 #import "CustomAnnotationView.h"
+#import "currentUserLocation.h"
 
 @implementation MLMapView
 @synthesize mapView=_mapView;
@@ -24,6 +25,7 @@
         _mapView.delegate = self;
         pointAnnoArray=[[NSMutableArray alloc]init];
         firstLoad=YES;
+        requestUserLocation=NO;
     }
     return self;
 }
@@ -89,16 +91,27 @@
 
 -(void)mapView:(MAMapView*)mapView didUpdateUserLocation:(MAUserLocation *)userLocation updatingLocation:(BOOL)updatingLocation
 {
-    if (firstLoad) {
+    if (requestUserLocation) {
+        currentUserLocation *cul=[currentUserLocation sharedInstance];
+        cul.currentUserLocation=userLocation.coordinate;
+        requestUserLocation=NO;
+        _mapView.showsUserLocation=NO;
+    }else if (firstLoad) {
         _mapView.region = MACoordinateRegionMake([_mapView userLocation].coordinate,MACoordinateSpanMake(0.05, 0.05));
         firstLoad=NO;
     }
 }
 
 -(void)mapView:(MAMapView *)mapView didFailToLocateUserWithError:(NSError *)error{
-    NSLog(@"fail to update location");
+    requestUserLocation=NO;
+    _mapView.showsUserLocation=NO;
 }
 
+//主动请求定位
+- (void)setShowUserLocation:(BOOL)isShow{
+    requestUserLocation=YES;
+    _mapView.showsUserLocation=isShow;
+}
 
 - (void)removeAllAnnotations{
     [_mapView removeAnnotations:pointAnnoArray];
