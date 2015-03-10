@@ -96,7 +96,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         
         if ([userReturnModel getStatus].intValue == STATIS_OK) {
-            [MBProgressHUD showSuccess:@"简历更新成功" toView:self.view];
+            [MBProgressHUD showSuccess:REMUMEUPDATESUCCESS toView:self.view];
             
             if ([[self.mainUserModel getImageFileURL] count]>0) {
                 RESideMenu *sideMenu=[RESideMenu sharedInstance];
@@ -143,14 +143,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             if ([userModel getStatus].intValue == STATIS_OK) {
                 [self initfromNet:userModel];
             }else{
-                UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:userModel.getInfo delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"立刻填写",nil];
+                UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:ALERTVIEW_TITLE message:userModel.getInfo delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:FILLRESUMENOW,nil];
                 alterTittle.tag=101;
                 [alterTittle show];
             }
         }];
     }else{
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:NOTLOGIN message:ASKTOLOGIN delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:LOGIN, nil];
         [loginAlert show];
     }
 }
@@ -418,7 +418,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
     }
     else{
-        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:NOTLOGIN message:ASKTOLOGIN delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:LOGIN, nil];
         [loginAlert show];
     }
 }
@@ -506,10 +506,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         previewVedioVC *vc = [[previewVedioVC alloc]init];
         vc.vedioPath = [self.mainUserModel getuserVideoURL];
         vc.type = [NSNumber numberWithInt:preview];
-        vc.title = @"我的视频介绍";
+        vc.title = VEDIOVCTITLE;
         [self.navigationController pushViewController:vc animated:YES];
     }else{
-        [MBProgressHUD showSuccess:@"您还没有录制个人视频哦" toView:self.view];
+        [MBProgressHUD showSuccess:NOVEDIO toView:self.view];
     }
 }
 

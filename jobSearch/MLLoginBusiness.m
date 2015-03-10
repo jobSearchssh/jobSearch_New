@@ -22,7 +22,7 @@
             
             [self saveUserInfoLocallyWithUserName:username userObjectId:registerModel.getUsrID logoUrl:nil];
             
-            [self registerIsSucceed:YES feedback:@"注册成功"];
+            [self registerIsSucceed:YES feedback:REGISTERSUCCESS];
             
         }else{
             NSString *error=registerModel.getInfo;
@@ -44,7 +44,7 @@
         if ([loginModel.getStatus intValue]==0) {
             
             [self saveUserInfoLocallyWithUserName:username userObjectId:loginModel.getUsrID logoUrl:loginModel.getusrLogoUrl];
-            [self loginIsSucceed:YES feedback:@"登录成功" logoUrl:loginModel.getusrLogoUrl];
+            [self loginIsSucceed:YES feedback:LOGINSUCCESS logoUrl:loginModel.getusrLogoUrl];
             
             //刷新消息条目
             [[badgeNumber sharedInstance] refreshCount];
@@ -62,7 +62,7 @@
     
     [netAPI usrResetPassword:username usrPassword:pwd withBlock:^(oprationResultModel *oprationResultModel) {
         if ([oprationResultModel.getStatus intValue]==0) {
-            [self.resetResultDelegate resetPassword:YES Feedback:@"修改成功"];
+            [self.resetResultDelegate resetPassword:YES Feedback:PASSWORDEDITSUCCESS];
         }else{
             [self.resetResultDelegate resetPassword:NO Feedback:oprationResultModel.getInfo];
         }

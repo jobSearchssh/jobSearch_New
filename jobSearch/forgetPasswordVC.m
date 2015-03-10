@@ -11,6 +11,7 @@
 #import "MBProgressHUD.h"
 #import "MBProgressHUD+Add.h"
 #import "MLLoginBusiness.h"
+#import "MLTextUtils.h"
 
 @interface forgetPasswordVC ()<UITextFieldDelegate,resetPasswordResult,UIAlertViewDelegate>
 {
@@ -151,24 +152,24 @@
             
             [NSThread detachNewThreadSelector:@selector(initTimer) toTarget:self withObject:nil];
             
-            [MBProgressHUD showSuccess:@"验证码已发送" toView:self.view];
+            [MBProgressHUD showSuccess:MESSAGESENTSUCCESS toView:self.view];
             
         }
         else if(0==state)
         {
-            [MBProgressHUD showError:@"验证码获取失败" toView:self.view];
+            [MBProgressHUD showError:MESSAGESENTFAIL toView:self.view];
             self.sendMsgButton.enabled=YES;
             [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]];
         }
         else if (SMS_ResponseStateMaxVerifyCode==state)
         {
-            [MBProgressHUD showError:@"验证码申请次数超限" toView:self.view];
+            [MBProgressHUD showError:MESSAGELIMIT toView:self.view];
             self.sendMsgButton.enabled=YES;
             [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]];
         }
         else if(SMS_ResponseStateGetVerifyCodeTooOften==state)
         {
-            [MBProgressHUD showError:@"对不起，你的操作太频繁啦" toView:self.view];
+            [MBProgressHUD showError:MESSAGENOTALLOW toView:self.view];
             self.sendMsgButton.enabled=YES;
             [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]];
         }
@@ -216,7 +217,7 @@
         [loginer resetPasswordInBackground:inputUserPhoneNumber Password:inputUserPassword1];
     }
     else{
-        [MBProgressHUD showError:@"两次输入的密码不一致" toView:self.view];
+        [MBProgressHUD showError:PASSWORDNOTSAME toView:self.view];
     }
 }
 
@@ -225,7 +226,7 @@
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     
     if (isSucceed) {
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"密码设置成功" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:PASSWORDEDITSUCCESS message:nil delegate:self cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil, nil];
         alertView.tag=1;
         [alertView show];
     }else{
@@ -284,12 +285,12 @@
             }
             else if(0==state)
             {
-                [MBProgressHUD showError:@"验证码错误" toView:self.view];
+                [MBProgressHUD showError:VERIFYCODEWRONG toView:self.view];
             }
         }];
     }
     else{
-        [MBProgressHUD showError:@"请输入正确的手机号和验证码" toView:self.view];
+        [MBProgressHUD showError:ENTERPHONEANDCODE toView:self.view];
     }
     
 }

@@ -233,7 +233,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
         NSString *height;
         if (_jobModel.getjobHeightStartReq||_jobModel.getjobHeightEndReq) {
-            height=[NSString stringWithFormat:@"【身高要求】%@—%@cm",_jobModel.getjobHeightStartReq,_jobModel.getjobHeightEndReq];
+            if ([self.jobModel.getjobHeightStartReq intValue]>[self.jobModel.getjobHeightEndReq intValue]) {
+                height=[NSString stringWithFormat:@"【身高要求】%@cm以上",self.jobModel.getjobHeightStartReq];
+            }else{
+                height=[NSString stringWithFormat:@"【身高要求】%@—%@cm",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
+            }
         }
         
         NSString *textString=[[NSString alloc]init];

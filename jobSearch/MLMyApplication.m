@@ -28,6 +28,8 @@
     
     //页数
     int skipTimes;
+    
+    BOOL FirstAdded;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic)BOOL inBackground;;
@@ -47,6 +49,17 @@ static  MLMyApplication *thisVC=nil;
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    
+    if (self.autoFreshing) {
+        if (FirstAdded)
+            FirstAdded=NO;
+        else{
+            firstLoad=YES;
+            [self headRefreshData];
+        }
+        self.autoFreshing=NO;
+    }
+
     [[badgeNumber sharedInstance] refreshCount];
 }
 
@@ -62,9 +75,11 @@ static  MLMyApplication *thisVC=nil;
     footerRefreshing=NO;
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM月dd日"];
-
+    
+    FirstAdded=YES;
     [self tableViewInit];
 }
+
 
 - (void)finishLogin{
     firstLoad=YES;
@@ -106,7 +121,11 @@ static  MLMyApplication *thisVC=nil;
             [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
         }
         
-        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        [recordArray removeAllObjects];
+        cellNum=0;
+        [_tableView reloadData];
+        
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:NOTLOGIN message:ASKTOLOGIN delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:LOGIN, nil];
         [loginAlert show];
     }
 }
@@ -124,7 +143,7 @@ static  MLMyApplication *thisVC=nil;
     }];
     }
     else{
-        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:NOTLOGIN message:ASKTOLOGIN delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:LOGIN, nil];
         [loginAlert show];
     }
 }
@@ -165,7 +184,7 @@ static  MLMyApplication *thisVC=nil;
         }else{
             
             if ([jobListModel.getjobAppliedArray count]==0) {
-                [MBProgressHUD showError:@"没有更多数据啦" toView:self.view];
+                [MBProgressHUD showError:NOMOREDATA toView:self.view];
             }else{
                 for (id object in jobListModel.getjobAppliedArray) {
                     [recordArray addObject:object];
@@ -184,9 +203,7 @@ static  MLMyApplication *thisVC=nil;
                 [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
 
             }
-            
-            
-            }
+        }
     }
     
     else{
@@ -199,7 +216,7 @@ static  MLMyApplication *thisVC=nil;
         }else{
 
             if ([jobListModel.getjobAppliedArray count]==0){
-                [MBProgressHUD showError:@"您没有申请记录哦" toView:self.view];
+                [MBProgressHUD showError:NOAPPLYDATA toView:self.view];
             }else{
             
                 [recordArray removeAllObjects];

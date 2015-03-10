@@ -17,6 +17,7 @@
 #import "RESideMenu.h"
 #import "forgetPasswordVC.h"
 #import "MLLeagal1.h"
+#import "MLTextUtils.h"
 
 static NSString *usrAccountText = @"usrAccountText";
 static NSString *usrPhoneText = @"usrPhoneText";
@@ -252,9 +253,9 @@ static  MLLoginVC *thisVC=nil;
 - (IBAction)touchLoginBtn:(id)sender {
    
     if ([inputUserAccount length]==0) {
-        [MBProgressHUD showError:@"请输入手机号码" toView:self.view];
+        [MBProgressHUD showError:ENTERPHONE toView:self.view];
     }else if ([inputUserPassword length]==0){
-        [MBProgressHUD showError:@"请输入登陆密码" toView:self.view];
+        [MBProgressHUD showError:ENTERPASSWORD toView:self.view];
     }else{
         
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -277,10 +278,10 @@ static  MLLoginVC *thisVC=nil;
             NSString *currentUsrName=[mySettingData objectForKey:@"currentUserName"];
             RESideMenu* _sideMenu=[RESideMenu sharedInstance];
             
-            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:@"点击退出" ImageUrl:logoUrl];
+            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:TOUCHLOGOUT ImageUrl:logoUrl];
         }
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"登录成功" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LOGINSUCCESS message:nil delegate:self cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
         [alert show];
     }
     else{
@@ -301,10 +302,10 @@ static  MLLoginVC *thisVC=nil;
             NSString *currentUsrName=[mySettingData objectForKey:@"currentUserName"];
             RESideMenu* _sideMenu=[RESideMenu sharedInstance];
             
-            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:@"点击退出" ImageUrl:nil];
+            [_sideMenu setTableItem:0 Title:currentUsrName Subtitle:TOUCHLOGOUT ImageUrl:nil];
         }
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:REGISTERSUCCESS message:nil delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
         alert.delegate=self;
         [alert show];
     }
@@ -379,25 +380,25 @@ static  MLLoginVC *thisVC=nil;
             
             [NSThread detachNewThreadSelector:@selector(initTimer) toTarget:self withObject:nil];
             
-            [MBProgressHUD showSuccess:@"验证码已发送" toView:self.view];
+            [MBProgressHUD showSuccess:MESSAGESENTSUCCESS toView:self.view];
             
             verifiedPhoneNumber=inputUserPhoneNumber;
         }
         else if(0==state)
         {
-            [MBProgressHUD showError:@"验证码获取失败" toView:self.view];
+            [MBProgressHUD showError:MESSAGESENTFAIL toView:self.view];
             self.sendMsgButton.enabled=YES;
             [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]];
         }
         else if (SMS_ResponseStateMaxVerifyCode==state)
         {
-            [MBProgressHUD showError:@"验证码申请次数超限" toView:self.view];
+            [MBProgressHUD showError:MESSAGELIMIT toView:self.view];
             self.sendMsgButton.enabled=YES;
             [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]];
         }
         else if(SMS_ResponseStateGetVerifyCodeTooOften==state)
         {
-            [MBProgressHUD showError:@"对不起，你的操作太频繁啦" toView:self.view];
+            [MBProgressHUD showError:MESSAGENOTALLOW toView:self.view];
             self.sendMsgButton.enabled=YES;
             [self.sendMsgButton setBackgroundColor:[UIColor colorWithRed:174.0/255.0 green:197.0/255.0 blue:80.0/255.0 alpha:1.0]];
         }
@@ -451,7 +452,7 @@ static  MLLoginVC *thisVC=nil;
         {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             self.registerButton.enabled=YES;
-            [MBProgressHUD showError:@"验证码错误" toView:self.view];
+            [MBProgressHUD showError:VERIFYCODEWRONG toView:self.view];
         }
     }];
     
@@ -464,23 +465,23 @@ static  MLLoginVC *thisVC=nil;
         NSString*alertString;
 
         if (!agree){
-            alertString=@"您未同意用户使用协议";
+            alertString=NOTAGREE;
 
         }
         if (![inputUserPassword1 isEqualToString:inputUserPassword2]) {
-            alertString=@"两次输入密码不一致";
+            alertString=PASSWORDNOTSAME;
 
         }
         if ([inputSecurityCode length]==0) {
-            alertString=@"请输入手机验证码";
+            alertString=ENTERVERIFYCODE;
 
         }
         if (inputUserPhoneNumber.length!=11) {
-            alertString=@"手机号码不正确";
+            alertString=PHONEWRONG;
         }
         
         if (![inputUserPhoneNumber isEqualToString:verifiedPhoneNumber]) {
-            alertString=@"手机号码不正确";
+            alertString=PHONEWRONG;
         }
         
         [MBProgressHUD showError:alertString toView:self.view];

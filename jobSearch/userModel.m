@@ -7,6 +7,7 @@
 //
 
 #import "userModel.h"
+#import "MLTextUtils.h"
 
 @implementation userModel
 
@@ -136,7 +137,7 @@
         }
         if (!flag) {
             status = [NSNumber numberWithInt:STATIS_NO];
-            info = @"解析错误,请重新尝试";
+            info = ANALYZE_ERROR;
         }
     }
     return self;

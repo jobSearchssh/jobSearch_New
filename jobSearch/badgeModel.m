@@ -7,6 +7,7 @@
 //
 
 #import "badgeModel.h"
+#import "MLTextUtils.h"
 
 @implementation badgeModel
 
@@ -36,7 +37,7 @@
         }
         if (!flag) {
             status = [NSNumber numberWithInt:STATIS_NO];
-            info = @"解析错误,请重新尝试";
+            info = ANALYZE_ERROR;
         }
         
         if (flag && status.intValue == STATIS_OK) {
@@ -46,7 +47,7 @@
                     dictionary = [a objectForKey:@"count"];
                 }
                 @catch (NSException *exception) {
-                    NSLog(@"datas 解析不成功");
+                    NSLog(ANALYZE_ERROR);
                     dictionary = Nil;
                     flag = false;
                 }
@@ -72,7 +73,7 @@
         }
         if (!flag) {
             status = [NSNumber numberWithInt:STATIS_NO];
-            info = @"解析错误,请重新尝试";
+            info = ANALYZE_ERROR;
         }
     }
     return self;

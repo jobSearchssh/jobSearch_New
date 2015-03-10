@@ -7,6 +7,7 @@
 //
 
 #import "jobApplyModel.h"
+#import "MLTextUtils.h"
 
 @implementation jobApplyModel
 -(jobApplyModel *)initWithData:(NSData *)mainData{
@@ -45,7 +46,7 @@
         }
         if (!flag) {
             status = [NSNumber numberWithInt:BASE_FAILED];
-            info = @"解析错误,请重新尝试";
+            info = ANALYZE_ERROR;
         }
     }
     return self;

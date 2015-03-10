@@ -63,6 +63,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title=@"职位详情";
+    
     if ([self.origin isEqualToString:@"1"]) {
         self.applyButton.hidden=YES;
         self.phoneLabel.hidden=YES;
@@ -86,7 +88,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     [self initData];
     [self timeCollectionViewInit];
-    
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -110,11 +111,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if ([self.origin isEqualToString:@"2"]) {
  
         if (self.contactPhoneNumber) {
-            UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"打电话给企业",@"发短信给企业", nil];
+            UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON destructiveButtonTitle:nil otherButtonTitles:CALLENTERPRISE,MESSAGEENTERPRISE, nil];
             [actionSheet showInView:self.view];
             
         }else{
-            [MBProgressHUD showError:@"该企业暂未提供联系方式" toView:self.view];
+            [MBProgressHUD showError:ENTERPRISENOPHONE toView:self.view];
         }
         
     }else{
@@ -132,11 +133,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             }
             else
             {
-                [MBProgressHUD showSuccess:@"申请成功" toView:self.view];
+                [MBProgressHUD showSuccess:APPLYSUCCESS toView:self.view];
             }
         }];
         }else{
-            UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+            UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:NOTLOGIN message:ASKTOLOGIN delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:LOGIN, nil];
             [loginAlert show];
         }
     }
@@ -288,7 +289,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
 
         NSString *age=[NSString stringWithFormat:@"【年龄要求】%@—%@岁",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
-        NSString *height=[NSString stringWithFormat:@"【身高要求】%@—%@cm",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
+        
+        NSString *height;
+        if ([self.jobModel.getjobHeightStartReq intValue]>[self.jobModel.getjobHeightEndReq intValue]) {
+            height=[NSString stringWithFormat:@"【身高要求】%@cm以上",self.jobModel.getjobHeightStartReq];
+        }else{
+            height=[NSString stringWithFormat:@"【身高要求】%@—%@cm",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
+        }
+        
         
         NSString *textString=[[NSString alloc]init];
         if (age) {
@@ -341,11 +349,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                 
                                 if (state == SSResponseStateSuccess)
                                 {
-                                    [MBProgressHUD showSuccess:@"分享成功" toView:self.view];
+                                    [MBProgressHUD showSuccess:SHARESUCCESS toView:self.view];
                                 }
                                 else if (state == SSResponseStateFail)
                                 {
-                                    [MBProgressHUD showError:@"分享失败" toView:self.view];
+                                    [MBProgressHUD showError:SHAREFAIL toView:self.view];
                                 }
                             }];
 }
@@ -399,11 +407,11 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             [MBProgressHUD showError:err toView:self.view];
         }
         else{
-            [MBProgressHUD showSuccess:@"收藏成功" toView:self.view];
+            [MBProgressHUD showSuccess:COLLOTESUCCESS toView:self.view];
         }
     }];
     }else{
-        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:NOTLOGIN message:ASKTOLOGIN delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:LOGIN, nil];
         [loginAlert show];
     }
 }

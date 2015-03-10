@@ -12,7 +12,6 @@
 #import "MLFirstVC.h"
 #import "MLMyCollection.h"
 #import "MLMyApplication.h"
-#import "MLProfileVC.h"
 #import "MLLoginVC.h"
 #import "MLMatchVC.h"
 #import "MLResumePreviewVC.h"
@@ -138,6 +137,7 @@
         
         RESideMenuItem *savedItem = [[RESideMenuItem alloc] initWithTitle:@"我的收藏" setFlag:NORMALCELL image:[UIImage imageNamed:@"collection"] highlightedImage:[UIImage imageNamed:@"collection"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             MLMyCollection *secondViewController = [MLMyCollection sharedInstance];
+            secondViewController.autoFreshing=YES;
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:secondViewController];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;
@@ -151,6 +151,7 @@
         RESideMenuItem *applicationItem = [[RESideMenuItem alloc] initWithTitle:@"我的申请" setFlag:NORMALCELL image:[UIImage imageNamed:@"apply"] highlightedImage:[UIImage imageNamed:@"apply"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             
             MLMyApplication *_profilehVC=[MLMyApplication sharedInstance];
+            _profilehVC.autoFreshing=YES;
             MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:_profilehVC];
             navigationController.navigationBar.translucent = NO;
             navigationController.tabBarController.tabBar.translucent = NO;

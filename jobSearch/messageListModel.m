@@ -7,6 +7,7 @@
 //
 
 #import "messageListModel.h"
+#import "MLTextUtils.h"
 
 @implementation messageListModel
 -(messageListModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error{
@@ -91,7 +92,7 @@
         
         if (!flag) {
             status = [NSNumber numberWithInt:BASE_FAILED];
-            info = @"解析错误,请重新尝试";
+            info = ANALYZE_ERROR;
         }
     }
     return self;

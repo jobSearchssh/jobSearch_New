@@ -99,7 +99,7 @@ static  MLFirstVC *thisVC=nil;
     
     self.topConstraint.constant=0;
     
-    self.title=@"附近的职位";
+    self.title=NEARBYJOB;
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
@@ -204,7 +204,7 @@ static  MLFirstVC *thisVC=nil;
             if (abs(locationCoord.latitude-99999.99)<0.001) {
                 [self.tableView footerEndRefreshing];
                 
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LOCATIONFAIL message:CHECKLOCATION delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
                 [alert show];
             }else{
                 [netAPI getNearByJobs:@"nearest" longtitude:locationCoord.longitude latitude:locationCoord.latitude start:skipTimes*BASE_SPAN+1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
@@ -224,7 +224,7 @@ static  MLFirstVC *thisVC=nil;
         else if ([searchType isEqualToString:@"keyword"]){
             if ([keyWord length]<1) {
                 [self.tableView footerEndRefreshing];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入关键字" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:ENTERKEYWORD message:nil delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
                 [alert show];
             }else{
                 [netAPI getJobByKeyWord:@"keyword" start:skipTimes*BASE_SPAN+1 length:BASE_SPAN keyWord:keyWord withBlock:^(jobListModel *jobListModel) {
@@ -237,7 +237,7 @@ static  MLFirstVC *thisVC=nil;
             if ([jobTypeArray count]==0) {
                 if (abs(locationCoord.latitude-99999.99)<0.001) {
                     [self.tableView footerEndRefreshing];
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LOCATIONFAIL message:CHECKLOCATION delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
                     [alert show];
                 }else{
                     [netAPI getJobByDistance:@"distance" longtitude:locationCoord.longitude latitude:locationCoord.latitude start:skipTimes*BASE_SPAN+1 length:BASE_SPAN distance:distance withBlock:^(jobListModel *jobListModel) {
@@ -247,7 +247,7 @@ static  MLFirstVC *thisVC=nil;
             }else{
                 if (abs(locationCoord.latitude-99999.99)<0.001) {
                     [self.tableView footerEndRefreshing];
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LOCATIONFAIL message:CHECKLOCATION delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
                     [alert show];
                 }else{
                     [netAPI getJobByTypeAndDistance:@"distanceAndType" start:skipTimes*BASE_SPAN+1 length:BASE_SPAN longtitude:locationCoord.longitude latitude:locationCoord.latitude distance:distance jobType:jobTypeArray withBlock:^(jobListModel *jobListModel) {
@@ -266,7 +266,7 @@ static  MLFirstVC *thisVC=nil;
                 [self.tableView headerEndRefreshing];
                 [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
                 firstLoad=NO;
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LOCATIONFAIL message:CHECKLOCATION delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
                 [alert show];
             }else{
                 [netAPI getNearByJobs:@"nearby" longtitude:locationCoord.longitude latitude:locationCoord.latitude start:1 length:BASE_SPAN withBlock:^(jobListModel *jobListModel) {
@@ -286,7 +286,7 @@ static  MLFirstVC *thisVC=nil;
                 firstLoad=NO;
                 [self.tableView headerEndRefreshing];
                 [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入关键字" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:ENTERKEYWORD message:nil delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
                 [alert show];
             }else{
                 [netAPI getJobByKeyWord:@"keyword" start:1 length:BASE_SPAN keyWord:keyWord withBlock:^(jobListModel *jobListModel) {
@@ -301,12 +301,12 @@ static  MLFirstVC *thisVC=nil;
                     firstLoad=NO;
                     [self.tableView headerEndRefreshing];
                     [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LOCATIONFAIL message:CHECKLOCATION delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
                     [alert show];
                 }else{
                     if (abs(locationCoord.latitude-99999.99)<0.001) {
                         [self.tableView footerEndRefreshing];
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LOCATIONFAIL message:CHECKLOCATION delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
                         [alert show];
                     }else{
                         [netAPI getJobByDistance:@"distance" longtitude:locationCoord.longitude latitude:locationCoord.latitude start:1 length:BASE_SPAN distance:distance withBlock:^(jobListModel *jobListModel) {
@@ -319,12 +319,12 @@ static  MLFirstVC *thisVC=nil;
                     firstLoad=NO;
                     [self.tableView headerEndRefreshing];
                     [MBProgressHUD hideAllHUDsForView:_tableView animated:YES];
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LOCATIONFAIL message:CHECKLOCATION delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
                     [alert show];
                 }else{
                     if (abs(locationCoord.latitude-99999.99)<0.001) {
                         [self.tableView footerEndRefreshing];
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位失败" message:@"请检查是否已打开定位功能" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LOCATIONFAIL message:CHECKLOCATION delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
                         [alert show];
                     }else{
                         [netAPI getJobByTypeAndDistance:@"distanceAndType" start:1 length:BASE_SPAN longtitude:locationCoord.longitude latitude:locationCoord.latitude distance:distance jobType:jobTypeArray withBlock:^(jobListModel *jobListModel) {
@@ -376,7 +376,7 @@ static  MLFirstVC *thisVC=nil;
         }else{
             
             if ([jobListModel.getJobArray count]<1) {
-                [MBProgressHUD showError:@"没有更多啦" toView:self.view];
+                [MBProgressHUD showError:NOMOREDATA toView:self.view];
             }else{
                 
             for (id object in jobListModel.getJobArray) {
@@ -402,12 +402,12 @@ static  MLFirstVC *thisVC=nil;
         
         if (![jobListModel.getStatus intValue]==0) {
             
-            [MBProgressHUD showError:@"信息加载失败" toView:self.view];
+            [MBProgressHUD showError:DOWNLOADFAIL toView:self.view];
 
         }else{
             
             if ([jobListModel.getJobArray count]<1) {
-                [MBProgressHUD showError:@"没有找到匹配的职位哦" toView:self.view];
+                [MBProgressHUD showError:NOMATCHJOB toView:self.view];
                 searchType=@"newest";
             }else{
             
@@ -658,7 +658,7 @@ static  MLFirstVC *thisVC=nil;
             searchView.alpha=0.0f;
         }];
     }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入关键字" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:ENTERKEYWORD message:nil delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
         [alert show];
     }
 }

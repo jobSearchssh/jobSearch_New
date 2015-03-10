@@ -7,6 +7,7 @@
 //
 
 #import "loginModel.h"
+#import "MLTextUtils.h"
 
 @implementation loginModel
 
@@ -82,7 +83,7 @@
         
         if (!flag) {
             status = [NSNumber numberWithInt:STATIS_NO];
-            info = @"解析错误,请重新尝试";
+            info = ANALYZE_ERROR;
             usrID = @"-1";
             usrLogoUrl=nil;
         }

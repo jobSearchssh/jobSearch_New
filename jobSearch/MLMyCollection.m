@@ -13,7 +13,7 @@
 #import "MBProgressHUD+Add.h"
 #import "MJRefresh.h"
 #import "MLLoginVC.h"
-
+#import "MLTextUtils.h"
 
 @interface MLMyCollection ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,finishLoginDelegate>
 {
@@ -28,7 +28,7 @@
     //页数
     int skipTimes;
     
-    BOOL NotFirstRefresh;
+    BOOL FirstAdded;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -61,7 +61,23 @@ static  MLMyCollection *thisVC=nil;
     footerRefreshing=NO;
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM月dd日"];
+    
+    FirstAdded=YES;
     [self tableViewInit];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    if (self.autoFreshing) {
+        if (FirstAdded)
+            FirstAdded=NO;
+        else{
+            firstLoad=YES;
+            [self headRefreshData];
+        }
+        self.autoFreshing=NO;
+    }
 }
 
 - (void)finishLogin{
@@ -104,7 +120,11 @@ static  MLMyCollection *thisVC=nil;
             [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
         }
         
-        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        [recordArray removeAllObjects];
+        cellNum=0;
+        [_tableView reloadData];
+        
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:NOTLOGIN message:ASKTOLOGIN delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:LOGIN, nil];
         [loginAlert show];
     }
 }
@@ -122,7 +142,7 @@ static  MLMyCollection *thisVC=nil;
         }];
     }
     else{
-        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:NOTLOGIN message:ASKTOLOGIN delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:LOGIN, nil];
         [loginAlert show];
 
     }
@@ -167,7 +187,7 @@ static  MLMyCollection *thisVC=nil;
         }else{
             
             if ([jobListModel.getJobArray count]==0) {
-                [MBProgressHUD showError:@"没有更多数据啦" toView:self.view];
+                [MBProgressHUD showError:NOMOREDATA toView:self.view];
             }else{
                 for (id object in jobListModel.getJobArray) {
                     [recordArray addObject:object];
@@ -197,7 +217,7 @@ static  MLMyCollection *thisVC=nil;
         }else{
             
             if ([jobListModel.getJobArray count]==0) {
-                [MBProgressHUD showError:@"您没有收藏记录哦" toView:self.view];
+                [MBProgressHUD showError:NOCOLLECTIONDATA toView:self.view];
             }else{
                 [recordArray removeAllObjects];
                 
@@ -413,7 +433,7 @@ static  MLMyCollection *thisVC=nil;
             }];
             }
             else{
-                UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+                UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:NOTLOGIN message:ASKTOLOGIN delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:LOGIN, nil];
                 [loginAlert show];
             }
             

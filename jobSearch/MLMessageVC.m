@@ -16,7 +16,7 @@
 #import "jobModel.h"
 #import "MLLoginVC.h"
 #import "badgeNumber.h"
-
+#import "MLTextUtils.h"
 
 @interface MLMessageVC ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,finishHandle,UIAlertViewDelegate,finishLoginDelegate>
 {
@@ -31,6 +31,8 @@
     int skipTimes;
     BOOL refreshAdded;
     NSInteger nowCellNum;
+    
+    BOOL tableViewAdded;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -99,7 +101,7 @@
             [_tableView addFooterWithTarget:self action:@selector(footRefreshData)];
         }
 
-        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:NOTLOGIN message:ASKTOLOGIN delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:LOGIN, nil];
         [loginAlert show];
     }
 }
@@ -116,7 +118,7 @@
         [self footHandler:messageListModel];
     }];
     }else{
-        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:@"未登录" message:@"是否现在登录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录", nil];
+        UIAlertView *loginAlert=[[UIAlertView alloc]initWithTitle:NOTLOGIN message:ASKTOLOGIN delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:LOGIN, nil];
         [loginAlert show];
     }
 }
@@ -167,7 +169,7 @@
             
         }else{
             if ([jobListModel.getMessageArray count]==0){
-                [MBProgressHUD showError:@"没有更多数据啦" toView:self.view];
+                [MBProgressHUD showError:NOMOREDATA toView:self.view];
             }else{
                 for (messageModel *object in jobListModel.getMessageArray) {
                     
@@ -199,7 +201,7 @@
         }else{
             
             if ([jobListModel.getMessageArray count]==0){
-                [MBProgressHUD showError:@"您没有新消息哦" toView:self.view];
+                [MBProgressHUD showError:NONEWMESSAGE toView:self.view];
             }else{
                 [recordArray removeAllObjects];
                 

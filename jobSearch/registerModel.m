@@ -7,7 +7,7 @@
 //
 
 #import "registerModel.h"
-
+#import "MLTextUtils.h"
 @implementation registerModel
 -(registerModel *)initWithError:(NSNumber *)getStatus info:(NSString *)error usrID:(NSString *)defaultID{
     self = [super init];
@@ -45,7 +45,7 @@
         }
         if (!flag) {
             status = [NSNumber numberWithInt:STATIS_NO];
-            info = @"解析错误,请重新尝试";
+            info = ANALYZE_ERROR;
             usrID = @"-1";
         }
     }

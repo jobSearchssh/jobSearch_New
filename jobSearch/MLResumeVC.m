@@ -479,7 +479,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     if (textField.tag==1001) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"修改手机号后登录账户名也会改变，是否要修改？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:ALERTVIEW_TITLE message:CHANGEPHONEALERT delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:ALERTVIEW_OKBUTTON, nil];
         alert.tag=1001;
         [alert show];
     }
@@ -597,7 +597,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         if ([self validateMobile:self.iphoneOutlet.text]) {
             [self.usermodel setuserPhone:self.iphoneOutlet.text];
         }else{
-            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"电话号码错误" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:ALERTVIEW_TITLE message:ALERTVIEW_PHONEWRONG delegate:nil cancelButtonTitle:ALERTVIEW_KNOWN otherButtonTitles:nil];
             [alterTittle show];
             return;
         }
@@ -1091,7 +1091,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                 imagePickerController.allowsEditing = TRUE;
                 [self presentViewController:imagePickerController animated:YES completion:^{}];
             }else{
-                UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"无法使用照相功能" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:ALERTVIEW_TITLE message:ALERTVIEW_CAMERAWRONG delegate:nil cancelButtonTitle:ALERTVIEW_KNOWN otherButtonTitles:nil];
                 [alterTittle show];
             }
             return;
@@ -1209,10 +1209,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                 previewVedioVC *vc = [[previewVedioVC alloc]init];
                 vc.vedioPath = [self.usermodel getuserVideoURL];
                 vc.type = [NSNumber numberWithInt:preview];
-                vc.title = @"我的视频介绍";
+                vc.title = VEDIOVCTITLE;
                 [self.navigationController pushViewController:vc animated:YES];
             }else{
-                [MBProgressHUD showSuccess:@"您还没有录制视频介绍哦" toView:self.view];
+                [MBProgressHUD showSuccess:NOVEDIO toView:self.view];
             }
             return;
         }
@@ -1253,7 +1253,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     picker = Nil;
     [self dismissModalViewControllerAnimated:YES];
     if (![self writeImageToDoc:image]) {
-        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"写入文件夹错误,请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:ALERTVIEW_TITLE message:ALERTVIEW_WRITETOFILEWRONG delegate:nil cancelButtonTitle:ALERTVIEW_KNOWN otherButtonTitles:nil];
         [alterTittle show];
     }else{
         //添加图片
@@ -1306,14 +1306,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                                   [btnPic seturl:imageTemp];
                                                   [btnPic setTitle:@"" forState:UIControlStateNormal];
                                                   [btnPic setBackgroundImage:temp forState:UIControlStateNormal];
-                                                  [MBProgressHUD showError:@"上传成功" toView:self.view];
+                                                  [MBProgressHUD showError:UPLOADSUCCESS toView:self.view];
                                               });
                                           }else{
                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                   [btnPic setTitle:@"失败" forState:UIControlStateNormal];
                                                   [btnPic setBackgroundImage:temp forState:UIControlStateNormal];
                                                   [btnPic setStatus:uploaderror];
-                                                  [MBProgressHUD showError:@"上传失败" toView:self.view];
+                                                  [MBProgressHUD showError:UPLOADFAIL toView:self.view];
                                               });
                                           }
                                       }
@@ -1323,7 +1323,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                                           [btnPic setTitle:@"失败" forState:UIControlStateNormal];
                                           [btnPic setBackgroundImage:temp forState:UIControlStateNormal];
                                           [btnPic setStatus:uploaderror];
-                                          [MBProgressHUD showError:@"上传失败" toView:self.view];
+                                          [MBProgressHUD showError:UPLOADFAIL toView:self.view];
                                       });
                                   }
                               }];

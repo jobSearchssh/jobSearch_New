@@ -63,14 +63,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
     if ([currentUserObjectId length]>0) {
     
-        
-//        [netAPI setRecordAlreadyRead:currentUserObjectId applyOrInviteId:self.jobModel.getinvite_id type:@"0" withBlock:^(oprationResultModel *oprationResultModel) {
-//            if ([[oprationResultModel getStatus] intValue]==0) {
-//                NSLog(@"OK");
-//                badgeNumber*bn=[badgeNumber sharedInstance];
-//                [bn minusMessageCount];
-//            }
-//        }];
     }
 }
 
@@ -206,7 +198,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             degree=@"【学历要求】博士及以上";
         }
         NSString *age=[NSString stringWithFormat:@"【年龄要求】%@—%@",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
-        NSString *height=[NSString stringWithFormat:@"【身高要求】%@——%@",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
+        
+        NSString *height;
+        if ([self.jobModel.getjobHeightStartReq intValue]>[self.jobModel.getjobHeightEndReq intValue]) {
+            height=[NSString stringWithFormat:@"【身高要求】%@cm以上",self.jobModel.getjobHeightStartReq];
+        }else{
+            height=[NSString stringWithFormat:@"【身高要求】%@—%@cm",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
+        }
         
         NSString *textString=[[NSString alloc]init];
         if (age) {
@@ -243,7 +241,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             }else
             {
                 
-                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"成功接受职位" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:ACCEPTJOB message:nil delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil, nil];
                 alertView.delegate=self;
                 
                 [alertView show];
@@ -262,7 +260,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                 
             }else
             {
-                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:@"成功拒绝职位" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:REFUSEJOB message:nil delegate:self cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil, nil];
                 [alertView show];
  
             }

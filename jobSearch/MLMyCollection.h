@@ -13,4 +13,6 @@
 
 + (MLMyCollection*)sharedInstance;
 
+@property (nonatomic)BOOL autoFreshing;
+
 @end

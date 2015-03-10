@@ -227,8 +227,6 @@
 		3BA484191A89E79C00B6A200 /* MLLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA484151A89E79B00B6A200 /* MLLoginVC.m */; };
 		3BA4841A1A89E79C00B6A200 /* MLLoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BA484161A89E79B00B6A200 /* MLLoginVC.xib */; };
 		3BA4841B1A89E79C00B6A200 /* MLLoginBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA484181A89E79C00B6A200 /* MLLoginBusiness.m */; };
-		3BA484221A89E7BE00B6A200 /* MLProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4841F1A89E7BE00B6A200 /* MLProfileVC.m */; };
-		3BA484231A89E7BE00B6A200 /* MLProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BA484201A89E7BE00B6A200 /* MLProfileVC.xib */; };
 		3BA484271A89E7CF00B6A200 /* jobDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA484251A89E7CF00B6A200 /* jobDetailVC.m */; };
 		3BA484281A89E7CF00B6A200 /* jobDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3BA484261A89E7CF00B6A200 /* jobDetailVC.xib */; };
 		3BA4842B1A89E80200B6A200 /* MLMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4842A1A89E80200B6A200 /* MLMapView.m */; };
@@ -615,6 +613,7 @@
 		3B7958211AAEDD4E003837BE /* tourists.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tourists.png; sourceTree = "<group>"; };
 		3B7958221AAEDD4E003837BE /* tourists@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tourists@3x.png"; sourceTree = "<group>"; };
 		3B7958231AAEDD4E003837BE /* tourists@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tourists@2x.png"; sourceTree = "<group>"; };
+		3B7958301AAF2D11003837BE /* MLTextUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLTextUtils.h; sourceTree = "<group>"; };
 		3B84BCB91AA6C7C4008B662B /* MLLeagal1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLLeagal1.h; sourceTree = "<group>"; };
 		3B84BCBA1AA6C7C4008B662B /* MLLeagal1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLLeagal1.m; sourceTree = "<group>"; };
 		3B84BCBB1AA6C7C4008B662B /* MLLeagal1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLLeagal1.xib; sourceTree = "<group>"; };
@@ -709,9 +708,6 @@
 		3BA484161A89E79B00B6A200 /* MLLoginVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLLoginVC.xib; sourceTree = "<group>"; };
 		3BA484171A89E79B00B6A200 /* MLLoginBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLLoginBusiness.h; sourceTree = "<group>"; };
 		3BA484181A89E79C00B6A200 /* MLLoginBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLLoginBusiness.m; sourceTree = "<group>"; };
-		3BA4841E1A89E7BE00B6A200 /* MLProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLProfileVC.h; sourceTree = "<group>"; };
-		3BA4841F1A89E7BE00B6A200 /* MLProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLProfileVC.m; sourceTree = "<group>"; };
-		3BA484201A89E7BE00B6A200 /* MLProfileVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLProfileVC.xib; sourceTree = "<group>"; };
 		3BA484241A89E7CF00B6A200 /* jobDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jobDetailVC.h; sourceTree = "<group>"; };
 		3BA484251A89E7CF00B6A200 /* jobDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = jobDetailVC.m; sourceTree = "<group>"; };
 		3BA484261A89E7CF00B6A200 /* jobDetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = jobDetailVC.xib; sourceTree = "<group>"; };
@@ -1354,6 +1350,8 @@
 		3B8FBB791AA174F8007C465E /* MLIntroVC */ = {
 			isa = PBXGroup;
 			children = (
+				3B8FBB851AA198C2007C465E /* KVNMaskedPageControl.h */,
+				3B8FBB861AA198C2007C465E /* KVNMaskedPageControl.m */,
 				3B8FBB7A1AA17524007C465E /* MLIntroduceVC.h */,
 				3B8FBB7B1AA17524007C465E /* MLIntroduceVC.m */,
 				3B8FBB7C1AA17524007C465E /* MLIntroduceVC.xib */,
@@ -1403,7 +1401,6 @@
 				3B313DCF1A723399002FE8B3 /* pipei */,
 				3BC051F11A7145B50099A2DF /* UMeng */,
 				3BC051D71A70E52B0099A2DF /* Login&register */,
-				3BCBBD0A1A6CCBDE00E581FD /* profileVC */,
 				3B176BB01A6BDC1F0012A350 /* jobDetailVC */,
 				3B3C09E71A68F31A00B8C343 /* firstVC */,
 				3B0785241A6A836E00ACD76C /* MapKit */,
@@ -1424,6 +1421,7 @@
 				3B9236551A67FAFA00347D9C /* LaunchScreen.xib */,
 				3B6993971A89E9B000A53760 /* image */,
 				3B9236461A67FAFA00347D9C /* Supporting Files */,
+				3B7958301AAF2D11003837BE /* MLTextUtils.h */,
 			);
 			path = jobSearch;
 			sourceTree = "<group>";
@@ -1695,18 +1693,6 @@
 				3BCACDB81A8C4FB000D22F62 /* ShareSDKShareActionSheet.framework */,
 			);
 			path = UI;
-			sourceTree = "<group>";
-		};
-		3BCBBD0A1A6CCBDE00E581FD /* profileVC */ = {
-			isa = PBXGroup;
-			children = (
-				3B8FBB851AA198C2007C465E /* KVNMaskedPageControl.h */,
-				3B8FBB861AA198C2007C465E /* KVNMaskedPageControl.m */,
-				3BA4841E1A89E7BE00B6A200 /* MLProfileVC.h */,
-				3BA4841F1A89E7BE00B6A200 /* MLProfileVC.m */,
-				3BA484201A89E7BE00B6A200 /* MLProfileVC.xib */,
-			);
-			name = profileVC;
 			sourceTree = "<group>";
 		};
 		3BCEA0BC1A83581F0005F080 /* CWStarRateView */ = {
@@ -2197,7 +2183,6 @@
 				3BD4DC881A77C50600B061D0 /* resume_icon2.png in Resources */,
 				3BD4DC771A77C50600B061D0 /* resume_5.png in Resources */,
 				3BD4DC781A77C50600B061D0 /* resume_6.png in Resources */,
-				3BA484231A89E7BE00B6A200 /* MLProfileVC.xib in Resources */,
 				B75CE4011A7B512B00974815 /* resume_female.png in Resources */,
 				3B8FBB7E1AA17524007C465E /* MLIntroduceVC.xib in Resources */,
 				3BD4DC241A77C4CD00B061D0 /* radio_checked@2x.png in Resources */,
@@ -2503,7 +2488,6 @@
 				3BA483D21A89E6F700B6A200 /* geoModel.m in Sources */,
 				B7EF76E21A8CFFA100B230F9 /* MDRadialProgressTheme.m in Sources */,
 				3BA483E01A89E70800B6A200 /* jobListModel.m in Sources */,
-				3BA484221A89E7BE00B6A200 /* MLProfileVC.m in Sources */,
 				3B4AB4961A81CB2F0053236C /* UIView+Extension.m in Sources */,
 				3B5C265C1A95D8DE00E4AF7E /* MLDatePickerView.m in Sources */,
 				3BA483BF1A89E6B800B6A200 /* userReturnModel.m in Sources */,

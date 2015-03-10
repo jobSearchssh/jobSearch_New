@@ -11,6 +11,7 @@
 
 @interface MLMyApplication : ViewController
 
+@property (nonatomic)BOOL autoFreshing;
 
 + (MLMyApplication*)sharedInstance;
 

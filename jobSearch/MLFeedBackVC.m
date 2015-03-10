@@ -11,6 +11,8 @@
 #import "UMFeedback.h"
 #import "MBProgressHUD.h"
 #import "MBProgressHUD+Add.h"
+#import "MLTextUtils.h"
+
 
 @interface MLFeedBackVC ()<CWStarRateViewDelegate,UMFeedbackDataDelegate,UITextViewDelegate>
 {
@@ -69,7 +71,7 @@ static  MLFeedBackVC *thisVC=nil;
 - (IBAction)sendFeedBack:(id)sender {
     
     if ([self.textView.text length]==0) {
-        [MBProgressHUD showError:@"请您先填写反馈意见哦" toView:self.view];
+        [MBProgressHUD showError:FEEDBACK_ALERT toView:self.view];
     }
     else{
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -84,9 +86,9 @@ static  MLFeedBackVC *thisVC=nil;
     [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
     
     if (error != nil) {
-        [MBProgressHUD showError:@"反馈提交失败" toView:self.view];
+        [MBProgressHUD showError:FEEDBACK_FAIL toView:self.view];
     } else {
-        [MBProgressHUD showSuccess:@"反馈提交成功" toView:self.view];
+        [MBProgressHUD showSuccess:FEEDBACK_SUCCESS toView:self.view];
     }
 }
 
