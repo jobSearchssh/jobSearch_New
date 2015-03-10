@@ -255,8 +255,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         else if ([str isEqualToString:@"3"])
             settlement=@"项目";
         
-        self.jobSalaryLabel.text=[NSString stringWithFormat:@"%@元/%@",self.jobModel.getjobSalaryRange,settlement];
-        self.settlementLabel.text=[NSString stringWithFormat:@"%@结",settlement];
+        self.jobSalaryLabel.text=[NSString stringWithFormat:@"薪酬待遇：%@元/%@",self.jobModel.getjobSalaryRange,settlement];
+        self.settlementLabel.text=[NSString stringWithFormat:@"结算方式：%@结",settlement];
         
         self.jobDescribeLabel.text=[NSString stringWithFormat:@"【工作描述】%@",self.jobModel.getjobIntroduction];
         

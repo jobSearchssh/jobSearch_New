@@ -121,7 +121,7 @@
             [self.imageLayers removeObject:removeLayer];
             [removeLayer removeFromSuperlayer];
         }
-        int num = self.images.count - self.sideVisibleImageCount - 1;
+        NSInteger num = self.images.count - self.sideVisibleImageCount - 1;
         if (self.currentRenderingImageIndex < num){
             UIImage *candidateImage = [self.images objectAtIndex:self.currentRenderingImageIndex  + self.sideVisibleImageCount + 1];
             CALayer *candidateLayer = [CALayer layer];
@@ -278,7 +278,7 @@
 - (void)setupImages {
     // setup the visible area, and start index and end index
     int startingImageIndex = (self.currentRenderingImageIndex - self.sideVisibleImageCount <= 0) ? 0 : self.currentRenderingImageIndex - self.sideVisibleImageCount;
-    int endImageIndex = (self.currentRenderingImageIndex + self.sideVisibleImageCount < self.images.count )  ? (self.currentRenderingImageIndex + self.sideVisibleImageCount) : (self.images.count -1 );
+    NSInteger endImageIndex = (self.currentRenderingImageIndex + self.sideVisibleImageCount < self.images.count )  ? (self.currentRenderingImageIndex + self.sideVisibleImageCount) : (self.images.count -1 );
     
     //step2: set up images that ready for rendering
     for (int i = startingImageIndex; i <= endImageIndex; i++) {
