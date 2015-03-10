@@ -14,6 +14,7 @@
 
 @optional
 - (void)timePickerDidChangeStatus:(UIDatePicker *)picker;
+- (void)timePickerDidCancel;
 @end
 
 @interface MLDatePickerView : UIView

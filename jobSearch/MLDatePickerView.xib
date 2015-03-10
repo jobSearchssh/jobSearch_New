@@ -13,6 +13,7 @@
             <subviews>
                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="i7k-II-NL6">
                     <rect key="frame" x="0.0" y="29" width="320" height="216"/>
+                    <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                     <date key="date" timeIntervalSinceReferenceDate="446028631.29381198">
                         <!--2015-02-19 08:50:31 +0000-->
                     </date>

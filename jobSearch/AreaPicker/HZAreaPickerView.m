@@ -43,6 +43,9 @@
     return _locate;
 }
 - (IBAction)touchCancel:(id)sender {
+    if([self.delegate respondsToSelector:@selector(pickerCancel:)]) {
+        [self.delegate pickerCancel:self];
+    }
     [self cancelPicker];
 }
 
@@ -230,7 +233,7 @@
     self.frame = CGRectMake(0, view.frame.size.height, [[UIScreen mainScreen] bounds].size.width, self.frame.size.height);
     [view addSubview:self];
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.4 animations:^{
         self.frame = CGRectMake(0, view.frame.size.height - self.frame.size.height, [[UIScreen mainScreen] bounds].size.width, self.frame.size.height);
     }];
     
@@ -239,7 +242,7 @@
 - (void)cancelPicker
 {
     
-    [UIView animateWithDuration:0.3
+    [UIView animateWithDuration:0.4
                      animations:^{
                          self.frame = CGRectMake(0, self.frame.origin.y+self.frame.size.height, self.frame.size.width, self.frame.size.height);
                      }

@@ -20,6 +20,7 @@ typedef enum {
 
 @optional
 - (void)pickerDidChaneStatus:(HZAreaPickerView *)picker;
+- (void)pickerCancel:(HZAreaPickerView *)picker;
 @end
 
 @interface HZAreaPickerView : UIView <UIPickerViewDelegate, UIPickerViewDataSource>

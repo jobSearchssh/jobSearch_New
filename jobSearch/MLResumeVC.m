@@ -53,6 +53,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     //选择点击图片按钮
     imageButton *didSelectedBTN;
+    
+    //召唤生日与地区时候的覆盖view
+    UIView *covervView;
 }
 
 @property (nonatomic, strong) AKPickerView *pickerView;
@@ -164,6 +167,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     [self createPages:self.pages];
     
+    //covervView
+    covervView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    covervView.backgroundColor = [UIColor blackColor];
+    covervView.alpha = 0.4;
+    
+    UITapGestureRecognizer *tapCovervView=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(covervViewDidCancel)];
+    [covervView addGestureRecognizer:tapCovervView];
+    
     //page1
     radio_male = [[QRadioButton alloc] initWithDelegate:self groupId:@"groupId1"];
     radio_male.frame = CGRectMake(self.nameoutlet.frame.origin.x, self.sexlabeloutlet.frame.origin.y-10, 70, 40);
@@ -235,6 +246,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     self.birthdayOutlet.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [self.detailAddressTextfield addTarget:self action:@selector(textFieldOutletWork:) forControlEvents:UIControlEventEditingDidBegin];
+    self.locatePicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];
     typeArray = Nil;
     
     //page2
@@ -985,28 +997,53 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 - (void)timePickerDidChangeStatus:(UIDatePicker *)picker{
+    [covervView removeFromSuperview];
     birthday=picker.date;
-    
     NSString *birthdayTemp = [DateUtil birthdayStringFromDate:picker.date];
-    
     [self.birthdayOutlet setTitle:birthdayTemp forState:UIControlStateNormal];
+}
+
+- (void)timePickerDidCancel{
+    [covervView removeFromSuperview];
+}
+
+-(void)covervViewDidCancel{
+    [covervView removeFromSuperview];
+    [datePickerView cancelPicker];
+    [self.locatePicker cancelPicker];
 }
 
 
 - (IBAction)birthdayAction:(UIButton *)sender {
-
+    
     if (self.usermodel.getuserBirthday) {
         [datePickerView setBirthday:self.usermodel.getuserBirthday];
     }else
         [datePickerView setBirthday:[NSDate date]];
 
+    [self.view addSubview:covervView];
     [datePickerView showInView:self.view];
 }
 
 - (IBAction)selectCityAction:(id)sender {
-    [self cancelLocatePicker];
-    self.locatePicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];
+    
+    [self.view addSubview:covervView];
     [self.locatePicker showInView:self.view];
+}
+
+#pragma mark - HZAreaPicker delegate
+-(void)pickerDidChaneStatus:(HZAreaPickerView *)picker{
+    province=picker.locate.state;
+    city=picker.locate.city;
+    district=picker.locate.district;
+    NSString *addr=[NSString stringWithFormat:@"%@%@%@",province,city,district];
+    [self.selectCityOutlet setTitle:addr forState:UIControlStateNormal];
+    [covervView removeFromSuperview];
+}
+
+- (void)pickerCancel:(HZAreaPickerView *)picker{
+    [picker cancelPicker];
+    [covervView removeFromSuperview];
 }
 
 //page3
@@ -1442,25 +1479,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
     }
     return cell;
-}
-
-
-#pragma mark - HZAreaPicker delegate
--(void)pickerDidChaneStatus:(HZAreaPickerView *)picker
-{
-    province=picker.locate.state;
-    city=picker.locate.city;
-    district=picker.locate.district;
-    NSString *addr=[NSString stringWithFormat:@"%@%@%@",province,city,district];
-    [self.selectCityOutlet setTitle:addr forState:UIControlStateNormal];
-    
-}
-
--(void)cancelLocatePicker
-{
-    [self.locatePicker cancelPicker];
-    self.locatePicker.delegate = nil;
-    self.locatePicker = nil;
 }
 
 //GPS 定位
