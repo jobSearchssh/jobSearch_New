@@ -95,7 +95,7 @@
         currentUserLocation *cul=[currentUserLocation sharedInstance];
         cul.currentUserLocation=userLocation.coordinate;
         requestUserLocation=NO;
-        _mapView.showsUserLocation=NO;
+        _mapView.showsUserLocation=YES;
     }else if (firstLoad) {
         _mapView.region = MACoordinateRegionMake([_mapView userLocation].coordinate,MACoordinateSpanMake(0.05, 0.05));
         firstLoad=NO;
@@ -104,7 +104,7 @@
 
 -(void)mapView:(MAMapView *)mapView didFailToLocateUserWithError:(NSError *)error{
     requestUserLocation=NO;
-    _mapView.showsUserLocation=NO;
+    _mapView.showsUserLocation=YES;
 }
 
 //主动请求定位
