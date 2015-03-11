@@ -76,7 +76,6 @@
     }
 }
 
-
 - (void)createPages:(NSInteger)pages {
     
     for (int i = 0; i < pages; i++) {
@@ -93,19 +92,17 @@
         imgView.image=img;
         [self.scrollView addSubview:imgView];
         
-//        if (i==3) {
-//            UIButton *btn=[[UIButton alloc]init];
-//            if (DEVICE_IS_IPHONE5) {
-//                btn.frame= CGRectMake(100, 430, 120, 40);
-//            }else{
-//                btn.frame= CGRectMake(100, 382, 120, 40);
-//            }
-//            btn.titleLabel.text=@"btnnto";
-//            btn.backgroundColor=[UIColor clearColor];
-//            [btn addTarget:self action:@selector(touchStart) forControlEvents:UIControlEventTouchUpInside];
-//            [imgView addSubview:btn];
-//            imgView.userInteractionEnabled=YES;
-//        }
+        if (i==3) {
+            UIButton *btn=[[UIButton alloc]init];
+
+            btn.frame= CGRectMake(213*[[UIScreen mainScreen] bounds].size.width/960, 1433*[[UIScreen mainScreen] bounds].size.height/1704, 543*[[UIScreen mainScreen] bounds].size.width/960, 112*[[UIScreen mainScreen] bounds].size.height/1704);
+            
+            btn.titleLabel.text=@"";
+            btn.backgroundColor=[UIColor clearColor];
+            [btn addTarget:self action:@selector(touchStart) forControlEvents:UIControlEventTouchUpInside];
+            [imgView addSubview:btn];
+            imgView.userInteractionEnabled=YES;
+        }
     }
     if (!DEVICE_IS_IPHONE4) {
         [self.scrollView setContentSize:CGSizeMake(CGRectGetWidth([[UIScreen mainScreen] bounds]) * pages, CGRectGetHeight([[UIScreen mainScreen] bounds]))];
