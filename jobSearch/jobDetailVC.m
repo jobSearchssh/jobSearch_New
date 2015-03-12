@@ -220,16 +220,13 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             if ([[self.jobModel.getjobEnterpriseLogoURL substringToIndex:4] isEqualToString:@"http"])
                 imageUrl=self.jobModel.getjobEnterpriseLogoURL;
         }
-        
+
         if ([imageUrl length]>4) {
             self.entepriseLogoView.contentMode = UIViewContentModeScaleAspectFill;
             self.entepriseLogoView.clipsToBounds = YES;
             [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:self.entepriseLogoView];
             self.entepriseLogoView.imageURL=[NSURL URLWithString:imageUrl];
-        }else{
-            self.entepriseLogoView.image=[UIImage imageNamed:@"placeholder"];
         }
-
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MM月dd日"];

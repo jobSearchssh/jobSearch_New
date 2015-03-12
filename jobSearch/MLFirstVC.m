@@ -751,13 +751,12 @@ static  MLFirstVC *thisVC=nil;
             imageUrl=jobObject.getjobEnterpriseLogoURL;
     }
     
+    [cell.portraitView setImage:[UIImage imageNamed:@"placeholder"]];
     if ([imageUrl length]>4) {
         cell.portraitView.contentMode = UIViewContentModeScaleAspectFill;
         cell.portraitView.clipsToBounds = YES;
         [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:cell.portraitView];
         cell.portraitView.imageURL=[NSURL URLWithString:imageUrl];
-    }else{
-        cell.portraitView.image=[UIImage imageNamed:@"placeholder"];
     }
     
     cell.notReadImageView.hidden=YES;

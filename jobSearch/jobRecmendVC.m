@@ -139,13 +139,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
                 imageUrl=self.jobModel.getjobEnterpriseLogoURL;
         }
         
+
         if ([imageUrl length]>4) {
             self.entepriseLogoView.contentMode = UIViewContentModeScaleAspectFill;
             self.entepriseLogoView.clipsToBounds = YES;
             [[AsyncImageLoader sharedLoader] cancelLoadingImagesForTarget:self.entepriseLogoView];
             self.entepriseLogoView.imageURL=[NSURL URLWithString:imageUrl];
-        }else{
-            self.entepriseLogoView.image=[UIImage imageNamed:@"placeholder"];
         }
         
         self.jobTitleLabel.text=self.jobModel.getjobTitle;

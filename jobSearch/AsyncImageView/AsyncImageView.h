@@ -79,6 +79,8 @@ extern NSString *const AsyncImageErrorKey;
 @property (nonatomic, assign) UIActivityIndicatorViewStyle activityIndicatorStyle;
 @property (nonatomic, assign) NSTimeInterval crossfadeDuration;
 
+- (void)setImage:(UIImage *)image;
+
 @end
 
 
