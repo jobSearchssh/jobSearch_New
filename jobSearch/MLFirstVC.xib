@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="mapItem" destination="i4c-Uu-9PM" id="SWa-6z-Tbf"/>
                 <outlet property="messageItem" destination="IDM-zW-qqE" id="MA4-QK-gfi"/>
+                <outlet property="sortItem" destination="qDR-4l-c4X" id="AN5-XF-Gdz"/>
                 <outlet property="tabbar" destination="hq5-HG-YjK" id="5Tz-gx-d5c"/>
                 <outlet property="tableView" destination="4Zw-aG-ERW" id="0Bl-e8-1Jh"/>
                 <outlet property="topConstraint" destination="CAZ-p0-XRm" id="z1G-x4-g02"/>

@@ -154,8 +154,9 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         self.jobPublishTimeLabel.text=[dateFormatter stringFromDate:self.jobModel.getcreated_at];
         self.jobWorkPeriodLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:self.jobModel.getjobBeginTime],[dateFormatter stringFromDate:self.jobModel.getjobEndTime]];
         self.jobRecuitNumLabel.text=[NSString stringWithFormat:@"招募%@人",self.jobModel.getjobRecruitNum];
+       
         NSString *settlement;
-        NSString *str=[NSString stringWithFormat:@"结算方式：%@",self.jobModel.getjobSettlementWay];
+        NSString *str=[NSString stringWithFormat:@"%@",self.jobModel.getjobSettlementWay];
         
         if ([str isEqualToString:@"0"])
             settlement=@"日";
@@ -165,7 +166,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             settlement=@"月";
         else if ([str isEqualToString:@"3"])
             settlement=@"项目";
-
         
         self.jobSalaryLabel.text=[NSString stringWithFormat:@"薪酬待遇：%@元/%@",self.jobModel.getjobSalaryRange,settlement];
 
@@ -173,12 +173,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         NSString *gender;
         NSString *genStr=[NSString stringWithFormat:@"%@",_jobModel.getjobGenderReq];
-        if ([genStr isEqualToString:@"0"]) {
-            gender=@"【性别要求】不限";
-        }else if ([genStr isEqualToString:@"1"]){
+        if ([genStr isEqualToString:@"1"]){
             gender=@"【性别要求】男";
         }else if ([genStr isEqualToString:@"2"]){
             gender=@"【性别要求】女";
+        }else{
+            gender=@"【性别要求】不限";
         }
         NSString *degree;
         if ([_jobModel.getjobDegreeReq intValue]==0){

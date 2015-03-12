@@ -64,6 +64,7 @@
 @property (weak, nonatomic) IBOutlet UITabBarItem *mapItem;
 @property (weak, nonatomic) IBOutlet UITabBarItem *messageItem;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
+@property (strong, nonatomic) IBOutlet UITabBarItem *sortItem;
 
 @end
 
@@ -157,6 +158,7 @@ static  MLFirstVC *thisVC=nil;
     touchView.backgroundColor=[UIColor clearColor];
     UITapGestureRecognizer *Gesture1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideTouchView)];
     [touchView addGestureRecognizer:Gesture1];
+    
     
 }
 
@@ -438,6 +440,7 @@ static  MLFirstVC *thisVC=nil;
                 self.navigationItem.rightBarButtonItem.enabled=NO;
                 self.navigationItem.rightBarButtonItem.tintColor=[UIColor clearColor];
                 mapSearching=NO;
+                self.sortItem.enabled=NO;
             }
         }
         }
@@ -516,6 +519,7 @@ static  MLFirstVC *thisVC=nil;
             [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
             self.navigationItem.rightBarButtonItem.enabled=NO;
             self.navigationItem.rightBarButtonItem.tintColor=[UIColor clearColor];
+            self.sortItem.enabled=NO;
         }
         
     }else {
@@ -528,6 +532,7 @@ static  MLFirstVC *thisVC=nil;
         [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         self.navigationItem.rightBarButtonItem.enabled=YES;
         self.navigationItem.rightBarButtonItem.tintColor=[UIColor whiteColor];
+        self.sortItem.enabled=YES;
     }
 }
 
