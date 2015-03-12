@@ -10,7 +10,6 @@
 #import "MLResumeVC.h"
 #import "MLLoginVC.h"
 
-
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 @interface MLResumePreviewVC (){
