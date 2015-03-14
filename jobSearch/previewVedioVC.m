@@ -11,7 +11,7 @@
 #import "MDRadialProgressView.h"
 #import "MDRadialProgressTheme.h"
 #import "MDRadialProgressLabel.h"
-
+#import "MLTextUtils.h"
 
 @interface previewVedioVC ()<ALMoviePlayerControllerDelegate>{
     MDRadialProgressView *radialView;
@@ -52,9 +52,6 @@
     //[movieControls setAdjustsFullscreenImage:NO];
     [movieControls setBarColor:[UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:0.5]];
     [movieControls setTimeRemainingDecrements:YES];
-    //[movieControls setFadeDelay:2.0];
-    //[movieControls setBarHeight:100.f];
-    //[movieControls setSeekRate:2.f];
     
     //assign controls
     [self.moviePlayer setControls:movieControls];
@@ -110,7 +107,6 @@
     }
     
     //calulate the frame on every rotation, so when we're returning from fullscreen mode we'll know where to position the movie plauyer
-//    self.defaultFrame = CGRectMake(self.view.frame.size.width/2 - videoWidth/2, self.view.frame.size.height/2 - videoHeight/2, videoWidth, videoHeight);
     self.defaultFrame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
     
     //only manage the movie player frame when it's not in fullscreen. when in fullscreen, the frame is automatically managed
@@ -132,7 +128,9 @@
 }
 
 - (void)movieTimedOut {
-    NSLog(@"MOVIE TIMED OUT");
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:VEDIOTIMEOUT message:nil
+                                                delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 - (BOOL)shouldAutorotate {
@@ -151,13 +149,13 @@
 
 -(void)saveVedio{
     if ([(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentConnectType] == NotReachable) {
-        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前无网络" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:ALERTVIEW_TITLE message:NONET delegate:nil cancelButtonTitle:ALERTVIEW_KNOWN otherButtonTitles:nil];
         [alterTittle show];
         return;
     }
     
     if ([(AppDelegate *)[[UIApplication sharedApplication] delegate] getCurrentConnectType] == ReachableViaWWAN) {
-        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"当前使用手机网络，是否上传" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:ALERTVIEW_TITLE message:NOTVIAWIFI delegate:self cancelButtonTitle:ALERTVIEW_CANCELBUTTON otherButtonTitles:ALERTVIEW_OKBUTTON, nil];
         [alterTittle show];
         return;
     }
@@ -192,7 +190,7 @@
                               
                               if (isSuccessful) {
                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                      [MBProgressHUD showError:@"上传成功" toView:self.view];
+                                      [MBProgressHUD showError:UPLOADSUCCESS toView:self.view];
                                   });
                                   
                                   //array 文件数组，isSuccessful 成功或者失败,error 错误信息
@@ -203,26 +201,12 @@
                                       vedioURL = [file url];
                                       [obj setObject:file  forKey:key];
                                   }
-                                  //                                  [obj saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-                                  //
-                                  //                                  }];
-//                                  //s删除临时文件
-//                                  NSString *videoPath = self.vedioPath;
-//                                  NSFileManager *fileManager = [NSFileManager defaultManager];
-//                                  NSError *error;
-//                                  if ([fileManager fileExistsAtPath:videoPath]) {
-//                                      if (![fileManager removeItemAtPath:videoPath error:&error]) {
-//                                          NSLog(@"%@",error);
-//                                      }else{
-//                                          NSLog(@"删除临时文件成功");
-//                                      }
-//                                  }
                                   //回调
                                   if (self.setVideoURLDelegate != Nil && vedioURL != Nil) {
                                       [self.setVideoURLDelegate getVideoURLDelegate:vedioURL];
                                   }
                               }else{
-                                  [MBProgressHUD showError:@"上传失败" toView:self.view];
+                                  [MBProgressHUD showError:UPLOADFAIL toView:self.view];
                               }
                           }];
 }

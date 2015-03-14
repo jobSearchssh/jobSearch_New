@@ -9,6 +9,7 @@
 #import "MLResumePreviewVC.h"
 #import "MLResumeVC.h"
 #import "MLLoginVC.h"
+#import "MLTextUtils.h"
 
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
@@ -47,6 +48,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 @property (weak, nonatomic) IBOutlet AsyncImageView *userLogoView;
 
+@property (strong, nonatomic) IBOutlet UILabel *degreeOutlet;
 
 @end
 
@@ -130,7 +132,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 -(void)callPreView{
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     //获取简历 ok
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
@@ -155,8 +156,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 -(void)callPreViewEdit{
-    //NSLog(@"callPreViewEdit");
-    //NSLog(@"aaa = %@",self.mainUserModel);
     [self initfromNet:self.mainUserModel];
 }
 
@@ -206,10 +205,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     UIImage *temp = [self scaleToSize:[UIImage imageNamed:@"placeholder"] size:size];
     
     
-//    for (NSString *url in sourceImagesURL) {
-//        [sourceImages addObject:temp];
-//    }
-    
     for (int i=0; i<[sourceImagesURL count]; i++) {
         [sourceImages addObject:temp];
     }
@@ -224,9 +219,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     }
     [self.coverflowOutlet addSubview:cfView];
     
-    //第二项
-    //    [self.usrinfo1Outlet setFrame:CGRectMake(0,self.coverflowOutlet.frame.size.height,[UIScreen mainScreen].bounds.size.width,110)];
-    //    [self.mainScrollviewOutlet addSubview:self.usrinfo1Outlet];
+
     //第三项
     //用户名字
     NSString *usrname = [userModel getuserName];
@@ -372,6 +365,27 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [self.usrschoolOutlet setText:@""];
     }
     
+    if ([userModel getuserDegree]!=0) {
+            
+        NSString *degree;
+        if ([[userModel getuserDegree] intValue]==1){
+            degree=@"初中及以下";
+        }else if ([[userModel getuserDegree] intValue]==2){
+                degree=@"高中";
+        }else if ([[userModel getuserDegree] intValue]==3){
+            degree=@"大专";
+        }else if ([[userModel getuserDegree] intValue]==4){
+            degree=@"本科";
+        }else if ([[userModel getuserDegree] intValue]==5){
+            degree=@"硕士";
+        }else if ([[userModel getuserDegree] intValue]==6){
+            degree=@"博士及以上";
+        }
+        if ([degree length]>0) {
+            [self.degreeOutlet setText:degree];
+        }
+    }
+    
     NSString *intro = [userModel getuserIntroduction];
     NSString  *testintroFormat = [intro stringByReplacingOccurrencesOfString:@"\n" withString:@"\r\n" ];
     [self.userIntroductionOutlet setNumberOfLines:0];
@@ -401,7 +415,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     
     
     //设置最终长度
-    [self.mainScrollviewOutlet setContentSize:CGSizeMake(0,self.usrinfo3Outet.frame.origin.y+self.usrinfo3Outet.frame.size.height)];
+    [self.mainScrollviewOutlet setContentSize:CGSizeMake(0,self.usrinfo3Outet.frame.origin.y+self.usrinfo3Outet.frame.size.height+30)];
     
 }
 
@@ -481,7 +495,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }else{
             cell.imageView.image = [selectfreetimepicArray objectAtIndex:0];
         }
-        
     }
     if (indexPath.row>=14 && indexPath.row<21) {
         if (selectFreeData[indexPath.row-7]) {
@@ -511,7 +524,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [MBProgressHUD showSuccess:NOVEDIO toView:self.view];
     }
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

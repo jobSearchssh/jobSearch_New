@@ -196,12 +196,21 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }else if ([_jobModel.getjobDegreeReq intValue]==6){
             degree=@"【学历要求】博士及以上";
         }
-        NSString *age=[NSString stringWithFormat:@"【年龄要求】%@—%@",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
+        
+        NSString *age=[[NSString alloc]init];;
+        if ([self.jobModel.getjobAgeStartReq intValue]==0&&[self.jobModel.getjobAgeEndReq intValue]==0) {
+            age=@"【年龄要求】不限";
+        }else
+            age =[NSString stringWithFormat:@"【年龄要求】%@—%@岁",self.jobModel.getjobAgeStartReq,self.jobModel.getjobAgeEndReq];
         
         NSString *height;
-        if ([self.jobModel.getjobHeightStartReq intValue]>[self.jobModel.getjobHeightEndReq intValue]) {
+        if ([self.jobModel.getjobHeightStartReq intValue]==0&&[self.jobModel.getjobHeightEndReq intValue]==0) {
+            height=@"【身高要求】不限";
+        }
+        else if ([self.jobModel.getjobHeightStartReq intValue]>=[self.jobModel.getjobHeightEndReq intValue]) {
             height=[NSString stringWithFormat:@"【身高要求】%@cm以上",self.jobModel.getjobHeightStartReq];
-        }else{
+        }
+        else{
             height=[NSString stringWithFormat:@"【身高要求】%@—%@cm",self.jobModel.getjobHeightStartReq,self.jobModel.getjobHeightEndReq];
         }
         

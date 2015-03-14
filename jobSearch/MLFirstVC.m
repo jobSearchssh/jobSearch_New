@@ -24,7 +24,7 @@
 #import "badgeNumber.h"
 #import "MLNavigation.h"
 #import "currentUserLocation.h"
-
+#import "MLTextUtils.h"
 
 @interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate,finishFilterDelegate,UINavigationControllerDelegate,showDetailDelegate>
 {
@@ -97,7 +97,7 @@ static  MLFirstVC *thisVC=nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSLog(@"宏测试");
     self.topConstraint.constant=0;
     
     self.title=NEARBYJOB;

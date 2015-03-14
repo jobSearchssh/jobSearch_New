@@ -91,4 +91,21 @@
 //推荐
 #define REFUSEJOB @"成功拒绝职位"
 #define ACCEPTJOB @"成功接受职位"
+
+//网络连接
+#define NETERROR @"网络连接异常"
+#define NETRECOVER @"网络连接已恢复"
+
+//视频
+#define VEDIOTIMEOUT @"视频加载超时"
+#define NONET @"当前无网络"
+#define NOTVIAWIFI @"当前使用手机网络，是否上传"
+
+#endif
+
+//buid时取消所有控制台输出
+#ifndef __OPTIMIZE__
+#define NSLog(...) NSLog(__VA_ARGS__)
+#else
+#define NSLog(...){}
 #endif

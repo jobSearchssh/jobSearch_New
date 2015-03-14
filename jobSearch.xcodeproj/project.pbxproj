@@ -54,6 +54,8 @@
 		3B4AB4961A81CB2F0053236C /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4AB48E1A81CB2F0053236C /* UIView+Extension.m */; };
 		3B4AB49A1A81CE9A0053236C /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3B4AB4991A81CE9A0053236C /* MJRefresh.bundle */; };
 		3B4AB49E1A81F1870053236C /* AJLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4AB49D1A81F1870053236C /* AJLocationManager.m */; };
+		3B4E16E91AB32BD900027A69 /* MLPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B4E16E81AB32BD900027A69 /* MLPickerView.m */; };
+		3B4E16EB1AB32BEC00027A69 /* MLPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B4E16EA1AB32BEC00027A69 /* MLPickerView.xib */; };
 		3B5C265C1A95D8DE00E4AF7E /* MLDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5C265B1A95D8DE00E4AF7E /* MLDatePickerView.m */; };
 		3B5C265E1A95DA4D00E4AF7E /* MLDatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3B5C265D1A95DA4D00E4AF7E /* MLDatePickerView.xib */; };
 		3B5C26621A97546C00E4AF7E /* badgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B5C26611A97546C00E4AF7E /* badgeModel.m */; };
@@ -476,6 +478,9 @@
 		3B4AB4991A81CE9A0053236C /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		3B4AB49C1A81F1870053236C /* AJLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJLocationManager.h; sourceTree = "<group>"; };
 		3B4AB49D1A81F1870053236C /* AJLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJLocationManager.m; sourceTree = "<group>"; };
+		3B4E16E71AB32BD900027A69 /* MLPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPickerView.h; sourceTree = "<group>"; };
+		3B4E16E81AB32BD900027A69 /* MLPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPickerView.m; sourceTree = "<group>"; };
+		3B4E16EA1AB32BEC00027A69 /* MLPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLPickerView.xib; sourceTree = "<group>"; };
 		3B5C265A1A95D8DE00E4AF7E /* MLDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLDatePickerView.h; sourceTree = "<group>"; };
 		3B5C265B1A95D8DE00E4AF7E /* MLDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLDatePickerView.m; sourceTree = "<group>"; };
 		3B5C265D1A95DA4D00E4AF7E /* MLDatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MLDatePickerView.xib; sourceTree = "<group>"; };
@@ -1791,6 +1796,9 @@
 				B73640E11AA0D6AC00CEB5F4 /* previewVedioVC.m */,
 				B73640E21AA0D6AC00CEB5F4 /* previewVedioVC.xib */,
 				B73640E51AA0EE9F00CEB5F4 /* geturlProtocol.h */,
+				3B4E16E71AB32BD900027A69 /* MLPickerView.h */,
+				3B4E16E81AB32BD900027A69 /* MLPickerView.m */,
+				3B4E16EA1AB32BEC00027A69 /* MLPickerView.xib */,
 			);
 			name = resumeVC;
 			sourceTree = "<group>";
@@ -2194,6 +2202,7 @@
 				3B7958251AAEDD4E003837BE /* tourists@3x.png in Resources */,
 				3B85D80D1A8A34AB0087ABEE /* annotation.png in Resources */,
 				3BD4DC811A77C50600B061D0 /* user.png in Resources */,
+				3B4E16EB1AB32BEC00027A69 /* MLPickerView.xib in Resources */,
 				3BD4DC701A77C50600B061D0 /* resume_night2.png in Resources */,
 				3B6994061A89E9B000A53760 /* cellBackground@3x.png in Resources */,
 				3BD82C521A8E15E2000B4462 /* launch.png in Resources */,
@@ -2450,6 +2459,7 @@
 				3B69944E1A89E9F900A53760 /* CustomAnnotationView.m in Sources */,
 				3B4547081A933D8000AA3C50 /* HZLocation.m in Sources */,
 				3B69938B1A89E98E00A53760 /* Evaluate.m in Sources */,
+				3B4E16E91AB32BD900027A69 /* MLPickerView.m in Sources */,
 				3BA483D51A89E6F700B6A200 /* baseMessageModel.m in Sources */,
 				3B4AB4901A81CB2F0053236C /* MJRefreshBaseView.m in Sources */,
 				B77578CC1A7A94B900660BB7 /* PBJVisionUtilities.m in Sources */,
@@ -2682,6 +2692,7 @@
 					"$(PROJECT_DIR)/jobSearch/ShareSDK/UI",
 				);
 				GCC_INPUT_FILETYPE = automatic;
+				GCC_PREPROCESSOR_DEFINITIONS = NS_BLOCK_ASSERTIONS;
 				INFOPLIST_FILE = jobSearch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

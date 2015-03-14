@@ -19,6 +19,8 @@
 #import "WeiboSDK.h"
 #import "badgeNumber.h"
 #import "MLIntroduceVC.h"
+#import "MLTextUtils.h"
+
 
 @interface AppDelegate (){
     int currentConnectType;
@@ -58,7 +60,7 @@
     
     //友盟
     [MobClick startWithAppkey:@"54c10ddbfd98c5b7c2000836" reportPolicy:BATCH  channelId:nil];
-    //[MobClick checkUpdate:@"兼职精灵有新版本啦" cancelButtonTitle:@"无情的忽略" otherButtonTitles:@"欣然前往下载"];
+
     [UMFeedback setAppkey:@"54c10ddbfd98c5b7c2000836"];
     
     //Bmob后台服务
@@ -111,7 +113,7 @@
     {
         currentConnectType = NotReachable;
         if (self.isReachable) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接异常" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NETERROR message:nil delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
             [alert show];
             self.isReachable = NO;
         }
@@ -120,7 +122,7 @@
     if (status==ReachableViaWiFi) {
         currentConnectType = ReachableViaWiFi;
         if (!self.isReachable) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接信息" message:@"网络连接恢复" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NETRECOVER message:nil delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
             [alert show];
             self.isReachable = YES;
         }
@@ -128,7 +130,7 @@
     if (status==ReachableViaWWAN) {
         currentConnectType = ReachableViaWWAN;
         if (!self.isReachable) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"网络连接信息" message:@"网络连接恢复" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NETRECOVER message:nil delegate:nil cancelButtonTitle:ALERTVIEW_OKBUTTON otherButtonTitles:nil];
             [alert show];
             self.isReachable = YES;
         }

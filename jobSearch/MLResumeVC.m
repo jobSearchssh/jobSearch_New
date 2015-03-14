@@ -16,17 +16,19 @@
 #import "MBProgressHUD+Add.h"
 #import "MLDatePickerView.h"
 #import "RESideMenu.h"
+#import "MLPickerView.h"
+#import "MLTextUtils.h"
 
 #define  PIC_WIDTH 60
 #define  PIC_HEIGHT 60
 #define  INSETS 10
-
+#define  MAPKEY @"c38130d72c3068f07be6c23c7e791f47"
 
 static NSString *scrollindentify = @"scrollviewdown";
 static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 
-@interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate,HZAreaPickerDelegate,AMapSearchDelegate,MLDatePickerDelegate,UITextViewDelegate,finishSaveDelegate,UIGestureRecognizerDelegate>{
+@interface MLResumeVC ()<AKPickerViewDataSource, AKPickerViewDelegate,HZAreaPickerDelegate,AMapSearchDelegate,MLDatePickerDelegate,UITextViewDelegate,finishSaveDelegate,UIGestureRecognizerDelegate,MLPickerDelegate>{
     NSMutableArray *addedPicArray;
     NSArray *selectfreetimetitleArray;
     NSArray *selectfreetimepicArray;
@@ -45,12 +47,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     NSString *city;
     NSString *district;
     NSString *detailAddress;
-    
+    int selectDegree;
     NSDate *birthday;
     
     AMapSearchAPI *search;
     MLDatePickerView *datePickerView;
-    
+    MLPickerView *pickerView;
     //选择点击图片按钮
     imageButton *didSelectedBTN;
     
@@ -110,12 +112,14 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 @property (weak, nonatomic) IBOutlet UITextView *introductionmeOutlet;
 @property (weak, nonatomic) IBOutlet UITextView *workexperienceOutlet;
 @property (weak, nonatomic) IBOutlet UITextField *schollNewOutlet;
+@property (strong, nonatomic) IBOutlet UILabel *degreeOutlet;
 
 @property (strong, nonatomic) HZAreaPickerView *locatePicker;
 
 @end
 
 @implementation MLResumeVC
+@synthesize pickerView=_pickView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -317,6 +321,16 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     self.workexperienceOutlet.delegate = self;
     self.schollNewOutlet.delegate = self;
     
+    UITapGestureRecognizer *tapgesture1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseDegree)];
+    tapgesture1.delegate=self;
+    self.degreeOutlet.userInteractionEnabled=YES;
+    [self.degreeOutlet addGestureRecognizer:tapgesture1];
+    
+    UIView *lineviewDegree= [[UIView alloc] initWithFrame:CGRectMake(self.degreeOutlet.frame.origin.x, self.degreeOutlet.frame.origin.y+self.degreeOutlet.frame.size.height+3,[UIScreen mainScreen].bounds.size.width - 120, 1)];
+    lineviewDegree.alpha = 0.5;
+    lineviewDegree.backgroundColor = [UIColor grayColor];
+    [self.view5outlet addSubview:lineviewDegree];
+    
     //键盘上方的按钮
     UIToolbar * topView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
     [topView setBarStyle:UIBarStyleDefault];
@@ -401,6 +415,28 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             [self.intentionOutlet setText:usrintentionTemp];
         }
         
+        
+        if ([self.usermodel getuserDegree]!=0) {
+            
+            NSString *degree;
+            if ([[self.usermodel getuserDegree] intValue]==1){
+                degree=@"初中及以下";
+            }else if ([[self.usermodel getuserDegree] intValue]==2){
+                degree=@"高中";
+            }else if ([[self.usermodel getuserDegree] intValue]==3){
+                degree=@"大专";
+            }else if ([[self.usermodel getuserDegree] intValue]==4){
+                degree=@"本科";
+            }else if ([[self.usermodel getuserDegree] intValue]==5){
+                degree=@"硕士";
+            }else if ([[self.usermodel getuserDegree] intValue]==6){
+                degree=@"博士及以上";
+            }
+            if ([degree length]>0) {
+                [self.degreeOutlet setText:degree];
+            }
+        }
+        
         //空闲时间
         if ([self.usermodel getuserFreeTime] != Nil) {
             for (NSNumber *freetimetemp in [self.usermodel getuserFreeTime]) {
@@ -467,6 +503,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         datePickerView=[[MLDatePickerView alloc]initWithStyle:UIDatePickerModeDate delegate:self];
     }
     
+    if (!pickerView) {
+        pickerView=[[MLPickerView alloc]initWithDelegate:self];
+    }
+    
     //保存用户当前位置信息
     if ([mySettingData objectForKey:@"currentCoordinate"]) {
         
@@ -495,20 +535,12 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         }
     }
 }
-//-(void)returnResume{
-//    UIAlertView *alterTittle = [[UIAlertView alloc] initWithTitle:@"提示" message:@"是否保存简历" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"返回",@"保存",nil];
-//    alterTittle.tag = 0;
-//    [alterTittle show];
-//}
+
+- (void)chooseDegree{
+    [pickerView showInView:self.view];
+}
 
 #pragma marks -- UIAlertViewDelegate --
-//根据被点击按钮的索引处理点击事件
-//-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-//    
-//    if (alertView.tag == 0) {
-//        NSLog(@"clickButtonAtIndex:%ld",(long)buttonIndex);
-//    }
-//}
 
 
 - (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
@@ -573,8 +605,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 
 
 -(void)previewResume{
-    
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     if (self.nameoutlet.text != Nil) {
         [self.usermodel setuserName:self.nameoutlet.text];
@@ -666,6 +696,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [self.usermodel setuserDistrict:district];
     }
     
+    if (selectDegree!=0) {
+        [self.usermodel setuserDegree:[NSNumber numberWithInt:selectDegree]];
+    }
+    
     detailAddress=self.detailAddressTextfield.text;
     if (detailAddress) {
         [self.usermodel setuserAddressDetail:detailAddress];
@@ -698,7 +732,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     _dailyMatcPreviewVC.saveDelegate=self;
     MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:_dailyMatcPreviewVC];
     [self.navigationController presentViewController:navigationController animated:YES completion:^{
-        
     }];
 }
 
@@ -815,19 +848,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     return [self.titles count];
 }
 
-/*
- * AKPickerView now support images!
- *
- * Please comment '-pickerView:titleForItem:' entirely
- * and uncomment '-pickerView:imageForItem:' to see how it works.
- *
- */
-
-//- (NSString *)pickerView:(AKPickerView *)pickerView titleForItem:(NSInteger)item
-//{
-//	return self.titles[item];
-//}
-
 
 - (UIImage *)pickerView:(AKPickerView *)pickerView imageForItem:(NSInteger)item
 {
@@ -857,34 +877,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 }
 
 
-/*
- * Label Customization
- *
- * You can customize labels by their any properties (except font,)
- * and margin around text.
- * These methods are optional, and ignored when using images.
- *
- */
-
-/*
- - (void)pickerView:(AKPickerView *)pickerView configureLabel:(UILabel *const)label forItem:(NSInteger)item
- {
-	label.textColor = [UIColor lightGrayColor];
-	label.highlightedTextColor = [UIColor whiteColor];
-	label.backgroundColor = [UIColor colorWithHue:(float)item/(float)self.titles.count
- saturation:1.0
- brightness:1.0
- alpha:1.0];
- }
- */
-
-/*
- - (CGSize)pickerView:(AKPickerView *)pickerView marginForItem:(NSInteger)item
- {
-	return CGSizeMake(40, 20);
- }
- */
-
 #pragma mark - UIScrollViewDelegate
 
 /*
@@ -893,7 +885,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
  * by simply setting pickerView's delegate.
  *
  */
-
 
 - (void)createPages:(NSInteger)pages {
     
@@ -904,11 +895,8 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.view3outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 2, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     
     [self.view5outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 3, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
-    
-    //    [self.view5outlet setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width* 4, 0,[UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
-    
+
     [self.scrollviewOutlet addSubview:self.view1outlet];
-    //    [self.scrollviewOutlet addSubview:self.view2outlet];
     [self.scrollviewOutlet addSubview:self.view4outlet];
     [self.scrollviewOutlet addSubview:self.view3outlet];
     [self.scrollviewOutlet addSubview:self.view5outlet];
@@ -943,7 +931,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
             [self.scrollviewOutlet setContentOffset:offset animated:YES];
             self.pageIndicator.page = page;
             [self.pickerView selectItem:page animated:YES];
-            //[self.pickerView reloadData];
         }
     }
 }
@@ -954,15 +941,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 - (IBAction)continueAction:(id)sender {
     NSInteger currentpage = [self.pickerView selectedItem];
@@ -987,7 +965,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 #pragma mark - QRadioButtonDelegate
 
 - (void)didSelectedRadioButton:(QRadioButton *)radio groupId:(NSString *)groupId {
-    //    NSLog(@"did selected radio:%@ groupId:%@ status:%d", radio.titleLabel.text, groupId,[radio getStatus]);
     if ([radio getStatus] == maleStatus) {
         [self.usermodel setuserGender:[NSNumber numberWithInt:maleStatus]];
     }
@@ -1013,6 +990,28 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     [self.locatePicker cancelPicker];
 }
 
+- (void)pickerDidCancel{
+    [covervView removeFromSuperview];
+}
+
+- (void)pickerDidChangeStatus:(int)degree{
+    [covervView removeFromSuperview];
+    
+    if (degree==1){
+        self.degreeOutlet.text=@"初中及以下";
+    }else if (degree==2){
+        self.degreeOutlet.text=@"高中";
+    }else if (degree==3){
+        self.degreeOutlet.text=@"大专";
+    }else if (degree==4){
+        self.degreeOutlet.text=@"本科";
+    }else if (degree==5){
+        self.degreeOutlet.text=@"硕士";
+    }else if (degree==6){
+        self.degreeOutlet.text=@"博士及以上";
+    }
+    selectDegree=degree;
+}
 
 - (IBAction)birthdayAction:(UIButton *)sender {
     
@@ -1228,7 +1227,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
 -(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
     
 }
--(void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex{
+-(void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonInde{
     
 }
 
@@ -1287,7 +1286,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [BmobFile filesUploadBatchWithPaths:@[fileTempPath]
                               progressBlock:^(int index, float progress) {
                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                      [btnPic setTitle:[NSString stringWithFormat:@"上传:%ld％",(long)(progress*100)] forState:UIControlStateNormal];
+                                      [btnPic setTitle:[NSString stringWithFormat:@"LOADING:%ld％",(long)(progress*100)] forState:UIControlStateNormal];
                                   });
                               } resultBlock:^(NSArray *array, BOOL isSuccessful, NSError *error) {
                                   
@@ -1390,7 +1389,6 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     CGFloat width=(PIC_WIDTH+INSETS*2)+(addedPicArray.count-1)*(PIC_WIDTH+INSETS);
     CGSize contentSize=CGSizeMake(width, PIC_HEIGHT+INSETS*2);
     [self.picscrollview setContentSize:contentSize];
-//    [self.picscrollview setContentOffset:CGPointMake(width<self.picscrollview.frame.size.width?0:width-self.picscrollview.frame.size.width, 0) animated:YES];
     [self.picscrollview setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 - (IBAction)callVideoAction:(UIButton *)sender {
@@ -1451,7 +1449,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
     if (cell == nil) {
         cell = [[freeselectViewCell alloc]init];
     }
-    //[[cell imageView]setFrame:CGRectMake(0, 0, freecellwidth, freecellwidth)];
+
     if (indexPath.row>=0 && indexPath.row<7) {
         cell.imageView.image = [selectfreetimetitleArray objectAtIndex:indexPath.row];
     }
@@ -1496,10 +1494,10 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         [self.usermodel setuserLocationGeo:userGeo];
 
         
-        [MAMapServices sharedServices].apiKey =@"c38130d72c3068f07be6c23c7e791f47";
+        [MAMapServices sharedServices].apiKey =MAPKEY;
         
         if (!search) {
-            search=[[AMapSearchAPI alloc] initWithSearchKey:@"c38130d72c3068f07be6c23c7e791f47" Delegate:self];
+            search=[[AMapSearchAPI alloc] initWithSearchKey:MAPKEY Delegate:self];
             search.delegate=self;
         }
         
