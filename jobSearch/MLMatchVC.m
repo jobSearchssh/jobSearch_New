@@ -206,7 +206,7 @@ static  MLMatchVC *thisVC=nil;
         for (int i=index+1;i<[recordArray count];i++ ) {
             UIView *currentView=[childViewArray objectAtIndex:i];
             
-            [UIView animateWithDuration:0.2 animations:^{
+            [UIView animateWithDuration:0.3 animations:^{
                 [currentView setCenter:CGPointMake(currentView.center.x, currentView.center.y-kScrollViewHeight)];
             }];
         }

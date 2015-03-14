@@ -100,7 +100,7 @@
 #define VEDIOTIMEOUT @"视频加载超时"
 #define NONET @"当前无网络"
 #define NOTVIAWIFI @"当前使用手机网络，是否上传"
-
+#define networkError @"请查看网络连接是否正常"
 #endif
 
 //buid时取消所有控制台输出

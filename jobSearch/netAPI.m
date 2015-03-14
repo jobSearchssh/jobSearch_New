@@ -7,6 +7,7 @@
 //
 
 #import "netAPI.h"
+#import "MLTextUtils.h"
 #import <CommonCrypto/CommonDigest.h> 
 
 //login&register
@@ -35,11 +36,11 @@
 #define SETREAD_FUNCTION @"user/userIsRead"
 #define DELETEAPPLYJOB_FUCTION @"user/deleteOneApply"
 #define DELETEMATCHJOB_FUNCTION @"user/addToDeleteList"
-#define networkError @"请查看网络连接是否正常"
+
 
 @implementation netAPI
 
-//登录密码加密
+//MD5加密
 + (NSString *)md5:(NSString *)str
 {
     const char *cStr = [str UTF8String];
@@ -53,8 +54,6 @@
             result[12], result[13], result[14], result[15]
             ]; 
 }
-
-
 
 //用户登录
 +(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(loginReturnBlock)loginBlock{
@@ -252,7 +251,6 @@
             [getType appendFormat:@","];
         }
     }
-//    [getType appendFormat:@"\""];
     
     NSString *str = [[NSString alloc]initWithFormat:
                      @"_id=%@&start=%d&length=%d&jobType=%@",usrID,start,length,getType];
