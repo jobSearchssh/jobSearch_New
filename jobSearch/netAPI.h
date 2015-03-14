@@ -52,6 +52,8 @@ typedef void (^badgeBlock)(badgeModel *badgeModel);
 +(void)testAPIPostTestWithBlock:(NSData *)postInfo getFunction:(NSString *)function block:(returnBlock)block;
 
 
++ (NSString *)md5:(NSString *)str;
+
 //用户登录
 //用户名，密码，回调block
 +(void)usrLogin:(NSString *)name usrPassword:(NSString *)password withBlock:(loginReturnBlock)loginBlock;

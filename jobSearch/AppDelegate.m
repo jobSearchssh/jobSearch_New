@@ -20,7 +20,7 @@
 #import "badgeNumber.h"
 #import "MLIntroduceVC.h"
 #import "MLTextUtils.h"
-
+#import "netAPI.h"
 
 @interface AppDelegate (){
     int currentConnectType;
