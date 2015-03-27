@@ -20,6 +20,7 @@
 #import "MLLoginBusiness.h"
 #import "badgeNumber.h"
 #import "MLNavigation1.h"
+#import "RootViewController.h"
 
 @interface ViewController ()<UIAlertViewDelegate>
 {
@@ -32,9 +33,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"mainItem"] style:UIBarButtonItemStyleBordered target:self action:@selector(showMenu)];
-    self.navigationController.navigationBar.translucent = NO;
-    currentnavigationController=self.navigationController;
+//    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"mainItem"] style:UIBarButtonItemStyleBordered target:self action:@selector(showMenu)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(showMenu)];
+//    self.navigationController.navigationBar.translucent = NO;
+//    currentnavigationController=self.navigationController;
     
     badgeNumber*bn=[badgeNumber sharedInstance];
     
@@ -88,14 +90,14 @@
             if ([currentUserObjectId length]>0) {
  
                 MLFirstVC *viewController = [MLFirstVC sharedInstance];
-                MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
-                navigationController.navigationBar.translucent = NO;
-                navigationController.tabBarController.tabBar.translucent = NO;
-                navigationController.toolbar.translucent = NO;
-                [self setNavigationBar:navigationController];
-                viewController.title=@"附近的职位";
-                currentnavigationController=navigationController;
-                [menu setRootViewControllerNotHide:navigationController];
+//                MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
+//                navigationController.navigationBar.translucent = NO;
+//                navigationController.tabBarController.tabBar.translucent = NO;
+//                navigationController.toolbar.translucent = NO;
+//                [self setNavigationBar:navigationController];
+//                viewController.title=@"附近的职位";
+//                currentnavigationController=navigationController;
+//                [menu setRootViewControllerNotHide:navigationController];
                 
                 UIAlertView *logoutAlert=[[UIAlertView alloc] initWithTitle:@"确定要退出该账号？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
                 [logoutAlert show];
@@ -121,15 +123,18 @@
         
         RESideMenuItem *searchItem = [[RESideMenuItem alloc] initWithTitle:@"附近的职位" setFlag:NORMALCELL image:[UIImage imageNamed:@"search"] highlightedImage:[UIImage imageNamed:@"search"] action:^(RESideMenu *menu, RESideMenuItem *item) {
     
-            MLFirstVC *viewController = [MLFirstVC sharedInstance];
-            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
-            navigationController.navigationBar.translucent = NO;
-            navigationController.tabBarController.tabBar.translucent = NO;
-            navigationController.toolbar.translucent = NO;
-            [self setNavigationBar:navigationController];
-            viewController.title=@"附近的职位";
-            currentnavigationController=navigationController;
-            [menu setRootViewController:navigationController];
+//            MLFirstVC *viewController = [MLFirstVC sharedInstance];
+//            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:viewController];
+//            navigationController.navigationBar.translucent = NO;
+//            navigationController.tabBarController.tabBar.translucent = NO;
+//            navigationController.toolbar.translucent = NO;
+//            [self setNavigationBar:navigationController];
+//            viewController.title=@"附近的职位";
+//            currentnavigationController=navigationController;
+//            [menu setRootViewController:navigationController];
+            
+            RootViewController *rootVC = [[RootViewController alloc]init];
+            [menu setRootViewController:rootVC];
         }];
 
         [searchItem setIsClick:YES];
@@ -138,13 +143,13 @@
         RESideMenuItem *savedItem = [[RESideMenuItem alloc] initWithTitle:@"我的收藏" setFlag:NORMALCELL image:[UIImage imageNamed:@"collection"] highlightedImage:[UIImage imageNamed:@"collection"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             MLMyCollection *secondViewController = [MLMyCollection sharedInstance];
             secondViewController.autoFreshing=YES;
-            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:secondViewController];
-            navigationController.navigationBar.translucent = NO;
-            navigationController.tabBarController.tabBar.translucent = NO;
-            navigationController.toolbar.translucent = NO;
-            [self setNavigationBar:navigationController];
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:secondViewController];
+//            navigationController.navigationBar.translucent = NO;
+//            navigationController.tabBarController.tabBar.translucent = NO;
+//            navigationController.toolbar.translucent = NO;
+//            [self setNavigationBar:navigationController];
             secondViewController.title=@"我的收藏";
-            currentnavigationController=navigationController;
+//            currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
         
@@ -152,13 +157,13 @@
             
             MLMyApplication *_profilehVC=[MLMyApplication sharedInstance];
             _profilehVC.autoFreshing=YES;
-            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:_profilehVC];
-            navigationController.navigationBar.translucent = NO;
-            navigationController.tabBarController.tabBar.translucent = NO;
-            navigationController.toolbar.translucent = NO;
-            [self setNavigationBar:navigationController];
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:_profilehVC];
+//            navigationController.navigationBar.translucent = NO;
+//            navigationController.tabBarController.tabBar.translucent = NO;
+//            navigationController.toolbar.translucent = NO;
+//            [self setNavigationBar:navigationController];
             _profilehVC.title=@"我的申请";
-            currentnavigationController=navigationController;
+//            currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
         
@@ -179,26 +184,26 @@
         RESideMenuItem *feedbackItem = [[RESideMenuItem alloc] initWithTitle:@"发送反馈" setFlag:NORMALCELL image:[UIImage imageNamed:@"send"] highlightedImage:[UIImage imageNamed:@"send"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             
             MLFeedBackVC *feedBackVC=[MLFeedBackVC sharedInstance];
-            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:feedBackVC];
-            navigationController.navigationBar.translucent = NO;
-            navigationController.tabBarController.tabBar.translucent = NO;
-            navigationController.toolbar.translucent = NO;
-            [self setNavigationBar:navigationController];
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:feedBackVC];
+//            navigationController.navigationBar.translucent = NO;
+//            navigationController.tabBarController.tabBar.translucent = NO;
+//            navigationController.toolbar.translucent = NO;
+//            [self setNavigationBar:navigationController];
             feedBackVC.title=@"发送反馈";
-            currentnavigationController=navigationController;
+//            currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
 
         }];
         
         RESideMenuItem *aboutusItem = [[RESideMenuItem alloc] initWithTitle:@"声明" setFlag:NORMALCELL image:[UIImage imageNamed:@"notice"] highlightedImage:[UIImage imageNamed:@"notice"] action:^(RESideMenu *menu, RESideMenuItem *item) {
             MLLegalVC *legalVC=[MLLegalVC sharedInstance];
-            MLNavigation *navigationController = [[MLNavigation alloc] initWithRootViewController:legalVC];
-            navigationController.navigationBar.translucent = NO;
-            navigationController.tabBarController.tabBar.translucent = NO;
-            navigationController.toolbar.translucent = NO;
-            [self setNavigationBar:navigationController];
+            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:legalVC];
+//            navigationController.navigationBar.translucent = NO;
+//            navigationController.tabBarController.tabBar.translucent = NO;
+//            navigationController.toolbar.translucent = NO;
+//            [self setNavigationBar:navigationController];
             legalVC.title=@"兼职精灵用户使用协议";
-            currentnavigationController=navigationController;
+//            currentnavigationController=navigationController;
             [menu setRootViewController:navigationController];
         }];
         

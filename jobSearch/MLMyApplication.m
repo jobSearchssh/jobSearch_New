@@ -14,7 +14,7 @@
 #import "MJRefresh.h"
 #import "MLLoginVC.h"
 #import "badgeNumber.h"
-
+#import "JobDetailController.h"
 @interface MLMyApplication ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,finishLoginDelegate>
 {
     NSInteger cellNum;
@@ -260,6 +260,9 @@ static  MLMyApplication *thisVC=nil;
     
     MLCell1 *cell = [tableView dequeueReusableCellWithIdentifier:Cellidentifier forIndexPath:indexPath];
     
+    if (!recordArray.count) {
+        return cell;
+    }
     
     jobAppliedModel *jobObject=[recordArray objectAtIndex:[indexPath row]];
     
@@ -319,11 +322,11 @@ static  MLMyApplication *thisVC=nil;
         cell.portraitView.imageURL=[NSURL URLWithString:imageUrl];
     }
     
-    if ([jobObject.getuserApplyIsRead isEqualToString:@"1"]) {
-        cell.notReadImageView.hidden=YES;
-    }else{
-        cell.notReadImageView.hidden=NO;
-    }
+//    if ([jobObject.getuserApplyIsRead isEqualToString:@"1"]) {
+//        cell.notReadImageView.hidden=YES;
+//    }else{
+//        cell.notReadImageView.hidden=NO;
+//    }
 
     return cell;
 }
@@ -358,7 +361,7 @@ static  MLMyApplication *thisVC=nil;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    jobDetailVC *detailVC=[[jobDetailVC alloc]init];
+    JobDetailController *detailVC=[[JobDetailController alloc]init];
     
     jobAppliedModel *appliedModel=[recordArray objectAtIndex:[indexPath row]];
     
@@ -387,7 +390,7 @@ static  MLMyApplication *thisVC=nil;
     if ([appliedModel.getuserApplyIsRead isEqualToString:@"0"]) {
         
         MLCell1 *cell=(MLCell1 *)[tableView cellForRowAtIndexPath:indexPath];
-        cell.notReadImageView.hidden=YES;
+//        cell.notReadImageView.hidden=YES;
         
         [appliedModel setuserApplyIsRead:@"1"];
         

@@ -77,6 +77,14 @@ typedef void (^badgeBlock)(badgeModel *badgeModel);
 //lon:经度坐标;lat:纬度坐标;start:起始位置;length:获取长度;distance:距离长度(km);_id:用户唯一标示;回调block;
 +(void)getJobByDistance:(NSString *)usrID longtitude:(double)longtitude latitude:(double)latitude start:(int)start length:(int)length distance:(int)distance withBlock:(jobListReturnBlock)distanceBlock;
 
+//根据工作时间
++(void)getJobByWorkingHours:(NSString *)usrID longtitude:(double)longtitude latitude:(double)latitude start:(int)start length:(int)length  workingHours:(NSString *)workingHours withBlock:(jobListReturnBlock)distanceBlock;
+//根据薪资
++(void)getJobBySalary:(NSString *)usrID longtitude:(double)longtitude latitude:(double)latitude start:(int)start length:(int)length  Salary:(int)salary withBlock:(jobListReturnBlock)distanceBlock;
+
+//根据城市
++(void)getJobByCity:(NSString *)usrID longtitude:(double)longtitude latitude:(double)latitude start:(int)start length:(int)length  City:(NSString *)city withBlock:(jobListReturnBlock)distanceBlock;
+
 //根据工作类型
 //start:起始位置;length:获取长度;typeArray:如[1,2,3]m,不为空，nsnumber类型;回调block;
 +(void)getJobByJobType:(NSString *)usrID start:(int)start length:(int)length jobType:(NSMutableArray *)typeArray withBlock:(jobListReturnBlock)byTypeBlock;
@@ -87,6 +95,8 @@ typedef void (^badgeBlock)(badgeModel *badgeModel);
 
 //根据关键字
 +(void)getJobByKeyWord:(NSString *)usrID start:(int)start length:(int)length keyWord:(NSString *)keyWord withBlock:(jobListReturnBlock)bykeyBlock;
+
+
 
 //最新的兼职信息
 //用户id，回调block

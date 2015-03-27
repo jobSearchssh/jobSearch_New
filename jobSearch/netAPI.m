@@ -8,7 +8,7 @@
 
 #import "netAPI.h"
 #import "MLTextUtils.h"
-#import <CommonCrypto/CommonDigest.h> 
+#import <CommonCrypto/CommonDigest.h>
 
 //login&register
 #define LOGIN_FUNCTION @"user/userLogin"
@@ -19,6 +19,9 @@
 #define NEWESTJOBLIST_FUNCTION @"userService/queryNewestJobs"
 #define APPLYJOBLIST_FUNCTION @"userService/queryUserApplys"
 #define DISTANCEJOBLIST_FUNCTION @"userService/queryJobsByDistance"
+#define WORKINGHOURSJOBLIST_FUNCTION @"userService/queryJobsByWorkingHours"//需要变动,等待后台提供数据
+#define CITYJOBLIST_FUNCTION @"userService/queryJobsByCity"//需要变动,等待后台提供数据
+#define SALARYJOBLIST_FUNCTION @"userService/queryJobsSalary"//需要变动,等待后台提供数据
 #define TYPEJOBLIST_FUNCTION @"userService/queryJobsByJobType"
 #define TYPEANDDISJOBLIST_FUNCTION @"userService/queryJobsByDistanceAndJobType"
 #define KEYWORDJOBLIST_FUNCTION @"userService/queryJobsByCondition"
@@ -52,7 +55,7 @@
             result[4], result[5], result[6], result[7],
             result[8], result[9], result[10], result[11],
             result[12], result[13], result[14], result[15]
-            ]; 
+            ];
 }
 
 //用户登录
@@ -240,6 +243,62 @@
     }];
 }
 
+
+//根据工作时间
+//start:起始位置;length:获取长度;workingHours:工作时间,不能为空;
++(void)getJobByWorkingHours:(NSString *)usrID longtitude:(double)longtitude latitude:(double)latitude start:(int)start length:(int)length  workingHours:(NSString *)workingHours withBlock:(jobListReturnBlock)distanceBlock
+{
+    NSString *str = [[NSString alloc]initWithFormat:
+                     @"_id=%@&start=%d&length=%d&lon=%f&lat=%f&workingHours=%@",usrID,start,length,longtitude,latitude,workingHours];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    
+    [self testAPIPostTestWithBlock:data getFunction:WORKINGHOURSJOBLIST_FUNCTION block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
+            distanceBlock(a);
+        }else{
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
+            distanceBlock(a);
+        }
+    }];
+}
+
+//根据薪资
++(void)getJobBySalary:(NSString *)usrID longtitude:(double)longtitude latitude:(double)latitude start:(int)start length:(int)length  Salary:(int)salary withBlock:(jobListReturnBlock)distanceBlock
+{
+    NSString *str = [[NSString alloc]initWithFormat:
+                     @"_id=%@&start=%d&length=%d&lon=%f&lat=%f&salary=%d",usrID,start,length,longtitude,latitude,salary];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    
+    [self testAPIPostTestWithBlock:data getFunction:SALARYJOBLIST_FUNCTION block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
+            distanceBlock(a);
+        }else{
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
+            distanceBlock(a);
+        }
+    }];
+    
+}
+
+//根据城市
++(void)getJobByCity:(NSString *)usrID longtitude:(double)longtitude latitude:(double)latitude start:(int)start length:(int)length  City:(NSString *)city withBlock:(jobListReturnBlock)distanceBlock
+{
+    NSString *str = [[NSString alloc]initWithFormat:
+                     @"_id=%@&start=%d&length=%d&lon=%f&lat=%f&city=%@",usrID,start,length,longtitude,latitude,city];
+    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+    
+    [self testAPIPostTestWithBlock:data getFunction:city block:^(URLReturnModel *returnModel) {
+        if (returnModel != Nil && [returnModel getFlag]) {
+            jobListModel *a = [[jobListModel alloc]initWithData:[returnModel getData]];
+            distanceBlock(a);
+        }else{
+            jobListModel *a = [[jobListModel alloc]initWithError:[NSNumber numberWithInt:STATIS_NO] info:networkError];
+            distanceBlock(a);
+        }
+    }];
+}
 //根据工作类型
 //start:起始位置;length:获取长度;typeArray:如[1,2,3];回调block;
 +(void)getJobByJobType:(NSString *)usrID start:(int)start length:(int)length jobType:(NSMutableArray *)typeArray withBlock:(jobListReturnBlock)byTypeBlock{
@@ -278,7 +337,7 @@
             [getType appendFormat:@","];
         }
     }
-//    [getType appendFormat:@""];
+    //    [getType appendFormat:@""];
     
     NSString *str = [[NSString alloc]initWithFormat:
                      @"_id=%@&start=%d&length=%d&jobType=%@&lon=%f&lat=%f&distance=%d",usrID,start,length,getType,longtitude,latitude,distance];
@@ -447,7 +506,7 @@
             oprationReturnBlock(a);
         }
     }];
-
+    
 }
 
 #pragma base API

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MLFirstVC">
             <connections>
                 <outlet property="mapItem" destination="i4c-Uu-9PM" id="SWa-6z-Tbf"/>
                 <outlet property="messageItem" destination="IDM-zW-qqE" id="MA4-QK-gfi"/>
-                <outlet property="sortItem" destination="qDR-4l-c4X" id="AN5-XF-Gdz"/>
                 <outlet property="tabbar" destination="hq5-HG-YjK" id="5Tz-gx-d5c"/>
                 <outlet property="tableView" destination="4Zw-aG-ERW" id="0Bl-e8-1Jh"/>
                 <outlet property="topConstraint" destination="CAZ-p0-XRm" id="z1G-x4-g02"/>
@@ -27,11 +26,9 @@
                         <constraint firstAttribute="height" constant="49" id="5Ef-EI-lDa"/>
                     </constraints>
                     <items>
-                        <tabBarItem title="地图" image="location.png" selectedImage="location.png" id="i4c-Uu-9PM"/>
-                        <tabBarItem tag="1" title="排序" image="catagory.png" selectedImage="catagory.png" id="qDR-4l-c4X"/>
-                        <tabBarItem tag="2" title="消息" image="letter.png" selectedImage="letter.png" id="IDM-zW-qqE"/>
-                        <tabBarItem tag="3" title="筛选" image="target.png" selectedImage="target.png" id="yGw-lO-0HX"/>
-                        <tabBarItem tag="4" title="精灵管家" image="calendar.png" selectedImage="calendar.png" id="750-FT-GBd"/>
+                        <tabBarItem title="职位" image="list.png" selectedImage="list.png" id="i4c-Uu-9PM"/>
+                        <tabBarItem tag="1" title="消息" image="letter.png" selectedImage="letter.png" id="IDM-zW-qqE"/>
+                        <tabBarItem tag="2" title="精灵管家" image="calendar.png" selectedImage="calendar.png" id="750-FT-GBd"/>
                     </items>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -96,10 +93,8 @@
     </objects>
     <resources>
         <image name="calendar.png" width="30" height="30"/>
-        <image name="catagory.png" width="30" height="30"/>
         <image name="letter.png" width="30" height="30"/>
-        <image name="location.png" width="30" height="30"/>
+        <image name="list.png" width="30" height="30"/>
         <image name="tabbarBackground.png" width="720" height="106"/>
-        <image name="target.png" width="30" height="30"/>
     </resources>
 </document>

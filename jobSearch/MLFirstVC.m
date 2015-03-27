@@ -22,10 +22,9 @@
 #import "AJLocationManager.h"
 #import <BmobSDK/Bmob.h>
 #import "badgeNumber.h"
-#import "MLNavigation.h"
 #import "currentUserLocation.h"
 #import "MLTextUtils.h"
-
+#import "JobDetailController.h"
 @interface MLFirstVC ()<NiftySearchViewDelegate,UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,UITabBarDelegate,AMapSearchDelegate,finishFilterDelegate,UINavigationControllerDelegate,showDetailDelegate>
 {
     NSInteger cellNum;
@@ -64,7 +63,6 @@
 @property (weak, nonatomic) IBOutlet UITabBarItem *mapItem;
 @property (weak, nonatomic) IBOutlet UITabBarItem *messageItem;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
-@property (strong, nonatomic) IBOutlet UITabBarItem *sortItem;
 
 @end
 
@@ -95,29 +93,59 @@ static  MLFirstVC *thisVC=nil;
     }
 }
 
+- (UITableView *)tableView
+{
+    if (_tableView) {
+        return _tableView;
+    }
+    
+    _tableView = [[UITableView alloc]initWithFrame:[UIScreen mainScreen].bounds style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self headRefreshData];
+    return _tableView;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"宏测试");
+    //    NSLog(@"宏测试");
     self.topConstraint.constant=0;
     
-    self.title=NEARBYJOB;
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
-    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
+    [self.view addSubview:self.tableView];
     
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:54.0/255.0 green:59.0/255.0 blue:81.0/255.0 alpha:1.0]];
-    [self.tabbar setSelectedImageTintColor: [UIColor whiteColor]];
+//    self.title=NEARBYJOB;
+
+         
+//    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+//    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+//    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
+//    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+//    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
+//    
+//    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:54.0/255.0 green:59.0/255.0 blue:81.0/255.0 alpha:1.0]];
+//    [self.navigationController.navigationBar setBarTintColor:[UIColor grayColor]];
+//    [self.tabbar setSelectedImageTintColor: [UIColor whiteColor]];
+    
+    
+    //创建UISegementControl
+    UISegmentedControl *segement = [[UISegmentedControl alloc]initWithItems:@[@" 地图          ",@"    列表  "]];
+    
+    segement.selectedSegmentIndex = 1; //通过数组下标
+    
+    segement.tintColor = [UIColor blueColor ];
+    
+    [segement addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged]; //改变的是数值
+    
+    self.navigationItem.titleView = segement;
     
     //添加观察者
     badgeNumber*bn=[badgeNumber sharedInstance];
-
+    
     [bn addObserver:self forKeyPath:@"messageCount" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
     
     currentUserLocation *cul=[currentUserLocation sharedInstance];
     [cul addObserver:self forKeyPath:@"currentUserLocation" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
-
+    
     
     //初始化参数
     refreshAdded=NO;
@@ -133,15 +161,17 @@ static  MLFirstVC *thisVC=nil;
     footerRefreshing=NO;
     mapSearching=NO;
     
-    searchView = [[NiftySearchView alloc] initWithFrame:CGRectMake(0, -38, [[UIScreen mainScreen] bounds].size.width, 38)];
-    searchView.delegate = self;
-
-    [_tableView addSubview:searchView];
-    searchView.alpha=0.0f;
-    self.navigationController.navigationBar.translucent=NO;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"] style:UIBarButtonItemStylePlain target:self action:@selector(search)];
-    self.navigationItem.rightBarButtonItem.tintColor=[UIColor whiteColor];
-    self.navigationItem.leftBarButtonItem.tintColor=[UIColor whiteColor];
+//    searchView = [[NiftySearchView alloc] initWithFrame:CGRectMake(0, -38, [[UIScreen mainScreen] bounds].size.width, 38)];
+//    searchView.delegate = self;
+//    
+//    [_tableView addSubview:searchView];
+//    searchView.alpha=0.0f;
+    
+//    self.navigationController.navigationBar.translucent=NO;
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search"] style:UIBarButtonItemStylePlain target:self action:@selector(search)];
+//    self.navigationItem.rightBarButtonItem.tintColor=[UIColor whiteColor];
+//    self.navigationItem.leftBarButtonItem.tintColor=[UIColor whiteColor];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(search)];
     
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM月dd日"];
@@ -150,9 +180,9 @@ static  MLFirstVC *thisVC=nil;
     
     [self tableViewInit];
     
-    [self initTabbar];
+//    [self initTabbar];
     
-    [self searchCity];
+//    [self searchCity];
     
     touchView=[[UIView alloc]initWithFrame:CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-108)];
     touchView.backgroundColor=[UIColor clearColor];
@@ -162,9 +192,14 @@ static  MLFirstVC *thisVC=nil;
     
 }
 
+- (void)changeView:(UISegmentedControl *)segment
+{
+    [self showMap];
+}
+
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
+    self.tableView.contentOffset = CGPointMake(0, -64);
     badgeNumber*bn=[badgeNumber sharedInstance];
     if ([bn.messageCount intValue]>0) {
         [self.messageItem setBadgeValue:[NSString stringWithFormat:@"%@",bn.messageCount]];
@@ -172,11 +207,11 @@ static  MLFirstVC *thisVC=nil;
 }
 
 - (void)finishFilter:(int)_distance Type:(NSMutableArray *)type{
-        jobTypeArray=type;
-        distance=_distance;
-        firstLoad=YES;
-        searchType=@"distanceAndType";
-        [self headRefreshData];
+    jobTypeArray=type;
+    distance=_distance;
+    firstLoad=YES;
+    searchType=@"distanceAndType";
+    [self headRefreshData];
 }
 
 - (void)headRefreshData{
@@ -188,7 +223,7 @@ static  MLFirstVC *thisVC=nil;
         [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
     }
     [self refreshDataByType:NO];
-
+    
 }
 
 - (void)footRefreshData{
@@ -381,22 +416,22 @@ static  MLFirstVC *thisVC=nil;
                 [MBProgressHUD showError:NOMOREDATA toView:self.view];
             }else{
                 
-            for (id object in jobListModel.getJobArray) {
-                [recordArray addObject:object];
+                for (id object in jobListModel.getJobArray) {
+                    [recordArray addObject:object];
+                }
+                
+                NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
+                
+                NSInteger n=[recordArray count];
+                NSInteger m=[jobListModel.getJobArray count];
+                
+                for (NSInteger k=n-m; k<[recordArray count];k++) {
+                    NSIndexPath *newPath = [NSIndexPath indexPathForRow:k inSection:0];
+                    [insertIndexPaths addObject:newPath];
+                }
+                cellNum=[recordArray count];
+                [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
             }
-            
-            NSMutableArray *insertIndexPaths = [NSMutableArray arrayWithCapacity:10];
-            
-            NSInteger n=[recordArray count];
-            NSInteger m=[jobListModel.getJobArray count];
-            
-            for (NSInteger k=n-m; k<[recordArray count];k++) {
-                NSIndexPath *newPath = [NSIndexPath indexPathForRow:k inSection:0];
-                [insertIndexPaths addObject:newPath];
-            }
-            cellNum=[recordArray count];
-            [self.tableView insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationNone];
-        }
         }
     }
     
@@ -405,44 +440,44 @@ static  MLFirstVC *thisVC=nil;
         if (![jobListModel.getStatus intValue]==0) {
             
             [MBProgressHUD showError:DOWNLOADFAIL toView:self.view];
-
+            
         }else{
             
             if ([jobListModel.getJobArray count]<1) {
                 [MBProgressHUD showError:NOMATCHJOB toView:self.view];
                 searchType=@"newest";
             }else{
-            
-            [recordArray removeAllObjects];
-            
-            for (id object in jobListModel.getJobArray) {
-                [recordArray addObject:object];
-            }
-            
-            cellNum=[recordArray count];
-            [self.tableView reloadData];
-            
-            if (mapSearching) {
-                if (!mapView) {
-                    mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64-self.tabbar.bounds.size.height)];
-                    mapView.showDetailDelegate=self;
-                    mapView.alpha=0.0f;
-                    [self.view addSubview:mapView];
+                
+                [recordArray removeAllObjects];
+                
+                for (id object in jobListModel.getJobArray) {
+                    [recordArray addObject:object];
                 }
-                mapDisplaying=YES;
-                [mapView removeAllAnnotations];
-                [self addannotations];
-                [UIView animateWithDuration:0.4 animations:^{
-                    mapView.alpha=1.0f;
-                }];
-                [self.mapItem setTitle:@"列表"];
-                [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-                self.navigationItem.rightBarButtonItem.enabled=NO;
-                self.navigationItem.rightBarButtonItem.tintColor=[UIColor clearColor];
-                mapSearching=NO;
-                self.sortItem.enabled=NO;
+                
+                cellNum=[recordArray count];
+                [self.tableView reloadData];
+                
+                if (mapSearching) {
+                    if (!mapView) {
+                        mapView=[[MLMapView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-self.tabbar.bounds.size.height)];
+                        mapView.showDetailDelegate=self;
+                        mapView.alpha=0.0f;
+                        [self.view addSubview:mapView];
+                    }
+                    mapDisplaying=YES;
+                    [mapView removeAllAnnotations];
+                    [self addannotations];
+                    [UIView animateWithDuration:0.4 animations:^{
+                        mapView.alpha=1.0f;
+                    }];
+                    [self.mapItem setTitle:@"列表"];
+                    [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+                    self.navigationItem.rightBarButtonItem.enabled=NO;
+                    self.navigationItem.rightBarButtonItem.tintColor=[UIColor clearColor];
+                    mapSearching=NO;
+//                    self.sortItem.enabled=NO;
+                }
             }
-        }
         }
     }
 }
@@ -451,24 +486,27 @@ static  MLFirstVC *thisVC=nil;
     
     [[self.tabbar.items objectAtIndex:0] setFinishedSelectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [[self.tabbar.items objectAtIndex:0] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                        [UIColor whiteColor], UITextAttributeTextColor,
-                                        nil] forState:UIControlStateNormal];
+                                                                 [UIColor whiteColor], UITextAttributeTextColor,
+                                                                 nil] forState:UIControlStateNormal];
     
     
-    [[self.tabbar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"catagory"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"catagory"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+//    [[self.tabbar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"catagory"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"catagory"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+//    [[self.tabbar.items objectAtIndex:1] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+//                                                                 [UIColor whiteColor], UITextAttributeTextColor,
+//                                                                 nil] forState:UIControlStateNormal];
+    
+    [[self.tabbar.items objectAtIndex:1] setFinishedSelectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [[self.tabbar.items objectAtIndex:1] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                  [UIColor whiteColor], UITextAttributeTextColor,
                                                                  nil] forState:UIControlStateNormal];
-    [[self.tabbar.items objectAtIndex:2] setFinishedSelectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"letter"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [[self.tabbar.items objectAtIndex:2] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                 [UIColor whiteColor], UITextAttributeTextColor,
-                                                                 nil] forState:UIControlStateNormal];
-    [[self.tabbar.items objectAtIndex:3] setFinishedSelectedImage:[[UIImage imageNamed:@"target"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"target"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [[self.tabbar.items objectAtIndex:3] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                 [UIColor whiteColor], UITextAttributeTextColor,
-                                                                 nil] forState:UIControlStateNormal];
-    [[self.tabbar.items objectAtIndex:4] setFinishedSelectedImage:[[UIImage imageNamed:@"calendar"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"calendar"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [[self.tabbar.items objectAtIndex:4] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+    
+//    [[self.tabbar.items objectAtIndex:3] setFinishedSelectedImage:[[UIImage imageNamed:@"target"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"target"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+//    [[self.tabbar.items objectAtIndex:3] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+//                                                                 [UIColor whiteColor], UITextAttributeTextColor,
+//                                                                 nil] forState:UIControlStateNormal];
+    
+    [[self.tabbar.items objectAtIndex:2] setFinishedSelectedImage:[[UIImage imageNamed:@"calendar"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"calendar"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [[self.tabbar.items objectAtIndex:1] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                  [UIColor whiteColor], UITextAttributeTextColor,
                                                                  nil] forState:UIControlStateNormal];
     self.tabbar.delegate=self;
@@ -476,14 +514,12 @@ static  MLFirstVC *thisVC=nil;
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
     if (item.tag==0) {
-        [self showMap];
-    }else if (item.tag==1){
-        [self sort];
-    }else if (item.tag==2){
+//        [self showMap];
+    }
+    else if (item.tag==1){
         [self showMessage];
-    }else if (item.tag==3){
-        [self filter];
-    }else if (item.tag==4){
+    }
+    else if (item.tag==2){
         [self showMatchInfo];
     }
 }
@@ -515,11 +551,11 @@ static  MLFirstVC *thisVC=nil;
             [UIView animateWithDuration:0.4 animations:^{
                 mapView.alpha=1.0f;
             }];
-            [self.mapItem setTitle:@"列表"];
-            [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-            self.navigationItem.rightBarButtonItem.enabled=NO;
-            self.navigationItem.rightBarButtonItem.tintColor=[UIColor clearColor];
-            self.sortItem.enabled=NO;
+//            [self.mapItem setTitle:@"职位"];
+//            [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"list"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+//            self.navigationItem.rightBarButtonItem.enabled=NO;
+//            self.navigationItem.rightBarButtonItem.tintColor=[UIColor clearColor];
+//            self.sortItem.enabled=NO;
         }
         
     }else {
@@ -528,11 +564,11 @@ static  MLFirstVC *thisVC=nil;
             [mapView removeAllAnnotations];
         }];
         mapDisplaying=NO;
-        [self.mapItem setTitle:@"地图"];
-        [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-        self.navigationItem.rightBarButtonItem.enabled=YES;
-        self.navigationItem.rightBarButtonItem.tintColor=[UIColor whiteColor];
-        self.sortItem.enabled=YES;
+//        [self.mapItem setTitle:@"职位"];
+//        [self.mapItem setFinishedSelectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] withFinishedUnselectedImage:[[UIImage imageNamed:@"location"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+//        self.navigationItem.rightBarButtonItem.enabled=YES;
+//        self.navigationItem.rightBarButtonItem.tintColor=[UIColor whiteColor];
+//        self.sortItem.enabled=YES;
     }
 }
 
@@ -544,7 +580,7 @@ static  MLFirstVC *thisVC=nil;
             
             NSArray *arr=jm.getjobWorkPlaceGeoPoint;
             
-            [mapView addAnnotation:arr Title:jm.getjobTitle tag:i SetToCenter:NO];
+            [mapView addAnnotation:arr Title:jm.getjobTitle peopleCount:[NSString stringWithFormat:@"招募%@人",jm.getjobRecruitNum]  tag:i SetToCenter:NO];
         }
     }
 }
@@ -627,7 +663,7 @@ static  MLFirstVC *thisVC=nil;
                          completion:^(BOOL completion) {
                              [searchView.finishTextField becomeFirstResponder];
                          }];
-
+        
     }else{
         [self hideTouchView];
     }
@@ -695,13 +731,26 @@ static  MLFirstVC *thisVC=nil;
 - (void)tableViewInit{
     
     recordArray=[[NSMutableArray alloc]init];
-    
+//    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     _tableView.scrollEnabled=YES;
     _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+    _tableView.autoresizesSubviews = YES;
     [self headRefreshData];
 }
+
+//- (UITableView *)tableView
+//{
+//    recordArray=[[NSMutableArray arr];
+//    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+//    [_tableView setDelegate:self];
+//    [_tableView setDataSource:self];
+//    _tableView.scrollEnabled=YES;
+//    _tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+//    [self headRefreshData];
+//    return _tableView;
+//}
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -719,11 +768,18 @@ static  MLFirstVC *thisVC=nil;
     
     
     jobModel *jobObject=[recordArray objectAtIndex:[indexPath row]];
-    
     cell.jobTitleLabel.text=jobObject.getjobTitle;
     cell.jobAddressLabel.text=[NSString stringWithFormat:@"%@%@",jobObject.getjobWorkPlaceCity,jobObject.getjobWorkPlaceDistrict];
-    cell.jobTimeLabel.text=[NSString stringWithFormat:@"%@—%@",[dateFormatter stringFromDate:jobObject.getjobBeginTime],[dateFormatter stringFromDate:jobObject.getjobEndTime]];
-    cell.jobDistance.text=[NSString stringWithFormat:@"%.1fKM",[jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint]];
+    cell.jobTimeLabel.text=[NSString stringWithFormat:@"%@至%@",[self exchangeString:[DateUtil birthdayStringFromDate:jobObject.getjobBeginTime]],[self exchangeString:[DateUtil birthdayStringFromDate:jobObject.getjobBeginTime]]];
+    NSString *distanceStr = nil;
+    
+    if ([jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint] < 1000) {
+        
+        distanceStr = [NSString stringWithFormat:@"%.1fm",[jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint]];
+    }else{
+        distanceStr = [NSString stringWithFormat:@"%.1fkm",[jobModel getDistance:jobObject.getjobWorkPlaceGeoPoint]/1000];
+    }
+    cell.jobDistance.text=distanceStr;
     
     int num=[jobObject.getjobRecruitNum intValue]-[jobObject.getjobHasAccepted intValue];
     if (num<0) {
@@ -742,9 +798,11 @@ static  MLFirstVC *thisVC=nil;
     else if ([str isEqualToString:@"3"])
         settlement=@"项目";
     
-    cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@元/%@",jobObject.getjobSalaryRange,settlement];
+    cell.jobPriceLabel.text=[NSString stringWithFormat:@"%@",jobObject.getjobSalaryRange];
+    cell.jobPriceLabel.textAlignment = NSTextAlignmentRight;
+    cell.unitLabel.text = [NSString stringWithFormat:@"元/%@",settlement];
     
-    cell.jobNumberRemainLabel.text=[NSString stringWithFormat:@"还剩%d人",num];
+    cell.jobNumberRemainLabel.text=[NSString stringWithFormat:@"招募%d人",num];
     
     NSString *imageUrl;
     
@@ -764,9 +822,21 @@ static  MLFirstVC *thisVC=nil;
         cell.portraitView.imageURL=[NSURL URLWithString:imageUrl];
     }
     
-    cell.notReadImageView.hidden=YES;
-    
     return cell;
+}
+
+
+//处理 Date, 转换成3-12格式
+- (NSString *)exchangeString:(NSString *)dateString
+{
+    NSString *purStr = [dateString substringFromIndex:5];
+    
+    NSInteger tempInter = [[purStr substringToIndex:2] integerValue];
+    
+    if (tempInter < 10) {
+        purStr = [purStr substringFromIndex:1];
+    }
+    return purStr;
 }
 
 - (NSArray *)rightButtons
@@ -801,19 +871,23 @@ static  MLFirstVC *thisVC=nil;
     return 100;
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    jobDetailVC *detailVC=[[jobDetailVC alloc]init];
-    if ([recordArray objectAtIndex:[indexPath row]]) {
-        detailVC.jobModel=[recordArray objectAtIndex:[indexPath row]];
-    }
     
-    detailVC.origin=@"0";
-    detailVC.hidesBottomBarWhenPushed=YES;
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-    backItem.title = @"";
-    self.navigationItem.backBarButtonItem = backItem;
+    JobDetailController *detailVC = [[JobDetailController alloc]init];
+    
+//        jobDetailVC *detailVC=[[jobDetailVC alloc]init];
+        if ([recordArray objectAtIndex:[indexPath row]]) {
+            detailVC.jobModel=[recordArray objectAtIndex:[indexPath row]];
+        }
+    
+        detailVC.origin=@"0";
+        detailVC.hidesBottomBarWhenPushed=YES;
+//        UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+//        backItem.title = @"";
+//        self.navigationItem.backBarButtonItem = backItem;
     
     [self.navigationController pushViewController:detailVC animated:YES];
     
@@ -924,10 +998,10 @@ static  MLFirstVC *thisVC=nil;
     } error:^(NSError *error) {
         
         if ([mySettingData objectForKey:@"currentCoordinate"]) {
-
+            
             CGPoint p=CGPointFromString([mySettingData objectForKey:@"currentCoordinate"]);
             locationCoord=CLLocationCoordinate2DMake(p.y, p.x);
-
+            
         }else{
             locationCoord=CLLocationCoordinate2DMake(38.92, 116.46);
         }
@@ -941,13 +1015,13 @@ static  MLFirstVC *thisVC=nil;
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigati
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

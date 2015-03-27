@@ -231,7 +231,7 @@ static NSString *selectFreecellIdentifier = @"freeselectViewCell";
         
         [self updateConstraints];
         
-        [mapView addAnnotation:self.jobModel.getjobWorkPlaceGeoPoint Title:self.jobModel.getjobTitle tag:0 SetToCenter:YES];
+        [mapView addAnnotation:self.jobModel.getjobWorkPlaceGeoPoint Title:self.jobModel.getjobTitle peopleCount:[NSString stringWithFormat:@"招募%@人",self.jobModel.getjobRecruitNum]  tag:0 SetToCenter:YES];
         
     }
 }

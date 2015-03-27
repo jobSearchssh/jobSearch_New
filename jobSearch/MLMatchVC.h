@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface MLMatchVC : UIViewController
+#import "ViewController.h"
+@interface MLMatchVC : ViewController
 
 + (MLMatchVC*)sharedInstance;
 

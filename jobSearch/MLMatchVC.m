@@ -64,24 +64,27 @@ static  MLMatchVC *thisVC=nil;
     return thisVC;
 }
 
-- (void)viewWillLayoutSubviews{
-    self.title=@"精灵管家";
-    //设置导航栏标题颜色及返回按钮颜色
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
-    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
-    
-    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
-}
+//- (void)viewWillLayoutSubviews{
+//    self.title=@"精灵管家";
+//    //设置导航栏标题颜色及返回按钮颜色
+//    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+//    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+//    NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
+//    [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
+//    
+//    [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];
+//}
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"精灵管家";
+    
     kScrollViewHeight = [[UIScreen mainScreen]bounds].size.height;
     kScrollViewContentHeight=kScrollViewHeight;
     kScrollViewTagBase=kScrollViewHeight;
+
     
     recordArray=[[NSMutableArray alloc]init];
     childViewArray=[[NSMutableArray alloc]init];
@@ -89,7 +92,7 @@ static  MLMatchVC *thisVC=nil;
     self.clipView.clipsToBounds = YES;
     [self.view addSubview:self.clipView];
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.clipView.bounds.size.width, kScrollViewHeight)];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, self.clipView.bounds.size.width, kScrollViewHeight)];
     self.scrollView.delegate = self;
     self.scrollView.clipsToBounds = NO;
     self.scrollView.pagingEnabled = YES;

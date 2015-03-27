@@ -21,7 +21,7 @@
 #import "MLIntroduceVC.h"
 #import "MLTextUtils.h"
 #import "netAPI.h"
-
+#import "RootViewController.h"
 @interface AppDelegate (){
     int currentConnectType;
 }
@@ -53,7 +53,11 @@
         self.window.rootViewController = [[MLIntroduceVC alloc] init];
     }
     else{
-        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MLFirstVC sharedInstance]];
+//        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MLFirstVC sharedInstance]];
+        RootViewController *rootVC = [[RootViewController alloc]init];
+        rootVC.selectedIndex = 0;
+        self.window.rootViewController = rootVC;
+        
     }
 
     [self.window makeKeyAndVisible];
@@ -141,7 +145,7 @@
     return currentConnectType;
 }
 
-
+//分享
 - (BOOL)application:(UIApplication *)application
       handleOpenURL:(NSURL *)url
 {

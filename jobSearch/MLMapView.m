@@ -9,6 +9,20 @@
 #import "MLMapView.h"
 #import "CustomAnnotationView.h"
 #import "currentUserLocation.h"
+#import "CallOutAnnotationVifew.h"
+#import "JingDianMapCell.h"
+#define span 40000
+@interface MLMapView ()
+{
+    NSMutableArray *_annotationList;
+    
+    CalloutMapAnnotation *_calloutAnnotation;
+    CalloutMapAnnotation *_previousdAnnotation;
+    
+}
+@end
+
+
 
 @implementation MLMapView
 @synthesize mapView=_mapView;
@@ -24,6 +38,7 @@
         _mapView.userInteractionEnabled=YES;
         _mapView.delegate = self;
         pointAnnoArray=[[NSMutableArray alloc]init];
+        pointAnnoDic = [NSMutableDictionary dictionary];
         firstLoad=YES;
         requestUserLocation=NO;
     }
@@ -31,18 +46,24 @@
 }
 
 - (void)KeyCheck{
-    [MAMapServices sharedServices].apiKey =@"c38130d72c3068f07be6c23c7e791f47";
+#pragma mark - 替换高德APPKey
+    [MAMapServices sharedServices].apiKey =@"f57611f60fe9e53f026542c08252cce4";
+    //    [MAMapServices sharedServices].apiKey =@"c38130d72c3068f07be6c23c7e791f47";
 }
 
-- (void)addAnnotation:(NSArray*)point Title:(NSString*)title tag:(int)tag SetToCenter:(BOOL)isCenter{
-    MAPointAnnotation *sellerPoint = [[MAPointAnnotation alloc] init];
+- (void)addAnnotation:(NSArray*)point Title:(NSString*)title peopleCount:(NSString *)peopleCount tag:(int)tag SetToCenter:(BOOL)isCenter
+{
+    BasicMapAnnotation *sellerPoint = [[BasicMapAnnotation alloc] init];
     nowTag=tag;
     [pointAnnoArray addObject:sellerPoint];
     CLLocationCoordinate2D coord=CLLocationCoordinate2DMake([[point objectAtIndex:1] doubleValue], [[point objectAtIndex:0] doubleValue]);
     sellerPoint.coordinate = coord;
     sellerPoint.title=title;
-    
+    sellerPoint.subtitle = peopleCount;
     [_mapView addAnnotation:sellerPoint];
+    [pointAnnoDic setObject:sellerPoint forKey:[NSString stringWithFormat:@"%f%f",sellerPoint.coordinate.latitude,sellerPoint.coordinate.longitude]];
+    
+    
     
     if (isCenter) {
         _mapView.region = MACoordinateRegionMake(coord,MACoordinateSpanMake(0.005, 0.005));
@@ -51,30 +72,105 @@
     }
 }
 
+//处理自定义 callout
+- (void)mapView:(MAMapView *)mapView didDeselectAnnotationView:(MAAnnotationView *)view
+{
+    if (_calloutAnnotation&& ![view isKindOfClass:[CallOutAnnotationVifew class]]) {
+        if (_calloutAnnotation.coordinate.latitude == view.annotation.coordinate.latitude&&
+            _calloutAnnotation.coordinate.longitude == view.annotation.coordinate.longitude) {
+            [mapView removeAnnotation:_calloutAnnotation];
+            _calloutAnnotation = nil;
+        }
+    }
+}
+
+- (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view
+{
+    
+    BasicMapAnnotation *ann = (BasicMapAnnotation *)view.annotation;
+    
+    if ([view.annotation isKindOfClass:[BasicMapAnnotation class]]) {
+        if (_calloutAnnotation.coordinate.latitude == view.annotation.coordinate.latitude&&
+            _calloutAnnotation.coordinate.longitude == view.annotation.coordinate.longitude) {
+            return;
+        }
+        if (_calloutAnnotation) {
+            [mapView removeAnnotation:_calloutAnnotation];
+            _calloutAnnotation = nil;
+        }
+        _calloutAnnotation = [[CalloutMapAnnotation alloc]
+                              initWithLatitude:view.annotation.coordinate.latitude
+                              andLongitude:view.annotation.coordinate.longitude];
+        
+        //         [_calloutAnnotation.locationInfo setValue:ann.title forKey:@"title"];
+        //        [_calloutAnnotation.locationInfo setValue:ann.subtitle forKey:@"subtitle"];
+        _calloutAnnotation.title = ann.title;
+        _calloutAnnotation.subtitle = ann.subtitle;
+        
+        [mapView addAnnotation:_calloutAnnotation];
+        
+        [mapView setCenterCoordinate:_calloutAnnotation.coordinate animated:YES];
+    }
+}
+
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation
 {
-    if ([annotation isKindOfClass:[MAPointAnnotation class]])
-    {
-        static NSString *reuseIndetifier = @"annotationReuseIndetifier";
-        CustomAnnotationView *annotationView = (CustomAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:reuseIndetifier];
-        if (annotationView == nil)
-        {
-            annotationView = [[CustomAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseIndetifier];
+    //    if ([annotation isKindOfClass:[MAPointAnnotation class]])
+    //    {
+    //        static NSString *reuseIndetifier = @"annotationReuseIndetifier";
+    //        CustomAnnotationView *annotationView = (CustomAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:reuseIndetifier];
+    //        if (annotationView == nil)
+    //        {
+    //            annotationView = [[CustomAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseIndetifier];
+    //        }
+    //        annotationView.image = [UIImage imageNamed:@"annotation"];
+    //
+    //        // 设置为NO，用以调用自定义的calloutView
+    ////        annotationView.canShowCallout = YES;
+    //
+    //
+    //
+    //        // 设置中心点偏移，使得标注底部中间点成为经纬度对应点
+    //        annotationView.centerOffset = CGPointMake(0, -18);
+    //
+    //        UIButton *btn=[[UIButton alloc]initWithFrame:annotationView.frame];
+    //        btn.tag=nowTag;
+    //
+    //        [btn setImage:[UIImage imageNamed:@"mapDetail"] forState:UIControlStateNormal];
+    //        [btn addTarget:self action:@selector(showDetails:) forControlEvents:UIControlEventTouchUpInside];
+    //        annotationView.rightCalloutAccessoryView=btn;
+    //
+    //        return annotationView;
+    //    }
+    //    return nil;
+    
+    if ([annotation isKindOfClass:[CalloutMapAnnotation class]]) {
+        
+        CalloutMapAnnotation *ann = (CalloutMapAnnotation *)annotation;
+        
+        CallOutAnnotationVifew *annotationView = nil;
+        //        (CallOutAnnotationVifew *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"CalloutView"];
+        JingDianMapCell  *cell = nil;
+        if (!annotationView) {
+            annotationView = [[CallOutAnnotationVifew alloc] initWithAnnotation:annotation reuseIdentifier:@"CalloutView"];
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"JingDianMapCell" owner:self options:nil] objectAtIndex:0];
+            
+            [annotationView.contentView addSubview:cell];
         }
-        annotationView.image = [UIImage imageNamed:@"annotation"];
+        cell.jobTitleLabel.text = ann.title;
+        cell.peopleCountLabel.text = ann.subtitle;
         
-        // 设置为NO，用以调用自定义的calloutView
-        annotationView.canShowCallout = YES;
+        return annotationView;
         
-        // 设置中心点偏移，使得标注底部中间点成为经纬度对应点
-        annotationView.centerOffset = CGPointMake(0, -18);
+    } else if ([annotation isKindOfClass:[BasicMapAnnotation class]]) {
         
-        UIButton *btn=[[UIButton alloc]initWithFrame:annotationView.frame];
-        btn.tag=nowTag;
-        
-        [btn setImage:[UIImage imageNamed:@"mapDetail"] forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(showDetails:) forControlEvents:UIControlEventTouchUpInside];
-        annotationView.rightCalloutAccessoryView=btn;
+        MAAnnotationView *annotationView =[self.mapView dequeueReusableAnnotationViewWithIdentifier:@"CustomAnnotation"];
+        if (!annotationView) {
+            annotationView = [[MAAnnotationView alloc] initWithAnnotation:annotation
+                                                          reuseIdentifier:@"CustomAnnotation"];
+            annotationView.canShowCallout = NO;
+            annotationView.image = [UIImage imageNamed:@"pin.png"];
+        }
         
         return annotationView;
     }

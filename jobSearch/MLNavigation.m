@@ -21,7 +21,6 @@
     
     [self.navigationBar setBarTintColor:[UIColor colorWithRed:54.0/255.0 green:59.0/255.0 blue:81.0/255.0 alpha:1.0]];
     self.navigationBar.translucent=NO;
-    
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary:[[UINavigationBar appearance] titleTextAttributes]];
     [titleBarAttributes setValue:[UIColor whiteColor] forKey:UITextAttributeTextColor];
     [self.navigationController.navigationBar setTitleTextAttributes:titleBarAttributes];

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface MLMessageVC : UIViewController
+#import "ViewController.h"
+@interface MLMessageVC : ViewController
 
 @end

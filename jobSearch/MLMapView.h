@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <MAMapKit/MAMapKit.h>
 #import <AMapSearchKit/AMapSearchAPI.h>
-
+#import "CalloutMapAnnotation.h"
+#import "BasicMapAnnotation.h"
 @protocol showDetailDelegate <NSObject>
 @required
 - (void)showDetail:(NSInteger)tag;
@@ -18,13 +19,14 @@
 @interface MLMapView : UIView<MAMapViewDelegate,AMapSearchDelegate,UIGestureRecognizerDelegate>
 {
     NSMutableArray *pointAnnoArray;
+    NSMutableDictionary *pointAnnoDic;
     int nowTag;
     BOOL firstLoad;
     BOOL requestUserLocation;
 }
 @property(nonatomic, retain) MAMapView *mapView;
 
-- (void)addAnnotation:(NSArray*)point Title:(NSString*)title tag:(int)tag SetToCenter:(BOOL)isCenter;
+- (void)addAnnotation:(NSArray*)point Title:(NSString*)title peopleCount:(NSString *)peopleCount tag:(int)tag SetToCenter:(BOOL)isCenter;
 - (void)removeAllAnnotations;
 //主动请求定位
 - (void)setShowUserLocation:(BOOL)isShow;

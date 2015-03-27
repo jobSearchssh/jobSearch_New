@@ -14,7 +14,7 @@
 #import "MJRefresh.h"
 #import "MLLoginVC.h"
 #import "MLTextUtils.h"
-
+#import "JobDetailController.h"
 @interface MLMyCollection ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,finishLoginDelegate>
 {
     NSInteger cellNum;
@@ -307,7 +307,6 @@ static  MLMyCollection *thisVC=nil;
         cell.portraitView.imageURL=[NSURL URLWithString:imageUrl];
     }
 
-    cell.notReadImageView.hidden=YES;
     
     return cell;
 }
@@ -340,7 +339,7 @@ static  MLMyCollection *thisVC=nil;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    jobDetailVC *detailVC=[[jobDetailVC alloc]init];
+    JobDetailController *detailVC=[[JobDetailController alloc]init];
     if ([recordArray objectAtIndex:[indexPath row]]) {
         detailVC.jobModel=[recordArray objectAtIndex:[indexPath row]];
     }
@@ -348,10 +347,10 @@ static  MLMyCollection *thisVC=nil;
     detailVC.origin=@"0";
     
     detailVC.hidesBottomBarWhenPushed=YES;
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-    backItem.title = @"";
-    backItem.tintColor=[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:50.0/255.0 alpha:1.0];
-    self.navigationItem.backBarButtonItem = backItem;
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+//    backItem.title = @"";
+//    backItem.tintColor=[UIColor colorWithRed:23.0/255.0 green:87.0/255.0 blue:50.0/255.0 alpha:1.0];
+//    self.navigationItem.backBarButtonItem = backItem;
     
     [self.navigationController pushViewController:detailVC animated:YES];
     

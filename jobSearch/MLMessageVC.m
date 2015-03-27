@@ -17,6 +17,8 @@
 #import "MLLoginVC.h"
 #import "badgeNumber.h"
 #import "MLTextUtils.h"
+#import "JobMessageCell.h"
+#import "SystemMessageCell.h"
 
 @interface MLMessageVC ()<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate,finishHandle,UIAlertViewDelegate,finishLoginDelegate>
 {
@@ -33,6 +35,7 @@
     NSInteger nowCellNum;
     
     BOOL tableViewAdded;
+    BOOL isJobMessage;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -40,7 +43,8 @@
 
 @implementation MLMessageVC
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     refreshAdded=NO;
     cellNum=0;
@@ -49,10 +53,40 @@
     firstLoad=YES;
     headerRefreshing=NO;
     footerRefreshing=NO;
+    isJobMessage = YES;
+    
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM月dd日"];
     
+    //创建UISegementControl
+    UISegmentedControl *segement = [[UISegmentedControl alloc]initWithItems:@[@"职 位 消 息",@"系 统 消 息"]];
+    
+    segement.selectedSegmentIndex = 0;
+    
+    segement.tintColor = [UIColor blueColor ];
+    
+    [segement addTarget:self action:@selector(changeView:) forControlEvents:UIControlEventValueChanged]; //改变的是数值
+    
+    self.navigationItem.titleView = segement;
+    
     [self tableViewInit];
+}
+
+- (void)changeView:(UISegmentedControl *)segment
+{
+    switch (segment.selectedSegmentIndex) {
+            
+        case 0:
+            isJobMessage = YES;
+            break;
+        case 1:
+            isJobMessage = NO;
+            break;
+            
+        default:
+            break;
+    }
+    [self.tableView reloadData];
 }
 
 - (void)finishHandle{
@@ -65,12 +99,14 @@
     [[badgeNumber sharedInstance] refreshCount];
 }
 
-- (void)finishLogin{
+- (void)finishLogin
+{
     firstLoad=YES;
     [self headRefreshData];
 }
 
-- (void)headRefreshData{
+- (void)headRefreshData
+{
     
     NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
     NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
@@ -106,7 +142,8 @@
     }
 }
 
-- (void)footRefreshData{
+- (void)footRefreshData
+{
     NSUserDefaults *myData = [NSUserDefaults standardUserDefaults];
     NSString *currentUserObjectId=[myData objectForKey:@"currentUserObjectId"];
     
